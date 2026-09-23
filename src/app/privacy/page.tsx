@@ -30,7 +30,8 @@ export default function PrivacyPage() {
             <h2 className="font-display text-[1.5rem] text-ink">The health check</h2>
             <p className="mt-2">
               Your answers are used to build your plan. They are shared with the distributor whose link you used only
-              when you choose to send them, for example by tapping the WhatsApp button at the end. The demo on this
+              when you choose to send them by tapping the WhatsApp button at the end. Sending also saves your answers and
+              plan, and the number you give (if any), in that distributor&apos;s Suppli Afya workspace so they can help you. The demo on this
               website runs entirely in your browser and doesn&apos;t save or send anything.
             </p>
           </section>
@@ -42,10 +43,11 @@ export default function PrivacyPage() {
             </p>
           </section>
           <section>
-            <h2 className="font-display text-[1.5rem] text-ink">Early access applications</h2>
+            <h2 className="font-display text-[1.5rem] text-ink">Distributor accounts and payments</h2>
             <p className="mt-2">
-              If you apply for early access, we use your name, number and town only to get back to you about Suppli
-              Afya.
+              For distributors, we keep your email, a securely hashed password, the business details you give us during
+              setup, and a record of your subscription payments. M-Pesa payments are processed by Safaricom and card
+              payments by Paystack; we never see or store card numbers.
             </p>
           </section>
           <section>

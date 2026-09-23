@@ -9,13 +9,16 @@ health check and the recommendation engine behind it.
 - `/`: the website for distributors, with a live demo of the health check
 - `/check`: the health check as a customer sees it (demo distributor)
 - `/d/<slug>`: a distributor's own health check link (the QR card points here)
+- `/start`: choose a plan, create an account, pay, set up
+- `/portal`: the distributor portal (Today, Prospects, Orders, Customers, Settings)
+- `/login`: returning distributors
 
 ## Running it
 
 ```bash
 npm install
 npm run dev          # http://localhost:3000
-npm test             # engine tests
+npm test             # engine, billing and daily-list tests
 npm run build
 npx playwright test  # end-to-end tests against a production build
 ```
@@ -25,9 +28,15 @@ npx playwright test  # end-to-end tests against a production build
 | Variable | Purpose |
 |---|---|
 | `NEXT_PUBLIC_SITE_URL` | Public URL, used in link previews and QR codes |
-| `NEXT_PUBLIC_SUPPLI_WHATSAPP` | Team WhatsApp number (`2547XXXXXXXX`) for early-access applications |
+| `NEXT_PUBLIC_SUPPLI_WHATSAPP` | Team WhatsApp number (`2547XXXXXXXX`) |
+| `NEXT_PUBLIC_COMMUNITY_URL` | WhatsApp community invite shown in the portal (hidden if unset) |
+| `DATABASE_URL` | Postgres connection string. Unset: embedded Postgres in `PGLITE_DIR` (default `.data/pglite`) |
+| `MPESA_*` | Daraja STK Push keys, see `docs/DECISIONS.md` |
+| `PAYSTACK_SECRET_KEY` | Card payments through Paystack |
+| `PAYMENTS_ALLOW_TEST` | `true` allows on-screen test payments in production builds. Never on the live site |
 
-Distributors are configured in `src/config/distributors.ts` until the portal exists.
+Without payment keys, checkout runs in test mode in development. The demo distributor lives in
+`src/config/distributors.ts`; real distributors come from the database after they sign up.
 
 ## Docs
 

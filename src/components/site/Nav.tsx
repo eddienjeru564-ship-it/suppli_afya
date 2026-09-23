@@ -11,13 +11,25 @@ const LINKS = [
   { href: "#how", label: "How it works" },
   { href: "#check", label: "The health check" },
   { href: "#portal", label: "Your portal" },
-  { href: "#early-access", label: "Early access" },
+  { href: "#pricing", label: "Pricing" },
 ];
 
 export function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState<string | null>(null);
+  const [session, setSession] = useState<{ signedIn: boolean; next?: string; name?: string | null } | null>(null);
+
+  // The page is static; ask once whether this is a returning distributor.
+  useEffect(() => {
+    fetch("/api/session")
+      .then((r) => r.json())
+      .then(setSession)
+      .catch(() => setSession({ signedIn: false }));
+  }, []);
+  const account = session?.signedIn
+    ? { href: session.next ?? "/portal", label: session.next === "/portal" ? "Open your portal" : "Continue setup" }
+    : null;
 
   // Highlight the section being read.
   useEffect(() => {
@@ -88,12 +100,20 @@ export function Nav() {
           })}
         </div>
         <div className="hidden items-center gap-2 lg:flex">
-          <Link href="/login" className="px-3 text-[0.92rem] font-medium text-ink-soft transition-colors hover:text-ink">
-            Distributor login
-          </Link>
-          <ButtonLink href="#check" size="sm" arrow>
-            Try the health check
-          </ButtonLink>
+          {account ? (
+            <ButtonLink href={account.href} size="sm" arrow>
+              {account.label}
+            </ButtonLink>
+          ) : (
+            <>
+              <Link href="/login" className="px-3 text-[0.92rem] font-medium text-ink-soft transition-colors hover:text-ink">
+                Log in
+              </Link>
+              <ButtonLink href="#pricing" size="sm" arrow>
+                Get started
+              </ButtonLink>
+            </>
+          )}
         </div>
         <button
           type="button"
@@ -134,12 +154,20 @@ export function Nav() {
                 For BF Suma distributors in Kenya. Sell more, follow up less.
               </p>
               <div className="mt-auto grid gap-3">
-                <ButtonLink href="#check" size="lg" onClick={() => setOpen(false)} arrow>
-                  Try the health check
-                </ButtonLink>
-                <ButtonLink href="/login" size="lg" variant="secondary" onClick={() => setOpen(false)}>
-                  Distributor login
-                </ButtonLink>
+                {account ? (
+                  <ButtonLink href={account.href} size="lg" onClick={() => setOpen(false)} arrow>
+                    {account.label}
+                  </ButtonLink>
+                ) : (
+                  <>
+                    <ButtonLink href="#pricing" size="lg" onClick={() => setOpen(false)} arrow>
+                      Get started
+                    </ButtonLink>
+                    <ButtonLink href="/login" size="lg" variant="secondary" onClick={() => setOpen(false)}>
+                      Log in
+                    </ButtonLink>
+                  </>
+                )}
               </div>
             </div>
           </motion.div>

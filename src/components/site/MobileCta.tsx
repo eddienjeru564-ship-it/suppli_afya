@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { Arrow } from "@/components/ui/Button";
 
 /** Sections that already have their own call to action or a control at the bottom of the screen. */
-const QUIET_ZONES = ["check", "numbers", "early-access", "start", "site-footer"];
+const QUIET_ZONES = ["check", "numbers", "pricing", "start", "site-footer"];
 
 /** A slim "try it" bar for phones, shown between sections that don't have their own. */
 export function MobileCta() {

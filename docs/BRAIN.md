@@ -93,17 +93,23 @@ For the product, in funnel order:
 
 Vanity metrics to ignore: page views, number of questions answered, "engagement".
 
-## Pricing (not settled)
+## Pricing (proposed, confirm before launch)
 
-Current public position: a single monthly subscription, price agreed with early-access
-distributors before they commit. Recommendation for the pilot:
+The founder asked for public pricing on the homepage, so there are three monthly plans in
+`src/config/plans.ts`: Starter KES 1,500 (up to 50 customers), Growth KES 2,900 (unlimited
+customers, import, monthly summary; the recommended plan) and Pro KES 4,900 (set up for you,
+priority help). These numbers are a proposal, anchored on the rule below. Change them in one place.
 
-- Price so that **two extra reorders a month clearly cover it**. With an average order around
-  KES 6,500, that makes roughly KES 1,500–2,500 a month an easy yes. Test it; don't guess.
+- Price so that **one or two extra reorders a month clearly cover it**. With an average order around
+  KES 6,500, that is the whole argument, and the homepage calculator lets distributors check it.
+- Billing is monthly by M-Pesa or card, and **nothing renews automatically**: the distributor pays
+  again to renew, and a renewal extends from the end of the current month. There's a 3-day grace
+  period after a month ends. Automatic card renewal can come later if distributors want it.
 - Consider a **founding rate** locked for the first cohort, in exchange for honest feedback and a case study.
 - Consider an **outcome guarantee** for the pilot ("if you don't see X reorders in 60 days, you
   don't pay for month three"). Only offer it once the portal can measure reorders reliably.
-- Don't show tiers publicly until the pilot tells us what distributors actually value.
+- Pro's "M-Pesa payment requests to your customers" is marked *coming soon*. It needs each
+  distributor's own Daraja credentials; don't sell it as live until it is.
 
 ## Honest risks
 
@@ -131,18 +137,21 @@ distributors before they commit. Recommendation for the pilot:
 **Phase 1: done in this repo.** Marketing site, working health check engine, distributor links
 (`/d/<slug>`), QR card, WhatsApp handoff, demo portal views, link previews.
 
-**Phase 2: portal MVP for 5–10 pilot distributors.**
-- Auth by phone number (OTP via SMS or WhatsApp link).
-- Lead inbox fed by completed checks (store the result server-side, matched by reference code).
-- Customer records: add manually, import from phone contacts/CSV.
-- Orders with manual payment recording (M-Pesa code, amount, date).
-- Reorder reminders from `supplyDays` per product; "gone quiet" list.
-- The "Today" list. This is the product.
+**Phase 2: built.** Public pricing, checkout (account, then M-Pesa STK Push or card through
+Paystack, with retry on failure), five-screen onboarding, and the distributor portal:
+- Today: the daily list (new prospects, unpaid orders, reorders due, check-ins, customers gone quiet),
+  ordered by the goals the distributor chose in onboarding, each with a WhatsApp message ready to send.
+- Prospects fed by completed health checks on the distributor's link (the answers are stored and the
+  plan is recomputed on the server).
+- Customers (add, import by pasting, notes, history), orders with manual payment recording
+  (M-Pesa code), reorder dates from `supplyDays`.
+- Settings: link, QR card sheet, profile, plan and billing history.
+Sign-in is email and password. Phone OTP can replace or join it once there's an SMS provider.
 
-**Phase 3: payments and reminders.**
-- Daraja STK Push for distributors with a Till/Paybill.
-- Pre-written reminder messages opened via `wa.me` (no API cost).
-- Printable QR cards generated per distributor.
+**Phase 3: next.**
+- M-Pesa payment requests from distributors to their own customers (per-distributor Daraja keys).
+- Automatic renewal for card payers, if asked for.
+- Pilot measurement: reorders recorded per distributor per month.
 
 **Phase 4: only if the pilot asks for it.**
 - Upline/team views, analytics, subdomains, kids' health check (BF Suma's Smart Kids range),
@@ -150,5 +159,7 @@ distributors before they commit. Recommendation for the pilot:
 
 ## Stack
 
-Next.js (App Router), TypeScript, Tailwind CSS v4, Motion. Static pages today; deploy on Vercel.
-For Phase 2: Supabase (Postgres, auth, row-level security per distributor) is the pragmatic choice.
+Next.js (App Router), TypeScript, Tailwind CSS v4, Motion. Deploy on Vercel.
+Data lives in Postgres (any provider: Supabase, Neon…) via `DATABASE_URL`; without it, an embedded
+Postgres (PGlite) in `.data/` runs locally and in tests, with the same SQL. Every query is scoped by
+workspace in `src/server/`.

@@ -17,17 +17,17 @@ export function FinalCta() {
         </Reveal>
         <Reveal delay={0.1}>
           <p className="mx-auto mt-7 max-w-[34rem] text-[1.15rem] leading-relaxed text-cream/75">
-            Start with the health check. If you can picture sending it to the next person who asks about your products,
-            we should talk.
+            Try the health check first. If you can picture sending it to the next person who asks about your products,
+            you&apos;re a couple of minutes away from having your own.
           </p>
         </Reveal>
         <Reveal delay={0.15}>
           <div className="mt-10 flex flex-col justify-center gap-3 sm:flex-row">
-            <ButtonLink href="#check" variant="light" size="lg" arrow>
-              Try the health check
+            <ButtonLink href="#pricing" variant="light" size="lg" arrow>
+              See plans and get started
             </ButtonLink>
-            <ButtonLink href="#early-access" size="lg" className="border border-cream/25 !bg-transparent hover:!bg-cream/10">
-              Apply for early access
+            <ButtonLink href="#check" size="lg" className="border border-cream/25 !bg-transparent hover:!bg-cream/10">
+              Try the health check
             </ButtonLink>
           </div>
         </Reveal>
@@ -49,8 +49,8 @@ export function Footer() {
             <Link href="/#how" className="hover:text-cream">How it works</Link>
             <Link href="/check" className="hover:text-cream">Health check</Link>
             <Link href="/#portal" className="hover:text-cream">Your portal</Link>
-            <Link href="/#early-access" className="hover:text-cream">Early access</Link>
-            <Link href="/login" className="hover:text-cream">Distributor login</Link>
+            <Link href="/#pricing" className="hover:text-cream">Pricing</Link>
+            <Link href="/login" className="hover:text-cream">Log in</Link>
             <Link href="/privacy" className="hover:text-cream">Privacy</Link>
           </nav>
         </div>

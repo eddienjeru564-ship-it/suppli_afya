@@ -14,17 +14,33 @@ Things only the founder can supply or decide. Ordered by how much they block.
    - Products we haven't included that should be (and any we included that are discontinued).
 2. **Pharmacist review of `src/engine/safety.ts`.** The rules are conservative general guidance,
    not a clinical interaction database.
-3. **Suppli Afya WhatsApp number.** Set `NEXT_PUBLIC_SUPPLI_WHATSAPP` (format `2547XXXXXXXX`). Until
-   then the early-access form shows the message for copying instead of opening WhatsApp.
+3. **Suppli Afya support number.** Pro promises priority WhatsApp help. Decide the number and set
+   `NEXT_PUBLIC_SUPPLI_WHATSAPP` (format `2547XXXXXXXX`); nothing on the site uses it yet.
 4. **Domain.** The site assumes `suppliafya.co.ke`. Set `NEXT_PUBLIC_SITE_URL` and
    `site.displayDomain` in `src/config/site.ts` to the real one. QR codes encode this URL.
 5. **Legal review** of `/privacy`, the disclaimers in the footer and the health check, and ODPC
-   registration before storing any customer's answers on a server.
+   registration. The portal now stores customers' health check answers when they choose to send
+   them to a distributor, so this is required before real distributors sign up.
+6. **Prices.** The plans in `src/config/plans.ts` are a proposal (KES 1,500 / 2,900 / 4,900).
+7. **Production database.** Set `DATABASE_URL` to a hosted Postgres. The embedded database is for
+   local development only; on Vercel its files would not survive a deploy.
+8. **Payment keys.** Without keys, checkout runs in test mode (approve or decline on screen), which
+   is allowed only outside production or with `PAYMENTS_ALLOW_TEST=true`. **Never set that on the
+   live site.** For live payments:
+   - M-Pesa (Daraja STK Push): `MPESA_ENV=production`, `MPESA_CONSUMER_KEY`, `MPESA_CONSUMER_SECRET`,
+     `MPESA_SHORTCODE`, `MPESA_PASSKEY`, `MPESA_TYPE` (`paybill` or `till`), `MPESA_TILL_NUMBER` for
+     tills, and a long random `MPESA_CALLBACK_TOKEN`. The callback URL is built automatically:
+     `<site>/api/payments/mpesa/callback?token=<MPESA_CALLBACK_TOKEN>`.
+   - Card (Paystack, KES): `PAYSTACK_SECRET_KEY`. In the Paystack dashboard set the webhook URL to
+     `<site>/api/payments/paystack/webhook`.
+9. **Community link.** Set `NEXT_PUBLIC_COMMUNITY_URL` to the WhatsApp community invite. Until then
+   the portal doesn't show the invite.
 
 ## Decisions to make during the pilot
 
-- **Pricing display.** Currently: "single monthly subscription, agreed before you commit". See
-  pricing notes in `docs/BRAIN.md`.
+- **Automatic renewal.** Today every month is paid by hand (M-Pesa or card). Decide after the pilot
+  whether card payers want automatic renewal.
+- **Phone sign-in.** Accounts use email and password. Decide whether to add phone OTP.
 - **Which distributors first.** Recommend 5–10 who already sell actively on WhatsApp, including
   at least one with a Till or Paybill and one without.
 - **BF Suma relationship.** Whether to approach the company, and when. Check distributor policy
@@ -43,3 +59,11 @@ Things only the founder can supply or decide. Ordered by how much they block.
 - **Pregnancy means no product plan.** Clinic first, even if it costs a sale.
 - **No product photos or BF Suma branding.** Independence has to be visible.
 - **Demo distributor has no WhatsApp number.** The demo never opens a chat to a real person.
+- **Public pricing, pay before setup.** Asked for by the founder: pricing → account → payment → setup
+  → portal. A failed payment keeps the account and offers a retry; returning users never see setup again.
+- **No product-categories step in onboarding.** Every distributor can sell the full range, so the
+  answer wouldn't change anything in the portal. Add it only when something uses it.
+- **"Independent distributor" business type, and a WhatsApp number in onboarding.** Most
+  distributors don't have a shop, and the health check link needs a number to send plans to.
+- **Onboarding goals shape the Today list.** The goals a distributor picks decide which kind of
+  follow-up comes first.

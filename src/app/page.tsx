@@ -6,9 +6,9 @@ import { Demo } from "@/components/site/Demo";
 import { Portal } from "@/components/site/Portal";
 import { Week } from "@/components/site/Week";
 import { Trust } from "@/components/site/Trust";
-import { CardSection } from "@/components/site/CardSection";
 import { Calculator } from "@/components/site/Calculator";
-import { EarlyAccess } from "@/components/site/EarlyAccess";
+import { Pricing } from "@/components/site/Pricing";
+import { Setup } from "@/components/site/Setup";
 import { Faq } from "@/components/site/Faq";
 import { FinalCta, Footer } from "@/components/site/Footer";
 import { MobileCta } from "@/components/site/MobileCta";
@@ -16,7 +16,7 @@ import { MobileCta } from "@/components/site/MobileCta";
 /**
  * The story runs in order: the distributor's reality → where sales leak →
  * how Suppli Afya fits in → try it → what you see each day → before/after →
- * why customers trust it → your card → what it's worth → join → questions.
+ * why customers trust it → what it's worth → what it costs → how setup works → questions.
  */
 export default function Home() {
   return (
@@ -30,9 +30,9 @@ export default function Home() {
         <Portal />
         <Week />
         <Trust />
-        <CardSection />
         <Calculator />
-        <EarlyAccess />
+        <Pricing />
+        <Setup />
         <Faq />
         <FinalCta />
       </main>

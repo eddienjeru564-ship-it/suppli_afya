@@ -25,14 +25,18 @@ Read before working here:
 - `src/engine/`: pure TypeScript health check engine (questions, catalogue, scoring, safety, WhatsApp handoff). Tested.
 - `src/components/check/`: health check UI (used on the landing page demo and on `/check`, `/d/[slug]`)
 - `src/components/site/`: landing page sections, in story order in `src/app/page.tsx`
-- `src/config/`: site settings and distributor entry points
+- `src/config/`: site settings, plans and prices (`plans.ts`), onboarding options, the demo distributor
+- `src/server/`: database (Postgres or embedded PGlite), schema migrations, auth and sessions, payments (M-Pesa Daraja, Paystack, test mode), portal queries including the Today list
+- `src/app/start/`: checkout (account → payment → welcome) and onboarding (`setup/`)
+- `src/app/portal/`: the distributor portal; every page guards itself with `requirePortalAccount()`
+- `src/app/api/`: payment callbacks and webhooks, lead capture from the health check
 - `e2e/`: Playwright tests that walk the health check
 
 ## Commands
 
 - `npm run dev`: local dev server
-- `npm test`: engine unit tests (Vitest, includes a safety fuzz test)
+- `npm test`: engine, billing and Today-list tests (Vitest; includes a safety fuzz test; the database runs in memory)
 - `npm run typecheck` / `npm run lint`
-- `npm run build && npx playwright test`: end-to-end tests (desktop and mobile)
+- `npm run build && npx playwright test`: end-to-end tests (desktop and mobile), including the full distributor journey with test payments
 
 Design tokens live in `src/app/globals.css` (`@theme`). Fonts: Newsreader (display) and Hanken Grotesk (text).

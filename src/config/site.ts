@@ -17,3 +17,6 @@ export const site = {
    */
   teamWhatsApp: process.env.NEXT_PUBLIC_SUPPLI_WHATSAPP ?? "",
 } as const;
+
+/** WhatsApp community invite link for distributors. Leave empty to hide the invitation. */
+export const communityUrl = process.env.NEXT_PUBLIC_COMMUNITY_URL ?? "";

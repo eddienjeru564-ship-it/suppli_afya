@@ -4,9 +4,9 @@ import clsx from "clsx";
 import { AnimatePresence, motion, useInView } from "motion/react";
 import { useRef, useState } from "react";
 import type { Distributor } from "@/config/distributors";
-import { goalLabel, whatsappLink, whatsappMessage, type EngineResult, type Recommendation } from "@/engine";
+import { goalLabel, whatsappLink, whatsappMessage, type Answers, type EngineResult, type Recommendation } from "@/engine";
 import { Alert, Check, Minus, Plus, Shield, WhatsAppIcon } from "@/components/ui/icons";
-import { Button, buttonClass } from "@/components/ui/Button";
+import { Button } from "@/components/ui/Button";
 import { FormatLabel, ProductGlyph } from "./ProductGlyph";
 import { WhatsAppPreview } from "./WhatsAppPreview";
 
@@ -123,12 +123,14 @@ function ProductCard({ rec, i }: { rec: Recommendation; i: number }) {
 
 export function ResultPlan({
   result,
+  answers,
   distributor,
   onRestart,
   onEdit,
   embedded,
 }: {
   result: EngineResult;
+  answers: Answers;
   distributor: Distributor;
   onRestart: () => void;
   onEdit: () => void;
@@ -136,6 +138,22 @@ export function ResultPlan({
 }) {
   const [showMessage, setShowMessage] = useState(false);
   const [shared, setShared] = useState(false);
+  const [phone, setPhone] = useState("");
+
+  /** Save the lead to the distributor's workspace, then open WhatsApp. */
+  const send = () => {
+    try {
+      fetch("/api/leads", {
+        method: "POST",
+        keepalive: true,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ slug: distributor.slug, answers, ref: result.ref, phone: phone || undefined }),
+      }).catch(() => {});
+    } catch {
+      /* never block the WhatsApp handoff */
+    }
+    window.location.assign(whatsappLink(distributor.whatsapp!, message));
+  };
   const handoffRef = useRef<HTMLDivElement>(null);
   const topRef = useRef<HTMLDivElement>(null);
   const handoffInView = useInView(handoffRef, { margin: "0px 0px -10% 0px" });
@@ -318,14 +336,26 @@ export function ResultPlan({
             only to {distributor.firstName}, and only when you send them.
           </p>
           {canSend ? (
-            <a
-              href={whatsappLink(distributor.whatsapp!, message)}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={buttonClass("whatsapp", "lg", "mt-4 w-full")}
-            >
-              <WhatsAppIcon /> Send on WhatsApp
-            </a>
+            <>
+              <label className="mt-4 block text-[0.82rem] font-medium text-cream/80">
+                Your WhatsApp number <span className="text-cream/50">(optional)</span>
+                <input
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  inputMode="tel"
+                  autoComplete="tel"
+                  placeholder="07XX XXX XXX"
+                  className="mt-1.5 w-full rounded-xl border border-cream/20 bg-cream/10 px-3.5 py-3 text-[1rem] text-cream outline-none placeholder:text-cream/35 focus:border-cream/60"
+                />
+              </label>
+              <Button variant="whatsapp" size="lg" className="mt-3 w-full" onClick={send}>
+                <WhatsAppIcon /> Send on WhatsApp
+              </Button>
+              <p className="mt-2 text-center text-[0.76rem] leading-snug text-cream/60">
+                Sending shares your answers and plan with {distributor.firstName}, in WhatsApp and in their Suppli Afya
+                workspace.
+              </p>
+            </>
           ) : (
             <>
               <Button variant="whatsapp" size="lg" className="mt-4 w-full" onClick={() => setShowMessage((s) => !s)}>
@@ -376,14 +406,14 @@ export function ResultPlan({
           >
             <div className="mx-auto max-w-xl">
               {canSend ? (
-                <a
-                  href={whatsappLink(distributor.whatsapp!, message)}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={buttonClass("whatsapp", "lg", "w-full shadow-float")}
+                <Button
+                  variant="whatsapp"
+                  size="lg"
+                  className="w-full shadow-float"
+                  onClick={() => handoffRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })}
                 >
                   <WhatsAppIcon /> Send my plan to {distributor.firstName}
-                </a>
+                </Button>
               ) : (
                 <Button
                   variant="whatsapp"

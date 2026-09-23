@@ -266,6 +266,7 @@ export function HealthCheck({
               >
                 <ResultPlan
                   result={result}
+                  answers={answers}
                   distributor={distributor}
                   onRestart={restart}
                   onEdit={back}
@@ -346,7 +347,7 @@ function QuestionView({
             </span>
             <span className="text-[0.82rem] leading-tight">
               <span className="block font-semibold text-ink">{distributor.name}</span>
-              <span className="block text-ink-mute">BF Suma distributor · {distributor.area}</span>
+              <span className="block text-ink-mute">{distributor.tagline || `BF Suma distributor · ${distributor.area}`}</span>
             </span>
           </div>
         )}

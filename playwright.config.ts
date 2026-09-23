@@ -20,5 +20,7 @@ export default defineConfig({
     url: `http://localhost:${PORT}`,
     reuseExistingServer: true,
     timeout: 120_000,
+    // The journey test pays with test payments against its own throwaway database.
+    env: { PAYMENTS_ALLOW_TEST: "true", PGLITE_DIR: ".data/e2e" },
   },
 });

@@ -12,6 +12,8 @@ export interface Distributor {
   area: string;
   whatsapp: string | null;
   demo: boolean;
+  /** Line under the name on the health check, e.g. "Afya Bora Pharmacy · Thika". */
+  tagline?: string;
 }
 
 export const DISTRIBUTORS: Distributor[] = [

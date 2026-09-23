@@ -33,7 +33,15 @@ const FAQ = [
   },
   {
     q: "How much does it cost?",
-    a: "It will be a single monthly subscription. We're setting the price with our first group of distributors, and you'll know exactly what it is before you commit to anything.",
+    a: "Starter is KES 1,500, Growth is KES 2,900 and Pro is KES 4,900 a month. You pay each month by M-Pesa or card. Nothing is taken automatically, so there's nothing to cancel: if you stop renewing, your plan simply ends.",
+  },
+  {
+    q: "What happens if my payment doesn't go through?",
+    a: "Your account is kept. You can try again straight away, with M-Pesa or a card, without filling anything in twice.",
+  },
+  {
+    q: "Can I try it before paying?",
+    a: "The health check on this page is the real one your customers will use, so you can see exactly what they get. The portal opens once you've chosen a plan.",
   },
   {
     q: "Can I use it for other brands?",
