@@ -1,8 +1,8 @@
 "use client";
 
 import clsx from "clsx";
-import { AnimatePresence, motion } from "motion/react";
-import { useState } from "react";
+import { AnimatePresence, motion, useInView } from "motion/react";
+import { useRef, useState } from "react";
 import type { Distributor } from "@/config/distributors";
 import { goalLabel, whatsappLink, whatsappMessage, type EngineResult, type Recommendation } from "@/engine";
 import { Alert, Check, Minus, Plus, Shield, WhatsAppIcon } from "@/components/ui/icons";
@@ -135,11 +135,39 @@ export function ResultPlan({
   embedded?: boolean;
 }) {
   const [showMessage, setShowMessage] = useState(false);
+  const [shared, setShared] = useState(false);
+  const handoffRef = useRef<HTMLDivElement>(null);
+  const topRef = useRef<HTMLDivElement>(null);
+  const handoffInView = useInView(handoffRef, { margin: "0px 0px -10% 0px" });
+  const topInView = useInView(topRef);
+  const showBar = !embedded && !handoffInView && !topInView;
   const p = result.profile;
   const ctx = { distributorName: distributor.name, distributorFirstName: distributor.firstName };
   const message = whatsappMessage(result, ctx);
   const canSend = Boolean(distributor.whatsapp) && !distributor.demo;
   const name = p.name || "Here";
+
+  const sharePlan = async () => {
+    const lines = [
+      `My health check plan (${result.ref})`,
+      ...result.core.map((c) => `• ${c.product.name}: ${c.reasons[0] ?? ""}`),
+      ...(result.habits.length ? ["", "Habits:", ...result.habits.map((h) => `• ${h.title}`)] : []),
+      "",
+      `From ${distributor.name}, BF Suma distributor`,
+    ];
+    const text = lines.join("\n");
+    try {
+      if (navigator.share) {
+        await navigator.share({ title: "My health check plan", text });
+        return;
+      }
+      await navigator.clipboard.writeText(text);
+      setShared(true);
+      setTimeout(() => setShared(false), 1800);
+    } catch {
+      /* cancelled or blocked */
+    }
+  };
 
   const title =
     result.status === "clinic-first" ? `${name}, let's start with your clinic.` : `${name}, here's your plan.`;
@@ -147,7 +175,7 @@ export function ResultPlan({
   return (
     <div className="pb-4">
       <Appear>
-        <div className="text-[0.8rem] font-semibold text-clay">Your plan · {result.ref}</div>
+        <div ref={topRef} className="text-[0.8rem] font-semibold text-clay">Your plan · {result.ref}</div>
         <h2 className={clsx("mt-2 font-display leading-[1.05] tracking-[-0.02em] text-ink", embedded ? "text-[2rem]" : "text-[2.4rem] sm:text-[2.9rem]")}>
           {title}
         </h2>
@@ -155,6 +183,26 @@ export function ResultPlan({
           {result.heard.map((h) => (
             <p key={h}>{h}</p>
           ))}
+        </div>
+        <div className="mt-4 flex flex-wrap gap-1.5 text-[0.75rem] font-semibold">
+          {result.core.length > 0 && (
+            <span className="rounded-full bg-forest px-2.5 py-1 text-cream">
+              {result.core.length} product{result.core.length > 1 ? "s" : ""}
+            </span>
+          )}
+          {result.habits.length > 0 && (
+            <span className="rounded-full bg-sand px-2.5 py-1 text-ink-soft">
+              {result.habits.length} free habit{result.habits.length > 1 ? "s" : ""}
+            </span>
+          )}
+          {result.excluded.length > 0 && (
+            <span className="rounded-full bg-sand px-2.5 py-1 text-ink-soft">{result.excluded.length} left out for safety</span>
+          )}
+          {result.seeDoctor.length + (result.status !== "ready" ? 1 : 0) > 0 && (
+            <span className="rounded-full bg-clay-soft px-2.5 py-1 text-clay">
+              {result.seeDoctor.length + (result.status !== "ready" ? 1 : 0)} to check with a doctor
+            </span>
+          )}
         </div>
       </Appear>
 
@@ -263,7 +311,7 @@ export function ResultPlan({
       )}
 
       <Appear i={result.core.length + 6} className="mt-10">
-        <div className="rounded-[1.5rem] bg-forest p-5 text-cream">
+        <div ref={handoffRef} className="scroll-mt-24 rounded-[1.5rem] bg-forest p-5 text-cream">
           <div className="font-display text-[1.5rem] leading-tight">Send your plan to {distributor.firstName}</div>
           <p className="mt-1.5 text-[0.92rem] leading-relaxed text-cream/75">
             {distributor.firstName} will confirm prices, answer your questions and help you get started. Your answers go
@@ -305,6 +353,9 @@ export function ResultPlan({
       </Appear>
 
       <div className="mt-6 flex flex-wrap items-center justify-center gap-2">
+        <Button variant="ghost" size="sm" onClick={sharePlan}>
+          {shared ? "Copied" : "Share or save my plan"}
+        </Button>
         <Button variant="ghost" size="sm" onClick={onEdit}>
           Change my answers
         </Button>
@@ -312,6 +363,44 @@ export function ResultPlan({
           Start again
         </Button>
       </div>
+
+      {/* Full-page check: keep the next step one tap away while reading the plan. */}
+      <AnimatePresence>
+        {showBar && (
+          <motion.div
+            initial={{ y: 90, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: 90, opacity: 0 }}
+            transition={{ duration: 0.4, ease }}
+            className="fixed inset-x-0 bottom-0 z-30 px-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-6 [background:linear-gradient(to_top,var(--color-cream)_55%,transparent)]"
+          >
+            <div className="mx-auto max-w-xl">
+              {canSend ? (
+                <a
+                  href={whatsappLink(distributor.whatsapp!, message)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={buttonClass("whatsapp", "lg", "w-full shadow-float")}
+                >
+                  <WhatsAppIcon /> Send my plan to {distributor.firstName}
+                </a>
+              ) : (
+                <Button
+                  variant="whatsapp"
+                  size="lg"
+                  className="w-full shadow-float"
+                  onClick={() => {
+                    setShowMessage(true);
+                    handoffRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+                  }}
+                >
+                  <WhatsAppIcon /> Send my plan to {distributor.firstName}
+                </Button>
+              )}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <p className="mt-6 text-center text-[0.75rem] leading-relaxed text-ink-mute">
         General wellness guidance only, not medical advice. Supplements don&apos;t replace a varied diet or any medicine

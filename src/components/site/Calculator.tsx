@@ -1,7 +1,7 @@
 "use client";
 
-import { animate, useMotionValue, useReducedMotion, useTransform, motion } from "motion/react";
-import { useEffect, useId, useState } from "react";
+import { animate, useInView, useMotionValue, useReducedMotion, useTransform, motion } from "motion/react";
+import { useEffect, useId, useRef, useState } from "react";
 import { Reveal } from "@/components/ui/Reveal";
 
 const kes = (n: number) => `KES ${Math.round(n).toLocaleString("en-KE")}`;
@@ -56,7 +56,7 @@ function Slider({
         step={step}
         value={value}
         onChange={(e) => onChange(Number(e.target.value))}
-        className="mt-3 h-2 w-full cursor-pointer appearance-none rounded-full bg-cream/15 accent-ochre [&::-moz-range-thumb]:h-5 [&::-moz-range-thumb]:w-5 [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:border-0 [&::-moz-range-thumb]:bg-cream [&::-webkit-slider-thumb]:h-5 [&::-webkit-slider-thumb]:w-5 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-cream [&::-webkit-slider-thumb]:shadow-[0_0_0_4px_rgb(196_139_44/0.35)]"
+        className="mt-3 h-2 w-full cursor-pointer appearance-none rounded-full bg-cream/15 accent-ochre [&::-moz-range-thumb]:h-6 [&::-moz-range-thumb]:w-6 [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:border-0 [&::-moz-range-thumb]:bg-cream [&::-webkit-slider-thumb]:h-6 [&::-webkit-slider-thumb]:w-6 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-cream [&::-webkit-slider-thumb]:shadow-[0_0_0_4px_rgb(196_139_44/0.35)]"
         style={{ background: `linear-gradient(to right, var(--color-ochre) ${pct}%, rgb(244 238 227 / 0.15) ${pct}%)` }}
       />
     </div>
@@ -72,9 +72,11 @@ export function Calculator() {
   const nowOrders = (customers * rate) / 100;
   const extraOrders = (customers * extra) / 100;
   const monthly = extraOrders * order;
+  const cardRef = useRef<HTMLDivElement>(null);
+  const cardInView = useInView(cardRef, { margin: "0px 0px -15% 0px" });
 
   return (
-    <section id="numbers" className="relative overflow-hidden bg-forest py-24 text-cream sm:py-32">
+    <section id="numbers" className="relative overflow-clip bg-forest py-24 text-cream sm:py-32">
       <div aria-hidden className="pointer-events-none absolute -right-40 top-0 h-[34rem] w-[34rem] rounded-full bg-[radial-gradient(closest-side,rgb(196_139_44/0.18),transparent)]" />
       <div className="container-x relative grid gap-14 lg:grid-cols-2 lg:gap-24">
         <div>
@@ -120,10 +122,21 @@ export function Calculator() {
               />
             </div>
           </Reveal>
+          {/* Phones: keep the answer in view while the sliders move. */}
+          <div
+            aria-hidden={cardInView}
+            className={`sticky bottom-[max(0.75rem,env(safe-area-inset-bottom))] z-10 mt-8 flex items-center justify-between gap-3 rounded-2xl bg-cream px-4 py-3 text-forest-deep shadow-float transition-opacity duration-300 lg:hidden ${cardInView ? "pointer-events-none opacity-0" : "opacity-100"}`}
+          >
+            <span className="text-[0.8rem] leading-tight text-ink-soft">
+              Extra a month
+              <br />≈ {Math.max(1, Math.round(extraOrders))} more orders
+            </span>
+            <AnimatedKes value={monthly} className="font-display text-[1.7rem] leading-none" />
+          </div>
         </div>
 
         <Reveal delay={0.1} className="lg:pt-24">
-          <div className="rounded-[2rem] bg-forest-deep/70 p-7 ring-1 ring-cream/10 sm:p-10">
+          <div ref={cardRef} className="rounded-[2rem] bg-forest-deep/70 p-7 ring-1 ring-cream/10 sm:p-10">
             <div className="text-[0.95rem] text-cream/70">
               Right now that&apos;s about {Math.round(nowOrders)} repeat orders a month. Bringing back {extra}% more
               adds roughly {Math.max(1, Math.round(extraOrders))} orders, which is

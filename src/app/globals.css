@@ -48,6 +48,7 @@
     }
   }
   body {
+    -webkit-tap-highlight-color: transparent;
     background: var(--color-cream);
     color: var(--color-ink);
     font-family: var(--font-sans);
@@ -57,6 +58,15 @@
   ::selection {
     background: var(--color-sage);
     color: var(--color-forest-deep);
+  }
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+  p,
+  li {
+    text-wrap: pretty;
   }
   :focus-visible {
     outline: 2px solid var(--color-ochre);
@@ -144,6 +154,14 @@
     opacity: 0.045;
     mix-blend-mode: multiply;
     background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.1  0 0 0 0 0.12  0 0 0 0 0.1  0 0 0 1 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  }
+
+  /* Blend modes on a full-screen fixed layer are costly on phones; keep the grain lighter there. */
+  @media (max-width: 767px) {
+    .grain::after {
+      mix-blend-mode: normal;
+      opacity: 0.03;
+    }
   }
 
   .no-scrollbar {

@@ -101,9 +101,9 @@ export function HealthCheck({
     scrollRef.current?.scrollTo({ top: 0 });
     if (mode === "page") window.scrollTo({ top: 0 });
     else if (rootRef.current && window.innerWidth < 1024) {
-      // On phones the check isn't framed, so bring its top back into view under the nav.
+      // On phones the check isn't framed, so bring its top back into view under the nav and live chip.
       const top = rootRef.current.getBoundingClientRect().top;
-      if (top < 72) window.scrollTo({ top: window.scrollY + top - 80 });
+      if (top < 150) window.scrollTo({ top: window.scrollY + top - 150 });
     }
   }, [mode]);
 
@@ -336,6 +336,7 @@ function QuestionView({
 
   if (q.kind === "section") {
     const isWelcome = q.id === "welcome";
+    const part = q.section === "intro" ? 0 : SECTIONS.findIndex((x) => x.id === q.section) + 1;
     return (
       <div className={clsx("flex flex-col", mode === "page" ? "min-h-[60dvh] justify-center" : "min-h-[26rem] justify-center")}>
         {isWelcome && (
@@ -351,6 +352,11 @@ function QuestionView({
         )}
         {q.badge && (
           <span className="mb-4 w-fit rounded-full bg-sage-soft px-3 py-1 text-[0.75rem] font-semibold text-forest">{q.badge}</span>
+        )}
+        {part > 0 && (
+          <span className="mb-4 text-[0.8rem] font-semibold text-clay">
+            Part {part} of {SECTIONS.length} · {SECTIONS[part - 1].label}
+          </span>
         )}
         <h2
           className={clsx(

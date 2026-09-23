@@ -1,3 +1,7 @@
+"use client";
+
+import clsx from "clsx";
+import { useRef, useState } from "react";
 import { Reveal } from "@/components/ui/Reveal";
 
 const STEPS = [
@@ -20,8 +24,25 @@ const STEPS = [
 ];
 
 export function HowItWorks() {
+  const rail = useRef<HTMLOListElement>(null);
+  const [active, setActive] = useState(0);
+
+  // On phones the steps are a swipeable row; track which card is in front.
+  const onScroll = () => {
+    const el = rail.current;
+    if (!el) return;
+    const card = el.firstElementChild as HTMLElement | null;
+    const w = card ? card.offsetWidth + 12 : el.clientWidth;
+    setActive(Math.min(STEPS.length - 1, Math.round(el.scrollLeft / w)));
+  };
+  const goTo = (i: number) => {
+    const el = rail.current;
+    const card = el?.children[i] as HTMLElement | undefined;
+    if (el && card) el.scrollTo({ left: card.offsetLeft - el.offsetLeft - 20, behavior: "smooth" });
+  };
+
   return (
-    <section id="how" className="py-24 sm:py-32">
+    <section id="how" className="py-20 sm:py-32">
       <div className="container-x">
         <div className="grid gap-6 lg:grid-cols-2 lg:items-end">
           <Reveal>
@@ -36,17 +57,41 @@ export function HowItWorks() {
           </Reveal>
         </div>
 
-        <ol className="mt-16 grid gap-px overflow-hidden rounded-[2rem] border border-ink/10 bg-ink/10 md:grid-cols-2 lg:grid-cols-4">
+        <ol
+          ref={rail}
+          onScroll={onScroll}
+          className="no-scrollbar -mx-5 mt-12 flex snap-x snap-mandatory gap-3 overflow-x-auto scroll-px-5 px-5 pb-1 md:mx-0 md:mt-16 md:grid md:grid-cols-2 md:gap-px md:overflow-hidden md:rounded-[2rem] md:border md:border-ink/10 md:bg-ink/10 md:px-0 md:pb-0 lg:grid-cols-4"
+        >
           {STEPS.map((s, i) => (
-            <Reveal as="li" key={s.title} delay={0.08 * i} className="group relative flex flex-col bg-cream p-7 sm:p-8">
-              <span className="font-display text-[3.5rem] leading-none text-sand-deep transition-colors duration-500 group-hover:text-clay-soft">
-                {String(i + 1).padStart(2, "0")}
-              </span>
-              <h3 className="mt-8 font-display text-[1.5rem] leading-[1.15] text-ink">{s.title}</h3>
-              <p className="mt-3 text-[0.98rem] leading-relaxed text-ink-soft">{s.body}</p>
-            </Reveal>
+            <li
+              key={s.title}
+              className="group relative flex w-[82%] shrink-0 snap-start flex-col rounded-[1.6rem] border border-ink/10 bg-paper p-7 sm:w-[60%] md:w-auto md:rounded-none md:border-0 md:bg-cream sm:p-8"
+            >
+              <Reveal delay={0.08 * i}>
+                <span className="font-display text-[3.25rem] leading-none text-sand-deep transition-colors duration-500 group-hover:text-clay-soft md:text-[3.5rem]">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <h3 className="mt-6 font-display text-[1.5rem] leading-[1.15] text-ink md:mt-8">{s.title}</h3>
+                <p className="mt-3 text-[0.98rem] leading-relaxed text-ink-soft">{s.body}</p>
+              </Reveal>
+            </li>
           ))}
         </ol>
+
+        <div className="mt-5 flex items-center justify-center gap-2 md:hidden" aria-hidden>
+          {STEPS.map((s, i) => (
+            <button
+              key={s.title}
+              type="button"
+              tabIndex={-1}
+              onClick={() => goTo(i)}
+              className={clsx(
+                "h-1.5 rounded-full transition-all duration-300",
+                i === active ? "w-6 bg-forest" : "w-1.5 bg-ink/20",
+              )}
+            />
+          ))}
+        </div>
       </div>
     </section>
   );

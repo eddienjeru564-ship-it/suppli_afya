@@ -5,7 +5,7 @@ import { Reveal } from "@/components/ui/Reveal";
 
 export function FinalCta() {
   return (
-    <section className="relative overflow-hidden bg-forest-deep pb-16 pt-28 text-cream sm:pt-36">
+    <section id="start" className="relative overflow-hidden bg-forest-deep pb-16 pt-28 text-cream sm:pt-36">
       <div aria-hidden className="pointer-events-none absolute left-1/2 top-0 h-[30rem] w-[50rem] -translate-x-1/2 rounded-full bg-[radial-gradient(closest-side,rgb(90_122_83/0.4),transparent)]" />
       <div className="container-x relative text-center">
         <Reveal>
@@ -38,7 +38,7 @@ export function FinalCta() {
 
 export function Footer() {
   return (
-    <footer className="bg-forest-deep pb-10 text-cream/70">
+    <footer id="site-footer" className="bg-forest-deep pb-10 text-cream/70">
       <div className="container-x">
         <div className="flex flex-col gap-10 border-t border-cream/10 pt-12 md:flex-row md:items-start md:justify-between">
           <div className="max-w-sm">

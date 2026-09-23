@@ -28,7 +28,16 @@ export function EarlyAccess() {
   const set = (k: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) =>
     setForm((f) => ({ ...f, [k]: e.target.value }));
 
-  const valid = form.name.trim().length > 1 && form.phone.replace(/\D/g, "").length >= 9 && form.town.trim().length > 1;
+  const [tried, setTried] = useState(false);
+  const phoneDigits = form.phone.replace(/[\s-]/g, "");
+  const errors = {
+    name: form.name.trim().length > 1 ? null : "Please add your name.",
+    phone: /^(?:\+?254|0)?[17]\d{8}$/.test(phoneDigits) ? null : "Use a Kenyan number, like 0712 345 678.",
+    town: form.town.trim().length > 1 ? null : "Which town do you sell in?",
+  };
+  const valid = !errors.name && !errors.phone && !errors.town;
+  const err = (k: keyof typeof errors) =>
+    tried && errors[k] ? <span className="mt-1.5 block text-[0.8rem] font-medium text-clay">{errors[k]}</span> : null;
 
   const details = [
     `*Name:* ${form.name.trim()}`,
@@ -41,6 +50,7 @@ export function EarlyAccess() {
 
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
+    setTried(true);
     if (!valid) return;
     setSent(message);
     if (site.teamWhatsApp) window.open(whatsappLink(site.teamWhatsApp, message), "_blank", "noopener,noreferrer");
@@ -81,6 +91,7 @@ export function EarlyAccess() {
               {sent === null ? (
                 <motion.form
                   key="form"
+                  noValidate
                   onSubmit={submit}
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
@@ -91,6 +102,7 @@ export function EarlyAccess() {
                     <label className="block text-[0.9rem] font-semibold text-ink">
                       Your name
                       <input className={field} value={form.name} onChange={set("name")} autoComplete="name" placeholder="e.g. Grace Wambui" />
+                      {err("name")}
                     </label>
                     <label className="block text-[0.9rem] font-semibold text-ink">
                       WhatsApp number
@@ -102,11 +114,13 @@ export function EarlyAccess() {
                         autoComplete="tel"
                         placeholder="07XX XXX XXX"
                       />
+                      {err("phone")}
                     </label>
                   </div>
                   <label className="block text-[0.9rem] font-semibold text-ink">
                     Town
-                    <input className={field} value={form.town} onChange={set("town")} placeholder="e.g. Thika" />
+                    <input className={field} value={form.town} onChange={set("town")} autoComplete="address-level2" placeholder="e.g. Thika" />
+                    {err("town")}
                   </label>
                   <div className="grid gap-5 sm:grid-cols-2">
                     <label className="block text-[0.9rem] font-semibold text-ink">
@@ -128,7 +142,7 @@ export function EarlyAccess() {
                       </select>
                     </label>
                   </div>
-                  <Button type="submit" size="lg" variant={site.teamWhatsApp ? "whatsapp" : "primary"} disabled={!valid} className="mt-2 w-full sm:w-auto">
+                  <Button type="submit" size="lg" variant={site.teamWhatsApp ? "whatsapp" : "primary"} className="mt-2 w-full sm:w-auto">
                     {site.teamWhatsApp && <WhatsAppIcon />}
                     {site.teamWhatsApp ? "Apply on WhatsApp" : "Apply for early access"}
                   </Button>

@@ -17,6 +17,25 @@ const LINKS = [
 export function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const [active, setActive] = useState<string | null>(null);
+
+  // Highlight the section being read.
+  useEffect(() => {
+    const ids = LINKS.map((l) => l.href.slice(1));
+    const seen = new Map<string, boolean>();
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) seen.set(e.target.id, e.isIntersecting);
+        setActive(ids.find((id) => seen.get(id)) ?? null);
+      },
+      { rootMargin: "-45% 0px -50% 0px" },
+    );
+    for (const id of ids) {
+      const el = document.getElementById(id);
+      if (el) io.observe(el);
+    }
+    return () => io.disconnect();
+  }, []);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -27,8 +46,11 @@ export function Nav() {
 
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
+    window.addEventListener("keydown", onKey);
     return () => {
       document.body.style.overflow = "";
+      window.removeEventListener("keydown", onKey);
     };
   }, [open]);
 
@@ -44,11 +66,26 @@ export function Nav() {
           <Logo />
         </Link>
         <div className="hidden items-center gap-7 text-[0.92rem] font-medium text-ink-soft lg:flex">
-          {LINKS.map((l) => (
-            <a key={l.href} href={l.href} className="transition-colors hover:text-ink">
-              {l.label}
-            </a>
-          ))}
+          {LINKS.map((l) => {
+            const on = active === l.href.slice(1);
+            return (
+              <a
+                key={l.href}
+                href={l.href}
+                aria-current={on ? "true" : undefined}
+                className={clsx("relative py-1 transition-colors hover:text-ink", on && "text-ink")}
+              >
+                {l.label}
+                {on && (
+                  <motion.span
+                    layoutId="nav-dot"
+                    className="absolute -bottom-1.5 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-clay"
+                    transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+                  />
+                )}
+              </a>
+            );
+          })}
         </div>
         <div className="hidden items-center gap-2 lg:flex">
           <Link href="/login" className="px-3 text-[0.92rem] font-medium text-ink-soft transition-colors hover:text-ink">
@@ -93,6 +130,9 @@ export function Nav() {
                   {l.label}
                 </motion.a>
               ))}
+              <p className="mt-6 text-[0.95rem] leading-relaxed text-ink-soft">
+                For BF Suma distributors in Kenya. Sell more, follow up less.
+              </p>
               <div className="mt-auto grid gap-3">
                 <ButtonLink href="#check" size="lg" onClick={() => setOpen(false)} arrow>
                   Try the health check

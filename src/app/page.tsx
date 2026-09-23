@@ -11,6 +11,7 @@ import { Calculator } from "@/components/site/Calculator";
 import { EarlyAccess } from "@/components/site/EarlyAccess";
 import { Faq } from "@/components/site/Faq";
 import { FinalCta, Footer } from "@/components/site/Footer";
+import { MobileCta } from "@/components/site/MobileCta";
 
 /**
  * The story runs in order: the distributor's reality → where sales leak →
@@ -36,6 +37,7 @@ export default function Home() {
         <FinalCta />
       </main>
       <Footer />
+      <MobileCta />
     </>
   );
 }

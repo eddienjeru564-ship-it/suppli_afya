@@ -53,34 +53,17 @@ export function Week() {
               The same week, <span className="whitespace-nowrap">two ways</span>
             </h2>
           </Reveal>
-          <Reveal delay={0.1} className="lg:justify-self-end">
-            <div role="tablist" aria-label="Compare" className="relative inline-flex rounded-full border border-ink/15 bg-paper p-1">
-              {[false, true].map((v) => (
-                <button
-                  key={String(v)}
-                  role="tab"
-                  aria-selected={withIt === v}
-                  onClick={() => setWithIt(v)}
-                  className={clsx(
-                    "relative z-10 rounded-full px-5 py-2.5 text-[0.92rem] font-semibold transition-colors duration-300",
-                    withIt === v ? "text-cream" : "text-ink-soft hover:text-ink",
-                  )}
-                >
-                  {withIt === v && (
-                    <motion.span
-                      layoutId="week-pill"
-                      className={clsx("absolute inset-0 -z-10 rounded-full", v ? "bg-forest" : "bg-clay")}
-                      transition={{ duration: 0.45, ease }}
-                    />
-                  )}
-                  {v ? "With Suppli Afya" : "Without it"}
-                </button>
-              ))}
-            </div>
+          <Reveal delay={0.1} className="hidden lg:block lg:justify-self-end">
+            <Toggle withIt={withIt} onChange={setWithIt} id="week-pill-lg" />
           </Reveal>
         </div>
 
-        <ol className="mt-14 divide-y divide-ink/10 border-y border-ink/10">
+        {/* On phones the switch follows you down the list. */}
+        <div className="sticky top-16 z-20 -mx-5 mt-6 flex justify-center bg-[#ede5d6]/95 px-5 py-3 backdrop-blur lg:hidden">
+          <Toggle withIt={withIt} onChange={setWithIt} id="week-pill-sm" floating />
+        </div>
+
+        <ol className="mt-2 divide-y lg:mt-14 divide-ink/10 border-y border-ink/10">
           {DAYS.map((d, i) => (
             <Reveal as="li" key={d.day} delay={0.04 * i} className="grid gap-3 py-7 md:grid-cols-[10rem_1fr_1.35fr] md:gap-8">
               <div className="font-display text-[1.35rem] text-ink">{d.day}</div>
@@ -107,5 +90,50 @@ export function Week() {
         </ol>
       </div>
     </section>
+  );
+}
+
+function Toggle({
+  withIt,
+  onChange,
+  id,
+  floating,
+}: {
+  withIt: boolean;
+  onChange: (v: boolean) => void;
+  id: string;
+  floating?: boolean;
+}) {
+  return (
+    <div
+      role="tablist"
+      aria-label="Compare"
+      className={clsx(
+        "relative inline-flex rounded-full border border-ink/15 bg-paper p-1",
+        floating && "shadow-[0_10px_30px_-12px_rgb(17_35_26/0.35)]",
+      )}
+    >
+      {[false, true].map((v) => (
+        <button
+          key={String(v)}
+          role="tab"
+          aria-selected={withIt === v}
+          onClick={() => onChange(v)}
+          className={clsx(
+            "relative z-10 rounded-full px-5 py-2.5 text-[0.92rem] font-semibold transition-colors duration-300",
+            withIt === v ? "text-cream" : "text-ink-soft hover:text-ink",
+          )}
+        >
+          {withIt === v && (
+            <motion.span
+              layoutId={id}
+              className={clsx("absolute inset-0 -z-10 rounded-full", v ? "bg-forest" : "bg-clay")}
+              transition={{ duration: 0.45, ease }}
+            />
+          )}
+          {v ? "With Suppli Afya" : "Without it"}
+        </button>
+      ))}
+    </div>
   );
 }

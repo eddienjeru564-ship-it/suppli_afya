@@ -1,9 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { useCallback, useState } from "react";
+import { AnimatePresence, motion, useInView } from "motion/react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import { DEMO_DISTRIBUTOR } from "@/config/distributors";
-import type { Answers, EngineResult } from "@/engine";
+import { deriveProfile, goalLabel, profileFlags, pruneAnswers, type Answers, type EngineResult } from "@/engine";
 import { HealthCheck } from "@/components/check/HealthCheck";
 import { LivePanel } from "@/components/check/LivePanel";
 import { PhoneFrame } from "@/components/check/PhoneFrame";
@@ -15,9 +16,27 @@ export function Demo() {
   const [result, setResult] = useState<EngineResult | null>(null);
   const onAnswers = useCallback((a: Answers) => setAnswers(a), []);
   const onResult = useCallback((r: EngineResult | null) => setResult(r), []);
+  const sectionRef = useRef<HTMLElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
+  const sectionInView = useInView(sectionRef, { margin: "-30% 0px -30% 0px" });
+  const panelInView = useInView(panelRef, { margin: "0px 0px -20% 0px" });
+
+  // Phones: the panel sits below the check, so show a small live summary while answering.
+  const live = useMemo(() => {
+    const p = deriveProfile(pruneAnswers(answers));
+    if (!p.name) return null;
+    const flags = profileFlags(p).length;
+    return {
+      title: [p.name, p.age].filter(Boolean).join(", "),
+      detail: [p.goals.map(goalLabel).join(", "), flags ? `${flags} thing${flags > 1 ? "s" : ""} to be careful about` : ""]
+        .filter(Boolean)
+        .join(" · "),
+    };
+  }, [answers]);
+  const showChip = Boolean(live) && sectionInView && !panelInView;
 
   return (
-    <section id="check" className="relative overflow-clip bg-forest-deep py-24 text-cream sm:py-32">
+    <section ref={sectionRef} id="check" className="relative overflow-clip bg-forest-deep py-24 text-cream sm:py-32">
       <div aria-hidden className="pointer-events-none absolute inset-0">
         <div className="absolute left-1/2 top-0 h-[36rem] w-[60rem] -translate-x-1/2 rounded-full bg-[radial-gradient(closest-side,rgb(90_122_83/0.35),transparent)]" />
       </div>
@@ -45,7 +64,7 @@ export function Demo() {
           </Reveal>
 
           <Reveal delay={0.1} className="lg:pt-6">
-            <div className="max-w-[30rem]">
+            <div ref={panelRef} className="max-w-[30rem] scroll-mt-24" id="what-reaches-you">
               <h3 className="font-display text-[1.7rem] leading-tight">What reaches you</h3>
               <p className="mt-2 text-[0.98rem] leading-relaxed text-cream/70">
                 {result
@@ -65,6 +84,32 @@ export function Demo() {
           </Reveal>
         </div>
       </div>
+      <AnimatePresence>
+        {showChip && live && (
+          <motion.button
+            type="button"
+            onClick={() => panelRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })}
+            initial={{ opacity: 0, y: -16 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -16 }}
+            transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+            className="fixed inset-x-3 top-[4.6rem] z-40 flex items-center gap-3 rounded-2xl bg-paper p-3 text-left text-ink shadow-float ring-1 ring-ink/10 lg:hidden"
+          >
+            <span className="relative flex h-2.5 w-2.5 shrink-0">
+              {!result && <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-moss opacity-60" />}
+              <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-moss" />
+            </span>
+            <span className="min-w-0 flex-1">
+              <span className="block text-[0.7rem] font-semibold text-moss">
+                {result ? "Finished · see what reaches Grace" : "Live in Grace's portal"}
+              </span>
+              <span className="block truncate text-[0.9rem] font-semibold">{live.title}</span>
+              {live.detail && <span className="block truncate text-[0.78rem] text-ink-soft">{live.detail}</span>}
+            </span>
+            <span className="shrink-0 rounded-full bg-forest px-3 py-1.5 text-[0.72rem] font-semibold text-cream">See it</span>
+          </motion.button>
+        )}
+      </AnimatePresence>
     </section>
   );
 }

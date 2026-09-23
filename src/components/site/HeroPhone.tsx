@@ -55,7 +55,7 @@ export function HeroPhone() {
             animate={{ opacity: 1, x: 0, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.7, delay: reduce ? 0 : 0.9, ease }}
-            className="absolute -right-2 top-[14%] w-[13.5rem] rounded-2xl border border-ink/10 bg-paper p-3.5 shadow-float sm:-right-10 lg:-right-20"
+            className="absolute -right-1 bottom-[20%] w-[12.5rem] rounded-2xl border border-ink/10 bg-paper p-3.5 shadow-float sm:-right-10 sm:bottom-auto sm:top-[14%] sm:w-[13.5rem] lg:-right-20"
           >
             <div className="flex items-center gap-1.5 text-[0.68rem] font-semibold text-moss">
               <span className="h-1.5 w-1.5 rounded-full bg-moss" /> New lead · via your link
@@ -74,7 +74,7 @@ export function HeroPhone() {
             animate={{ opacity: 1, x: 0, scale: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.7, delay: reduce ? 0 : 2.4, ease }}
-            className="absolute -left-2 bottom-[16%] flex items-center gap-2.5 rounded-2xl border border-ink/10 bg-paper px-3 py-2.5 shadow-float sm:-left-10 lg:-left-16"
+            className="absolute -left-1 bottom-[4%] flex items-center gap-2.5 rounded-2xl border border-ink/10 bg-paper px-3 py-2.5 shadow-float sm:-left-10 sm:bottom-[16%] lg:-left-16"
           >
             <span className="grid h-7 w-7 place-items-center rounded-full bg-[#e3f4e0] text-[0.62rem] font-bold text-[#1f7a36]">M</span>
             <span className="leading-tight">
