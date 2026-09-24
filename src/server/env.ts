@@ -23,6 +23,15 @@ export const env = {
     baseUrl: (process.env.PAYHERO_BASE_URL ?? "https://backend.payhero.co.ke/api/v2").replace(/\/$/, ""),
   },
 
+  /** Web push for the morning reminder. Generate with: npx web-push generate-vapid-keys */
+  push: {
+    publicKey: process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY ?? "",
+    privateKey: process.env.VAPID_PRIVATE_KEY ?? "",
+    subject: process.env.VAPID_SUBJECT ?? "mailto:hello@suppliafya.co.ke",
+  },
+  /** Shared secret the scheduler sends to /api/cron/* (Vercel Cron sends it as a Bearer token). */
+  cronSecret: process.env.CRON_SECRET ?? "",
+
   paystack: {
     secretKey: process.env.PAYSTACK_SECRET_KEY ?? "",
   },
@@ -42,4 +51,8 @@ export function mpesaConfigured() {
 
 export function paystackConfigured() {
   return Boolean(env.paystack.secretKey);
+}
+
+export function pushConfigured() {
+  return Boolean(env.push.publicKey && env.push.privateKey);
 }

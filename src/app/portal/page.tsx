@@ -8,6 +8,10 @@ import { monthStats, today } from "@/server/portal";
 import { CommunityInvite } from "@/components/portal/Community";
 import { ShareLink } from "@/components/portal/ShareLink";
 import { TaskList } from "@/components/portal/TaskList";
+import { AppBadge } from "@/components/pwa/AppBadge";
+import { InstallCard } from "@/components/pwa/InstallCard";
+import { ReminderCard } from "@/components/pwa/MorningReminder";
+import { pushConfigured } from "@/server/env";
 import { Card, kesAmount } from "@/components/portal/ui";
 import { Check } from "@/components/ui/icons";
 
@@ -50,7 +54,7 @@ export default async function Dashboard() {
   const date = new Date().toLocaleDateString("en-KE", { weekday: "long", day: "numeric", month: "long", timeZone: "Africa/Nairobi" });
 
   return (
-    <div className="grid gap-10">
+    <div className="grid grid-cols-1 gap-10">
       <div>
         <div className="text-[0.85rem] font-semibold text-clay">{date}</div>
         <h1 className="mt-1 font-display text-[2.3rem] leading-[1.05] tracking-[-0.02em] text-ink sm:text-[2.8rem]">
@@ -75,7 +79,7 @@ export default async function Dashboard() {
               {steps.filter((s) => s.done).length} of {steps.length}
             </span>
           </div>
-          <ol className="mt-4 grid gap-3">
+          <ol className="mt-4 grid grid-cols-1 gap-3">
             {steps.map((s, i) => (
               <li key={s.title} className="flex gap-3">
                 <span
@@ -116,7 +120,11 @@ export default async function Dashboard() {
           {tasks.length > 0 && <span className="text-[0.85rem] font-semibold text-ink-mute">{tasks.length} to do</span>}
         </div>
         <TaskList tasks={tasks} />
+        <AppBadge count={tasks.length} />
       </section>
+
+      <InstallCard />
+      {pushConfigured() && <ReminderCard />}
 
       {hasActivity && (
         <section>

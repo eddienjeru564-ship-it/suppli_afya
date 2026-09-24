@@ -28,7 +28,7 @@ export default async function CustomerPage(props: PageProps<"/portal/customers/[
   const hello = `Hi ${c.name.split(" ")[0]}, `;
 
   return (
-    <div className="grid gap-6">
+    <div className="grid grid-cols-1 gap-6">
       <Link href="/portal/customers" className="inline-flex w-fit items-center gap-1 text-[0.88rem] font-semibold text-ink-soft hover:text-ink">
         <ChevronLeft className="h-3.5 w-3.5" /> Customers
       </Link>

@@ -1,12 +1,15 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { BUSINESS_TYPES, CHANNELS, GOALS } from "@/config/onboarding";
 import { PLANS_BY_ID } from "@/config/plans";
 import { PRODUCTS_BY_ID } from "@/engine";
 import { getAccount, subscriptionState, type Account } from "@/server/auth";
 import { db, json } from "@/server/db";
+import { pushConfigured } from "@/server/env";
+import { removeSubscription, saveSubscription, sendTo, type PushSubscriptionJSON } from "@/server/push";
 import { normaliseKenyanPhone } from "@/server/payments/mpesa";
 import { customerCount, supplyDaysFor, type OrderItem } from "@/server/portal";
 
@@ -283,5 +286,43 @@ export async function saveProfile(_prev: ActionResult | null, fd: FormData): Pro
     [a.workspace.id, name, businessName, location, type, whatsapp, json(channels), json(goals)],
   );
   revalidatePath("/portal", "layout");
+  return { ok: true };
+}
+
+// ------------------------------------------------------------------ Morning reminder
+
+export async function subscribePush(sub: PushSubscriptionJSON): Promise<ActionResult> {
+  const a = await requireAccount();
+  if (!pushConfigured()) return { ok: false, error: "Reminders aren't available yet." };
+  const valid =
+    typeof sub?.endpoint === "string" &&
+    sub.endpoint.startsWith("https://") &&
+    typeof sub.keys?.p256dh === "string" &&
+    typeof sub.keys?.auth === "string";
+  if (!valid) return { ok: false, error: "This browser didn't give us what's needed for reminders." };
+  const ua = (await headers()).get("user-agent");
+  await saveSubscription(a.workspace.id, { endpoint: sub.endpoint, keys: { p256dh: sub.keys.p256dh, auth: sub.keys.auth } }, ua);
+  // A first notification straight away, so they see what it looks like and know it works.
+  const d = await db();
+  const [row] = await d.query<{ id: string; endpoint: string; p256dh: string; auth: string }>(
+    `select id, endpoint, p256dh, auth from push_subscriptions where endpoint = $1`,
+    [sub.endpoint],
+  );
+  if (row) {
+    const sent = await sendTo(row, {
+      title: "Morning reminders are on",
+      body: "Each morning at 8, we'll tell you who needs you that day. Nothing on quiet days.",
+      url: "/portal",
+      tag: "welcome",
+    });
+    // The welcome shouldn't count as today's reminder.
+    if (sent) await d.query(`update push_subscriptions set last_sent_at = null where id = $1`, [row.id]);
+  }
+  return { ok: true };
+}
+
+export async function unsubscribePush(endpoint: string): Promise<ActionResult> {
+  const a = await requireAccount();
+  await removeSubscription(a.workspace.id, String(endpoint ?? ""));
   return { ok: true };
 }

@@ -94,6 +94,12 @@ export const getAccount = cache(async (): Promise<Account | null> => {
     [sha(token)],
   );
   if (!rows[0]) return null;
+  // Sliding sessions: in use means signed in. Extend once it's under 25 days from expiring (the proxy moves the cookie).
+  await d.query(
+    `update sessions set expires_at = now() + interval '${SESSION_DAYS} days'
+      where token_hash = $1 and expires_at < now() + interval '25 days'`,
+    [sha(token)],
+  );
   const ws = await d.query<Workspace>(`select * from workspaces where owner_id = $1`, [rows[0].user_id]);
   if (!ws[0]) return null;
   const sub = await d.query<Subscription>(

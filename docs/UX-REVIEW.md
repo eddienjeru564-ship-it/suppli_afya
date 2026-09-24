@@ -46,3 +46,19 @@ wasn't working, and what we changed. Keep this as the record of why screens look
 | Getting started began at "0 of 3" | Starting from zero makes a list feel long | "Set up your workspace" is already ticked, so it starts at 1 of 4 |
 | A new customer's page shows three empty stat boxes | Noise where the next action should be | With no orders yet, it shows one clear "Record their first order" |
 | "Already paid" was a small checkbox on the order form | Easy to skip, so paid orders were saved as unpaid and chased by mistake | A clear "Has it been paid? Not yet / Paid" choice before saving |
+
+## The installed app
+
+| Question | What we chose | Why |
+|---|---|---|
+| Where to offer installing | A small card on Today (phones only, "Not now" hides it for three weeks) and a permanent section in Settings | Today is where the daily habit forms; Settings is where people look later. No pop-ups on arrival |
+| Android and desktop | "Install" opens the browser's own dialog | It's the real, trusted flow; our card only decides when to offer it |
+| iPhone | Three illustrated steps (Share, Add to Home Screen, Add), plus "log in once" | Apple has no install button. Pretending otherwise breaks trust |
+| Inside Instagram, Facebook or TikTok | "Open in Safari/Chrome first", with a copy-link button | In-app browsers can't install; many links arrive through them |
+| Desktop | Install button when the browser supports it, and a QR code to open the portal on your phone | The phone is where the app matters |
+| Opening the app | Straight into Today; the launch screen is the icon on cream, matching the first frame | No flash of white, no marketing site |
+| Staying signed in | Sessions renew with use | Logging in again on a phone is the fastest way to lose a daily user |
+| Poor signal | Every tap shows the page's shape at once; a bar says when you're offline or looking at a saved copy; saves wait and retry | People sell on the move. The app should never look broken because the network is |
+| New versions | "A new version is ready · Update", never a surprise reload | Nobody loses a half-typed order |
+| Notifications | One optional morning reminder, offered inside the installed app, permission asked only on tap | One useful nudge beats many ignored ones |
+| Tab bar | Four tabs, 60px tall, a pill that slides to the current tab, a pulse while the next page loads | Thumb reach, and clear feedback that a tap registered |

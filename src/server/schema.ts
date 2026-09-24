@@ -141,4 +141,21 @@ create index interactions_workspace_idx on interactions(workspace_id, created_at
 create index interactions_task_idx on interactions(workspace_id, task_key);
 `,
   },
+  {
+    version: 2,
+    sql: `
+-- Phones and computers that asked for the morning reminder. One row per device.
+create table push_subscriptions (
+  id uuid primary key default gen_random_uuid(),
+  workspace_id uuid not null references workspaces(id) on delete cascade,
+  endpoint text not null unique,
+  p256dh text not null,
+  auth text not null,
+  user_agent text,
+  created_at timestamptz not null default now(),
+  last_sent_at timestamptz
+);
+create index push_subscriptions_workspace_idx on push_subscriptions(workspace_id);
+`,
+  },
 ];

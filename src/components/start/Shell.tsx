@@ -43,7 +43,7 @@ export function Stepper({ step, detail }: { step: 0 | 1 | 2; detail?: string }) 
 export function StartShell({ step, children, aside }: { step: 0 | 1 | 2; children: ReactNode; aside?: ReactNode }) {
   return (
     <div className="min-h-dvh bg-cream">
-      <header className="container-x flex h-16 items-center justify-between">
+      <header className="container-x flex h-[calc(4rem+env(safe-area-inset-top))] items-center justify-between pt-[env(safe-area-inset-top)]">
         <Link href="/" aria-label="Suppli Afya home">
           <Logo />
         </Link>

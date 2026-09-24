@@ -30,8 +30,10 @@ Read before working here:
 - `src/server/`: database (Postgres or embedded PGlite), schema migrations, auth and sessions, payments (M-Pesa through PayHero, cards through Paystack, test mode), portal queries including the Today list
 - `src/app/start/`: checkout (account → payment → welcome) and onboarding (`setup/`)
 - `src/app/portal/`: the distributor portal; every page guards itself with `requirePortalAccount()`
-- `src/app/api/`: payment callbacks and webhooks, lead capture from the health check
-- `e2e/`: Playwright tests that walk the health check
+- `src/app/api/`: payment callbacks and webhooks, lead capture from the health check, the morning reminder cron
+- `src/pwa/service-worker.ts` (served at `/sw.js`), `src/app/manifest.ts`, `src/components/pwa/`: the installable app (install offers, offline, updates, notifications). The service worker only runs in production builds
+- `src/proxy.ts`: keeps portal sessions alive while they're used
+- `e2e/`: Playwright tests: the health check, the distributor journey, and the installed app (`pwa.spec.ts`)
 
 ## Commands
 
@@ -39,5 +41,7 @@ Read before working here:
 - `npm test`: engine, billing and Today-list tests (Vitest; includes a safety fuzz test; the database runs in memory)
 - `npm run typecheck` / `npm run lint`
 - `npm run build && npx playwright test`: end-to-end tests (desktop and mobile), including the full distributor journey with test payments
+
+Portal page grids use `grid-cols-1` so long content (links, names) can't widen the page past a small phone; `pwa.spec.ts` checks every portal page at 360px.
 
 Design tokens live in `src/app/globals.css` (`@theme`). Fonts: Newsreader (display) and Hanken Grotesk (text).

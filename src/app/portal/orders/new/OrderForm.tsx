@@ -76,7 +76,7 @@ export function OrderForm({
     });
 
   return (
-    <div className="grid gap-6">
+    <div className="grid grid-cols-1 gap-6">
       <section className="rounded-[1.25rem] border border-ink/10 bg-paper p-5">
         <h2 className="text-[0.95rem] font-semibold text-ink">Customer</h2>
         {prospect ? (

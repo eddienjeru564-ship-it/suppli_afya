@@ -1,4 +1,5 @@
-import { expect, test, type Page } from "@playwright/test";
+import { expect, test } from "@playwright/test";
+import { customerCheck } from "./helpers";
 
 /**
  * The distributor journey end to end, with test payments:
@@ -10,45 +11,6 @@ import { expect, test, type Page } from "@playwright/test";
 
 test.describe.configure({ mode: "serial" });
 
-async function customerCheck(page: Page) {
-  const pick = async (name: string | RegExp) => {
-    await page.getByRole("radio", { name, exact: typeof name === "string" }).click();
-    await page.waitForTimeout(450);
-  };
-  const next = async (label = "Continue") => {
-    await page.getByRole("button", { name: label }).click();
-    await page.waitForTimeout(420);
-  };
-  const tick = async (...names: (string | RegExp)[]) => {
-    for (const n of names) await page.getByRole("checkbox", { name: n, exact: typeof n === "string" }).click();
-    await next();
-  };
-  await next("Start");
-  await next("I understand");
-  await page.getByPlaceholder("First name").fill("Achieng");
-  await next();
-  await next();
-  await pick("Female");
-  await page.getByPlaceholder("Age").fill("41");
-  await next();
-  await pick("None of these");
-  await pick(/Never/);
-  await next();
-  await tick(/^Joints/, /^Energy/);
-  await tick(/Pain when I walk/);
-  await pick("More than a year");
-  await pick("No");
-  await pick("2 of 5");
-  await tick("Mid-afternoon");
-  await next();
-  for (const a of ["Mostly home-cooked", "One or two", "Every day", "Less than three glasses", "One or two", "Five to six", "None", "No"])
-    await pick(a);
-  await next();
-  await tick("None of these");
-  await tick("None of these");
-  await tick("None of these");
-  await pick(/focused plan/);
-}
 
 test("a distributor can pay, set up and run their first order", async ({ page, browser }, info) => {
   test.setTimeout(180_000);
@@ -119,6 +81,7 @@ test("a distributor can pay, set up and run their first order", async ({ page, b
   await page.waitForURL(/prospects\//);
   await page.getByRole("link", { name: "Create an order" }).click();
   await page.waitForURL(/orders\/new/);
+  await expect(page.getByRole("heading", { name: "New order" })).toBeVisible();
   const prices = page.getByPlaceholder("0");
   for (let i = 0; i < (await prices.count()); i++) await prices.nth(i).fill(String(3500 + i * 1000));
   await page.getByRole("button", { name: /Save order/ }).click();

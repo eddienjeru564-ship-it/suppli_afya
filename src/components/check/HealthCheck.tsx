@@ -433,7 +433,7 @@ function QuestionView({
       )}
 
       {needsContinue && (
-        <div className="sticky bottom-0 -mx-5 mt-6 bg-gradient-to-t from-cream via-cream to-cream/0 px-5 pb-2 pt-4">
+        <div className="sticky bottom-0 z-10 -mx-5 mt-6 bg-gradient-to-t from-cream via-cream to-cream/0 px-5 pb-2 pt-4">
           <Button size="lg" className="w-full sm:w-auto" onClick={onNext} disabled={!answered} arrow>
             Continue
           </Button>

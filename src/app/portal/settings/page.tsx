@@ -1,14 +1,16 @@
 import Link from "next/link";
 import { PLANS_BY_ID, kes } from "@/config/plans";
 import { site } from "@/config/site";
-import { logOut } from "@/app/start/actions";
 import { requirePortalAccount, subscriptionState } from "@/server/auth";
 import { db } from "@/server/db";
 import { businessTypeLabel } from "@/server/distributors";
 import { QrCard } from "@/components/brand/QrCard";
 import { ShareLink } from "@/components/portal/ShareLink";
 import { Card, PageHeader, kesAmount, longDate } from "@/components/portal/ui";
-import { Button, buttonClass } from "@/components/ui/Button";
+import { buttonClass } from "@/components/ui/Button";
+import { AppSettings } from "@/components/pwa/AppSettings";
+import { LogoutButton } from "@/components/pwa/LogoutButton";
+import { pushConfigured } from "@/server/env";
 import { qrSvg } from "@/lib/qr";
 import { ProfileForm } from "./ProfileForm";
 
@@ -21,6 +23,7 @@ export default async function SettingsPage() {
   const url = `${site.url}/d/${w.slug}`;
   const displayUrl = `${site.displayDomain}/d/${w.slug}`;
   const svg = await qrSvg(url);
+  const phoneSvg = await qrSvg(`${site.url}/portal`);
   const d = await db();
   const payments = await d.query<{ id: string; amount: number; method: string; status: string; receipt: string | null; created_at: Date; plan: string }>(
     `select id, amount, method, status, receipt, created_at, plan from payments where workspace_id = $1 and status <> 'pending' order by created_at desc limit 12`,
@@ -29,7 +32,7 @@ export default async function SettingsPage() {
   const state = subscriptionState(a);
 
   return (
-    <div className="grid gap-10">
+    <div className="grid grid-cols-1 gap-10">
       <PageHeader title="Settings" sub={a.user.email} />
 
       <section id="card" className="scroll-mt-20">
@@ -56,6 +59,11 @@ export default async function SettingsPage() {
             />
           </div>
         </div>
+      </section>
+
+      <section id="app" className="scroll-mt-20">
+        <h2 className="mb-3 font-display text-[1.5rem] text-ink">Suppli Afya on your phone</h2>
+        <AppSettings phoneQrSvg={phoneSvg} pushEnabled={pushConfigured()} />
       </section>
 
       <section>
@@ -111,11 +119,7 @@ export default async function SettingsPage() {
         </Card>
       </section>
 
-      <form action={logOut}>
-        <Button variant="secondary" type="submit">
-          Log out
-        </Button>
-      </form>
+      <LogoutButton />
     </div>
   );
 }

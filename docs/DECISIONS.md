@@ -39,6 +39,11 @@ Things only the founder can supply or decide. Ordered by how much they block.
 9. **Community link.** Set `NEXT_PUBLIC_COMMUNITY_URL` to the WhatsApp community invite. Until then
    the portal doesn't show the invite.
 
+10. **Morning reminder (optional).** Generate VAPID keys (`npx web-push generate-vapid-keys`), set
+    `NEXT_PUBLIC_VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY`, `VAPID_SUBJECT` and a random `CRON_SECRET`.
+    `vercel.json` runs `/api/cron/morning` at 05:00 UTC (08:00 in Nairobi). Until the keys are set, the
+    reminder simply doesn't appear.
+
 ## Decisions to make during the pilot
 
 - **Automatic renewal.** Today every month is paid by hand (M-Pesa or card). Decide after the pilot
@@ -72,5 +77,13 @@ Things only the founder can supply or decide. Ordered by how much they block.
   any Till, Paybill or bank channel. Each M-Pesa confirmation is double-checked against PayHero's
   status API, polling covers a missing callback, a late confirmation still activates the plan, and one
   account can send at most 5 prompts in 15 minutes (PayHero pauses accounts with many failed prompts).
+- **The portal is an installable app (PWA), not an app-store app.** No store approval, instant updates, one
+  codebase. iPhones need Share → Add to Home Screen (Apple offers no install button), and the installed app
+  keeps its own login on iPhone, so we tell people they'll log in once.
+- **Offline is read-first.** Portal pages you've opened are kept on the phone and open without signal;
+  saves wait and retry when the connection returns (while the app is open). We don't queue saves across app
+  restarts: a half-synced order is worse than a clear "you're offline".
+- **One notification a day, at most.** The morning reminder only fires when someone needs the distributor,
+  says who first, and never asks for permission until they turn it on.
 - **Onboarding goals shape the Today list.** The goals a distributor picks decide which kind of
   follow-up comes first.

@@ -15,7 +15,7 @@ export default async function ProspectPage(props: PageProps<"/portal/prospects/[
   const r = p.result ?? {};
 
   return (
-    <div className="grid gap-6">
+    <div className="grid grid-cols-1 gap-6">
       <Link href="/portal/prospects" className="inline-flex w-fit items-center gap-1 text-[0.88rem] font-semibold text-ink-soft hover:text-ink">
         <ChevronLeft className="h-3.5 w-3.5" /> Prospects
       </Link>

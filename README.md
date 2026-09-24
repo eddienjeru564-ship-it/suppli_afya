@@ -13,6 +13,8 @@ health check and the recommendation engine behind it.
 - `/portal`: the distributor portal (Today, Prospects, Orders, Customers, Settings)
 - `/login`: returning distributors
 
+Distributors can install the portal on their phone as an app (see "The installed app" below).
+
 ## Running it
 
 ```bash
@@ -36,10 +38,30 @@ Every variable is listed in `.env.example`.
 | `DATABASE_URL` | Postgres connection string. Unset: embedded Postgres in `PGLITE_DIR` (default `.data/pglite`) |
 | `PAYHERO_*` | M-Pesa prompts through PayHero, see `.env.example` and `docs/DECISIONS.md` |
 | `PAYSTACK_SECRET_KEY` | Card payments through Paystack |
+| `NEXT_PUBLIC_VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY` | Morning reminder notifications (optional; hidden until set) |
+| `CRON_SECRET` | Protects `/api/cron/morning`, which sends the reminders at 8am (see `vercel.json`) |
 | `PAYMENTS_ALLOW_TEST` | `true` allows on-screen test payments in production builds. Never on the live site |
 
 Without payment keys, checkout runs in test mode in development. The demo distributor lives in
 `src/config/distributors.ts`; real distributors come from the database after they sign up.
+
+## The installed app
+
+The portal is a Progressive Web App. `src/app/manifest.ts` describes it, `src/pwa/service-worker.ts`
+is the service worker (served from `/sw.js` with the deploy's version), and `src/components/pwa/`
+holds the install offers, update prompt, connection bar and morning reminder.
+
+- **Installing:** on Android and desktop Chrome/Edge, an Install button opens the browser's own dialog. On
+  iPhone, clear Share → Add to Home Screen steps. Inside Instagram/Facebook, instructions to open the browser
+  first. Offered on Today (phones, dismissable) and always in Settings.
+- **Offline:** built files are cached; portal pages you've opened are kept on the phone and open without
+  signal, with a bar saying when they were saved. Saves made while offline wait and go through when the
+  connection returns. Saved pages are deleted on log out, or as soon as the server says you're signed out.
+- **Updates:** each deploy is a new service worker; the app shows "A new version is ready" with an Update
+  button, and never swaps versions underneath someone mid-task.
+- **Sessions:** using the portal keeps the session alive (30 days from the last visit).
+- **Icons:** regenerate with `node scripts/generate-icons.mjs`; app screenshots with
+  `SCREENSHOTS=1 npx playwright test e2e/screenshots.spec.ts --project=mobile`.
 
 ## Docs
 

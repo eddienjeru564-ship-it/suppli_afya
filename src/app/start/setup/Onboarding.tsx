@@ -70,7 +70,7 @@ export function Onboarding({ initial }: { initial: OnboardingInitial }) {
 
   return (
     <div className="flex min-h-dvh flex-col bg-cream">
-      <header className="container-x flex h-16 items-center justify-between">
+      <header className="container-x flex h-[calc(4rem+env(safe-area-inset-top))] items-center justify-between pt-[env(safe-area-inset-top)]">
         <Link href="/" aria-label="Suppli Afya home">
           <Logo />
         </Link>
@@ -255,7 +255,7 @@ function Screen({
           {error}
         </p>
       )}
-      <div className="sticky bottom-0 -mx-5 mt-8 bg-gradient-to-t from-cream from-70% to-cream/0 px-5 pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-6">
+      <div className="sticky bottom-0 z-10 -mx-5 mt-8 bg-gradient-to-t from-cream from-70% to-cream/0 px-5 pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-6">
         <Button size="lg" className="w-full" onClick={onNext} disabled={pending} arrow>
           {pending ? "Saving…" : cta}
         </Button>
