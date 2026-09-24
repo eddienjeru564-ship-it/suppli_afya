@@ -27,10 +27,13 @@ Things only the founder can supply or decide. Ordered by how much they block.
 8. **Payment keys.** Without keys, checkout runs in test mode (approve or decline on screen), which
    is allowed only outside production or with `PAYMENTS_ALLOW_TEST=true`. **Never set that on the
    live site.** For live payments:
-   - M-Pesa (Daraja STK Push): `MPESA_ENV=production`, `MPESA_CONSUMER_KEY`, `MPESA_CONSUMER_SECRET`,
-     `MPESA_SHORTCODE`, `MPESA_PASSKEY`, `MPESA_TYPE` (`paybill` or `till`), `MPESA_TILL_NUMBER` for
-     tills, and a long random `MPESA_CALLBACK_TOKEN`. The callback URL is built automatically:
-     `<site>/api/payments/mpesa/callback?token=<MPESA_CALLBACK_TOKEN>`.
+   - M-Pesa (STK Push through **PayHero**): from the PayHero dashboard, `PAYHERO_API_USERNAME` and
+     `PAYHERO_API_PASSWORD` (API Keys; or the ready-made `PAYHERO_AUTH_TOKEN` instead) and
+     `PAYHERO_CHANNEL_ID` (Payment Channels → My Payment Channels: the Till, Paybill or bank account
+     the money goes to). Nothing to configure for the callback: each prompt carries
+     `<site>/api/payments/payhero/callback?token=…`, with a secret derived from the credentials
+     (override with `PAYHERO_CALLBACK_TOKEN`). `NEXT_PUBLIC_SITE_URL` must be the public https URL.
+     Then run `npm run payhero:check -- 07XXXXXXXX` to send yourself a KES 1 prompt end to end.
    - Card (Paystack, KES): `PAYSTACK_SECRET_KEY`. In the Paystack dashboard set the webhook URL to
      `<site>/api/payments/paystack/webhook`.
 9. **Community link.** Set `NEXT_PUBLIC_COMMUNITY_URL` to the WhatsApp community invite. Until then
@@ -65,5 +68,9 @@ Things only the founder can supply or decide. Ordered by how much they block.
   answer wouldn't change anything in the portal. Add it only when something uses it.
 - **"Independent distributor" business type, and a WhatsApp number in onboarding.** Most
   distributors don't have a shop, and the health check link needs a number to send plans to.
+- **PayHero for M-Pesa, not Daraja directly.** PayHero handles the Safaricom side and settles to
+  any Till, Paybill or bank channel. Each M-Pesa confirmation is double-checked against PayHero's
+  status API, polling covers a missing callback, a late confirmation still activates the plan, and one
+  account can send at most 5 prompts in 15 minutes (PayHero pauses accounts with many failed prompts).
 - **Onboarding goals shape the Today list.** The goals a distributor picks decide which kind of
   follow-up comes first.

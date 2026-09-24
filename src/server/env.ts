@@ -8,18 +8,19 @@ export const env = {
   isProduction: process.env.NODE_ENV === "production",
   siteUrl: (process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000").replace(/\/$/, ""),
 
-  mpesa: {
-    env: (process.env.MPESA_ENV ?? "sandbox") as "sandbox" | "production",
-    consumerKey: process.env.MPESA_CONSUMER_KEY ?? "",
-    consumerSecret: process.env.MPESA_CONSUMER_SECRET ?? "",
-    shortcode: process.env.MPESA_SHORTCODE ?? "",
-    passkey: process.env.MPESA_PASSKEY ?? "",
-    /** "paybill" (CustomerPayBillOnline) or "till" (CustomerBuyGoodsOnline). */
-    type: (process.env.MPESA_TYPE ?? "paybill") as "paybill" | "till",
-    /** For tills, the till number differs from the store shortcode. */
-    tillNumber: process.env.MPESA_TILL_NUMBER ?? "",
-    /** Shared secret appended to the callback URL; Daraja doesn't sign callbacks. */
-    callbackToken: process.env.MPESA_CALLBACK_TOKEN ?? "",
+  /**
+   * PayHero sends the M-Pesa STK Push. From the PayHero dashboard:
+   * API Keys (username and password, or the ready-made "Basic …" token) and
+   * Payment Channels → My Payment Channels (the channel id).
+   */
+  payhero: {
+    username: process.env.PAYHERO_API_USERNAME ?? "",
+    password: process.env.PAYHERO_API_PASSWORD ?? "",
+    authToken: process.env.PAYHERO_AUTH_TOKEN ?? "",
+    channelId: process.env.PAYHERO_CHANNEL_ID ?? "",
+    /** Optional: the secret in the callback URL. Derived from the credentials if unset. */
+    callbackToken: process.env.PAYHERO_CALLBACK_TOKEN ?? "",
+    baseUrl: (process.env.PAYHERO_BASE_URL ?? "https://backend.payhero.co.ke/api/v2").replace(/\/$/, ""),
   },
 
   paystack: {
@@ -35,8 +36,8 @@ export const env = {
 };
 
 export function mpesaConfigured() {
-  const m = env.mpesa;
-  return Boolean(m.consumerKey && m.consumerSecret && m.shortcode && m.passkey && m.callbackToken);
+  const p = env.payhero;
+  return Boolean((p.authToken || (p.username && p.password)) && /^\d+$/.test(p.channelId));
 }
 
 export function paystackConfigured() {

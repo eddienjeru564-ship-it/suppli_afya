@@ -21,9 +21,12 @@ npm run dev          # http://localhost:3000
 npm test             # engine, billing and daily-list tests
 npm run build
 npx playwright test  # end-to-end tests against a production build
+npm run payhero:check -- 07XXXXXXXX  # once PayHero keys are in .env.local: a real KES 1 prompt
 ```
 
 ## Configuration
+
+Every variable is listed in `.env.example`.
 
 | Variable | Purpose |
 |---|---|
@@ -31,7 +34,7 @@ npx playwright test  # end-to-end tests against a production build
 | `NEXT_PUBLIC_SUPPLI_WHATSAPP` | Team WhatsApp number (`2547XXXXXXXX`) |
 | `NEXT_PUBLIC_COMMUNITY_URL` | WhatsApp community invite shown in the portal (hidden if unset) |
 | `DATABASE_URL` | Postgres connection string. Unset: embedded Postgres in `PGLITE_DIR` (default `.data/pglite`) |
-| `MPESA_*` | Daraja STK Push keys, see `docs/DECISIONS.md` |
+| `PAYHERO_*` | M-Pesa prompts through PayHero, see `.env.example` and `docs/DECISIONS.md` |
 | `PAYSTACK_SECRET_KEY` | Card payments through Paystack |
 | `PAYMENTS_ALLOW_TEST` | `true` allows on-screen test payments in production builds. Never on the live site |
 

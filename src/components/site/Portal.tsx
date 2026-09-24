@@ -71,7 +71,7 @@ const FILTERS: { id: "all" | Kind | "follow"; label: string; kinds: Kind[] }[] =
 const BLOCKS = [
   {
     title: "Orders and M-Pesa in one place",
-    body: "When someone says yes, create the order from their record. If you take payments on a Till or Paybill, send an M-Pesa request straight to their phone and see it marked paid when the money arrives. If they pay to your own number, record it against the order in a couple of taps. Either way, you stop scrolling through M-Pesa messages to work out who paid for what.",
+    body: "When someone says yes, create the order from their record. When the money arrives, record it against the order with the M-Pesa code in a couple of taps. Anything still owed stays on your list, with a polite reminder ready to send, so you stop scrolling through M-Pesa messages to work out who paid for what.",
   },
   {
     title: "Reorders that don't depend on your memory",

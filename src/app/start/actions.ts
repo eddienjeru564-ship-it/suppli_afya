@@ -66,5 +66,6 @@ export async function beginPayment(input: { plan: PlanId; method: Method; phone?
     plan,
     method: input.method === "card" ? "card" : "mpesa",
     phone: input.phone,
+    customerName: account.workspace.owner_name ?? account.workspace.business_name ?? undefined,
   });
 }

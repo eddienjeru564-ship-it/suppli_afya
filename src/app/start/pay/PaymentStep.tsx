@@ -21,6 +21,9 @@ type Stage =
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
+/** Same rule as the server: a Kenyan mobile number in any common format. */
+const validPhone = (v: string) => /^(?:254|0)?[17]\d{8}$/.test(v.replace(/[^\d+]/g, "").replace(/^\+/, ""));
+
 export function PaymentStep({
   initialPlan,
   modes,
@@ -50,16 +53,21 @@ export function PaymentStep({
     router.replace(`/start/pay?plan=${id}${renewing ? "&renew=1" : ""}`, { scroll: false });
   };
 
-  const pay = () =>
+  const pay = () => {
+    if (method === "mpesa" && !validPhone(phone)) {
+      setStage({ kind: "choose", error: "Enter the M-Pesa number to pay from, like 0712 345 678." });
+      return;
+    }
     start(async () => {
       const r = await beginPayment({ plan, method, phone });
       if (!r.ok) return setStage({ kind: "choose", error: r.error });
       if (r.next === "redirect") {
-        window.location.href = r.url;
+        window.location.assign(r.url);
         return;
       }
       setStage(r.next === "test" ? { kind: "test", paymentId: r.paymentId } : { kind: "waiting", paymentId: r.paymentId });
     });
+  };
 
   const onResult = (status: string, reason?: string | null) => {
     if (status === "succeeded") {
@@ -104,7 +112,7 @@ export function PaymentStep({
                     >
                       <span className="block font-semibold text-ink">{m === "mpesa" ? "M-Pesa" : "Card"}</span>
                       <span className="mt-0.5 block text-[0.8rem] text-ink-mute">
-                        {m === "mpesa" ? "Prompt on your phone" : "Visa or Mastercard"}
+                        {modes[m] === "off" ? "Not available yet" : m === "mpesa" ? "Prompt on your phone" : "Visa or Mastercard"}
                       </span>
                     </button>
                   ))}
@@ -151,7 +159,20 @@ export function PaymentStep({
             )}
 
             {stage.kind === "waiting" && (
-              <Waiting paymentId={stage.paymentId} phone={phone} amount={p.price} onResult={onResult} onRetry={() => setStage({ kind: "choose" })} />
+              <Waiting
+                key={stage.paymentId}
+                paymentId={stage.paymentId}
+                phone={phone}
+                amount={p.price}
+                resending={pending}
+                onResult={onResult}
+                onResend={pay}
+                onChange={(m) => {
+                  setMethod(m);
+                  setStage({ kind: "choose" });
+                }}
+                cardAvailable={modes.card !== "off"}
+              />
             )}
 
             {stage.kind === "test" && (
@@ -171,6 +192,14 @@ export function PaymentStep({
                 <Button size="lg" className="mt-7 w-full" onClick={() => setStage({ kind: "choose" })} arrow>
                   Try again
                 </Button>
+                {method === "mpesa" && (
+                  <p className="mt-4 text-center text-[0.85rem] text-ink-mute">
+                    Already paid?{" "}
+                    <button type="button" onClick={() => router.refresh()} className="font-semibold text-forest underline underline-offset-2">
+                      Check again
+                    </button>
+                  </p>
+                )}
               </>
             )}
 
@@ -219,21 +248,28 @@ function Waiting({
   paymentId,
   phone,
   amount,
+  resending,
   onResult,
-  onRetry,
+  onResend,
+  onChange,
+  cardAvailable,
 }: {
   paymentId: string;
   phone: string;
   amount: number;
+  resending: boolean;
   onResult: (s: string, r?: string | null) => void;
-  onRetry: () => void;
+  onResend: () => void;
+  onChange: (m: Method) => void;
+  cardAvailable: boolean;
 }) {
   usePoll(paymentId, onResult);
   const [slow, setSlow] = useState(false);
   useEffect(() => {
-    const t = setTimeout(() => setSlow(true), 45_000);
+    const t = setTimeout(() => setSlow(true), 30_000);
     return () => clearTimeout(t);
   }, []);
+  const link = "font-semibold text-forest underline underline-offset-2 disabled:opacity-50";
   return (
     <div>
       <div className="relative grid h-12 w-12 place-items-center">
@@ -245,15 +281,35 @@ function Waiting({
         We&apos;ve sent an M-Pesa prompt to <span className="font-semibold text-ink">{phone}</span>. Enter your PIN to pay{" "}
         {kes(amount)}. This page moves on by itself once it&apos;s done.
       </p>
-      {slow && (
-        <div className="mt-6 rounded-2xl bg-paper p-4 text-[0.92rem] leading-relaxed text-ink-soft">
-          No prompt yet? Make sure the phone is on and has signal, then{" "}
-          <button type="button" onClick={onRetry} className="font-semibold text-forest underline underline-offset-2">
-            send it again
-          </button>
-          .
-        </div>
-      )}
+      <AnimatePresence initial={false}>
+        {slow && (
+          <motion.div
+            initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.35, ease }}
+            className="mt-6 rounded-2xl bg-paper p-4 text-[0.92rem] leading-relaxed text-ink-soft"
+          >
+            No prompt yet? Make sure the phone is on, unlocked and has signal, then{" "}
+            <button type="button" onClick={onResend} disabled={resending} className={link}>
+              {resending ? "sending…" : "send it again"}
+            </button>
+            .
+          </motion.div>
+        )}
+      </AnimatePresence>
+      <p className="mt-6 text-[0.85rem] text-ink-mute">
+        <button type="button" onClick={() => onChange("mpesa")} className={link}>
+          Use a different number
+        </button>
+        {cardAvailable && (
+          <>
+            {" · "}
+            <button type="button" onClick={() => onChange("card")} className={link}>
+              Pay by card instead
+            </button>
+          </>
+        )}
+      </p>
     </div>
   );
 }

@@ -109,7 +109,7 @@ priority help). These numbers are a proposal, anchored on the rule below. Change
 - Consider an **outcome guarantee** for the pilot ("if you don't see X reorders in 60 days, you
   don't pay for month three"). Only offer it once the portal can measure reorders reliably.
 - Pro's "M-Pesa payment requests to your customers" is marked *coming soon*. It needs each
-  distributor's own Daraja credentials; don't sell it as live until it is.
+  distributor's own PayHero payment channel; don't sell it as live until it is.
 
 ## Honest risks
 
@@ -124,7 +124,7 @@ priority help). These numbers are a proposal, anchored on the rule below. Change
 - **BF Suma's position.** We're independent and must look it: no BF Suma logos or product photos,
   clear disclaimer, no impersonation. Check BF Suma's distributor policy on online tools and
   price communication before scaling. A good relationship with the company would help; a bad one could hurt.
-- **M-Pesa reality.** STK Push only works for Till/Paybill holders with Daraja credentials. Many
+- **M-Pesa reality.** STK Push only works for Till/Paybill holders (directly or through PayHero). Many
   distributors are probably paid on personal lines (confirm in the pilot). Manual payment recording must be first-class.
   Collecting money on behalf of distributors would raise licensing questions; avoid it.
 - **WhatsApp dependency.** The handoff is a `wa.me` link, which is free and robust. The WhatsApp
@@ -137,7 +137,7 @@ priority help). These numbers are a proposal, anchored on the rule below. Change
 **Phase 1: done in this repo.** Marketing site, working health check engine, distributor links
 (`/d/<slug>`), QR card, WhatsApp handoff, demo portal views, link previews.
 
-**Phase 2: built.** Public pricing, checkout (account, then M-Pesa STK Push or card through
+**Phase 2: built.** Public pricing, checkout (account, then an M-Pesa prompt through PayHero or card through
 Paystack, with retry on failure), five-screen onboarding, and the distributor portal:
 - Today: the daily list (new prospects, unpaid orders, reorders due, check-ins, customers gone quiet),
   ordered by the goals the distributor chose in onboarding, each with a WhatsApp message ready to send.
@@ -149,7 +149,7 @@ Paystack, with retry on failure), five-screen onboarding, and the distributor po
 Sign-in is email and password. Phone OTP can replace or join it once there's an SMS provider.
 
 **Phase 3: next.**
-- M-Pesa payment requests from distributors to their own customers (per-distributor Daraja keys).
+- M-Pesa payment requests from distributors to their own customers (a PayHero channel per distributor).
 - Automatic renewal for card payers, if asked for.
 - Pilot measurement: reorders recorded per distributor per month.
 

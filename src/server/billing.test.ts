@@ -5,7 +5,8 @@ import type { Workspace } from "./auth";
 process.env.PGLITE_DIR = "memory://";
 process.env.PAYMENTS_ALLOW_TEST = "true";
 delete process.env.DATABASE_URL;
-delete process.env.MPESA_CONSUMER_KEY;
+delete process.env.PAYHERO_API_USERNAME;
+delete process.env.PAYHERO_AUTH_TOKEN;
 delete process.env.PAYSTACK_SECRET_KEY;
 
 type Db = Awaited<ReturnType<typeof import("./db").db>>;

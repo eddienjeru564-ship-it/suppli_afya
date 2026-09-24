@@ -14,7 +14,7 @@ export async function GET(req: Request) {
   if (!p) redirect("/start/pay");
   if (p.status === "pending") {
     const t = await verify(reference);
-    if (t?.status === "success" && t.currency === "KES" && t.amount >= p.amount * 100) await markSucceeded(p.id, reference);
+    if (t?.status === "success" && t.currency === "KES" && t.amount >= p.amount * 100) await markSucceeded(p.id, reference, { confirmed: true });
     else if (t && ["failed", "abandoned", "reversed"].includes(t.status))
       await markFailed(p.id, t.gateway_response || "The card payment didn't go through.");
   }

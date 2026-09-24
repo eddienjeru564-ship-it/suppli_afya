@@ -26,7 +26,7 @@ Read before working here:
 - `src/components/check/`: health check UI (used on the landing page demo and on `/check`, `/d/[slug]`)
 - `src/components/site/`: landing page sections, in story order in `src/app/page.tsx`
 - `src/config/`: site settings, plans and prices (`plans.ts`), onboarding options, the demo distributor
-- `src/server/`: database (Postgres or embedded PGlite), schema migrations, auth and sessions, payments (M-Pesa Daraja, Paystack, test mode), portal queries including the Today list
+- `src/server/`: database (Postgres or embedded PGlite), schema migrations, auth and sessions, payments (M-Pesa through PayHero, cards through Paystack, test mode), portal queries including the Today list
 - `src/app/start/`: checkout (account → payment → welcome) and onboarding (`setup/`)
 - `src/app/portal/`: the distributor portal; every page guards itself with `requirePortalAccount()`
 - `src/app/api/`: payment callbacks and webhooks, lead capture from the health check

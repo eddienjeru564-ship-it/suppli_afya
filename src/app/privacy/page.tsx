@@ -46,7 +46,7 @@ export default function PrivacyPage() {
             <h2 className="font-display text-[1.5rem] text-ink">Distributor accounts and payments</h2>
             <p className="mt-2">
               For distributors, we keep your email, a securely hashed password, the business details you give us during
-              setup, and a record of your subscription payments. M-Pesa payments are processed by Safaricom and card
+              setup, and a record of your subscription payments. M-Pesa payments are processed by PayHero and Safaricom, and card
               payments by Paystack; we never see or store card numbers.
             </p>
           </section>

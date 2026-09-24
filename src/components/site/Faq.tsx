@@ -29,7 +29,7 @@ const FAQ = [
   },
   {
     q: "How does M-Pesa work with it?",
-    a: "If you're paid through a Till or Paybill number, you can send payment requests straight to a customer's phone and see when they've paid. If customers pay to your own line, you can record payments against their orders in a couple of taps.",
+    a: "Every order shows whether it's been paid. When a customer sends money, record it against their order in a couple of taps, with the M-Pesa code, and anything still owed shows up on your list until it's in. Sending M-Pesa requests straight to a customer's phone is coming to the Pro plan.",
   },
   {
     q: "How much does it cost?",

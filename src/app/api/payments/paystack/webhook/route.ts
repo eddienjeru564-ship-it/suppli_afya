@@ -16,7 +16,7 @@ export async function POST(req: Request) {
   );
   if (p) {
     if (event.event === "charge.success" && event.data.currency === "KES" && event.data.amount >= p.amount * 100) {
-      await markSucceeded(p.id, event.data.reference);
+      await markSucceeded(p.id, event.data.reference, { confirmed: true });
     } else if (event.event === "charge.failed") {
       await markFailed(p.id, event.data.gateway_response || "The card payment didn't go through.");
     }
