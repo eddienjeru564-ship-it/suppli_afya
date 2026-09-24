@@ -27,7 +27,7 @@ export default async function WelcomePage() {
   const onboarded = Boolean(account.workspace.onboarded_at);
 
   return (
-    <StartShell step={onboarded ? 2 : 1}>
+    <StartShell step={2}>
       <div className="mx-auto max-w-lg py-6 text-center">
         <div className="mx-auto grid h-14 w-14 place-items-center rounded-full bg-forest text-2xl text-cream">✓</div>
         <h1 className="mt-6 font-display text-[2.4rem] leading-[1.05] tracking-[-0.02em] text-ink sm:text-[3rem]">
@@ -65,7 +65,9 @@ export default async function WelcomePage() {
             {onboarded ? "Back to my portal" : "Set up my workspace"}
           </ButtonLink>
         </div>
-        {!onboarded && <p className="mt-4 text-[0.85rem] text-ink-mute">It takes a couple of minutes.</p>}
+        {!onboarded && (
+          <p className="mt-4 text-[0.85rem] text-ink-mute">Four short questions, about two minutes. You can change any answer later.</p>
+        )}
       </div>
     </StartShell>
   );

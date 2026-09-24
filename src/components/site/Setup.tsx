@@ -11,7 +11,7 @@ const STEPS = [
   },
   {
     title: "Tell us about your business",
-    body: "Five short questions: who you are, where you sell, how customers reach you and what you want to improve. Your workspace is set up around the answers.",
+    body: "Four short questions: who you are, where you sell, how customers reach you and what you want to improve. Your workspace is set up around the answers.",
   },
   {
     title: "Share your link and QR card",

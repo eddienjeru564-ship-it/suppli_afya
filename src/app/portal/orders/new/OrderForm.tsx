@@ -183,10 +183,30 @@ export function OrderForm({
       </section>
 
       <section className="rounded-[1.25rem] border border-ink/10 bg-paper p-5">
-        <label className="flex items-center gap-3 text-[0.95rem] font-semibold text-ink">
-          <input type="checkbox" checked={paid} onChange={(e) => setPaid(e.target.checked)} className="h-5 w-5 accent-[var(--color-forest)]" />
-          Already paid
-        </label>
+        <div className="text-[0.95rem] font-semibold text-ink" id="paid-label">
+          Has it been paid?
+        </div>
+        <div role="radiogroup" aria-labelledby="paid-label" className="mt-3 grid grid-cols-2 gap-2">
+          {[
+            { v: false, label: "Not yet", hint: "It stays on your list until it's paid" },
+            { v: true, label: "Paid", hint: "M-Pesa, cash or other" },
+          ].map((o) => (
+            <button
+              key={o.label}
+              type="button"
+              role="radio"
+              aria-checked={paid === o.v}
+              onClick={() => setPaid(o.v)}
+              className={clsx(
+                "rounded-2xl border px-4 py-3 text-left transition-colors",
+                paid === o.v ? "border-forest bg-sage-soft/60 shadow-[0_0_0_1px_var(--color-forest)]" : "border-ink/15 bg-cream hover:border-ink/35",
+              )}
+            >
+              <span className="block font-semibold text-ink">{o.label}</span>
+              <span className="mt-0.5 block text-[0.78rem] leading-snug text-ink-mute">{o.hint}</span>
+            </button>
+          ))}
+        </div>
         {paid && (
           <div className="mt-3 grid gap-3 sm:grid-cols-2">
             <select value={method} onChange={(e) => setMethod(e.target.value as typeof method)} className={inputClass}>

@@ -79,7 +79,6 @@ test("a distributor can pay, set up and run their first order", async ({ page, b
   // Onboarding.
   await page.getByRole("link", { name: "Set up my workspace" }).click();
   await page.waitForURL(/\/start\/setup/);
-  await page.getByRole("button", { name: "Get started" }).click();
   await page.getByLabel("Your name").fill("Jane Wanjiku");
   await page.getByRole("button", { name: "Continue" }).click();
   await page.getByLabel("Business or shop name").fill("Afya Bora Wellness");

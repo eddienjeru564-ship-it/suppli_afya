@@ -39,11 +39,14 @@ export default async function Dashboard() {
   const plan = PLANS_BY_ID[w.plan];
   const isNew = c.customers + c.orders + c.prospects === 0;
   const steps = [
+    // Already true: starting the checklist part-done makes the rest feel close.
+    { done: true, title: "Set up your workspace", body: "" },
     { done: c.prospects > 0, title: "Share your health check link", body: "Your first prospect appears here as soon as someone sends their plan." },
     { done: c.customers > 0, title: "Add a customer you already have", body: "Start with the people who order from you regularly.", href: "/portal/customers/new" },
     { done: c.orders > 0, title: "Record an order", body: "We'll work out when they're likely to run out and remind you.", href: "/portal/orders/new" },
   ];
   const setupDone = steps.every((s) => s.done);
+  const hasActivity = c.orders + c.prospects > 0;
   const date = new Date().toLocaleDateString("en-KE", { weekday: "long", day: "numeric", month: "long", timeZone: "Africa/Nairobi" });
 
   return (
@@ -58,7 +61,9 @@ export default async function Dashboard() {
             ? `We've set up your workspace around ${goalFocus(w.goals)}. Here's the quickest way to get going.`
             : tasks.length
               ? `${tasks.length} ${tasks.length === 1 ? "person needs" : "people need"} you today, with ${goalFocus(w.goals, 1)} first.`
-              : "You're up to date. Here's how the month is going."}
+              : setupDone
+                ? "Nobody needs you right now. Here's how the month is going."
+                : "Nothing needs you yet. Finish getting started and your list will fill up."}
         </p>
       </div>
 
@@ -93,7 +98,7 @@ export default async function Dashboard() {
                     )}
                   </div>
                   {!s.done && <p className="text-[0.88rem] leading-snug text-ink-soft">{s.body}</p>}
-                  {i === 0 && !s.done && (
+                  {i === 1 && !s.done && (
                     <div className="mt-3">
                       <ShareLink url={url} displayUrl={displayUrl} channels={w.channels} />
                     </div>
@@ -113,29 +118,31 @@ export default async function Dashboard() {
         <TaskList tasks={tasks} />
       </section>
 
-      <section>
-        <h2 className="mb-3 font-display text-[1.6rem] text-ink">This month</h2>
-        <div className="grid grid-cols-2 gap-2 lg:grid-cols-4">
-          <Stat label="New prospects" value={String(stats.prospects)} href="/portal/prospects" />
-          <Stat label="Orders" value={String(stats.orders)} href="/portal/orders" />
-          <Stat label="Paid" value={kesAmount(stats.paid)} href="/portal/orders?status=paid" />
-          <Stat label="Reorders due soon" value={String(stats.reordersDue)} href="/portal/customers" />
-        </div>
-        {plan.monthlySummary ? (
-          <p className="mt-3 text-[0.93rem] leading-relaxed text-ink-soft">
-            {stats.repeatOrders} of this month&apos;s orders came from returning customers.{" "}
-            {stats.unpaid > 0 ? `${kesAmount(stats.unpaid)} is still owed on unpaid orders.` : "Nothing is owed on open orders."}
-          </p>
-        ) : (
-          <p className="mt-3 text-[0.85rem] text-ink-mute">
-            The monthly summary of repeat orders and money owed is part of{" "}
-            <Link href="/start/pay?renew=1&plan=growth" className="font-semibold text-forest underline underline-offset-2">
-              Growth
-            </Link>
-            .
-          </p>
-        )}
-      </section>
+      {hasActivity && (
+        <section>
+          <h2 className="mb-3 font-display text-[1.6rem] text-ink">This month</h2>
+          <div className="grid grid-cols-2 gap-2 lg:grid-cols-4">
+            <Stat label="New prospects" value={String(stats.prospects)} href="/portal/prospects" />
+            <Stat label="Orders" value={String(stats.orders)} href="/portal/orders" />
+            <Stat label="Paid" value={kesAmount(stats.paid)} href="/portal/orders?status=paid" />
+            <Stat label="Reorders due soon" value={String(stats.reordersDue)} href="/portal/customers" />
+          </div>
+          {plan.monthlySummary ? (
+            <p className="mt-3 text-[0.93rem] leading-relaxed text-ink-soft">
+              {stats.repeatOrders} of this month&apos;s orders came from returning customers.{" "}
+              {stats.unpaid > 0 ? `${kesAmount(stats.unpaid)} is still owed on unpaid orders.` : "Nothing is owed on open orders."}
+            </p>
+          ) : (
+            <p className="mt-3 text-[0.85rem] text-ink-mute">
+              The monthly summary of repeat orders and money owed is part of{" "}
+              <Link href="/start/pay?renew=1&plan=growth" className="font-semibold text-forest underline underline-offset-2">
+                Growth
+              </Link>
+              .
+            </p>
+          )}
+        </section>
+      )}
 
       {setupDone && (
         <section>

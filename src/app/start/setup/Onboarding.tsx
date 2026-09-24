@@ -6,6 +6,7 @@ import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useState, useTransition } from "react";
 import { BUSINESS_TYPES, CHANNELS, GOALS, goalFocus, labelFor } from "@/config/onboarding";
 import { Logo } from "@/components/brand/Logo";
+import { Stepper } from "@/components/start/Shell";
 import { QrCard } from "@/components/brand/QrCard";
 import { Button, ButtonLink } from "@/components/ui/Button";
 import { Check, ChevronLeft } from "@/components/ui/icons";
@@ -35,7 +36,7 @@ const prettyPhone = (p: string) => {
 
 export function Onboarding({ initial }: { initial: OnboardingInitial }) {
   const reduce = useReducedMotion();
-  const [step, setStep] = useState(Math.min(initial.step === 0 ? 0 : initial.step + 1, TOTAL));
+  const [step, setStep] = useState(Math.min(Math.max(initial.step + 1, 1), TOTAL));
   const [dir, setDir] = useState(1);
   const [v, setV] = useState({ ...initial, whatsapp: localPhone(initial.whatsapp) });
   const [error, setError] = useState<string | null>(null);
@@ -73,13 +74,9 @@ export function Onboarding({ initial }: { initial: OnboardingInitial }) {
         <Link href="/" aria-label="Suppli Afya home">
           <Logo />
         </Link>
-        {!done && step > 0 && (
-          <span className="text-[0.8rem] font-semibold text-ink-mute">
-            {step} of {TOTAL}
-          </span>
-        )}
+        {!done && <Stepper step={2} detail={`${step} of ${TOTAL}`} />}
       </header>
-      {!done && step > 0 && (
+      {!done && (
         <div className="container-x">
           <div className="mx-auto h-1 max-w-lg overflow-hidden rounded-full bg-ink/10">
             <motion.div
@@ -113,20 +110,6 @@ export function Onboarding({ initial }: { initial: OnboardingInitial }) {
             >
               {done ? (
                 <Done v={v} done={done} firstName={firstName} />
-              ) : step === 0 ? (
-                <div className="py-8">
-                  <h1 className="font-display text-[2.6rem] leading-[1.04] tracking-[-0.025em] text-ink sm:text-[3.3rem]">
-                    Let&apos;s get Suppli Afya set up for your business.
-                  </h1>
-                  <p className="mt-4 text-[1.1rem] leading-relaxed text-ink-soft">It&apos;ll only take a couple of minutes.</p>
-                  <p className="mt-2 text-[0.95rem] leading-relaxed text-ink-mute">
-                    Four short questions. Everything you tell us is used to set up your workspace and your health check
-                    link.
-                  </p>
-                  <Button size="lg" className="mt-9" onClick={() => go(1)} arrow>
-                    Get started
-                  </Button>
-                </div>
               ) : step === 1 ? (
                 <Screen
                   title="First, what's your name?"
@@ -272,7 +255,7 @@ function Screen({
           {error}
         </p>
       )}
-      <div className="sticky bottom-0 -mx-5 mt-8 bg-gradient-to-t from-cream via-cream to-cream/0 px-5 pb-[max(0.5rem,env(safe-area-inset-bottom))] pt-4">
+      <div className="sticky bottom-0 -mx-5 mt-8 bg-gradient-to-t from-cream from-70% to-cream/0 px-5 pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-6">
         <Button size="lg" className="w-full" onClick={onNext} disabled={pending} arrow>
           {pending ? "Saving…" : cta}
         </Button>

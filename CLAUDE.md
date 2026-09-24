@@ -10,6 +10,7 @@ Read before working here:
 - `docs/VOICE.md`: copy rules. The site speaks to distributors like a sharp founder would; the health check speaks to customers calmly
 - `docs/ENGINE.md`: how the health check builds a plan, and the safety rules
 - `docs/DECISIONS.md`: launch blockers and open decisions
+- `docs/UX-REVIEW.md`: the design principles for every screen, and why each screen looks the way it does
 
 ## Non-negotiables
 

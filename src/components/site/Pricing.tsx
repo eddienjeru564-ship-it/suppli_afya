@@ -31,7 +31,8 @@ export function Pricing() {
 
         <div className="mt-14 grid gap-4 lg:grid-cols-3">
           {PLANS.map((p, i) => (
-            <Reveal key={p.id} delay={0.06 * i}>
+            // On phones the recommended plan is the first one you read.
+            <Reveal key={p.id} delay={0.06 * i} className={p.featured ? "order-first lg:order-none" : undefined}>
               <article
                 className={clsx(
                   "relative flex h-full flex-col rounded-[1.75rem] p-7 sm:p-8",

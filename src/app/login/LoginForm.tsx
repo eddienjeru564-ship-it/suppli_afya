@@ -5,6 +5,7 @@ import { useActionState } from "react";
 import { logIn, type FormState } from "@/app/start/actions";
 import { Button } from "@/components/ui/Button";
 import { Field } from "@/components/ui/Field";
+import { PasswordField } from "@/components/ui/PasswordField";
 
 export function LoginForm({ next }: { next: string }) {
   const [state, action, pending] = useActionState<FormState, FormData>(logIn, {});
@@ -12,7 +13,7 @@ export function LoginForm({ next }: { next: string }) {
     <form action={action} className="mt-8 grid gap-5" noValidate>
       <input type="hidden" name="next" value={next} />
       <Field label="Email" name="email" type="email" autoComplete="email" inputMode="email" defaultValue={state.fields?.email} required />
-      <Field label="Password" name="password" type="password" autoComplete="current-password" required />
+      <PasswordField label="Password" name="password" autoComplete="current-password" required />
       {state.error && (
         <p role="alert" className="rounded-xl bg-clay-soft/60 px-4 py-3 text-[0.9rem] text-[#6b3a1f]">
           {state.error}

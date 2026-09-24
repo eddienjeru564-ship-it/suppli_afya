@@ -2,6 +2,7 @@
 
 import { motion, useReducedMotion } from "motion/react";
 import { ButtonLink } from "@/components/ui/Button";
+import { FROM_PRICE } from "@/config/plans";
 import { HeroPhone } from "./HeroPhone";
 
 const ease = [0.22, 1, 0.36, 1] as const;
@@ -51,9 +52,8 @@ export function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, delay: 0.75, ease }}
           >
-            Suppli Afya helps you turn enquiries into first orders, and first orders into customers who keep coming
-            back. Your customers get a proper health check and a plan that makes sense to them. You get a clear list of
-            who to follow up with, who still owes you, and who is about to run out.
+            Your customers get a proper health check and a plan that makes sense to them. You get a short list each
+            morning of who to follow up with, who still owes you, and who is about to run out.
           </motion.p>
 
           <motion.div
@@ -65,8 +65,8 @@ export function Hero() {
             <ButtonLink href="#check" size="lg" arrow>
               Try the health check
             </ButtonLink>
-            <ButtonLink href="#how" size="lg" variant="secondary">
-              See how it works
+            <ButtonLink href="#pricing" size="lg" variant="secondary">
+              See plans
             </ButtonLink>
           </motion.div>
           <motion.p
@@ -75,7 +75,7 @@ export function Hero() {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.9, delay: 1.1 }}
           >
-            It takes about three minutes, and nothing you enter is saved.
+            The check takes about three minutes. Plans from {FROM_PRICE} a month.
           </motion.p>
         </div>
 

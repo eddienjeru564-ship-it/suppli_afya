@@ -35,7 +35,7 @@ export default async function PortalLayout({ children }: LayoutProps<"/portal">)
     ) : null;
 
   return (
-    <PortalShell businessName={a.workspace.business_name ?? ""} newProspects={n} banner={banner}>
+    <PortalShell businessName={a.workspace.business_name ?? ""} ownerName={a.workspace.owner_name ?? ""} newProspects={n} banner={banner}>
       {children}
     </PortalShell>
   );

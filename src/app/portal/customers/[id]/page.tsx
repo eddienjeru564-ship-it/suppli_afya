@@ -50,24 +50,35 @@ export default async function CustomerPage(props: PageProps<"/portal/customers/[
           >
             <WhatsAppIcon className="h-4 w-4" /> WhatsApp
           </a>
-          <Link href={`/portal/orders/new?customer=${c.id}`} className={buttonClass("primary", "md")}>
-            New order
-          </Link>
+          {live.length > 0 && (
+            <Link href={`/portal/orders/new?customer=${c.id}`} className={buttonClass("primary", "md")}>
+              New order
+            </Link>
+          )}
         </div>
       </div>
 
-      <div className="grid grid-cols-3 gap-2">
-        <Mini label="Orders" value={String(live.length)} />
-        <Mini label="Paid in total" value={kesAmount(spent)} />
-        <Mini label="Likely to need more" value={next ? shortDate(next) : "—"} />
-      </div>
+      {live.length > 0 && (
+        <div className="grid grid-cols-3 gap-2">
+          <Mini label="Orders" value={String(live.length)} />
+          <Mini label="Paid in total" value={kesAmount(spent)} />
+          <Mini label="Likely to need more" value={next ? shortDate(next) : "—"} />
+        </div>
+      )}
 
       <div className="grid gap-6 lg:grid-cols-[1.2fr_1fr]">
         <div className="grid content-start gap-4">
           <Card className="overflow-hidden">
             <h2 className="px-5 pt-5 text-[0.95rem] font-semibold text-ink">Orders</h2>
             {live.length === 0 ? (
-              <p className="px-5 pb-5 pt-2 text-[0.93rem] text-ink-soft">No orders yet.</p>
+              <div className="px-5 pb-5 pt-2">
+                <p className="text-[0.93rem] leading-relaxed text-ink-soft">
+                  Record what {c.name.split(" ")[0]} buys and we&apos;ll remind you a few days before it runs out.
+                </p>
+                <Link href={`/portal/orders/new?customer=${c.id}`} className={`${buttonClass("primary", "md")} mt-4`}>
+                  Record their first order
+                </Link>
+              </div>
             ) : (
               <ul className="mt-2 divide-y divide-ink/10">
                 {orders.map((o) => (

@@ -16,11 +16,13 @@ const NAV = [
 export function PortalShell({
   children,
   businessName,
+  ownerName,
   newProspects,
   banner,
 }: {
   children: ReactNode;
   businessName: string;
+  ownerName: string;
   newProspects: number;
   banner?: ReactNode;
 }) {
@@ -82,10 +84,13 @@ export function PortalShell({
           </Link>
           <Link
             href="/portal/settings"
-            aria-label="Settings"
-            className={clsx("grid h-10 w-10 place-items-center rounded-full", active("/portal/settings") ? "bg-forest text-cream" : "text-ink")}
+            aria-label="Settings and your account"
+            className={clsx(
+              "grid h-9 w-9 place-items-center rounded-full font-display text-[1.05rem] leading-none transition-colors",
+              active("/portal/settings") ? "bg-forest text-cream" : "bg-sand text-ink hover:bg-sand/70",
+            )}
           >
-            <IconSettings className="h-5 w-5" />
+            {(ownerName.trim()[0] ?? "S").toUpperCase()}
           </Link>
         </header>
         {banner}

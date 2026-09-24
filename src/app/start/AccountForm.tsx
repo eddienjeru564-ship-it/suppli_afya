@@ -6,6 +6,7 @@ import { useActionState, useState } from "react";
 import type { PlanId } from "@/config/plans";
 import { Button } from "@/components/ui/Button";
 import { Field } from "@/components/ui/Field";
+import { PasswordField } from "@/components/ui/PasswordField";
 import { PlanSummary } from "@/components/start/PlanSummary";
 import { StartShell } from "@/components/start/Shell";
 import { createAccount, type FormState } from "./actions";
@@ -27,8 +28,8 @@ export function AccountStep({ initialPlan }: { initialPlan: PlanId }) {
           Create your account
         </h1>
         <p className="mt-3 text-[1.02rem] leading-relaxed text-ink-soft">
-          This is what you&apos;ll use to log in to your portal. Payment is the next step, and your account is saved
-          even if it doesn&apos;t go through first time.
+          You&apos;ll use this to log in to your portal. Your account is saved even if the payment doesn&apos;t go
+          through first time.
         </p>
 
         <form action={action} className="mt-8 grid gap-5" noValidate>
@@ -43,10 +44,9 @@ export function AccountStep({ initialPlan }: { initialPlan: PlanId }) {
             defaultValue={state.fields?.email}
             required
           />
-          <Field
+          <PasswordField
             label="Password"
             name="password"
-            type="password"
             autoComplete="new-password"
             placeholder="At least 8 characters"
             minLength={8}

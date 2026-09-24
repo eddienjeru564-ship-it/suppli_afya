@@ -85,3 +85,6 @@ export function planOrDefault(id: string | null | undefined): Plan {
 }
 
 export const kes = (n: number) => `KES ${Math.round(n).toLocaleString("en-KE")}`;
+
+/** The cheapest plan, for "from KES …" lines. */
+export const FROM_PRICE = kes(Math.min(...PLANS.map((p) => p.price))).replace(" ", "\u00a0");

@@ -93,7 +93,7 @@ export function PaymentStep({
                   {renewing ? "Renew your plan" : "Payment"}
                 </h1>
                 <p className="mt-3 text-[1.02rem] leading-relaxed text-ink-soft">
-                  {kes(p.price)} for {renewing ? "another" : "your first"} month of {p.name}. Signed in as {email}.
+                  {kes(p.price)} for {renewing ? "another" : "your first"} month of {p.name}.
                 </p>
 
                 <div role="radiogroup" aria-label="Payment method" className="mt-8 grid grid-cols-2 gap-2">
@@ -152,8 +152,10 @@ export function PaymentStep({
                 <Button size="lg" className="mt-6 w-full" disabled={pending || mode === "off"} onClick={pay} arrow>
                   {pending ? "Starting payment…" : renewing ? `Pay ${kes(p.price)} and renew` : `Pay ${kes(p.price)} and start Suppli Afya`}
                 </Button>
-                <p className="mt-4 text-center text-[0.8rem] text-ink-mute">
+                <p className="mt-4 text-center text-[0.8rem] leading-relaxed text-ink-mute">
                   Nothing renews automatically. Your portal reminds you a few days before the month ends.
+                  <br />
+                  Signed in as {email}
                 </p>
               </>
             )}
