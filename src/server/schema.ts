@@ -158,4 +158,15 @@ create table push_subscriptions (
 create index push_subscriptions_workspace_idx on push_subscriptions(workspace_id);
 `,
   },
+  {
+    version: 3,
+    sql: `
+-- Orders customers place on a distributor's storefront, filed alongside those recorded in the portal.
+alter table orders add column source text not null default 'portal';
+alter table orders add column ref text;
+alter table orders add column customer_note text;
+alter table orders add column delivery jsonb;
+create unique index orders_workspace_ref_idx on orders(workspace_id, ref) where ref is not null;
+`,
+  },
 ];

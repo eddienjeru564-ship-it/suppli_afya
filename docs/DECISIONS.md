@@ -44,6 +44,12 @@ Things only the founder can supply or decide. Ordered by how much they block.
     `vercel.json` runs `/api/cron/morning` at 05:00 UTC (08:00 in Nairobi). Until the keys are set, the
     reminder simply doesn't appear.
 
+11. **Storefront orders (optional).** Set the same random `STOREFRONT_SECRET` here and in the
+    distributor storefront (`suppli_afya-distributor_template`), with its `SUPPLI_AFYA_URL` pointing
+    here. Orders customers place on a live storefront with a `suppliSlug` then arrive through
+    `/api/storefront/orders` in that distributor's Orders and on Today. Until it's set, the endpoint
+    refuses everything and customers order on WhatsApp.
+
 ## Decisions to make during the pilot
 
 - **Automatic renewal.** Today every month is paid by hand (M-Pesa or card). Decide after the pilot

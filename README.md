@@ -39,6 +39,7 @@ Every variable is listed in `.env.example`.
 | `PAYHERO_*` | M-Pesa prompts through PayHero, see `.env.example` and `docs/DECISIONS.md` |
 | `PAYSTACK_SECRET_KEY` | Card payments through Paystack |
 | `NEXT_PUBLIC_VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY` | Morning reminder notifications (optional; hidden until set) |
+| `STOREFRONT_SECRET` | Shared with the distributor storefronts. Signs orders they file through `/api/storefront/orders` |
 | `CRON_SECRET` | Protects `/api/cron/morning`, which sends the reminders at 8am (see `vercel.json`) |
 | `PAYMENTS_ALLOW_TEST` | `true` allows on-screen test payments in production builds. Never on the live site |
 

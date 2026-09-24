@@ -29,6 +29,8 @@ export const env = {
     privateKey: process.env.VAPID_PRIVATE_KEY ?? "",
     subject: process.env.VAPID_SUBJECT ?? "mailto:hello@suppliafya.co.ke",
   },
+  /** Shared with the distributor storefronts (suppli_afya-distributor_template) so they can file orders. */
+  storefrontSecret: process.env.STOREFRONT_SECRET ?? "",
   /** Shared secret the scheduler sends to /api/cron/* (Vercel Cron sends it as a Bearer token). */
   cronSecret: process.env.CRON_SECRET ?? "",
 

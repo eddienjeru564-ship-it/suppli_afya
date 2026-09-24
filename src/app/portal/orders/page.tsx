@@ -61,6 +61,7 @@ export default async function OrdersPage(props: PageProps<"/portal/orders">) {
                 <div className="flex flex-wrap items-center gap-2">
                   <span className="font-semibold text-ink">{o.customer_name}</span>
                   <Pill tone={o.status} />
+                  {o.source === "storefront" && <span className="rounded-full bg-sage-soft px-2 py-0.5 text-[0.7rem] font-semibold text-forest">From your page</span>}
                 </div>
                 <div className="truncate text-[0.86rem] text-ink-soft">
                   {o.items.map((i) => `${i.qty} × ${i.name}`).join(", ")}

@@ -23,6 +23,9 @@ export default async function OrderPage(props: PageProps<"/portal/orders/[id]">)
         <div className="flex flex-wrap items-center gap-2">
           <h1 className="font-display text-[2.2rem] leading-tight tracking-[-0.02em] text-ink">{kesAmount(o.total)}</h1>
           <Pill tone={o.status} />
+          {o.source === "storefront" && (
+            <span className="rounded-full bg-sage-soft px-2.5 py-0.5 text-[0.75rem] font-semibold text-forest">From your page{o.ref ? ` · ${o.ref}` : ""}</span>
+          )}
         </div>
         <p className="mt-1 text-[0.95rem] text-ink-soft">
           <Link href={`/portal/customers/${o.customer_id}`} className="font-semibold text-forest underline underline-offset-2">
@@ -45,6 +48,28 @@ export default async function OrderPage(props: PageProps<"/portal/orders/[id]">)
           <span>{kesAmount(o.total)}</span>
         </div>
       </Card>
+      {o.source === "storefront" && (o.delivery || o.customer_note || o.payment_method) && (
+        <Card className="grid gap-2 p-5 text-[0.93rem]">
+          {o.delivery && (
+            <p>
+              <span className="font-semibold text-ink">{o.delivery.fulfilment === "pickup" ? "Collecting. " : "Deliver to: "}</span>
+              <span className="text-ink-soft">{o.delivery.fulfilment === "pickup" ? "They'll collect from you." : (o.delivery.address ?? "Ask where")}</span>
+            </p>
+          )}
+          {o.payment_method && o.status === "unpaid" && (
+            <p>
+              <span className="font-semibold text-ink">Paying by: </span>
+              <span className="text-ink-soft">{o.payment_method === "mpesa" ? "M-Pesa" : "cash"}</span>
+            </p>
+          )}
+          {o.customer_note && (
+            <p>
+              <span className="font-semibold text-ink">Their note: </span>
+              <span className="text-ink-soft">{o.customer_note}</span>
+            </p>
+          )}
+        </Card>
+      )}
       <dl className="grid gap-1.5 text-[0.93rem]">
         {o.paid_at && (
           <div>

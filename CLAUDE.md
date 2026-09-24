@@ -30,7 +30,7 @@ Read before working here:
 - `src/server/`: database (Postgres or embedded PGlite), schema migrations, auth and sessions, payments (M-Pesa through PayHero, cards through Paystack, test mode), portal queries including the Today list
 - `src/app/start/`: checkout (account → payment → welcome) and onboarding (`setup/`)
 - `src/app/portal/`: the distributor portal; every page guards itself with `requirePortalAccount()`
-- `src/app/api/`: payment callbacks and webhooks, lead capture from the health check, the morning reminder cron
+- `src/app/api/`: payment callbacks and webhooks, lead capture from the health check, orders placed on distributor storefronts (`storefront/orders`), the morning reminder cron
 - `src/pwa/service-worker.ts` (served at `/sw.js`), `src/app/manifest.ts`, `src/components/pwa/`: the installable app (install offers, offline, updates, notifications). The service worker only runs in production builds
 - `src/proxy.ts`: keeps portal sessions alive while they're used
 - `e2e/`: Playwright tests: the health check, the distributor journey, and the installed app (`pwa.spec.ts`)
