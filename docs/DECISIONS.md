@@ -44,13 +44,6 @@ Things only the founder can supply or decide. Ordered by how much they block.
     `vercel.json` runs `/api/cron/morning` at 05:00 UTC (08:00 in Nairobi). Until the keys are set, the
     reminder simply doesn't appear.
 
-11. **Kate Cromuel's real details.** The example shop at `/d/kate-cromuel` uses placeholder area, note,
-    delivery, M-Pesa and reply hours, and illustrative prices (`src/config/distributors.ts`). Replace them with
-    what Kate confirms, or create Kate as a real account and set them in the portal.
-12. **Official product photos.** The shop shows a quiet, unlabelled illustration for every product until
-    official photos are added (`assets/products/README.md`, then `node scripts/product-images.mjs`). They
-    must be BF Suma's own images of the exact pack, and we should confirm distributors may use them online.
-
 ## Decisions to make during the pilot
 
 - **Automatic renewal.** Today every month is paid by hand (M-Pesa or card). Decide after the pilot
@@ -72,16 +65,7 @@ Things only the founder can supply or decide. Ordered by how much they block.
 - **WhatsApp handoff via `wa.me` links, no email capture.** Zero cost, works on every phone, matches
   how distributors already sell.
 - **Pregnancy means no product plan.** Clinic first, even if it costs a sale.
-- **No BF Suma branding; official product photos only.** Independence has to be visible, so no BF Suma
-  logos. Customers do need to recognise the pack they're buying, so each shop can show official photos,
-  normalised to one catalogue look. Never generated or look-alike packaging.
-- **Every distributor gets a shop, not just a health check.** People who know what they want shouldn't have
-  to answer questions; people who don't shouldn't have to browse 29 products. `/d/<slug>` offers both,
-  and the check's plan can be ordered in one tap.
-- **Ordering without WhatsApp, WhatsApp always one tap away.** Orders go straight into the distributor's
-  portal (with the customer's consent to share any health check answers). Nothing is charged online: the
-  distributor confirms the total, then the customer pays by M-Pesa or cash. WhatsApp messages carry context
-  (the product, the basket, the order reference).
+- **No product photos or BF Suma branding.** Independence has to be visible.
 - **Demo distributor has no WhatsApp number.** The demo never opens a chat to a real person.
 - **Public pricing, pay before setup.** Asked for by the founder: pricing → account → payment → setup
   → portal. A failed payment keeps the account and offers a retry; returning users never see setup again.

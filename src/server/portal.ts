@@ -70,11 +70,6 @@ export interface Order {
   delivered_at: Date | null;
   reorder_due_at: Date | null;
   created_at: Date;
-  /** "shop" when the customer ordered on the distributor's shop page. */
-  source: "portal" | "shop";
-  ref: string | null;
-  customer_note: string | null;
-  delivery: { fulfilment: "delivery" | "pickup"; address: string | null } | null;
 }
 
 export interface Interaction {
@@ -301,26 +296,7 @@ export async function today(ws: Workspace): Promise<Task[]> {
   }
   for (const o of unpaid) {
     const key = `unpaid:${o.id}`;
-    // Just confirmed a shop order: give them a few days to pay before a reminder.
-    if (recentlyDone(key, 3) || recentlyDone(`shop:${o.id}`, 3)) continue;
-    // A fresh order from the shop needs confirming, not chasing.
-    if (o.source === "shop" && !doneAt.has(`shop:${o.id}`) && Date.now() - new Date(o.created_at).getTime() < 7 * 86400_000) {
-      const where = o.delivery?.fulfilment === "pickup" ? "Will collect" : o.delivery?.address ? `Deliver to ${o.delivery.address}` : "Delivery to arrange";
-      tasks.push({
-        key: `shop:${o.id}`,
-        kind: "payment",
-        title: `${o.customer_name} ordered from your shop`,
-        why: `${productNames(o.items)}${o.total ? `, ${kesFmt(o.total)}` : ""}. ${where}. Confirm the total and when it will arrive.`,
-        message: `Hi ${firstName(o.customer_name)}, thank you for your order${o.ref ? ` (${o.ref})` : ""} of ${productNames(o.items)}.${
-          o.total ? ` The total is ${kesFmt(o.total)}${o.delivery?.fulfilment === "pickup" ? "" : " plus delivery"}.` : ""
-        } ${o.delivery?.fulfilment === "pickup" ? "When would you like to collect?" : "When is a good time to deliver?"}${me ? ` ${me}` : ""}`,
-        phone: o.customer_phone,
-        href: `/portal/orders/${o.id}`,
-        customerId: o.customer_id,
-        at: o.created_at,
-      });
-      continue;
-    }
+    if (recentlyDone(key, 3)) continue;
     tasks.push({
       key,
       kind: "payment",

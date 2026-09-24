@@ -5,7 +5,7 @@ import { Check } from "@/components/ui/icons";
 import { Reveal } from "@/components/ui/Reveal";
 
 const EVERY_PLAN = [
-  "Your own shop page, with the health check and a QR card",
+  "Your health check link and QR card",
   "Leads that arrive with answers and a plan",
   "WhatsApp messages ready to send",
   "M-Pesa and cash payments recorded against orders",

@@ -148,7 +148,7 @@ test("every portal page fits a small phone without sideways scrolling", async ({
   test.skip(info.project.name !== "mobile", "phones only");
   const ctx = await browser.newContext({ ...iphone, viewport: { width: 360, height: 740 }, baseURL: info.project.use.baseURL, storageState: auth });
   const page = await ctx.newPage();
-  for (const path of ["/portal", "/portal/prospects", "/portal/orders", "/portal/orders/new", "/portal/customers", "/portal/customers/new", "/portal/shop", "/portal/settings"]) {
+  for (const path of ["/portal", "/portal/prospects", "/portal/orders", "/portal/orders/new", "/portal/customers", "/portal/customers/new", "/portal/settings"]) {
     await page.goto(path);
     await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
     // Anything reaching past the page column, except inside rows that scroll sideways on purpose.

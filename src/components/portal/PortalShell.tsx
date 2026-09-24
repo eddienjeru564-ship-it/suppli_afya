@@ -78,16 +78,6 @@ export function PortalShell({
             </button>
           )}
           <Link
-            href="/portal/shop"
-            className={clsx(
-              "flex items-center gap-3 rounded-xl px-3 py-2.5 text-[0.95rem] font-medium transition-colors",
-              active("/portal/shop") ? "bg-forest text-cream" : "text-ink-soft hover:bg-ink/5 hover:text-ink",
-            )}
-          >
-            <IconShop className="h-[18px] w-[18px]" />
-            Your shop
-          </Link>
-          <Link
             href="/portal/settings"
             className={clsx(
               "flex items-center gap-3 rounded-xl px-3 py-2.5 text-[0.95rem] font-medium transition-colors",
@@ -238,14 +228,6 @@ function IconInstall({ className }: I) {
       aria-hidden
     >
       <path d="M12 4v11M7.5 10.5 12 15l4.5-4.5M5 19h14" />
-    </svg>
-  );
-}
-
-function IconShop({ className }: I) {
-  return (
-    <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-      <path d="M4 9.5 5.5 4h13L20 9.5M4 9.5h16M4 9.5v10h16v-10M9 19.5v-5h6v5" />
     </svg>
   );
 }

@@ -29,11 +29,10 @@ export default async function Dashboard() {
   const [tasks, stats, counts] = await Promise.all([
     today(w),
     monthStats(w.id),
-    d.query<{ customers: number; orders: number; prospects: number; priced: number }>(
+    d.query<{ customers: number; orders: number; prospects: number }>(
       `select (select count(*)::int from customers where workspace_id = $1) as customers,
               (select count(*)::int from orders where workspace_id = $1) as orders,
-              (select count(*)::int from prospects where workspace_id = $1) as prospects,
-              (select count(*)::int from shop_products where workspace_id = $1 and price is not null) as priced`,
+              (select count(*)::int from prospects where workspace_id = $1) as prospects`,
       [w.id],
     ),
   ]);
@@ -46,8 +45,7 @@ export default async function Dashboard() {
   const steps = [
     // Already true: starting the checklist part-done makes the rest feel close.
     { done: true, title: "Set up your workspace", body: "" },
-    { done: c.priced > 0, title: "Add your prices", body: "So customers can see what things cost and order from your shop.", href: "/portal/shop" },
-    { done: c.prospects > 0, title: "Share your shop link", body: "Customers can take the health check or order straight away. They appear here as soon as they do." },
+    { done: c.prospects > 0, title: "Share your health check link", body: "Your first prospect appears here as soon as someone sends their plan." },
     { done: c.customers > 0, title: "Add a customer you already have", body: "Start with the people who order from you regularly.", href: "/portal/customers/new" },
     { done: c.orders > 0, title: "Record an order", body: "We'll work out when they're likely to run out and remind you.", href: "/portal/orders/new" },
   ];
@@ -104,7 +102,7 @@ export default async function Dashboard() {
                     )}
                   </div>
                   {!s.done && <p className="text-[0.88rem] leading-snug text-ink-soft">{s.body}</p>}
-                  {s.title === "Share your shop link" && !s.done && (
+                  {i === 1 && !s.done && (
                     <div className="mt-3">
                       <ShareLink url={url} displayUrl={displayUrl} channels={w.channels} />
                     </div>

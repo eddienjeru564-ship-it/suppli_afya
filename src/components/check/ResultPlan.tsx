@@ -2,28 +2,15 @@
 
 import clsx from "clsx";
 import { AnimatePresence, motion, useInView } from "motion/react";
-import Link from "next/link";
 import { useRef, useState } from "react";
 import type { Distributor } from "@/config/distributors";
-import type { PriceList } from "@/config/shop";
 import { goalLabel, whatsappLink, whatsappMessage, type Answers, type EngineResult, type Recommendation } from "@/engine";
 import { Alert, Check, Minus, Plus, Shield, WhatsAppIcon } from "@/components/ui/icons";
 import { Button } from "@/components/ui/Button";
-import { ProductVisual } from "@/components/shop/ProductVisual";
-import { FormatLabel } from "./ProductGlyph";
+import { FormatLabel, ProductGlyph } from "./ProductGlyph";
 import { WhatsAppPreview } from "./WhatsAppPreview";
 
 const ease = [0.22, 1, 0.36, 1] as const;
-
-/** When the check runs inside a distributor's shop. */
-export interface ShopHooks {
-  prices: PriceList;
-  productHref: (id: string) => string;
-  /** Puts these products in the basket and goes to the order page. */
-  orderPlan: (ids: string[], context: { answers: Answers; ref: string }) => void;
-}
-
-const kes = (n: number) => `KES ${n.toLocaleString("en-KE")}`;
 
 function Appear({ children, i = 0, className }: { children: React.ReactNode; i?: number; className?: string }) {
   return (
@@ -38,29 +25,21 @@ function Appear({ children, i = 0, className }: { children: React.ReactNode; i?:
   );
 }
 
-function ProductCard({ rec, i, shop }: { rec: Recommendation; i: number; shop?: ShopHooks }) {
+function ProductCard({ rec, i }: { rec: Recommendation; i: number }) {
   const [open, setOpen] = useState(false);
   const p = rec.product;
   return (
     <Appear i={i + 2}>
       <article className="overflow-hidden rounded-[1.5rem] border border-ink/10 bg-paper">
         <div className="flex gap-4 p-5">
-          <div className="w-16 shrink-0 overflow-hidden rounded-2xl sm:w-20">
-            <ProductVisual product={p} size="thumb" />
+          <div className="grid h-20 w-16 shrink-0 place-items-center rounded-2xl bg-sand/70 p-2">
+            <ProductGlyph product={p} />
           </div>
           <div className="min-w-0 flex-1">
             <div className="text-[0.75rem] font-semibold text-ink-mute">
               <FormatLabel product={p} /> · {p.line}
             </div>
             <h3 className="font-display text-[1.45rem] leading-[1.15] text-ink">{p.name}</h3>
-            {shop && (
-              <div className="mt-1 flex items-center gap-3 text-[0.85rem]">
-                <span className="font-semibold text-ink">{shop.prices[p.id]?.price ? kes(shop.prices[p.id].price!) : "Price on request"}</span>
-                <Link href={shop.productHref(p.id)} className="font-semibold text-forest underline underline-offset-4">
-                  Product details
-                </Link>
-              </div>
-            )}
             {rec.covers.length > 0 && (
               <div className="mt-2 flex flex-wrap gap-1.5">
                 {rec.covers.map((g) => (
@@ -149,7 +128,6 @@ export function ResultPlan({
   onRestart,
   onEdit,
   embedded,
-  shop,
 }: {
   result: EngineResult;
   answers: Answers;
@@ -157,7 +135,6 @@ export function ResultPlan({
   onRestart: () => void;
   onEdit: () => void;
   embedded?: boolean;
-  shop?: ShopHooks;
 }) {
   const [showMessage, setShowMessage] = useState(false);
   const [shared, setShared] = useState(false);
@@ -187,12 +164,6 @@ export function ResultPlan({
   const message = whatsappMessage(result, ctx);
   const canSend = Boolean(distributor.whatsapp) && !distributor.demo;
   const name = p.name || "Here";
-  const orderRef = useRef<HTMLDivElement>(null);
-  const orderInView = useInView(orderRef, { margin: "0px 0px -10% 0px" });
-  const orderable = Boolean(shop) && result.status !== "clinic-first" && result.core.length > 0;
-  const planTotal = shop ? result.core.reduce((t, c) => t + (shop.prices[c.product.id]?.price ?? 0), 0) : 0;
-  const planUnpriced = shop ? result.core.some((c) => !shop.prices[c.product.id]?.price) : false;
-  const orderPlan = () => shop?.orderPlan(result.core.map((c) => c.product.id), { answers, ref: result.ref });
 
   const sharePlan = async () => {
     const lines = [
@@ -231,10 +202,6 @@ export function ResultPlan({
             <p key={h}>{h}</p>
           ))}
         </div>
-        <p className="mt-3 text-[0.85rem] leading-relaxed text-ink-mute">
-          This plan comes from what you told us, not a diagnosis. {distributor.firstName} can talk it through with you before you
-          buy anything.
-        </p>
         <div className="mt-4 flex flex-wrap gap-1.5 text-[0.75rem] font-semibold">
           {result.core.length > 0 && (
             <span className="rounded-full bg-forest px-2.5 py-1 text-cream">
@@ -291,7 +258,7 @@ export function ResultPlan({
           </Appear>
           <div className="mt-3 grid gap-3">
             {result.core.map((rec, i) => (
-              <ProductCard key={rec.product.id} rec={rec} i={i} shop={shop} />
+              <ProductCard key={rec.product.id} rec={rec} i={i} />
             ))}
           </div>
         </section>
@@ -303,8 +270,8 @@ export function ResultPlan({
           <div className="mt-3 grid gap-2">
             {result.addons.map((rec) => (
               <div key={rec.product.id} className="flex gap-3 rounded-2xl border border-ink/10 bg-paper/60 p-3.5">
-                <div className="w-11 shrink-0 overflow-hidden rounded-xl">
-                  <ProductVisual product={rec.product} size="thumb" />
+                <div className="h-12 w-10 shrink-0">
+                  <ProductGlyph product={rec.product} />
                 </div>
                 <div className="min-w-0">
                   <div className="font-semibold text-ink">{rec.product.name}</div>
@@ -361,39 +328,9 @@ export function ResultPlan({
         </Appear>
       )}
 
-      {orderable && (
-        <Appear i={result.core.length + 6} className="mt-10">
-          <div ref={orderRef} className="scroll-mt-24 rounded-[1.5rem] border border-ink/10 bg-paper p-5">
-            <h3 className="font-display text-[1.5rem] leading-tight text-ink">Order your plan from {distributor.firstName}</h3>
-            <ul className="mt-3 grid gap-1.5 text-[0.93rem]">
-              {result.core.map((c) => (
-                <li key={c.product.id} className="flex justify-between gap-3 text-ink">
-                  <span>{c.product.name}</span>
-                  <span className="tabular-nums text-ink-soft">{shop!.prices[c.product.id]?.price ? kes(shop!.prices[c.product.id].price!) : "To confirm"}</span>
-                </li>
-              ))}
-            </ul>
-            {planTotal > 0 && (
-              <div className="mt-3 flex justify-between border-t border-ink/10 pt-3 font-semibold text-ink">
-                <span>{planUnpriced ? "Subtotal so far" : "Total"}</span>
-                <span className="tabular-nums">{kes(planTotal)}</span>
-              </div>
-            )}
-            <Button size="lg" className="mt-4 w-full" onClick={orderPlan}>
-              Order this plan
-            </Button>
-            <p className="mt-2 text-center text-[0.78rem] leading-snug text-ink-mute">
-              You can change quantities or remove anything before you order. Nothing is charged now.
-            </p>
-          </div>
-        </Appear>
-      )}
-
       <Appear i={result.core.length + 6} className="mt-10">
         <div ref={handoffRef} className="scroll-mt-24 rounded-[1.5rem] bg-forest p-5 text-cream">
-          <div className="font-display text-[1.5rem] leading-tight">
-            {orderable ? "Rather talk it through first?" : `Send your plan to ${distributor.firstName}`}
-          </div>
+          <div className="font-display text-[1.5rem] leading-tight">Send your plan to {distributor.firstName}</div>
           <p className="mt-1.5 text-[0.92rem] leading-relaxed text-cream/75">
             {distributor.firstName} will confirm prices, answer your questions and help you get started. Your answers go
             only to {distributor.firstName}, and only when you send them.
@@ -459,7 +396,7 @@ export function ResultPlan({
 
       {/* Full-page check: keep the next step one tap away while reading the plan. */}
       <AnimatePresence>
-        {showBar && !orderInView && (
+        {showBar && (
           <motion.div
             initial={{ y: 90, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
@@ -468,22 +405,7 @@ export function ResultPlan({
             className="fixed inset-x-0 bottom-0 z-30 px-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-6 [background:linear-gradient(to_top,var(--color-cream)_55%,transparent)]"
           >
             <div className="mx-auto max-w-xl">
-              {orderable ? (
-                <div className="flex gap-2">
-                  <Button size="lg" className="flex-1 shadow-float" onClick={orderPlan}>
-                    Order this plan{planTotal ? ` · ${kes(planTotal)}` : ""}
-                  </Button>
-                  <Button
-                    variant="whatsapp"
-                    size="lg"
-                    className="w-14 shrink-0 !px-0 shadow-float"
-                    aria-label={`Talk it through with ${distributor.firstName}`}
-                    onClick={() => handoffRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })}
-                  >
-                    <WhatsAppIcon />
-                  </Button>
-                </div>
-              ) : canSend ? (
+              {canSend ? (
                 <Button
                   variant="whatsapp"
                   size="lg"

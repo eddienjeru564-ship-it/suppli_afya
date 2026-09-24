@@ -75,10 +75,10 @@ export function Demo() {
                 <LivePanel answers={answers} result={result} distributor={DEMO_DISTRIBUTOR} />
               </div>
               <Link
-                href={`/d/${DEMO_DISTRIBUTOR.slug}`}
+                href="/check"
                 className="group mt-8 inline-flex items-center gap-2 text-[0.95rem] font-semibold text-cream underline-offset-4 hover:underline"
               >
-                See the whole shop your customers get <Arrow />
+                Open the health check on its own page <Arrow />
               </Link>
             </div>
           </Reveal>
@@ -101,7 +101,7 @@ export function Demo() {
             </span>
             <span className="min-w-0 flex-1">
               <span className="block text-[0.7rem] font-semibold text-moss">
-                {result ? "Finished · see what reaches Kate" : "Live in Kate's portal"}
+                {result ? "Finished · see what reaches Grace" : "Live in Grace's portal"}
               </span>
               <span className="block truncate text-[0.9rem] font-semibold">{live.title}</span>
               {live.detail && <span className="block truncate text-[0.78rem] text-ink-soft">{live.detail}</span>}

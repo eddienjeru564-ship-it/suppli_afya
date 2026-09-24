@@ -62,18 +62,3 @@ wasn't working, and what we changed. Keep this as the record of why screens look
 | New versions | "A new version is ready · Update", never a surprise reload | Nobody loses a half-typed order |
 | Notifications | One optional morning reminder, offered inside the installed app, permission asked only on tap | One useful nudge beats many ignored ones |
 | Tab bar | Four tabs, 60px tall, a pill that slides to the current tab, a pulse while the next page loads | Thumb reach, and clear feedback that a tap registered |
-
-## The customer shop (`/d/<slug>`)
-
-| Question | What we chose | Why |
-|---|---|---|
-| What the page is | The distributor's own shop, with Suppli Afya only in the footer | Customers buy from a person they can ask. The platform should be credible, not loud |
-| The hero | "Supplements that suit you, from someone you can ask", two paths (Help me choose · Browse), WhatsApp one line below, the three most asked-for products on one shelf, and the distributor's own note | Says who, what and how in one screen, and gives the undecided and the decided their own first step |
-| Finding products | "What would you like help with?" by need, then the catalogue with need filters that stay pinned while you scroll, and search | People shop by problem, not by BF Suma's range names |
-| Product presentation | Every product on the same 4:5 stage and floor, official photos when supplied, otherwise one quiet unlabelled illustration per format | A catalogue that looks like one set. No fake packaging |
-| Product pages | What it is, what people take it for, what to expect, key ingredients, "Before you take it" read from the same safety traits as the check, and "Not sure? Take the check / Ask Kate" | Enough to decide, honest about limits, never a health claim |
-| Recommendations | The check runs inside the shop; the plan explains why each product is there, says it comes from your answers and isn't a diagnosis, shows prices, and "Order this plan" puts it in the basket | The engine's reasoning, carried straight into buying |
-| Ordering | Basket sheet, then one page: name, phone, deliver or collect, M-Pesa or cash, a note. Nothing is charged online. The confirmation says exactly what happens next and how to pay | First-time customers need to know who confirms, when, and how money moves, before they commit |
-| WhatsApp | In the header, the phone action bar, on every product ("Ask Kate about this"), the basket ("send this list"), the results and the confirmation, each with a message already written | Help at the moment of doubt, with the context already in the message |
-| Phones | A bottom bar that becomes the basket once something is in it; product pages keep price and Add in reach; 2-column catalogue; sheets instead of new pages | One thumb, weak signal, no hunting |
-| Trust | Who they're buying from (name, area, reply hours, languages), how ordering and payment work, straight answers on genuineness, medicine and cancelling | Reassurance where the question arises, not a wall of badges |

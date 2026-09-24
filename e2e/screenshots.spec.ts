@@ -25,7 +25,7 @@ test("app screenshots", async ({ browser }, info) => {
   const c = await browser.newContext({ ...base, viewport: { width: 390, height: 844 } });
   const cp = await c.newPage();
   await cp.route("https://wa.me/**", (r) => r.fulfill({ status: 200, body: "whatsapp" }));
-  await cp.goto(`${slug}/d/${link.match(/\/d\/([a-z0-9-]+)/)![1]}/check`);
+  await cp.goto(`${slug}/d/${link.match(/\/d\/([a-z0-9-]+)/)![1]}`);
   await customerCheck(cp);
   await cp.getByPlaceholder("07XX XXX XXX").fill("0722 111 222");
   await cp.getByRole("button", { name: "Send on WhatsApp" }).click();
