@@ -1,7 +1,7 @@
 "use client";
 
 import clsx from "clsx";
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { Distributor } from "@/config/distributors";
 import {
@@ -23,6 +23,7 @@ import { Button } from "@/components/ui/Button";
 import { ChevronLeft, Shield } from "@/components/ui/icons";
 import { MultiChoice, Scale, SingleChoice, TextField } from "./inputs";
 import { ResultPlan } from "./ResultPlan";
+import { useReducedMotion } from "@/components/ui/useReducedMotion";
 
 type Mode = "embedded" | "page";
 

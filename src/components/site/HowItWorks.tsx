@@ -3,6 +3,7 @@
 import clsx from "clsx";
 import { useRef, useState } from "react";
 import { Reveal } from "@/components/ui/Reveal";
+import { MPesa, keepTogether } from "@/components/ui/KeepTogether";
 
 const STEPS = [
   {
@@ -51,7 +52,7 @@ export function HowItWorks() {
           </Reveal>
           <Reveal delay={0.1}>
             <p className="lede max-w-[34rem] lg:ml-auto">
-              You keep using WhatsApp and M-Pesa. Suppli Afya adds the structure around them, from the first question
+              You keep using WhatsApp and <MPesa />. Suppli Afya adds the structure around them, from the first question
               someone asks you to their fifth order.
             </p>
           </Reveal>
@@ -72,7 +73,7 @@ export function HowItWorks() {
                   {String(i + 1).padStart(2, "0")}
                 </span>
                 <h3 className="mt-6 font-display text-[1.5rem] leading-[1.15] text-ink md:mt-8">{s.title}</h3>
-                <p className="mt-3 text-[0.98rem] leading-relaxed text-ink-soft">{s.body}</p>
+                <p className="mt-3 text-[0.98rem] leading-relaxed text-ink-soft">{keepTogether(s.body)}</p>
               </Reveal>
             </li>
           ))}

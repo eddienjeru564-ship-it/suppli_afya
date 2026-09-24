@@ -1,15 +1,16 @@
-"use client";
-
-import { motion, useReducedMotion } from "motion/react";
+import { Fragment, type CSSProperties } from "react";
 import { ButtonLink } from "@/components/ui/Button";
 import { FROM_PRICE } from "@/config/plans";
 import { HeroPhone } from "./HeroPhone";
 
-const ease = [0.22, 1, 0.36, 1] as const;
 const HEADLINE = ["Most", "of", "your", "next", "orders", "are", "already", "in", "your", "phone."];
+const at = (i: number) => ({ "--i": i }) as CSSProperties;
 
+/**
+ * The first screen. Its entrances are CSS (globals.css: .rise, .rise-word), so the words are in
+ * the HTML and readable before any JavaScript arrives, and look the same with reduced motion.
+ */
 export function Hero() {
-  const reduce = useReducedMotion();
   return (
     <section className="relative overflow-hidden pb-20 pt-28 sm:pt-32 lg:pb-28 lg:pt-36">
       <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
@@ -19,73 +20,44 @@ export function Hero() {
 
       <div className="container-x grid items-center gap-16 lg:grid-cols-[1.15fr_0.85fr] lg:gap-10">
         <div>
-          <motion.div
-            className="eyebrow"
-            initial={reduce ? false : { opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease }}
-          >
-            For BF Suma distributors in Kenya
-          </motion.div>
+          <div className="eyebrow rise">For BF Suma distributors in Kenya</div>
 
           <h1 className="display-xl mt-6 max-w-[14ch] text-ink">
+            {/* Each word rises inside its own clipping box; the spaces sit between the boxes, where they
+                stay spaces (a space at the end of an inline-block is dropped). */}
             {HEADLINE.map((w, i) => (
-              <span key={i} className="inline-block overflow-hidden pb-[0.08em] align-bottom">
-                <motion.span
-                  className={
-                    w === "already" ? "inline-block italic text-forest" : "inline-block"
-                  }
-                  initial={reduce ? false : { y: "105%", opacity: 0 }}
-                  animate={{ y: "0%", opacity: 1 }}
-                  transition={{ duration: 0.9, delay: 0.15 + i * 0.055, ease }}
-                >
-                  {w}
-                </motion.span>
-                {i < HEADLINE.length - 1 && " "}
-              </span>
+              <Fragment key={i}>
+                <span className="inline-block overflow-hidden pb-[0.08em] align-bottom">
+                  <span className={w === "already" ? "rise-word italic text-forest" : "rise-word"} style={at(i)}>
+                    {w}
+                  </span>
+                </span>
+                {i < HEADLINE.length - 1 && " "}
+              </Fragment>
             ))}
           </h1>
 
-          <motion.p
-            className="lede mt-7 max-w-[36rem]"
-            initial={reduce ? false : { opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, delay: 0.75, ease }}
-          >
-            Your customers get a proper health check and a plan that makes sense to them. You get a short list each
-            morning of who to follow up with, who still owes you, and who is about to run out.
-          </motion.p>
+          <p className="lede rise mt-7 max-w-[36rem]" style={at(9)}>
+            Your customers get a proper health check and a plan that makes sense to them. You get a short list each morning
+            of who to follow up with, who still owes you, and who is about to run out.
+          </p>
 
-          <motion.div
-            className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center"
-            initial={reduce ? false : { opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, delay: 0.9, ease }}
-          >
+          <div className="rise mt-9 flex flex-col gap-3 sm:flex-row sm:items-center" style={at(11)}>
             <ButtonLink href="#check" size="lg" arrow>
               Try the health check
             </ButtonLink>
             <ButtonLink href="#pricing" size="lg" variant="secondary">
               See plans
             </ButtonLink>
-          </motion.div>
-          <motion.p
-            className="mt-4 text-[0.85rem] text-ink-mute"
-            initial={reduce ? false : { opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.9, delay: 1.1 }}
-          >
+          </div>
+          <p className="rise mt-4 text-[0.85rem] text-ink-mute" style={at(13)}>
             The check takes about three minutes. Plans from {FROM_PRICE} a month.
-          </motion.p>
+          </p>
         </div>
 
-        <motion.div
-          initial={reduce ? false : { opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.1, delay: 0.35, ease }}
-        >
+        <div className="rise" style={at(4)}>
           <HeroPhone />
-        </motion.div>
+        </div>
       </div>
     </section>
   );

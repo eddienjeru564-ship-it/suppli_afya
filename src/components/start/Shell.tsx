@@ -2,6 +2,7 @@ import clsx from "clsx";
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { Logo } from "@/components/brand/Logo";
+import { Check } from "@/components/ui/icons";
 
 const STEPS = ["Account", "Payment", "Set up"];
 
@@ -21,7 +22,7 @@ export function Stepper({ step, detail }: { step: 0 | 1 | 2; detail?: string }) 
                 i < step ? "bg-forest text-cream" : i === step ? "border border-forest text-forest" : "border border-ink/15 text-ink-mute",
               )}
             >
-              {i < step ? "✓" : i + 1}
+              {i < step ? <Check className="h-3.5 w-3.5" /> : i + 1}
             </span>
             <span className={i === step ? "text-ink" : "text-ink-mute"}>
               {s}

@@ -4,7 +4,7 @@ import { db, json } from "@/server/db";
 import { distributorBySlug } from "@/server/distributors";
 import { env } from "@/server/env";
 import { normaliseKenyanPhone } from "@/server/payments/mpesa";
-import { supplyDaysFor, type OrderItem } from "@/server/portal";
+import { deliveryLine, orderLines, supplyDaysFor, type Order, type OrderItem } from "@/server/portal";
 
 /**
  * Orders placed on a distributor's storefront (suppli_afya-distributor_template). The
@@ -45,13 +45,11 @@ export async function POST(req: Request) {
   const payment = b.payment === "mpesa" || b.payment === "cash" ? b.payment : null;
   const note = typeof b.note === "string" ? b.note.trim().slice(0, 400) : "";
   const deliverTo = (b.deliverTo ?? null) as { area?: unknown; address?: unknown } | null;
-  const delivery =
+  const words = (x: unknown, max: number) => (typeof x === "string" && x.trim() ? x.replace(/\s+/g, " ").trim().slice(0, max) : null);
+  const delivery: NonNullable<Order["delivery"]> =
     b.receive === "pickup"
-      ? { fulfilment: "pickup", address: null }
-      : {
-          fulfilment: "delivery",
-          address: [deliverTo?.area, deliverTo?.address].filter((x): x is string => typeof x === "string" && x.trim() !== "").join(", ").slice(0, 200) || null,
-        };
+      ? { fulfilment: "pickup", area: null, address: null }
+      : { fulfilment: "delivery", area: words(deliverTo?.area, 80), address: words(deliverTo?.address, 200) };
   const selectorRef = typeof b.selectorRef === "string" && /^SA-[A-Z2-9]{4}$/.test(b.selectorRef) ? b.selectorRef : null;
 
   const ws = dist.workspaceId;
@@ -76,9 +74,9 @@ export async function POST(req: Request) {
   await d.query(`insert into interactions (workspace_id, customer_id, kind, body) values ($1, $2, 'order', $3)`, [
     ws,
     c.id,
-    `Ordered from your page (${ref}): ${items.map((i) => `${i.qty} × ${i.name}`).join(", ")}. ${
-      delivery.fulfilment === "pickup" ? "Will collect." : delivery.address ? `Deliver to ${delivery.address}.` : "Delivery to arrange."
-    }${payment ? ` Paying by ${payment === "mpesa" ? "M-Pesa" : "cash"}.` : ""}${selectorRef ? ` From health check ${selectorRef}.` : ""}${note ? ` Note: ${note}` : ""}`,
+    `Ordered from your page (${ref}): ${orderLines(items)}. ${deliveryLine(delivery)}.${
+      payment ? ` Paying by ${payment === "mpesa" ? "M-Pesa" : "cash"}.` : ""
+    }${selectorRef ? ` From health check ${selectorRef}.` : ""}${note ? ` Note: ${note}` : ""}`,
   ]);
   return Response.json({ ok: true, orderId: rows[0].id });
 }

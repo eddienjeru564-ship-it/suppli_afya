@@ -45,3 +45,5 @@ Read before working here:
 Portal page grids use `grid-cols-1` so long content (links, names) can't widen the page past a small phone; `pwa.spec.ts` checks every portal page at 360px.
 
 Design tokens live in `src/app/globals.css` (`@theme`). Fonts: Newsreader (display) and Hanken Grotesk (text).
+
+Motion: first-screen entrances and section reveals are CSS (`.rise`, `.rise-word`, `.reveal`, `<Reveal>`), so pages are readable before JavaScript. For reduced motion in components, import `useReducedMotion` from `@/components/ui/useReducedMotion`, never from `motion/react` (it mismatches the server HTML).

@@ -1,10 +1,12 @@
 "use client";
 
 import clsx from "clsx";
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
 import { useState } from "react";
 import { WhatsAppIcon } from "@/components/ui/icons";
 import { Reveal } from "@/components/ui/Reveal";
+import { useReducedMotion } from "@/components/ui/useReducedMotion";
+import { keepTogether } from "@/components/ui/KeepTogether";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -111,8 +113,8 @@ export function Portal() {
         <div className="mt-24 grid gap-12 border-t border-ink/10 pt-14 md:grid-cols-3 md:gap-10">
           {BLOCKS.map((b, i) => (
             <Reveal key={b.title} delay={0.08 * i}>
-              <h3 className="font-display text-[1.55rem] leading-[1.15] text-ink">{b.title}</h3>
-              <p className="mt-3 text-[1rem] leading-relaxed text-ink-soft">{b.body}</p>
+              <h3 className="font-display text-[1.55rem] leading-[1.15] text-ink">{keepTogether(b.title)}</h3>
+              <p className="mt-3 text-[1rem] leading-relaxed text-ink-soft">{keepTogether(b.body)}</p>
             </Reveal>
           ))}
         </div>

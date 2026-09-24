@@ -1,8 +1,9 @@
 "use client";
 
-import { animate, useInView, useMotionValue, useReducedMotion, useTransform, motion } from "motion/react";
+import { animate, useInView, useMotionValue, useTransform, motion } from "motion/react";
 import { useEffect, useId, useRef, useState } from "react";
 import { Reveal } from "@/components/ui/Reveal";
+import { useReducedMotion } from "@/components/ui/useReducedMotion";
 
 const kes = (n: number) => `KES ${Math.round(n).toLocaleString("en-KE")}`;
 

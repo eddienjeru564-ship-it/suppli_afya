@@ -69,7 +69,7 @@ describe("orders from a distributor's storefront", () => {
       [w.id],
     );
     expect(o).toMatchObject({ source: "storefront", status: "unpaid", total: 9400, ref: "KC-7QX2", customer_note: "Evenings are best", payment_method: "mpesa" });
-    expect(o.delivery).toEqual({ fulfilment: "delivery", address: "Within Nairobi, Kilimani, near Yaya" });
+    expect(o.delivery).toEqual({ fulfilment: "delivery", area: "Within Nairobi", address: "Kilimani, near Yaya" });
     const [c] = await d.query<{ name: string; phone: string }>(`select name, phone from customers where workspace_id = $1`, [w.id]);
     expect(c).toEqual({ name: "Achieng Otieno", phone: "254722111222" });
 
@@ -83,7 +83,15 @@ describe("orders from a distributor's storefront", () => {
     await post(order(w.slug!, { ref: "KC-9ZZ3" }));
     const [task] = await portal.today(w);
     expect(task).toMatchObject({ key: expect.stringMatching(/^placed:/), title: "Achieng Otieno ordered from your page" });
+    expect(task.why).toBe("2 × ArthroXtra Tablets, KES 9,400. Delivery: Within Nairobi · Kilimani, near Yaya. Confirm the total and when it will arrive.");
     expect(task.message).toContain("(KC-9ZZ3)");
+
+    // Until it's confirmed, the order page leads with confirming it; afterwards, with the payment.
+    const id = task.key.split(":")[1];
+    expect(await portal.pageOrderConfirmed(w.id, id)).toBe(false);
+    await d.query(`insert into interactions (workspace_id, kind, task_key) values ($1, 'followup', $2)`, [w.id, task.key]);
+    expect(await portal.pageOrderConfirmed(w.id, id)).toBe(true);
+    expect((await portal.today(w)).map((t) => t.key)).not.toContain(task.key);
   });
 
   it("won't file for an unknown distributor or an incomplete order", async () => {

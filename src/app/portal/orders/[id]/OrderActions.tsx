@@ -12,11 +12,14 @@ export function OrderActions({
   status,
   phone,
   reminder,
+  remind = true,
 }: {
   id: string;
   status: string;
   phone: string | null;
   reminder: string;
+  /** Off while a page order still needs confirming: nobody is late paying for an order nobody has confirmed. */
+  remind?: boolean;
 }) {
   const [pending, start] = useTransition();
   const [method, setMethod] = useState<"mpesa" | "cash" | "other">("mpesa");
@@ -56,14 +59,16 @@ export function OrderActions({
             </div>
             {err && <p className="mt-1.5 text-[0.82rem] text-clay">{err}</p>}
           </div>
-          <a
-            href={phone ? whatsappLink(phone, reminder) : `https://wa.me/?text=${encodeURIComponent(reminder)}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={buttonClass("secondary", "md", "w-fit")}
-          >
-            <WhatsAppIcon className="h-4 w-4" /> Send a payment reminder
-          </a>
+          {remind && (
+            <a
+              href={phone ? whatsappLink(phone, reminder) : `https://wa.me/?text=${encodeURIComponent(reminder)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={buttonClass("secondary", "md", "w-fit")}
+            >
+              <WhatsAppIcon className="h-4 w-4" /> Send a payment reminder
+            </a>
+          )}
         </>
       )}
       <div className="flex flex-wrap gap-2">

@@ -1,9 +1,10 @@
 "use client";
 
 import clsx from "clsx";
-import { AnimatePresence, motion, useInView, useReducedMotion } from "motion/react";
+import { AnimatePresence, motion, useInView } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import { WhatsAppIcon } from "@/components/ui/icons";
+import { useReducedMotion } from "@/components/ui/useReducedMotion";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 const SCENES = [3400, 3400, 4600]; // question, plan, whatsapp

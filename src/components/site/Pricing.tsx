@@ -3,6 +3,7 @@ import { PLANS, kes } from "@/config/plans";
 import { ButtonLink } from "@/components/ui/Button";
 import { Check } from "@/components/ui/icons";
 import { Reveal } from "@/components/ui/Reveal";
+import { MPesa, keepTogether } from "@/components/ui/KeepTogether";
 
 const EVERY_PLAN = [
   "Your health check link and QR card",
@@ -23,7 +24,7 @@ export function Pricing() {
           </Reveal>
           <Reveal delay={0.1}>
             <p className="lede max-w-[34rem] lg:ml-auto">
-              Pay monthly by M-Pesa or card. There&apos;s no contract and no setup fee, and nothing is taken
+              Pay monthly by <MPesa /> or card. There&apos;s no contract and no setup fee, and nothing is taken
               automatically: each month you choose to renew, so you can stop whenever you like.
             </p>
           </Reveal>
@@ -57,7 +58,7 @@ export function Pricing() {
                     <li key={f.text} className="flex gap-2.5">
                       <Check className={clsx("mt-0.5 h-4 w-4 shrink-0", p.featured ? "text-sage" : "text-moss")} />
                       <span className={clsx(f.soon && (p.featured ? "text-cream/70" : "text-ink-soft"))}>
-                        {f.text}
+                        {keepTogether(f.text)}
                         {f.soon && (
                           <span
                             className={clsx(
@@ -95,7 +96,7 @@ export function Pricing() {
               {EVERY_PLAN.map((t) => (
                 <li key={t} className="flex items-center gap-2">
                   <Check className="h-3.5 w-3.5 text-moss" />
-                  {t}
+                  {keepTogether(t)}
                 </li>
               ))}
             </ul>

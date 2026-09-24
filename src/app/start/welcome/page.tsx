@@ -5,6 +5,7 @@ import { getAccount, subscriptionState } from "@/server/auth";
 import { db } from "@/server/db";
 import { ButtonLink } from "@/components/ui/Button";
 import { StartShell } from "@/components/start/Shell";
+import { Check } from "@/components/ui/icons";
 
 export const metadata: Metadata = { title: "Payment confirmed" };
 
@@ -29,7 +30,9 @@ export default async function WelcomePage() {
   return (
     <StartShell step={2}>
       <div className="mx-auto max-w-lg py-6 text-center">
-        <div className="mx-auto grid h-14 w-14 place-items-center rounded-full bg-forest text-2xl text-cream">✓</div>
+        <div className="mx-auto grid h-14 w-14 place-items-center rounded-full bg-forest text-cream">
+          <Check className="h-6 w-6" />
+        </div>
         <h1 className="mt-6 font-display text-[2.4rem] leading-[1.05] tracking-[-0.02em] text-ink sm:text-[3rem]">
           Payment confirmed.
         </h1>

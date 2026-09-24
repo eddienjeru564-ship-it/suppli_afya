@@ -3,6 +3,7 @@ import { site } from "@/config/site";
 import { QrCard } from "@/components/brand/QrCard";
 import { Reveal } from "@/components/ui/Reveal";
 import { qrSvg } from "@/lib/qr";
+import { keepTogether } from "@/components/ui/KeepTogether";
 
 const STEPS = [
   {
@@ -44,7 +45,7 @@ export async function Setup() {
                 </span>
                 <div>
                   <h3 className="font-display text-[1.4rem] leading-tight text-ink">{s.title}</h3>
-                  <p className="mt-1.5 text-[1rem] leading-relaxed text-ink-soft">{s.body}</p>
+                  <p className="mt-1.5 text-[1rem] leading-relaxed text-ink-soft">{keepTogether(s.body)}</p>
                 </div>
               </Reveal>
             ))}

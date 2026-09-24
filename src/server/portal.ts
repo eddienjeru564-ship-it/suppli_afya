@@ -74,7 +74,8 @@ export interface Order {
   source: "portal" | "storefront";
   ref: string | null;
   customer_note: string | null;
-  delivery: { fulfilment: "delivery" | "pickup"; address: string | null } | null;
+  /** Where it goes: the distributor's delivery area (e.g. "Within Nairobi") and the customer's own words. */
+  delivery: { fulfilment: "delivery" | "pickup"; area?: string | null; address: string | null } | null;
 }
 
 export interface Interaction {
@@ -236,6 +237,37 @@ const productNames = (items: OrderItem[]) => {
   return names.length <= 1 ? names.join("") : `${names.slice(0, -1).join(", ")} and ${names[names.length - 1]}`;
 };
 
+/** "2 × Probio3, 1 × Veggie Veggie": what's in an order, counts included. */
+export const orderLines = (items: OrderItem[]) => items.map((i) => `${i.qty} × ${i.name}`).join(", ");
+
+/** Where a delivery goes: the distributor's area, then the customer's own directions. */
+export function deliveryWhere(delivery: Order["delivery"]): string | null {
+  const where = [delivery?.area, delivery?.address].filter((x): x is string => Boolean(x && x.trim()));
+  return where.length ? where.join(" · ") : null;
+}
+
+/** How an order from the distributor's page reaches the customer, in one line. */
+export function deliveryLine(delivery: Order["delivery"]): string {
+  if (delivery?.fulfilment === "pickup") return "They'll collect it from you";
+  const where = deliveryWhere(delivery);
+  return where ? `Delivery: ${where}` : "Delivery still to arrange";
+}
+
+/** The message that confirms an order placed on the distributor's page, ready to send. */
+export function confirmationMessage(o: Pick<Order, "customer_name" | "ref" | "items" | "total" | "delivery">, me: string): string {
+  const pickup = o.delivery?.fulfilment === "pickup";
+  return `Hi ${firstName(o.customer_name)}, thank you for your order${o.ref ? ` (${o.ref})` : ""} of ${productNames(o.items)}.${
+    o.total ? ` The total is ${kesFmt(o.total)}${pickup ? "" : " plus delivery"}.` : ""
+  } ${pickup ? "When would you like to collect?" : "When is a good time to deliver?"}${me ? ` ${me}` : ""}`;
+}
+
+/** Whether the distributor has confirmed an order placed on their page (sent the confirmation, or ticked it off). */
+export async function pageOrderConfirmed(workspaceId: string, orderId: string): Promise<boolean> {
+  const d = await db();
+  const rows = await d.query(`select 1 from interactions where workspace_id = $1 and task_key = $2 limit 1`, [workspaceId, `placed:${orderId}`]);
+  return rows.length > 0;
+}
+
 /** The daily list: who to talk to, why, and a message ready to send. */
 export async function today(ws: Workspace): Promise<Task[]> {
   const d = await db();
@@ -305,16 +337,12 @@ export async function today(ws: Workspace): Promise<Task[]> {
     if (recentlyDone(key, 3) || recentlyDone(`placed:${o.id}`, 3)) continue;
     // A fresh order from the distributor's page needs confirming, not chasing.
     if (o.source === "storefront" && !doneAt.has(`placed:${o.id}`) && Date.now() - new Date(o.created_at).getTime() < 7 * 86400_000) {
-      const pickup = o.delivery?.fulfilment === "pickup";
-      const where = pickup ? "Will collect" : o.delivery?.address ? `Deliver to ${o.delivery.address}` : "Delivery to arrange";
       tasks.push({
         key: `placed:${o.id}`,
         kind: "payment",
         title: `${o.customer_name} ordered from your page`,
-        why: `${productNames(o.items)}${o.total ? `, ${kesFmt(o.total)}` : ""}. ${where}. Confirm the total and when it will arrive.`,
-        message: `Hi ${firstName(o.customer_name)}, thank you for your order${o.ref ? ` (${o.ref})` : ""} of ${productNames(o.items)}.${
-          o.total ? ` The total is ${kesFmt(o.total)}${pickup ? "" : " plus delivery"}.` : ""
-        } ${pickup ? "When would you like to collect?" : "When is a good time to deliver?"}${me ? ` ${me}` : ""}`,
+        why: `${orderLines(o.items)}${o.total ? `, ${kesFmt(o.total)}` : ""}. ${deliveryLine(o.delivery)}. Confirm the total and when it will arrive.`,
+        message: confirmationMessage(o, me),
         phone: o.customer_phone,
         href: `/portal/orders/${o.id}`,
         customerId: o.customer_id,

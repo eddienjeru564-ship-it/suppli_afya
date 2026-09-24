@@ -53,6 +53,60 @@ export default async function Dashboard() {
   const hasActivity = c.orders + c.prospects > 0;
   const date = new Date().toLocaleDateString("en-KE", { weekday: "long", day: "numeric", month: "long", timeZone: "Africa/Nairobi" });
 
+  const checklist = !setupDone && (
+    <Card className="p-5 sm:p-6">
+      <div className="flex items-center justify-between gap-3">
+        <h2 className="font-display text-[1.35rem] text-ink">Getting started</h2>
+        <span className="text-[0.8rem] font-semibold text-ink-mute">
+          {steps.filter((s) => s.done).length} of {steps.length}
+        </span>
+      </div>
+      <ol className="mt-4 grid grid-cols-1 gap-3">
+        {steps.map((s, i) => (
+          <li key={s.title} className="flex gap-3">
+            <span
+              className={
+                s.done
+                  ? "grid h-7 w-7 shrink-0 place-items-center rounded-full bg-forest text-cream"
+                  : "grid h-7 w-7 shrink-0 place-items-center rounded-full border border-ink/20 text-[0.8rem] font-semibold text-ink-soft"
+              }
+            >
+              {s.done ? <Check className="h-4 w-4" /> : i + 1}
+            </span>
+            <div className="min-w-0 flex-1">
+              <div className={s.done ? "font-semibold text-ink-mute line-through" : "font-semibold text-ink"}>
+                {s.href && !s.done ? (
+                  <Link href={s.href} className="underline decoration-ink/20 underline-offset-4 hover:decoration-forest">
+                    {s.title}
+                  </Link>
+                ) : (
+                  s.title
+                )}
+              </div>
+              {!s.done && <p className="text-[0.88rem] leading-snug text-ink-soft">{s.body}</p>}
+              {i === 1 && !s.done && (
+                <div className="mt-3">
+                  <ShareLink url={url} displayUrl={displayUrl} channels={w.channels} />
+                </div>
+              )}
+            </div>
+          </li>
+        ))}
+      </ol>
+    </Card>
+  );
+
+  const todayList = (
+    <section>
+      <div className="mb-3 flex items-baseline justify-between gap-3">
+        <h2 className="font-display text-[1.6rem] text-ink">Today</h2>
+        {tasks.length > 0 && <span className="text-[0.85rem] font-semibold text-ink-mute">{tasks.length} to do</span>}
+      </div>
+      <TaskList tasks={tasks} />
+      <AppBadge count={tasks.length} />
+    </section>
+  );
+
   return (
     <div className="grid grid-cols-1 gap-10">
       <div>
@@ -71,57 +125,9 @@ export default async function Dashboard() {
         </p>
       </div>
 
-      {!setupDone && (
-        <Card className="p-5 sm:p-6">
-          <div className="flex items-center justify-between gap-3">
-            <h2 className="font-display text-[1.35rem] text-ink">Getting started</h2>
-            <span className="text-[0.8rem] font-semibold text-ink-mute">
-              {steps.filter((s) => s.done).length} of {steps.length}
-            </span>
-          </div>
-          <ol className="mt-4 grid grid-cols-1 gap-3">
-            {steps.map((s, i) => (
-              <li key={s.title} className="flex gap-3">
-                <span
-                  className={
-                    s.done
-                      ? "grid h-7 w-7 shrink-0 place-items-center rounded-full bg-forest text-cream"
-                      : "grid h-7 w-7 shrink-0 place-items-center rounded-full border border-ink/20 text-[0.8rem] font-semibold text-ink-soft"
-                  }
-                >
-                  {s.done ? <Check className="h-4 w-4" /> : i + 1}
-                </span>
-                <div className="min-w-0 flex-1">
-                  <div className={s.done ? "font-semibold text-ink-mute line-through" : "font-semibold text-ink"}>
-                    {s.href && !s.done ? (
-                      <Link href={s.href} className="underline decoration-ink/20 underline-offset-4 hover:decoration-forest">
-                        {s.title}
-                      </Link>
-                    ) : (
-                      s.title
-                    )}
-                  </div>
-                  {!s.done && <p className="text-[0.88rem] leading-snug text-ink-soft">{s.body}</p>}
-                  {i === 1 && !s.done && (
-                    <div className="mt-3">
-                      <ShareLink url={url} displayUrl={displayUrl} channels={w.channels} />
-                    </div>
-                  )}
-                </div>
-              </li>
-            ))}
-          </ol>
-        </Card>
-      )}
-
-      <section>
-        <div className="mb-3 flex items-baseline justify-between gap-3">
-          <h2 className="font-display text-[1.6rem] text-ink">Today</h2>
-          {tasks.length > 0 && <span className="text-[0.85rem] font-semibold text-ink-mute">{tasks.length} to do</span>}
-        </div>
-        <TaskList tasks={tasks} />
-        <AppBadge count={tasks.length} />
-      </section>
+      {/* Someone waiting on you comes before the checklist; on a quiet day the checklist leads. */}
+      {tasks.length > 0 ? todayList : checklist}
+      {tasks.length > 0 ? checklist : todayList}
 
       <InstallCard />
       {pushConfigured() && <ReminderCard />}

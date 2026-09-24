@@ -12,6 +12,13 @@ import { Pill } from "./ui";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
+/** Says where the link goes, rather than a bare "Open". */
+function openLabel(href: string) {
+  if (href.startsWith("/portal/orders/")) return "See the order";
+  if (href.startsWith("/portal/prospects/")) return "See their answers";
+  return "See their record";
+}
+
 /** Today's list. Each person opens a ready message; send it on WhatsApp, then tick it off. */
 export function TaskList({ tasks }: { tasks: Task[] }) {
   const [open, setOpen] = useState<string | null>(tasks[0]?.key ?? null);
@@ -86,7 +93,8 @@ export function TaskList({ tasks }: { tasks: Task[] }) {
                           value={msg}
                           onChange={(e) => setDrafts((d) => ({ ...d, [t.key]: e.target.value }))}
                           rows={3}
-                          className="mt-1.5 w-full resize-y rounded-xl border border-transparent bg-wa-bubble px-3 py-2.5 text-[0.92rem] font-normal leading-relaxed text-[#111b21] outline-none focus:border-moss"
+                          // Grows to fit the whole message where the browser can, so nothing is cut off mid-sentence.
+                          className="mt-1.5 max-h-72 w-full resize-y rounded-xl border border-transparent bg-wa-bubble px-3 py-2.5 text-[0.92rem] font-normal leading-relaxed text-[#111b21] outline-none [field-sizing:content] focus:border-moss"
                         />
                       </label>
                       <div className="mt-3 flex flex-wrap items-center gap-2">
@@ -106,8 +114,11 @@ export function TaskList({ tasks }: { tasks: Task[] }) {
                         >
                           Mark done
                         </button>
-                        <Link href={t.href} className="px-2 text-[0.88rem] font-semibold text-forest underline-offset-2 hover:underline">
-                          Open
+                        <Link
+                          href={t.href}
+                          className="inline-flex h-10 items-center rounded-full px-4 text-[0.88rem] font-semibold text-forest hover:bg-forest/[0.06]"
+                        >
+                          {openLabel(t.href)}
                         </Link>
                       </div>
                       {!t.phone && (

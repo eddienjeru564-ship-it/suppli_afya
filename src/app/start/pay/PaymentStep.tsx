@@ -11,6 +11,8 @@ import { Field } from "@/components/ui/Field";
 import { PlanSummary } from "@/components/start/PlanSummary";
 import { StartShell } from "@/components/start/Shell";
 import { beginPayment } from "../actions";
+import { MPesa } from "@/components/ui/KeepTogether";
+import { Check } from "@/components/ui/icons";
 
 type Stage =
   | { kind: "choose"; error?: string }
@@ -155,7 +157,7 @@ export function PaymentStep({
                 <p className="mt-4 text-center text-[0.8rem] leading-relaxed text-ink-mute">
                   Nothing renews automatically. Your portal reminds you a few days before the month ends.
                   <br />
-                  Signed in as {email}
+                  Signed in as <span className="break-all">{email}</span>
                 </p>
               </>
             )}
@@ -189,7 +191,7 @@ export function PaymentStep({
                 </h1>
                 <p className="mt-3 text-[1.02rem] leading-relaxed text-ink-soft">{stage.reason}</p>
                 <p className="mt-2 text-[0.95rem] leading-relaxed text-ink-soft">
-                  Your account is saved and nothing was charged. You can try again now, with M-Pesa or a card.
+                  Your account is saved and nothing was charged. You can try again now, with <MPesa /> or a card.
                 </p>
                 <Button size="lg" className="mt-7 w-full" onClick={() => setStage({ kind: "choose" })} arrow>
                   Try again
@@ -207,7 +209,9 @@ export function PaymentStep({
 
             {stage.kind === "confirmed" && (
               <div className="py-10">
-                <div className="grid h-12 w-12 place-items-center rounded-full bg-forest text-xl text-cream">✓</div>
+                <div className="grid h-12 w-12 place-items-center rounded-full bg-forest text-cream">
+                  <Check className="h-5 w-5" />
+                </div>
                 <h1 className="mt-5 font-display text-[2.2rem] leading-tight text-ink">Payment confirmed.</h1>
               </div>
             )}
@@ -280,7 +284,7 @@ function Waiting({
       </div>
       <h1 className="mt-5 font-display text-[2.2rem] leading-[1.05] tracking-[-0.02em] text-ink">Check your phone</h1>
       <p className="mt-3 text-[1.02rem] leading-relaxed text-ink-soft">
-        We&apos;ve sent an M-Pesa prompt to <span className="font-semibold text-ink">{phone}</span>. Enter your PIN to pay{" "}
+        We&apos;ve sent an <MPesa /> prompt to <span className="font-semibold text-ink">{phone}</span>. Enter your PIN to pay{" "}
         {kes(amount)}. This page moves on by itself once it&apos;s done.
       </p>
       <AnimatePresence initial={false}>
@@ -342,11 +346,17 @@ function TestApproval({
     <div>
       <div className="text-[0.8rem] font-semibold text-[#7a5412]">Test mode</div>
       <h1 className="mt-2 font-display text-[2.2rem] leading-[1.05] tracking-[-0.02em] text-ink">
-        {method === "mpesa" ? "Approve the M-Pesa prompt" : "Complete the card payment"}
+        {method === "mpesa" ? (
+          <>
+            Approve the <MPesa /> prompt
+          </>
+        ) : (
+          "Complete the card payment"
+        )}
       </h1>
       <p className="mt-3 text-[1.02rem] leading-relaxed text-ink-soft">
-        On the live site this is where {method === "mpesa" ? "the customer enters their M-Pesa PIN" : "Paystack takes the card details"} for{" "}
-        {kes(amount)}. Choose what happens.
+        On the live site this is where {method === "mpesa" ? <>you&apos;d enter your <MPesa /> PIN</> : "you'd enter your card details, with Paystack"}{" "}
+        to pay {kes(amount)}. Here, you choose what happens.
       </p>
       <div className="mt-7 grid gap-2 sm:grid-cols-2">
         <Button size="lg" disabled={busy} onClick={() => decide("approve")}>

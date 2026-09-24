@@ -1,8 +1,9 @@
 "use client";
 
 import clsx from "clsx";
-import { motion, useReducedMotion } from "motion/react";
+import { motion } from "motion/react";
 import { Reveal } from "@/components/ui/Reveal";
+import { useReducedMotion } from "@/components/ui/useReducedMotion";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 

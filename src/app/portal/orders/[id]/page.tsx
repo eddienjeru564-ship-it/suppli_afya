@@ -1,9 +1,10 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { requirePortalAccount } from "@/server/auth";
-import { order as getOrder } from "@/server/portal";
+import { confirmationMessage, deliveryWhere, order as getOrder, pageOrderConfirmed } from "@/server/portal";
 import { Card, Pill, kesAmount, longDate, prettyPhone } from "@/components/portal/ui";
 import { ChevronLeft } from "@/components/ui/icons";
+import { ConfirmOrder } from "./ConfirmOrder";
 import { OrderActions } from "./OrderActions";
 
 export default async function OrderPage(props: PageProps<"/portal/orders/[id]">) {
@@ -12,6 +13,8 @@ export default async function OrderPage(props: PageProps<"/portal/orders/[id]">)
   const o = /^[0-9a-f-]{36}$/.test(id) ? await getOrder(a.workspace.id, id) : null;
   if (!o) notFound();
   const first = o.customer_name.split(" ")[0];
+  // A page order is confirmed before anyone chases the payment.
+  const toConfirm = o.source === "storefront" && o.status === "unpaid" && !(await pageOrderConfirmed(a.workspace.id, o.id));
   const reminder = `Hi ${first}, just a quick reminder about your order of ${kesAmount(o.total)} from ${longDate(o.created_at)}. Send it whenever you're ready and I'll sort out the delivery. Asante!`;
 
   return (
@@ -52,8 +55,10 @@ export default async function OrderPage(props: PageProps<"/portal/orders/[id]">)
         <Card className="grid gap-2 p-5 text-[0.93rem]">
           {o.delivery && (
             <p>
-              <span className="font-semibold text-ink">{o.delivery.fulfilment === "pickup" ? "Collecting. " : "Deliver to: "}</span>
-              <span className="text-ink-soft">{o.delivery.fulfilment === "pickup" ? "They'll collect from you." : (o.delivery.address ?? "Ask where")}</span>
+              <span className="font-semibold text-ink">{o.delivery.fulfilment === "pickup" ? "Collecting: " : "Delivery: "}</span>
+              <span className="text-ink-soft">
+                {o.delivery.fulfilment === "pickup" ? "they'll collect it from you" : (deliveryWhere(o.delivery) ?? "still to arrange")}
+              </span>
             </p>
           )}
           {o.payment_method && o.status === "unpaid" && (
@@ -93,8 +98,18 @@ export default async function OrderPage(props: PageProps<"/portal/orders/[id]">)
           </div>
         )}
       </dl>
+      {toConfirm && (
+        <Card className="p-5">
+          <ConfirmOrder
+            orderId={o.id}
+            first={first}
+            phone={o.customer_phone}
+            message={confirmationMessage(o, (a.workspace.owner_name ?? "").split(" ")[0])}
+          />
+        </Card>
+      )}
       <Card className="p-5">
-        <OrderActions id={o.id} status={o.status} phone={o.customer_phone} reminder={reminder} />
+        <OrderActions id={o.id} status={o.status} phone={o.customer_phone} reminder={reminder} remind={!toConfirm} />
       </Card>
     </div>
   );

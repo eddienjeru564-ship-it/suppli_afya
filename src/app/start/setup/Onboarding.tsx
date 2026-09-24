@@ -2,7 +2,7 @@
 
 import clsx from "clsx";
 import Link from "next/link";
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
 import { useState, useTransition } from "react";
 import { BUSINESS_TYPES, CHANNELS, GOALS, goalFocus, labelFor } from "@/config/onboarding";
 import { Logo } from "@/components/brand/Logo";
@@ -12,6 +12,7 @@ import { Button, ButtonLink } from "@/components/ui/Button";
 import { Check, ChevronLeft } from "@/components/ui/icons";
 import { Field } from "@/components/ui/Field";
 import { finishOnboarding, saveStep, type FinishResult } from "./actions";
+import { useReducedMotion } from "@/components/ui/useReducedMotion";
 
 export interface OnboardingInitial {
   step: number;
@@ -334,7 +335,9 @@ function Done({
 
   return (
     <div className="pb-6">
-      <div className="grid h-12 w-12 place-items-center rounded-full bg-forest text-xl text-cream">✓</div>
+      <div className="grid h-12 w-12 place-items-center rounded-full bg-forest text-cream">
+        <Check className="h-5 w-5" />
+      </div>
       <h1 className="mt-5 font-display text-[2.6rem] leading-[1.04] tracking-[-0.025em] text-ink sm:text-[3.2rem]">
         You&apos;re all set, {firstName}.
       </h1>
@@ -353,12 +356,13 @@ function Done({
       <h2 className="mt-14 text-[0.95rem] font-semibold text-ink">Here&apos;s what we set up from your answers</h2>
       <ul className="mt-4 grid gap-3">
         <SetupItem title="Your health check link">
-          <span className="font-mono text-[0.85rem] text-forest">{done.displayUrl}</span>{" "}
-          <button type="button" onClick={copy} className="ml-1 text-[0.85rem] font-semibold text-forest underline underline-offset-2">
-            {copied ? "Copied" : "Copy"}
-          </button>
-          <br />
-          Customers who use it send their plan to your WhatsApp on {prettyPhone(v.whatsapp)}.
+          <span className="flex flex-wrap items-center gap-x-3 gap-y-1">
+            <span className="break-all font-mono text-[0.85rem] text-forest">{done.displayUrl}</span>
+            <button type="button" onClick={copy} className="text-[0.85rem] font-semibold text-forest underline underline-offset-2">
+              {copied ? "Copied" : "Copy"}
+            </button>
+          </span>
+          <span className="mt-1 block">Customers who use it send their plan to your WhatsApp on {prettyPhone(v.whatsapp)}.</span>
         </SetupItem>
         <SetupItem title="Your portal, in your order">
           Your daily list puts {goalFocus(v.goals)} first

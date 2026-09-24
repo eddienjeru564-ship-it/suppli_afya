@@ -5,6 +5,7 @@ import { AnimatePresence, motion } from "motion/react";
 import { useState } from "react";
 import { PLANS, PLANS_BY_ID, kes, type PlanId } from "@/config/plans";
 import { Check } from "@/components/ui/icons";
+import { MPesa } from "@/components/ui/KeepTogether";
 
 /**
  * What you're buying, kept in view through checkout. Switching plan here is
@@ -95,7 +96,7 @@ function Details({ plan, onChange, desktop }: { plan: PlanId; onChange: (p: Plan
         </div>
       </div>
       <p className="mt-5 text-[0.8rem] leading-relaxed text-cream/60">
-        Paid monthly. Nothing is taken automatically; you renew each month by M-Pesa or card.
+        Paid monthly. Nothing is taken automatically; you renew each month by <MPesa /> or card.
       </p>
     </div>
   );
