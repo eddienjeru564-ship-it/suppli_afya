@@ -68,7 +68,7 @@ test("a distributor can pay, set up and run their first order", async ({ page, b
   const c = await browser.newContext({ viewport: { width: 390, height: 844 } });
   const cp = await c.newPage();
   await cp.route("https://wa.me/**", (r) => r.fulfill({ status: 200, body: "whatsapp" }));
-  await cp.goto(`/d/${slug}`);
+  await cp.goto(`/d/${slug}/check`);
   await customerCheck(cp);
   await cp.getByPlaceholder("07XX XXX XXX").fill("0722 111 222");
   await cp.getByRole("button", { name: "Send on WhatsApp" }).click();

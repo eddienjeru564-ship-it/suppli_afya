@@ -35,6 +35,23 @@ export default async function SettingsPage() {
     <div className="grid grid-cols-1 gap-10">
       <PageHeader title="Settings" sub={a.user.email} />
 
+      <section>
+        <h2 className="mb-3 font-display text-[1.5rem] text-ink">Your shop</h2>
+        <Card className="flex flex-wrap items-center justify-between gap-4 p-5">
+          <p className="max-w-md text-[0.93rem] leading-relaxed text-ink-soft">
+            Your prices, delivery, payment details and the note customers see at the top of your shop.
+          </p>
+          <div className="flex flex-wrap gap-2">
+            <Link href="/portal/shop" className={buttonClass("primary", "md")}>
+              Edit your shop
+            </Link>
+            <Link href={`/d/${w.slug}`} target="_blank" className={buttonClass("secondary", "md")}>
+              View it
+            </Link>
+          </div>
+        </Card>
+      </section>
+
       <section id="card" className="scroll-mt-20">
         <h2 className="mb-3 font-display text-[1.5rem] text-ink">Your link and QR card</h2>
         <div className="grid items-center gap-8 lg:grid-cols-2">

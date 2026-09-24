@@ -1,5 +1,6 @@
 "use server";
 
+import { RESERVED_SLUGS } from "@/config/distributors";
 import { BUSINESS_TYPES, CHANNELS, GOALS } from "@/config/onboarding";
 import { site } from "@/config/site";
 import { getAccount, subscriptionState } from "@/server/auth";
@@ -88,7 +89,7 @@ export async function finishOnboarding(): Promise<FinishResult> {
     for (let i = 0; i < 50 && !slug; i++) {
       const candidate = i === 0 ? base : `${base}-${i + 1}`;
       const taken = await d.query(`select 1 from workspaces where slug = $1`, [candidate]);
-      if (!taken.length && candidate !== "grace") slug = candidate;
+      if (!taken.length && !RESERVED_SLUGS.includes(candidate)) slug = candidate;
     }
     slug ??= `${base}-${Date.now().toString(36)}`;
   }

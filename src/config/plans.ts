@@ -38,7 +38,7 @@ export const PLANS: Plan[] = [
     canImport: false,
     monthlySummary: false,
     features: [
-      { text: "Your own health check link and QR card" },
+      { text: "Your own shop page with the health check, and a QR card" },
       { text: "Prospects, customers and orders in one place" },
       { text: "A daily list of follow-ups, unpaid orders and reorders" },
       { text: "Up to 50 customers" },

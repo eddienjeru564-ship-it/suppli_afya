@@ -16,7 +16,7 @@ export default async function NewOrderPage(props: PageProps<"/portal/orders/new"
   const prospectId = uuid(sp.prospect);
   const customerId = uuid(sp.customer);
 
-  const [customers, priceRows, p] = await Promise.all([
+  const [customers, priceRows, p, shopPrices] = await Promise.all([
     d.query<{ id: string; name: string; phone: string | null }>(`select id, name, phone from customers where workspace_id = $1 order by name`, [
       a.workspace.id,
     ]),
@@ -25,11 +25,14 @@ export default async function NewOrderPage(props: PageProps<"/portal/orders/new"
       [a.workspace.id],
     ),
     prospectId ? getProspect(a.workspace.id, prospectId) : Promise.resolve(null),
+    d.query<{ product_id: string; price: number }>(`select product_id, price from shop_products where workspace_id = $1 and price is not null`, [a.workspace.id]),
   ]);
 
   // Remember the last price used for each product, so repeat orders are one tap.
   const lastPrices: Record<string, number> = {};
   for (const r of priceRows) for (const i of r.items) if (!(i.productId in lastPrices) && i.unitPrice > 0) lastPrices[i.productId] = i.unitPrice;
+  // Otherwise, the price on their shop.
+  for (const r of shopPrices) if (!(r.product_id in lastPrices)) lastPrices[r.product_id] = r.price;
 
   const usableProspect = p && !p.customer_id ? { id: p.id, name: p.name } : undefined;
   const suggested = p ? p.products : [];

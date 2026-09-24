@@ -8,7 +8,7 @@ health check and the recommendation engine behind it.
 
 - `/`: the website for distributors, with a live demo of the health check
 - `/check`: the health check as a customer sees it (demo distributor)
-- `/d/<slug>`: a distributor's own health check link (the QR card points here)
+- `/d/<slug>`: a distributor's own shop: browse, product pages, the health check (`/check`), basket and ordering. The QR card points here. Example: `/d/kate-cromuel`
 - `/start`: choose a plan, create an account, pay, set up
 - `/portal`: the distributor portal (Today, Prospects, Orders, Customers, Settings)
 - `/login`: returning distributors
@@ -60,6 +60,7 @@ holds the install offers, update prompt, connection bar and morning reminder.
 - **Updates:** each deploy is a new service worker; the app shows "A new version is ready" with an Update
   button, and never swaps versions underneath someone mid-task.
 - **Sessions:** using the portal keeps the session alive (30 days from the last visit).
+- **Product photos:** official images go in `assets/products/` (see its README), then `node scripts/product-images.mjs`.
 - **Icons:** regenerate with `node scripts/generate-icons.mjs`; app screenshots with
   `SCREENSHOTS=1 npx playwright test e2e/screenshots.spec.ts --project=mobile`.
 

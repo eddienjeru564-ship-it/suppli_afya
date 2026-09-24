@@ -10,6 +10,8 @@ import { getAccount, subscriptionState, type Account } from "@/server/auth";
 import { db, json } from "@/server/db";
 import { pushConfigured } from "@/server/env";
 import { removeSubscription, saveSubscription, sendTo, type PushSubscriptionJSON } from "@/server/push";
+import { savePrices, saveShopDetails } from "@/server/shop";
+import type { PriceList, ShopDetails } from "@/config/shop";
 import { normaliseKenyanPhone } from "@/server/payments/mpesa";
 import { customerCount, supplyDaysFor, type OrderItem } from "@/server/portal";
 
@@ -324,5 +326,28 @@ export async function subscribePush(sub: PushSubscriptionJSON): Promise<ActionRe
 export async function unsubscribePush(endpoint: string): Promise<ActionResult> {
   const a = await requireAccount();
   await removeSubscription(a.workspace.id, String(endpoint ?? ""));
+  return { ok: true };
+}
+
+// ------------------------------------------------------------------ Shop page
+
+export async function saveShop(details: ShopDetails): Promise<ActionResult> {
+  const a = await requireAccount();
+  if (details?.mpesa?.number && !/^\d{5,12}$/.test(details.mpesa.number.replace(/\s/g, "")))
+    return { ok: false, error: "The M-Pesa number should be digits only, like 123456." };
+  await saveShopDetails(a.workspace.id, details ?? {});
+  revalidatePath("/portal/shop");
+  if (a.workspace.slug) revalidatePath(`/d/${a.workspace.slug}`, "layout");
+  return { ok: true };
+}
+
+export async function saveShopPrices(prices: PriceList): Promise<ActionResult> {
+  const a = await requireAccount();
+  const featured = Object.values(prices ?? {}).filter((p) => p?.featured).length;
+  if (featured > 4) return { ok: false, error: "Choose up to four products as most asked for." };
+  await savePrices(a.workspace.id, prices ?? {});
+  revalidatePath("/portal/shop");
+  revalidatePath("/portal", "layout");
+  if (a.workspace.slug) revalidatePath(`/d/${a.workspace.slug}`, "layout");
   return { ok: true };
 }

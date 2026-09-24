@@ -66,8 +66,8 @@ test("a customer can complete the check and get a safe, explained plan", async (
   await expect(page.getByText("One of its ingredients comes from pork, which you avoid.")).toBeVisible();
   await expect(page.getByRole("heading", { name: "ArthroXtra Tablets" })).toBeVisible();
 
-  await page.getByRole("button", { name: /See the message Grace gets/ }).click();
-  await expect(page.getByText("Hi Grace, I've just done the health check.")).toBeVisible();
+  await page.getByRole("button", { name: /See the message Kate gets/ }).click();
+  await expect(page.getByText("Hi Kate, I've just done the health check.")).toBeVisible();
   await expect(page.getByText(/Takes blood pressure medicine/)).toBeVisible();
 });
 

@@ -22,7 +22,7 @@ import {
 import { Button } from "@/components/ui/Button";
 import { ChevronLeft, Shield } from "@/components/ui/icons";
 import { MultiChoice, Scale, SingleChoice, TextField } from "./inputs";
-import { ResultPlan } from "./ResultPlan";
+import { ResultPlan, type ShopHooks } from "./ResultPlan";
 
 type Mode = "embedded" | "page";
 
@@ -40,12 +40,18 @@ export function HealthCheck({
   onAnswersChange,
   onResult,
   className,
+  shop,
+  stickyTop = "top-0",
 }: {
   distributor: Distributor;
   mode: Mode;
   onAnswersChange?: (answers: Answers) => void;
   onResult?: (result: EngineResult | null) => void;
   className?: string;
+  /** Inside a distributor's shop: prices, product links and ordering the plan. */
+  shop?: ShopHooks;
+  /** Where the progress header sticks, when something else is pinned above it. */
+  stickyTop?: string;
 }) {
   const reduce = useReducedMotion();
   const storageKey = `sa-check:${distributor.slug}`;
@@ -213,7 +219,7 @@ export function HealthCheck({
       <div
         className={clsx(
           "z-10 bg-cream/90 backdrop-blur",
-          mode === "page" ? "sticky top-0 px-5 pt-4 sm:px-8" : "px-5 pt-4 lg:sticky lg:top-0",
+          mode === "page" ? clsx("sticky px-5 pt-4 sm:px-8", stickyTop) : "px-5 pt-4 lg:sticky lg:top-0",
         )}
       >
         <div className={clsx("mx-auto flex items-center gap-3", mode === "page" && "max-w-xl")}>
@@ -271,6 +277,7 @@ export function HealthCheck({
                   onRestart={restart}
                   onEdit={back}
                   embedded={mode === "embedded"}
+                  shop={shop}
                 />
               </motion.div>
             ) : (

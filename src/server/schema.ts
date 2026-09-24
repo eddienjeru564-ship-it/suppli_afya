@@ -158,4 +158,25 @@ create table push_subscriptions (
 create index push_subscriptions_workspace_idx on push_subscriptions(workspace_id);
 `,
   },
+  {
+    version: 3,
+    sql: `
+-- The customer-facing shop: details the distributor writes, and their price list.
+alter table workspaces add column shop jsonb not null default '{}';
+create table shop_products (
+  workspace_id uuid not null references workspaces(id) on delete cascade,
+  product_id text not null,
+  price int,
+  in_stock boolean not null default true,
+  featured boolean not null default false,
+  updated_at timestamptz not null default now(),
+  primary key (workspace_id, product_id)
+);
+-- Orders placed by customers on the shop page, alongside those the distributor records.
+alter table orders add column source text not null default 'portal';
+alter table orders add column ref text;
+alter table orders add column customer_note text;
+alter table orders add column delivery jsonb;
+`,
+  },
 ];

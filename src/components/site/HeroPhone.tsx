@@ -203,7 +203,7 @@ function PlanScene() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1, duration: 0.5, ease }}
       >
-        <div className="font-display text-[0.95rem]">Send your plan to Grace</div>
+        <div className="font-display text-[0.95rem]">Send your plan to Kate</div>
         <motion.div
           className="mt-2 flex h-8 items-center justify-center gap-1.5 rounded-full bg-wa text-[0.72rem] font-semibold text-[#06331f]"
           animate={{ scale: [1, 0.95, 1] }}
@@ -228,7 +228,7 @@ function ChatScene() {
       <div className="flex items-center gap-2 bg-wa-deep px-3 pb-2.5 pt-8 text-white">
         <span className="grid h-7 w-7 place-items-center rounded-full bg-[#dfe5e7] text-xs font-semibold text-wa-deep">G</span>
         <div className="leading-tight">
-          <div className="text-[0.8rem] font-semibold">Grace Wambui</div>
+          <div className="text-[0.8rem] font-semibold">Kate Cromuel</div>
           <div className="text-[0.6rem] text-white/75">online</div>
         </div>
       </div>
@@ -239,7 +239,7 @@ function ChatScene() {
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ delay: 0.35, duration: 0.5, ease }}
         >
-          Hi Grace, I&apos;ve just done the health check.
+          Hi Kate, I&apos;ve just done the health check.
           <br />
           <br />
           <b>About me:</b> Wanjiru, 34
