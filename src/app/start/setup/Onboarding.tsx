@@ -13,6 +13,7 @@ import { Check, ChevronLeft } from "@/components/ui/icons";
 import { Field } from "@/components/ui/Field";
 import { finishOnboarding, saveStep, type FinishResult } from "./actions";
 import { useReducedMotion } from "@/components/ui/useReducedMotion";
+import { greetingName } from "@/lib/names";
 
 export interface OnboardingInitial {
   step: number;
@@ -66,7 +67,7 @@ export function Onboarding({ initial }: { initial: OnboardingInitial }) {
   const toggle = (key: "channels" | "goals", id: string) =>
     setV((s) => ({ ...s, [key]: s[key].includes(id) ? s[key].filter((x) => x !== id) : [...s[key], id] }));
 
-  const firstName = v.name.split(" ")[0] || "there";
+  const firstName = greetingName(v.name) || "there";
   const screenKey = done ? "done" : String(step);
 
   return (

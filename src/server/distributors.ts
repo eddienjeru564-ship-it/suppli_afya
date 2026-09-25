@@ -1,5 +1,6 @@
 import { DISTRIBUTORS, type Distributor } from "@/config/distributors";
 import { db } from "./db";
+import { greetingName } from "@/lib/names";
 
 const TYPE_LABEL: Record<string, string> = {
   independent: "BF Suma distributor",
@@ -43,7 +44,7 @@ export async function distributorBySlug(slug: string): Promise<(Distributor & { 
   return {
     slug: w.slug,
     name: w.owner_name,
-    firstName: w.owner_name.split(" ")[0],
+    firstName: greetingName(w.owner_name),
     area: w.location ?? "",
     whatsapp: w.whatsapp,
     demo: false,

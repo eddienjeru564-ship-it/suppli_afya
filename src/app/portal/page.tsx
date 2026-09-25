@@ -14,6 +14,7 @@ import { ReminderCard } from "@/components/pwa/MorningReminder";
 import { pushConfigured } from "@/server/env";
 import { Card, kesAmount } from "@/components/portal/ui";
 import { Check } from "@/components/ui/icons";
+import { greetingName } from "@/lib/names";
 
 export const metadata = { title: "Today" };
 
@@ -37,7 +38,7 @@ export default async function Dashboard() {
     ),
   ]);
   const c = counts[0];
-  const first = (w.owner_name ?? "").split(" ")[0];
+  const first = greetingName(w.owner_name);
   const url = `${site.url}/d/${w.slug}`;
   const displayUrl = `${site.displayDomain}/d/${w.slug}`;
   const plan = PLANS_BY_ID[w.plan];

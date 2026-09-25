@@ -1,6 +1,7 @@
 import { PRODUCTS_BY_ID } from "@/engine";
 import type { Workspace } from "./auth";
 import { db } from "./db";
+import { greetingName } from "@/lib/names";
 
 /** Data access for the distributor portal. Every query is scoped to one workspace. */
 
@@ -222,14 +223,13 @@ const GOAL_KINDS: Record<string, TaskKind[]> = {
 };
 const DEFAULT_ORDER: TaskKind[] = ["new", "payment", "reorder", "checkin", "quiet"];
 
-export function kindOrder(goals: string[]): TaskKind[] {
+function kindOrder(goals: string[]): TaskKind[] {
   const out: TaskKind[] = [];
   for (const g of goals) for (const k of GOAL_KINDS[g] ?? []) if (!out.includes(k)) out.push(k);
   for (const k of DEFAULT_ORDER) if (!out.includes(k)) out.push(k);
   return out;
 }
 
-const firstName = (n: string) => n.split(" ")[0];
 const dayMonth = (d: Date) => new Date(d).toLocaleDateString("en-KE", { day: "numeric", month: "long" });
 const kesFmt = (n: number) => `KES ${n.toLocaleString("en-KE")}`;
 const productNames = (items: OrderItem[]) => {
@@ -256,7 +256,7 @@ export function deliveryLine(delivery: Order["delivery"]): string {
 /** The message that confirms an order placed on the distributor's page, ready to send. */
 export function confirmationMessage(o: Pick<Order, "customer_name" | "ref" | "items" | "total" | "delivery">, me: string): string {
   const pickup = o.delivery?.fulfilment === "pickup";
-  return `Hi ${firstName(o.customer_name)}, thank you for your order${o.ref ? ` (${o.ref})` : ""} of ${productNames(o.items)}.${
+  return `Hi ${greetingName(o.customer_name)}, thank you for your order${o.ref ? ` (${o.ref})` : ""} of ${productNames(o.items)}.${
     o.total ? ` The total is ${kesFmt(o.total)}${pickup ? "" : " plus delivery"}.` : ""
   } ${pickup ? "When would you like to collect?" : "When is a good time to deliver?"}${me ? ` ${me}` : ""}`;
 }
@@ -312,7 +312,7 @@ export async function today(ws: Workspace): Promise<Task[]> {
     const t = doneAt.get(key);
     return t !== undefined && Date.now() - t < days * 86400_000;
   };
-  const me = firstName(ws.owner_name ?? "");
+  const me = greetingName(ws.owner_name ?? "");
   const tasks: Task[] = [];
 
   for (const p of newP) {
@@ -355,7 +355,7 @@ export async function today(ws: Workspace): Promise<Task[]> {
       kind: "payment",
       title: o.customer_name,
       why: `Order of ${kesFmt(o.total)} from ${dayMonth(o.created_at)} isn't paid yet.`,
-      message: `Hi ${firstName(o.customer_name)}, just a quick reminder about your order of ${kesFmt(o.total)} from ${dayMonth(o.created_at)}. Send it whenever you're ready and I'll sort out the delivery. Asante!`,
+      message: `Hi ${greetingName(o.customer_name)}, just a quick reminder about your order of ${kesFmt(o.total)} from ${dayMonth(o.created_at)}. Send it whenever you're ready and I'll sort out the delivery. Asante!`,
       phone: o.customer_phone,
       href: `/portal/orders/${o.id}`,
       customerId: o.customer_id,
@@ -371,7 +371,7 @@ export async function today(ws: Workspace): Promise<Task[]> {
       kind: "reorder",
       title: o.customer_name,
       why: `Bought ${productNames(o.items)} on ${dayMonth(o.created_at)}. ${overdue ? "Probably finished by now." : "Probably running out this week."}`,
-      message: `Habari ${firstName(o.customer_name)}! It's about time for your next ${productNames(o.items)}. How has it been going? I can set aside another one for you, just let me know.${me ? ` ${me}` : ""}`,
+      message: `Habari ${greetingName(o.customer_name)}! It's about time for your next ${productNames(o.items)}. How has it been going? I can set aside another one for you, just let me know.${me ? ` ${me}` : ""}`,
       phone: o.customer_phone,
       href: `/portal/customers/${o.customer_id}`,
       customerId: o.customer_id,
@@ -387,7 +387,7 @@ export async function today(ws: Workspace): Promise<Task[]> {
       kind: "checkin",
       title: o.customer_name,
       why: `Started ${productNames(o.items)} ${relative(o.created_at)}. A good time to ask how it's going.`,
-      message: `Hi ${firstName(o.customer_name)}, it's been a couple of weeks on ${productNames(o.items)}. How are you finding it?${first ? ` ${first.expectation}` : ""}`,
+      message: `Hi ${greetingName(o.customer_name)}, it's been a couple of weeks on ${productNames(o.items)}. How are you finding it?${first ? ` ${first.expectation}` : ""}`,
       phone: o.customer_phone,
       href: `/portal/customers/${o.customer_id}`,
       customerId: o.customer_id,
@@ -402,7 +402,7 @@ export async function today(ws: Workspace): Promise<Task[]> {
       kind: "quiet",
       title: c.name,
       why: `No order since ${dayMonth(c.last_order_at!)}.`,
-      message: `Hi ${firstName(c.name)}, it's been a while! Hope you're keeping well. Let me know if you need anything, I'm here.`,
+      message: `Hi ${greetingName(c.name)}, it's been a while! Hope you're keeping well. Let me know if you need anything, I'm here.`,
       phone: c.phone,
       href: `/portal/customers/${c.id}`,
       customerId: c.id,
