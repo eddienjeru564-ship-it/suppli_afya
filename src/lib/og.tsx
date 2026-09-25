@@ -55,7 +55,7 @@ export async function brandCard({
           </div>
         </div>
         <div style={{ display: "flex", flexDirection: "column" }}>
-          <div style={{ fontSize: 26, color: "#98552f", marginBottom: 18 }}>{eyebrow}</div>
+          <div style={{ fontSize: 26, color: "#8a4a27", marginBottom: 18 }}>{eyebrow}</div>
           <div
             style={{
               display: "flex",

@@ -21,7 +21,8 @@ export default async function CardSheet() {
     .join(" · ");
 
   return (
-    <div className="min-h-dvh bg-white p-6 print:p-0">
+    <main className="min-h-dvh bg-white p-6 print:p-0">
+      <h1 className="sr-only">Your QR cards</h1>
       <div className="mx-auto mb-6 flex max-w-[190mm] items-center justify-between print:hidden">
         <p className="text-[0.95rem] text-ink-soft">Ten cards per A4 sheet. Print at 100% and cut along the edges.</p>
         <PrintButton />
@@ -47,6 +48,6 @@ export default async function CardSheet() {
           </div>
         ))}
       </div>
-    </div>
+    </main>
   );
 }

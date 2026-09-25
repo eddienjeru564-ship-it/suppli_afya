@@ -61,6 +61,9 @@ export function HowItWorks() {
         <ol
           ref={rail}
           onScroll={onScroll}
+          // On phones the steps scroll sideways; focusable so a keyboard can scroll them too.
+          tabIndex={0}
+          aria-label="How it works, step by step"
           className="no-scrollbar -mx-5 mt-12 flex snap-x snap-mandatory gap-3 overflow-x-auto scroll-px-5 px-5 pb-1 md:mx-0 md:mt-16 md:grid md:grid-cols-2 md:gap-px md:overflow-hidden md:rounded-[2rem] md:border md:border-ink/10 md:bg-ink/10 md:px-0 md:pb-0 lg:grid-cols-4"
         >
           {STEPS.map((s, i) => (
@@ -69,7 +72,7 @@ export function HowItWorks() {
               className="group relative flex w-[82%] shrink-0 snap-start flex-col rounded-[1.6rem] border border-ink/10 bg-paper p-7 sm:w-[60%] md:w-auto md:rounded-none md:border-0 md:bg-cream sm:p-8"
             >
               <Reveal delay={0.08 * i}>
-                <span className="font-display text-[3.25rem] leading-none text-sand-deep transition-colors duration-500 group-hover:text-clay-soft md:text-[3.5rem]">
+                <span aria-hidden className="font-display text-[3.25rem] leading-none text-sand-deep transition-colors duration-500 group-hover:text-clay-soft md:text-[3.5rem]">
                   {String(i + 1).padStart(2, "0")}
                 </span>
                 <h3 className="mt-6 font-display text-[1.5rem] leading-[1.15] text-ink md:mt-8">{s.title}</h3>

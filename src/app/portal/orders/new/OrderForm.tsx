@@ -99,7 +99,7 @@ export function OrderForm({
               ))}
             </div>
             {mode === "existing" ? (
-              <select value={customerId} onChange={(e) => setCustomerId(e.target.value)} className={inputClass}>
+              <select aria-label="Customer" value={customerId} onChange={(e) => setCustomerId(e.target.value)} className={inputClass}>
                 <option value="">Choose a customer</option>
                 {customers.map((c) => (
                   <option key={c.id} value={c.id}>
@@ -209,7 +209,7 @@ export function OrderForm({
         </div>
         {paid && (
           <div className="mt-3 grid gap-3 sm:grid-cols-2">
-            <select value={method} onChange={(e) => setMethod(e.target.value as typeof method)} className={inputClass}>
+            <select aria-label="How it was paid" value={method} onChange={(e) => setMethod(e.target.value as typeof method)} className={inputClass}>
               <option value="mpesa">M-Pesa</option>
               <option value="cash">Cash</option>
               <option value="other">Other</option>
@@ -219,6 +219,7 @@ export function OrderForm({
                 value={ref}
                 onChange={(e) => setRef(e.target.value.toUpperCase())}
                 placeholder="M-Pesa code (optional)"
+                aria-label="M-Pesa code (optional)"
                 className={inputClass}
               />
             )}

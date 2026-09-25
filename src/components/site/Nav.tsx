@@ -73,7 +73,7 @@ export function Nav() {
         scrolled || open ? "bg-cream/85 shadow-[0_1px_0_rgb(22_36_28/0.08)] backdrop-blur-md" : "bg-transparent",
       )}
     >
-      <nav className="container-x flex h-16 items-center justify-between gap-6">
+      <nav aria-label="Main" className="container-x flex h-16 items-center justify-between gap-6">
         <Link href="/" aria-label="Suppli Afya home" onClick={() => setOpen(false)}>
           <Logo />
         </Link>

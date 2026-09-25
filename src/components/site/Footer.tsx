@@ -45,7 +45,7 @@ export function Footer() {
             <Logo tone="cream" />
             <p className="mt-4 text-[0.95rem] leading-relaxed">Made in Kenya, for people who sell BF Suma products.</p>
           </div>
-          <nav className="grid grid-cols-2 gap-x-12 gap-y-3 text-[0.95rem]">
+          <nav aria-label="Footer" className="grid grid-cols-2 gap-x-12 gap-y-3 text-[0.95rem]">
             <Link href="/#how" className="hover:text-cream">How it works</Link>
             <Link href="/check" className="hover:text-cream">Health check</Link>
             <Link href="/#portal" className="hover:text-cream">Your portal</Link>
