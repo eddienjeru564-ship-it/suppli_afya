@@ -16,14 +16,16 @@ Things only the founder can supply or decide. Ordered by how much they block.
    not a clinical interaction database.
 3. **Suppli Afya support number.** Pro promises priority WhatsApp help. Decide the number and set
    `NEXT_PUBLIC_SUPPLI_WHATSAPP` (format `2547XXXXXXXX`); nothing on the site uses it yet.
-4. **Domain.** The site assumes `suppliafya.co.ke`. Set `NEXT_PUBLIC_SITE_URL` and
-   `site.displayDomain` in `src/config/site.ts` to the real one. QR codes encode this URL.
+4. **Domain.** The site assumes `suppliafya.co.ke`. Set `NEXT_PUBLIC_SITE_URL` to the real one; QR codes
+   encode this URL and cards show its domain. Until it's set, a Vercel deploy uses its own address.
 5. **Legal review** of `/privacy`, the disclaimers in the footer and the health check, and ODPC
    registration. The portal now stores customers' health check answers when they choose to send
    them to a distributor, so this is required before real distributors sign up.
 6. **Prices.** The plans in `src/config/plans.ts` are a proposal (KES 1,500 / 2,900 / 4,900).
 7. **Production database.** Set `DATABASE_URL` to a hosted Postgres. The embedded database is for
-   local development only; on Vercel its files would not survive a deploy.
+   local development only; on Vercel, pages that need the database fail with a clear error until
+   `DATABASE_URL` is set. With Supabase, use the transaction pooler (port 6543): Vercel can't reach
+   the direct connection, which is IPv6 only.
 8. **Payment keys.** Without keys, checkout runs in test mode (approve or decline on screen), which
    is allowed only outside production or with `PAYMENTS_ALLOW_TEST=true`. **Never set that on the
    live site.** For live payments:

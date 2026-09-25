@@ -46,6 +46,21 @@ Every variable is listed in `.env.example`.
 Without payment keys, checkout runs in test mode in development. The demo distributor lives in
 `src/config/distributors.ts`; real distributors come from the database after they sign up.
 
+## Deploying on Vercel
+
+Import the repository as a Next.js project; `vercel.json` runs functions in Frankfurt (`fra1`, near
+Kenya and a Supabase `eu-central-1` database) and schedules the morning reminder.
+
+- **`DATABASE_URL` is required.** Vercel's disk is read-only, so the embedded database can't be used there.
+  With Supabase, use the transaction pooler string (port 6543) with `?sslmode=require`.
+- **`NEXT_PUBLIC_SITE_URL`** can wait: until it's set, links, QR codes and callbacks use the deploy's own
+  address (the production domain, or the branch address on previews).
+- **A test deploy without payment keys** needs `PAYMENTS_ALLOW_TEST=true`, because Vercel builds are
+  production builds. Remove it before the site goes live.
+- **Storefronts:** set the same `STOREFRONT_SECRET` here and on the storefront deploy, and point the
+  storefront's `SUPPLI_AFYA_URL` at this site's production address. The storefront's server calls it,
+  so that address must be public: limit Vercel Authentication (Deployment Protection) to previews.
+
 ## The installed app
 
 The portal is a Progressive Web App. `src/app/manifest.ts` describes it, `src/pwa/service-worker.ts`

@@ -31,7 +31,8 @@ async function connect(): Promise<Db> {
   if (env.databaseUrl) {
     const postgres = (await import("postgres")).default;
     // prepare:false keeps us compatible with transaction poolers (e.g. Supabase port 6543).
-    const sql = postgres(env.databaseUrl, { max: 5, prepare: false, onnotice: () => {} });
+    // Serverless instances pause between requests, so idle connections are closed rather than left to go stale.
+    const sql = postgres(env.databaseUrl, { max: 5, prepare: false, idle_timeout: 20, connect_timeout: 10, onnotice: () => {} });
     d = {
       query: async <T,>(text: string, params: unknown[] = []) =>
         (await sql.unsafe(text, params as never[])) as unknown as T[],
@@ -40,6 +41,10 @@ async function connect(): Promise<Db> {
       },
     };
   } else {
+    if (process.env.VERCEL && !process.env.PGLITE_DIR) {
+      // Vercel's disk is read-only and every instance starts empty: the embedded database can't keep anything there.
+      throw new Error("DATABASE_URL is not set. On Vercel the app needs a hosted Postgres database (Supabase, Neon…); see .env.example.");
+    }
     const { PGlite } = await import("@electric-sql/pglite");
     // "memory://" keeps everything in memory (tests); anything else is a folder on disk.
     const inMemory = env.pgliteDir.startsWith("memory://");
