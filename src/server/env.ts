@@ -1,12 +1,13 @@
 /**
  * Server-side configuration. Everything that differs between local, preview
- * and production lives here, read from environment variables.
+ * and production lives here, read from environment variables. An empty variable
+ * counts as unset (Vercel lets you save a blank value), so defaults use ||.
  */
 export const env = {
   databaseUrl: process.env.DATABASE_URL ?? "",
-  pgliteDir: process.env.PGLITE_DIR ?? ".data/pglite",
+  pgliteDir: process.env.PGLITE_DIR || ".data/pglite",
   isProduction: process.env.NODE_ENV === "production",
-  siteUrl: (process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000").replace(/\/$/, ""),
+  siteUrl: (process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000").replace(/\/$/, ""),
 
   /**
    * PayHero sends the M-Pesa STK Push. From the PayHero dashboard:
@@ -20,14 +21,14 @@ export const env = {
     channelId: process.env.PAYHERO_CHANNEL_ID ?? "",
     /** Optional: the secret in the callback URL. Derived from the credentials if unset. */
     callbackToken: process.env.PAYHERO_CALLBACK_TOKEN ?? "",
-    baseUrl: (process.env.PAYHERO_BASE_URL ?? "https://backend.payhero.co.ke/api/v2").replace(/\/$/, ""),
+    baseUrl: (process.env.PAYHERO_BASE_URL || "https://backend.payhero.co.ke/api/v2").replace(/\/$/, ""),
   },
 
   /** Web push for the morning reminder. Generate with: npx web-push generate-vapid-keys */
   push: {
     publicKey: process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY ?? "",
     privateKey: process.env.VAPID_PRIVATE_KEY ?? "",
-    subject: process.env.VAPID_SUBJECT ?? "mailto:hello@suppliafya.co.ke",
+    subject: process.env.VAPID_SUBJECT || "mailto:hello@suppliafya.co.ke",
   },
   /** Shared with the distributor storefronts (suppli_afya-template_site) so they can file orders. */
   storefrontSecret: process.env.STOREFRONT_SECRET ?? "",

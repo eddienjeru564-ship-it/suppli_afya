@@ -1,5 +1,5 @@
 /** Public URL, used for metadata and QR codes. Set NEXT_PUBLIC_SITE_URL in production; on Vercel it defaults to the deploy's own address (next.config.ts). */
-const url = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://suppliafya.co.ke").replace(/\/$/, "");
+const url = (process.env.NEXT_PUBLIC_SITE_URL || "https://suppliafya.co.ke").replace(/\/$/, "");
 
 /**
  * Site-wide settings. Anything that must change before launch lives here.
