@@ -69,8 +69,9 @@ migrations in `src/server/schema.ts`. It never uses Supabase's Data API, Auth or
 
 - **Its own database user.** The app connects as `suppli_app`, not as `postgres`. It owns the app's tables and
   can't bypass row level security, create roles or touch Supabase's own schemas. Use the transaction pooler
-  (port 6543, IPv4, which Vercel needs):
-  `postgres://suppli_app.gntwlmnzgfymyxwkrqtn:PASSWORD@aws-1-eu-west-2.pooler.supabase.com:6543/postgres?sslmode=require`
+  (port 6543, IPv4, which Vercel needs). The host is the project's pooler cluster; copy it from Supabase → Connect →
+  Transaction pooler rather than guessing (a region has more than one, and a wrong one gives "tenant/user not found"):
+  `postgres://suppli_app.gntwlmnzgfymyxwkrqtn:PASSWORD@aws-0-eu-west-2.pooler.supabase.com:6543/postgres?sslmode=require`
 - **Nothing is readable through the Data API.** Supabase grants its public API roles (`anon`, `authenticated`) every
   table that `postgres` creates. Tables owned by `suppli_app` get no such grants, and migration 4 switches on row
   level security with no policies, so the API sees no rows even if a grant slips in later. A test
