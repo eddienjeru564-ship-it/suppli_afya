@@ -22,10 +22,10 @@ Things only the founder can supply or decide. Ordered by how much they block.
    registration. The portal now stores customers' health check answers when they choose to send
    them to a distributor, so this is required before real distributors sign up.
 6. **Prices.** The plans in `src/config/plans.ts` are a proposal (KES 1,500 / 2,900 / 4,900).
-7. **Production database.** Set `DATABASE_URL` to a hosted Postgres. The embedded database is for
-   local development only; on Vercel, pages that need the database fail with a clear error until
-   `DATABASE_URL` is set. With Supabase, use the transaction pooler (port 6543): Vercel can't reach
-   the direct connection, which is IPv6 only.
+7. **Production database.** Set up: the Supabase project `suppli_afya_main_site` (London), reached
+   as the app's own user `suppli_app` through the transaction pooler (port 6543; Vercel can't reach
+   the direct connection, which is IPv6 only). See README, "The database". Still to decide: the
+   Supabase plan. Free projects pause after a week without traffic, and have no daily backups.
 8. **Payment keys.** Without keys, checkout runs in test mode (approve or decline on screen), which
    is allowed only outside production or with `PAYMENTS_ALLOW_TEST=true`. **Never set that on the
    live site.** For live payments:
@@ -47,7 +47,7 @@ Things only the founder can supply or decide. Ordered by how much they block.
     reminder simply doesn't appear.
 
 11. **Storefront orders (optional).** Set the same random `STOREFRONT_SECRET` here and in the
-    distributor storefront (`suppli_afya-distributor_template`), with its `SUPPLI_AFYA_URL` pointing
+    distributor storefront (`suppli_afya-template_site`), with its `SUPPLI_AFYA_URL` pointing
     here. Orders customers place on a live storefront with a `suppliSlug` then arrive through
     `/api/storefront/orders` in that distributor's Orders and on Today. Until it's set, the endpoint
     refuses everything and customers order on WhatsApp.

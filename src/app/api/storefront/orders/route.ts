@@ -7,7 +7,7 @@ import { normaliseKenyanPhone } from "@/server/payments/mpesa";
 import { deliveryLine, orderLines, supplyDaysFor, type Order, type OrderItem } from "@/server/portal";
 
 /**
- * Orders placed on a distributor's storefront (suppli_afya-distributor_template). The
+ * Orders placed on a distributor's storefront (suppli_afya-template_site). The
  * storefront's server has already priced the order from the distributor's own price list;
  * it authenticates with STOREFRONT_SECRET. The order lands in the portal as unpaid, with the
  * customer, their delivery details and note, and shows on Today for the distributor to confirm.

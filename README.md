@@ -48,11 +48,12 @@ Without payment keys, checkout runs in test mode in development. The demo distri
 
 ## Deploying on Vercel
 
-Import the repository as a Next.js project; `vercel.json` runs functions in Frankfurt (`fra1`, near
-Kenya and a Supabase `eu-central-1` database) and schedules the morning reminder.
+The Vercel project is `suppli-afya-main-site`, linked to `suppli-afya/suppli_afya-main_site`.
+`vercel.json` runs functions in London (`lhr1`, next to the database) and schedules the morning reminder.
 
 - **`DATABASE_URL` is required.** Vercel's disk is read-only, so the embedded database can't be used there.
-  With Supabase, use the transaction pooler string (port 6543) with `?sslmode=require`.
+  The database is the Supabase project **`suppli_afya_main_site`** (ref `gntwlmnzgfymyxwkrqtn`, London,
+  `eu-west-2`). The storefront has its own Supabase project; never point this app at it. See "The database" below.
 - **`NEXT_PUBLIC_SITE_URL`** can wait: until it's set, links, QR codes and callbacks use the deploy's own
   address (the production domain, or the branch address on previews).
 - **A test deploy without payment keys** needs `PAYMENTS_ALLOW_TEST=true`, because Vercel builds are
@@ -60,6 +61,24 @@ Kenya and a Supabase `eu-central-1` database) and schedules the morning reminder
 - **Storefronts:** set the same `STOREFRONT_SECRET` here and on the storefront deploy, and point the
   storefront's `SUPPLI_AFYA_URL` at this site's production address. The storefront's server calls it,
   so that address must be public: limit Vercel Authentication (Deployment Protection) to previews.
+
+## The database
+
+The app talks to Postgres directly (`src/server/db.ts`) and creates its own tables on first connect from the
+migrations in `src/server/schema.ts`. It never uses Supabase's Data API, Auth or Storage.
+
+- **Its own database user.** The app connects as `suppli_app`, not as `postgres`. It owns the app's tables and
+  can't bypass row level security, create roles or touch Supabase's own schemas. Use the transaction pooler
+  (port 6543, IPv4, which Vercel needs):
+  `postgres://suppli_app.gntwlmnzgfymyxwkrqtn:PASSWORD@aws-1-eu-west-2.pooler.supabase.com:6543/postgres?sslmode=require`
+- **Nothing is readable through the Data API.** Supabase grants its public API roles (`anon`, `authenticated`) every
+  table that `postgres` creates. Tables owned by `suppli_app` get no such grants, and migration 4 switches on row
+  level security with no policies, so the API sees no rows even if a grant slips in later. A test
+  (`schema.test.ts`) checks this against every table, so a new migration must enable RLS on its tables.
+- **Rotating the password:** in the Supabase SQL editor, `alter role suppli_app password '…'`, then update
+  `DATABASE_URL` in Vercel (Production and Preview) and redeploy.
+- **Viewing data:** the dashboard's `postgres` role is a member of `suppli_app`, so the Table Editor and SQL
+  editor can read and change the app's tables.
 
 ## The installed app
 
