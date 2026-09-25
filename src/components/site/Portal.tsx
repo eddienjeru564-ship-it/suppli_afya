@@ -89,7 +89,7 @@ export function Portal() {
   return (
     <section id="portal" className="py-24 sm:py-32">
       <div className="container-x">
-        <div className="grid items-center gap-14 lg:grid-cols-[0.95fr_1.05fr] lg:gap-20">
+        <div className="grid grid-cols-1 items-center gap-14 lg:grid-cols-[0.95fr_1.05fr] lg:gap-20">
           <div>
             <Reveal>
               <div className="eyebrow">Your portal</div>
@@ -136,7 +136,7 @@ function TodayList() {
         <div className="flex items-end justify-between gap-3">
           <div>
             <div className="font-display text-[1.45rem] leading-tight text-ink">Today</div>
-            <div className="text-[0.8rem] text-ink-mute">Tuesday 14 October · {TODAY.length} people</div>
+            <div className="text-[0.8rem] text-ink-mute">Tuesday 13 October · {TODAY.length} people</div>
           </div>
           <span className="hidden text-[0.72rem] font-semibold text-ink-mute sm:block">Tap anyone to see the message</span>
         </div>

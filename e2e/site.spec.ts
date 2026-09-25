@@ -18,6 +18,19 @@ test("the first screen is readable before any JavaScript arrives", async ({ brow
   await ctx.close();
 });
 
+test("public pages fit a small phone without sideways scrolling", async ({ browser }, info) => {
+  test.skip(info.project.name !== "mobile", "phones only");
+  // A plain 360px window: phone emulation zooms out to fit a page that's too wide, which hides the problem.
+  const ctx = await browser.newContext({ baseURL: info.project.use.baseURL, viewport: { width: 360, height: 740 } });
+  const page = await ctx.newPage();
+  for (const path of ["/", "/check", "/start?plan=growth", "/login", "/privacy"]) {
+    await page.goto(path);
+    await page.waitForLoadState("networkidle");
+    expect(await page.evaluate(() => document.documentElement.scrollWidth), path).toBeLessThanOrEqual(360);
+  }
+  await ctx.close();
+});
+
 test("pages hydrate cleanly for people who asked for reduced motion", async ({ browser }, info) => {
   const ctx = await browser.newContext({ baseURL: info.project.use.baseURL, reducedMotion: "reduce" });
   const page = await ctx.newPage();

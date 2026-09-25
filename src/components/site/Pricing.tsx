@@ -94,8 +94,8 @@ export function Pricing() {
             <div className="text-[0.9rem] font-semibold text-ink">Every plan includes</div>
             <ul className="mt-3 flex flex-wrap gap-x-6 gap-y-2 text-[0.93rem] text-ink-soft">
               {EVERY_PLAN.map((t) => (
-                <li key={t} className="flex items-center gap-2">
-                  <Check className="h-3.5 w-3.5 text-moss" />
+                <li key={t} className="flex items-start gap-2">
+                  <Check className="mt-[0.2rem] h-3.5 w-3.5 shrink-0 text-moss" />
                   {keepTogether(t)}
                 </li>
               ))}
