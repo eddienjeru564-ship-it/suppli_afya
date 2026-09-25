@@ -78,7 +78,7 @@ export const PLANS: Plan[] = [
 ];
 
 export const PLANS_BY_ID = Object.fromEntries(PLANS.map((p) => [p.id, p])) as Record<PlanId, Plan>;
-export const DEFAULT_PLAN: PlanId = "growth";
+const DEFAULT_PLAN: PlanId = "growth";
 
 export function planOrDefault(id: string | null | undefined): Plan {
   return PLANS_BY_ID[(id ?? "") as PlanId] ?? PLANS_BY_ID[DEFAULT_PLAN];

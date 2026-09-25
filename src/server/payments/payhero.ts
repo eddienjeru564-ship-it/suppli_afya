@@ -13,7 +13,7 @@ import { env } from "../env";
  * is read defensively.
  */
 
-export function authHeader() {
+function authHeader() {
   const p = env.payhero;
   if (p.authToken) return p.authToken.startsWith("Basic ") ? p.authToken : `Basic ${p.authToken}`;
   return `Basic ${Buffer.from(`${p.username}:${p.password}`).toString("base64")}`;
@@ -28,7 +28,7 @@ export function callbackToken() {
   return createHash("sha256").update(`suppli-afya:payhero-callback:${authHeader()}`).digest("hex").slice(0, 40);
 }
 
-export function callbackUrl() {
+function callbackUrl() {
   return `${env.siteUrl}/api/payments/payhero/callback?token=${callbackToken()}`;
 }
 

@@ -28,7 +28,3 @@ export const DISTRIBUTORS: Distributor[] = [
 ];
 
 export const DEMO_DISTRIBUTOR = DISTRIBUTORS[0];
-
-export function findDistributor(slug: string) {
-  return DISTRIBUTORS.find((d) => d.slug === slug) ?? null;
-}

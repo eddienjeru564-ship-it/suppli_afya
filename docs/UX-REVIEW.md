@@ -93,3 +93,32 @@ A fresh review of every screen, with orders now arriving from distributors' own 
 | Check marks were a font glyph in some places and an icon in others | The same drawn check everywhere |
 | On the set-up summary, "Copy" sat oddly indented after the link | The link and "Copy" share a line that wraps cleanly |
 | A long email could run off the payment screen on a small phone | It wraps |
+
+## Third pass
+
+Every page at 360px and 1440px, with an accessibility checker (axe) on each screen.
+
+| Problem | Why it matters | Change |
+|---|---|---|
+| On a 360px phone the homepage was 383px wide: the demo Today list stretched its column, cutting off "Your portal" text at the right | The page wobbles sideways and the text reads as broken, on the phones most distributors use | That grid is `grid-cols-1` on phones. `e2e/site.spec.ts` checks the public pages at 360px, as `pwa.spec.ts` already did for the portal |
+| Messages to "Mama Njeri" opened "Hi Mama," | Wrong, and it's the distributor's name on the message. The homepage demo already wrote "Habari Mama Njeri!" | `greetingName()` (`src/lib/names.ts`) keeps a form of address with the name after it: Mama Njeri, Mzee Kamau, Dr. Achieng. Used for customers, prospects and distributors alike |
+| "M-Pesa and cash payments recorded against orders" split into two columns under "Every plan includes", with a shrunken tick | Looked broken right beside the prices | `keepTogether()` returns one inline piece, so a flex row keeps the sentence together; ticks don't shrink and sit on the first line |
+| The desktop sidebar's Settings icon was a sun | The same "is this a light/dark switch?" confusion the phone header had | A gear |
+| The demo Today list said "Tuesday 14 October" | 14 October 2026 is a Wednesday. Small, but the kind of thing a careful reader notices | Tuesday 13 October |
+
+### Accessibility
+
+| Problem | Change |
+|---|---|
+| The health check pages (`/check`, `/d/<slug>`) and the QR card sheet had no main landmark or page heading | A `<main>` and a heading for screen readers ("Health check with Grace Wambui"); each step keeps its question as the visible heading |
+| The "Unpaid" tag (clay on pale clay) was 4.0:1 | `clay` is a shade deeper (#8a4a27), 4.8:1 on its tag and 5.9:1 on cream |
+| The customer and payment-method dropdowns, and the M-Pesa code boxes, had no names | Labelled |
+| The homepage's steps scroll sideways on phones but couldn't be reached by keyboard; its large step numbers were read out | The row is focusable and named; the numbers are decorative (the list is already numbered) |
+| Two unnamed navigation landmarks on the homepage | "Main" and "Footer" |
+
+### Leads from the health check
+
+`/api/leads` is public and files prospects into a distributor's workspace. It now keeps only answers to questions
+the check asks (not whatever a request sends), refuses oversized requests, ignores an age that isn't a real age,
+and takes at most 300 new prospects per workspace an hour, far above a busy chama meeting and far below a script
+filling someone's Today list. `src/server/leads.test.ts` covers each.
