@@ -50,7 +50,9 @@ Things only the founder can supply or decide. Ordered by how much they block.
     distributor storefront (`suppli_afya-template_site`), with its `SUPPLI_AFYA_URL` pointing
     here. Orders customers place on a live storefront with a `suppliSlug` then arrive through
     `/api/storefront/orders` in that distributor's Orders and on Today. Until it's set, the endpoint
-    refuses everything and customers order on WhatsApp.
+    refuses everything and customers order on WhatsApp. The storefront asks customers for their phone
+    number for this; orders this app can't take right away wait in the storefront's own database (at
+    most 7 days) and are sent again.
 
 ## Decisions to make during the pilot
 

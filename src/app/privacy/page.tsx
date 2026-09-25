@@ -37,6 +37,13 @@ export default function PrivacyPage() {
             </p>
           </section>
           <section>
+            <h2 className="font-display text-[1.5rem] text-ink">Ordering from a distributor&apos;s page</h2>
+            <p className="mt-2">
+              When you order on a distributor&apos;s own page, the products, your name, your phone number and your delivery
+              details are saved in that distributor&apos;s Suppli Afya workspace, so they can deliver your order and follow up.
+            </p>
+          </section>
+          <section>
             <h2 className="font-display text-[1.5rem] text-ink">Distributors and their customers</h2>
             <p className="mt-2">
               A distributor&apos;s customer records belong to that distributor. We don&apos;t sell them, share them with
