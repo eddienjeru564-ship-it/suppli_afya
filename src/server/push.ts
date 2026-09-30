@@ -50,7 +50,7 @@ export function morningMessage(ownerName: string | null, tasks: Pick<Task, "kind
   if (tasks.length === 0) return null;
   const who = greetingName(tasks[0].title);
   const lead: Record<Task["kind"], string> = {
-    new: `${who} did your health check`,
+    new: `${who} did the assessment on your page`,
     payment: `${who} hasn't paid yet`,
     reorder: `${who} is due for a reorder`,
     checkin: `${who} is due a check-in`,

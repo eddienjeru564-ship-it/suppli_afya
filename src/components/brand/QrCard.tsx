@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import { LogoMark } from "./Logo";
 
-/** The distributor's printable card: their name, their link, a QR code to the health check. */
+/** The distributor's printable card: their name, their link, a QR code to their page. */
 export function QrCard({
   name,
   tagline,
@@ -33,7 +33,7 @@ export function QrCard({
             <div className="truncate font-display text-[1.3rem] leading-tight text-ink sm:text-[1.5rem]">{name}</div>
             <div className="truncate text-[0.72rem] text-ink-mute sm:text-[0.8rem]">{tagline}</div>
             <div className="mt-auto font-display text-[1rem] leading-snug text-ink sm:text-[1.2rem]">
-              Not sure what you need? Take a three-minute health check.
+              Not sure where to start? Take my short assessment.
             </div>
             <div className="mt-2 truncate font-mono text-[0.66rem] text-forest sm:text-[0.75rem]">{displayUrl}</div>
           </div>

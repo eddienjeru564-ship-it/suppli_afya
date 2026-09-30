@@ -33,7 +33,7 @@ export function ProfileForm({
           name="whatsapp"
           inputMode="tel"
           defaultValue={initial.whatsapp ? `0${initial.whatsapp.slice(3)}` : ""}
-          hint="Your health check sends customers here."
+          hint="Your page sends customers here."
         />
       </div>
       <fieldset>

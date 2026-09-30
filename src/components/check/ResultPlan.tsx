@@ -167,7 +167,7 @@ export function ResultPlan({
 
   const sharePlan = async () => {
     const lines = [
-      `My health check plan (${result.ref})`,
+      `My plan (${result.ref})`,
       ...result.core.map((c) => `• ${c.product.name}: ${c.reasons[0] ?? ""}`),
       ...(result.habits.length ? ["", "Habits:", ...result.habits.map((h) => `• ${h.title}`)] : []),
       "",
@@ -176,7 +176,7 @@ export function ResultPlan({
     const text = lines.join("\n");
     try {
       if (navigator.share) {
-        await navigator.share({ title: "My health check plan", text });
+        await navigator.share({ title: "My plan", text });
         return;
       }
       await navigator.clipboard.writeText(text);
@@ -330,7 +330,7 @@ export function ResultPlan({
 
       <Appear i={result.core.length + 6} className="mt-10">
         <div ref={handoffRef} className="scroll-mt-24 rounded-[1.5rem] bg-forest p-5 text-cream">
-          <div className="font-display text-[1.5rem] leading-tight">Send your plan to {distributor.firstName}</div>
+          <div className="font-display text-[1.5rem] leading-tight">Want help deciding? Talk it through with {distributor.firstName}</div>
           <p className="mt-1.5 text-[0.92rem] leading-relaxed text-cream/75">
             {distributor.firstName} will confirm prices, answer your questions and help you get started. Your answers go
             only to {distributor.firstName}, and only when you send them.

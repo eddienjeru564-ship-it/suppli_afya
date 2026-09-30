@@ -81,7 +81,7 @@ export function OrderForm({
         <h2 className="text-[0.95rem] font-semibold text-ink">Customer</h2>
         {prospect ? (
           <p className="mt-2 text-[0.95rem] text-ink">
-            {prospect.name} <span className="text-ink-mute">· from the health check. They&apos;ll become a customer when you save.</span>
+            {prospect.name} <span className="text-ink-mute">· from the assessment. They&apos;ll become a customer when you save.</span>
           </p>
         ) : (
           <>

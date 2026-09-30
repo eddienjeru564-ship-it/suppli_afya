@@ -15,12 +15,13 @@ import {
   toggleOption,
   visibleOptions,
   visibleQuestions,
+  whatsappLink,
   type Answers,
   type EngineResult,
   type Question,
 } from "@/engine";
 import { Button } from "@/components/ui/Button";
-import { ChevronLeft, Shield } from "@/components/ui/icons";
+import { ChevronLeft, Shield, WhatsAppIcon } from "@/components/ui/icons";
 import { MultiChoice, Scale, SingleChoice, TextField } from "./inputs";
 import { ResultPlan } from "./ResultPlan";
 import { useReducedMotion } from "@/components/ui/useReducedMotion";
@@ -342,13 +343,16 @@ function QuestionView({
     return (
       <div className={clsx("flex flex-col", mode === "page" ? "min-h-[60dvh] justify-center" : "min-h-[26rem] justify-center")}>
         {isWelcome && (
-          <div className="mb-8 inline-flex w-fit items-center gap-3 rounded-full border border-ink/10 bg-paper py-1.5 pl-1.5 pr-4">
-            <span className="grid h-8 w-8 place-items-center rounded-full bg-forest font-display text-cream">
-              {distributor.firstName.charAt(0)}
+          // The distributor's page starts with who it belongs to: customers are talking to them, not to Suppli Afya.
+          <div className="mb-8 flex items-center gap-3.5">
+            <span className="grid h-14 w-14 shrink-0 place-items-center rounded-full bg-forest font-display text-[1.3rem] tracking-[0.02em] text-cream">
+              {initials(distributor.name)}
             </span>
-            <span className="text-[0.82rem] leading-tight">
-              <span className="block font-semibold text-ink">{distributor.name}</span>
-              <span className="block text-ink-mute">{distributor.tagline || `BF Suma distributor · ${distributor.area}`}</span>
+            <span className="min-w-0 leading-tight">
+              <span className="block font-display text-[1.35rem] text-ink">{distributor.name}</span>
+              <span className="mt-0.5 block text-[0.85rem] text-ink-mute">
+                {distributor.tagline || ["BF Suma distributor", distributor.area].filter(Boolean).join(" · ")}
+              </span>
             </span>
           </div>
         )}
@@ -375,10 +379,21 @@ function QuestionView({
             ))}
           </div>
         )}
-        <div className="mt-8">
+        <div className="mt-8 flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:gap-6">
           <Button size="lg" onClick={onNext} arrow>
             {q.cta ?? "Continue"}
           </Button>
+          {/* Someone who already knows what they want can go straight to the distributor. */}
+          {isWelcome && distributor.whatsapp && !distributor.demo && (
+            <a
+              href={whatsappLink(distributor.whatsapp, `Hi ${distributor.firstName}, I found your page and I have a question.`)}
+              target="_blank"
+              rel="noopener"
+              className="inline-flex items-center gap-2 text-[0.95rem] font-semibold text-forest underline-offset-4 hover:underline"
+            >
+              <WhatsAppIcon className="h-4 w-4" /> Or message {distributor.firstName} directly
+            </a>
+          )}
         </div>
       </div>
     );
@@ -442,4 +457,10 @@ function QuestionView({
       )}
     </div>
   );
+}
+
+/** "Kate Cromuel" gives "KC": the monogram at the top of a distributor's page. */
+function initials(name: string) {
+  const words = name.trim().split(/\s+/).filter(Boolean);
+  return ((words[0]?.[0] ?? "") + (words.length > 1 ? words[words.length - 1][0] : "")).toUpperCase() || "S";
 }

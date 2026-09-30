@@ -64,7 +64,7 @@ export async function POST(req: Request) {
   );
   await d.query(
     `insert into interactions (workspace_id, prospect_id, kind, body) values ($1, $2, 'health_check', $3)`,
-    [dist.workspaceId, rows[0].id, `Did the health check (${ref}) and sent it on WhatsApp.`],
+    [dist.workspaceId, rows[0].id, `Did the assessment on your page (${ref}) and sent it on WhatsApp.`],
   );
   return Response.json({ ok: true, stored: true });
 }

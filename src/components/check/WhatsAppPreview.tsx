@@ -61,7 +61,7 @@ export function WhatsAppPreview({
         </div>
         <div className="relative max-w-[92%] rounded-lg rounded-tl-none bg-white px-3 pb-5 pt-2 text-[0.84rem] leading-[1.42] shadow-[0_1px_0.5px_rgb(11_20_26/0.13)]">
           {message.split("\n").map(formatLine)}
-          <span className="absolute bottom-1 right-2 text-[0.66rem] text-[#667781]">{time}</span>
+          <span className="absolute bottom-1 right-2 text-[0.66rem] text-[#54656f]">{time}</span>
         </div>
       </div>
     </div>

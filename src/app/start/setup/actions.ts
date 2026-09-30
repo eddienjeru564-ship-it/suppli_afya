@@ -1,6 +1,7 @@
 "use server";
 
 import { BUSINESS_TYPES, CHANNELS, GOALS } from "@/config/onboarding";
+import { DISTRIBUTORS } from "@/config/distributors";
 import { site } from "@/config/site";
 import { getAccount, subscriptionState } from "@/server/auth";
 import { db, json } from "@/server/db";
@@ -88,7 +89,8 @@ export async function finishOnboarding(): Promise<FinishResult> {
     for (let i = 0; i < 50 && !slug; i++) {
       const candidate = i === 0 ? base : `${base}-${i + 1}`;
       const taken = await d.query(`select 1 from workspaces where slug = $1`, [candidate]);
-      if (!taken.length && candidate !== "grace") slug = candidate;
+      // Example pages (/d/kate) are served from config first, so a workspace can never take their name.
+      if (!taken.length && !DISTRIBUTORS.some((x) => x.slug === candidate)) slug = candidate;
     }
     slug ??= `${base}-${Date.now().toString(36)}`;
   }

@@ -1,7 +1,7 @@
 import { distributorBySlug } from "@/server/distributors";
 import { brandCard, ogSize } from "@/lib/og";
 
-export const alt = "Health check";
+export const alt = "Find where to start";
 export const size = ogSize;
 export const contentType = "image/png";
 
@@ -9,9 +9,9 @@ export default async function Image({ params }: { params: Promise<{ slug: string
   const { slug } = await params;
   const d = await distributorBySlug(slug);
   return brandCard({
-    eyebrow: d ? `Health check with ${d.name}` : "A three-minute health check",
+    eyebrow: d ? `${d.name}` : "A short assessment",
     title: "Let's find what",
     emphasis: "actually suits you.",
-    footer: d ? `${d.name} · ${d.tagline || `BF Suma distributor · ${d.area}`}` : "Answer a few questions, get a plan that explains why",
+    footer: d ? d.tagline || ["BF Suma distributor", d.area].filter(Boolean).join(" · ") : "Answer a few questions, see what could help and why",
   });
 }

@@ -39,7 +39,7 @@ export default async function NewOrderPage(props: PageProps<"/portal/orders/new"
       <Link href="/portal/orders" className="mb-4 inline-flex items-center gap-1 text-[0.88rem] font-semibold text-ink-soft hover:text-ink">
         <ChevronLeft className="h-3.5 w-3.5" /> Orders
       </Link>
-      <PageHeader title="New order" sub={p ? `Their health check plan is filled in. Adjust it to what they actually ordered.` : undefined} />
+      <PageHeader title="New order" sub={p ? `The plan from their assessment is filled in. Adjust it to what they actually ordered.` : undefined} />
       <OrderForm
         customers={customers}
         presetCustomerId={customerId ?? p?.customer_id ?? undefined}

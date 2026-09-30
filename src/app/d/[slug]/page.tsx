@@ -7,10 +7,11 @@ export async function generateMetadata(props: PageProps<"/d/[slug]">): Promise<M
   const { slug } = await props.params;
   const d = await distributorBySlug(slug);
   if (!d) return {};
-  const title = `Health check with ${d.name}`;
-  const description = `Answer a few questions and get a plan that explains what could help and why. ${d.firstName} will take it from there on WhatsApp.`;
+  // The page is theirs, so the tab and the link preview carry their name, not Suppli Afya's.
+  const title = `${d.name} · find where to start`;
+  const description = `Answer a few questions and see which products could help, and why. ${d.firstName} will take it from there on WhatsApp.`;
   return {
-    title,
+    title: { absolute: title },
     description,
     openGraph: { title, description, siteName: "Suppli Afya", locale: "en_KE", type: "website" },
   };

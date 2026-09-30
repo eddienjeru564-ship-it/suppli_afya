@@ -39,7 +39,7 @@ export function LeadCard({
             {live && <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-moss opacity-60" />}
             <span className="relative inline-flex h-2 w-2 rounded-full bg-moss" />
           </span>
-          {live ? "Doing the health check now" : "New lead · via your link"}
+          {live ? "Doing the assessment now" : "New enquiry · via your page"}
         </span>
         {refCode && <span className="font-mono text-ink-mute">{refCode}</span>}
       </div>

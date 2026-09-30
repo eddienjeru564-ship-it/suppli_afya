@@ -11,7 +11,7 @@ export default function NotFound() {
           Go to the home page
         </ButtonLink>
         <ButtonLink href="/check" variant="secondary">
-          Try the health check
+          Try the assessment
         </ButtonLink>
       </div>
     </main>

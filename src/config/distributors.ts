@@ -17,13 +17,16 @@ export interface Distributor {
 }
 
 export const DISTRIBUTORS: Distributor[] = [
+  // The example page used across the website and at /check. Kate Cromuel is a real distributor
+  // (her own storefront is in suppli_afya-template_site); this copy is a demo with no number.
   {
-    slug: "grace",
-    name: "Grace Wambui",
-    firstName: "Grace",
-    area: "Kiambu",
+    slug: "kate",
+    name: "Kate Cromuel",
+    firstName: "Kate",
+    area: "",
     whatsapp: null,
     demo: true,
+    tagline: "Wellness Consultant",
   },
 ];
 

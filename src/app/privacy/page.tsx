@@ -28,9 +28,9 @@ export default function PrivacyPage() {
             information you give us.
           </p>
           <section>
-            <h2 className="font-display text-[1.5rem] text-ink">The health check</h2>
+            <h2 className="font-display text-[1.5rem] text-ink">The assessment on a distributor&apos;s page</h2>
             <p className="mt-2">
-              Your answers are used to build your plan. They are shared with the distributor whose link you used only
+              Your answers are used to build your plan. They are shared with the distributor whose page you used only
               when you choose to send them by tapping the WhatsApp button at the end. Sending also saves your answers and
               plan, and the number you give (if any), in that distributor&apos;s Suppli Afya workspace so they can help you. The demo on this
               website runs entirely in your browser and doesn&apos;t save or send anything.

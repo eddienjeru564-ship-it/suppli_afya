@@ -3,7 +3,7 @@ import type { Distributor } from "@/config/distributors";
 import { Logo } from "@/components/brand/Logo";
 import { HealthCheck } from "./HealthCheck";
 
-/** Full-page health check, as a customer sees it from a distributor's link or QR card. */
+/** A distributor's page, as a customer sees it from their link or QR card: who they are, then the assessment. */
 export function CheckShell({ distributor }: { distributor: Distributor }) {
   return (
     <div className="min-h-dvh bg-cream">
@@ -17,7 +17,7 @@ export function CheckShell({ distributor }: { distributor: Distributor }) {
       )}
       <main>
         {/* Each step shows its own question as the visible heading; this names the page for screen readers. */}
-        <h1 className="sr-only">Health check with {distributor.name}</h1>
+        <h1 className="sr-only">{distributor.name}: find where to start</h1>
         <HealthCheck distributor={distributor} mode="page" />
       </main>
       <footer className="mx-auto flex max-w-xl items-center justify-between px-5 pb-8 pt-4 text-[0.75rem] text-ink-mute sm:px-8">

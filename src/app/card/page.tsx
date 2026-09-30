@@ -36,7 +36,7 @@ export default async function CardSheet() {
                 <span className="truncate font-display text-[15pt] leading-tight text-ink">{w.owner_name}</span>
               </div>
               <div className="truncate text-[7.5pt] text-ink-mute">{tagline}</div>
-              <div className="mt-auto font-display text-[10.5pt] leading-snug text-ink">Not sure what you need? Take a three-minute health check.</div>
+              <div className="mt-auto font-display text-[10.5pt] leading-snug text-ink">Not sure where to start? Take my short assessment.</div>
               <div className="mt-1 truncate font-mono text-[7pt] text-forest">
                 {site.displayDomain}/d/{w.slug}
               </div>

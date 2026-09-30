@@ -115,7 +115,7 @@ export function Onboarding({ initial }: { initial: OnboardingInitial }) {
               ) : step === 1 ? (
                 <Screen
                   title="First, what's your name?"
-                  sub="This is how customers will see you on your health check."
+                  sub="This is how customers will see you on your page."
                   error={error}
                   pending={pending}
                   onNext={() => save(1, { name: v.name })}
@@ -176,7 +176,7 @@ export function Onboarding({ initial }: { initial: OnboardingInitial }) {
                       placeholder="07XX XXX XXX"
                       inputMode="tel"
                       autoComplete="tel"
-                      hint="Customers who do your health check will message you here."
+                      hint="Customers who use your page will message you here."
                     />
                   </div>
                 </Screen>
@@ -356,7 +356,7 @@ function Done({
 
       <h2 className="mt-14 text-[0.95rem] font-semibold text-ink">Here&apos;s what we set up from your answers</h2>
       <ul className="mt-4 grid gap-3">
-        <SetupItem title="Your health check link">
+        <SetupItem title="Your page">
           <span className="flex flex-wrap items-center gap-x-3 gap-y-1">
             <span className="break-all font-mono text-[0.85rem] text-forest">{done.displayUrl}</span>
             <button type="button" onClick={copy} className="text-[0.85rem] font-semibold text-forest underline underline-offset-2">

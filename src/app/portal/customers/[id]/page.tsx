@@ -10,7 +10,7 @@ import { NoteForm } from "./NoteForm";
 import { greetingName } from "@/lib/names";
 
 const KIND_LABEL: Record<string, string> = {
-  health_check: "Health check",
+  health_check: "Assessment",
   order: "Order",
   payment: "Payment",
   note: "Note",
@@ -37,7 +37,7 @@ export default async function CustomerPage(props: PageProps<"/portal/customers/[
         <div>
           <h1 className="font-display text-[2.2rem] leading-tight tracking-[-0.02em] text-ink">{c.name}</h1>
           <p className="mt-1 text-[0.93rem] text-ink-soft">
-            {[c.phone && prettyPhone(c.phone), `Customer since ${longDate(c.created_at)}`, c.source === "health_check" && "Came through your health check"]
+            {[c.phone && prettyPhone(c.phone), `Customer since ${longDate(c.created_at)}`, c.source === "health_check" && "Came through your page"]
               .filter(Boolean)
               .join(" · ")}
           </p>
@@ -100,7 +100,7 @@ export default async function CustomerPage(props: PageProps<"/portal/customers/[
 
           {p?.result?.core && p.result.core.length > 0 && (
             <Card className="p-5">
-              <h2 className="text-[0.95rem] font-semibold text-ink">From their health check</h2>
+              <h2 className="text-[0.95rem] font-semibold text-ink">From their assessment</h2>
               <p className="mt-1 text-[0.85rem] text-ink-mute">
                 {longDate(p.created_at)} ·{" "}
                 <Link href={`/portal/prospects/${p.id}`} className="font-semibold text-forest underline underline-offset-2">
