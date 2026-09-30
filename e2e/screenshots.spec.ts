@@ -18,7 +18,7 @@ test("app screenshots", async ({ browser }, info) => {
   await signUp(page, `screens.${Date.now()}@example.com`, "Grace Wambui");
   const slug = new URL(page.url()).origin;
 
-  // A prospect from the health check link.
+  // A prospect from the distributor's page.
   const settings = await page.goto("/portal/settings");
   expect(settings?.ok()).toBe(true);
   const link = (await page.getByText(/\/d\/grace-wambui[a-z0-9-]*/).first().textContent())!;

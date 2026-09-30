@@ -5,7 +5,7 @@ test("the first screen is readable before any JavaScript arrives", async ({ brow
   const page = await ctx.newPage();
   await page.goto("/");
   const h1 = page.getByRole("heading", { level: 1 });
-  await expect(h1).toHaveText("Most of your next orders are already in your phone.");
+  await expect(h1).toHaveText("Your own page for turning curiosity into customers.");
   // Every word is visible in the HTML itself, not waiting on a script to fade it in.
   const hidden = await h1.locator("span span").evaluateAll((els) => els.filter((e) => getComputedStyle(e).opacity !== "1").length);
   expect(hidden).toBe(0);

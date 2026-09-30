@@ -3,7 +3,7 @@ import { ButtonLink } from "@/components/ui/Button";
 import { FROM_PRICE } from "@/config/plans";
 import { HeroPhone } from "./HeroPhone";
 
-const HEADLINE = ["Most", "of", "your", "next", "orders", "are", "already", "in", "your", "phone."];
+const HEADLINE = ["Your", "own", "page", "for", "turning", "curiosity", "into", "customers."];
 const at = (i: number) => ({ "--i": i }) as CSSProperties;
 
 /**
@@ -28,7 +28,7 @@ export function Hero() {
             {HEADLINE.map((w, i) => (
               <Fragment key={i}>
                 <span className="inline-block overflow-hidden pb-[0.08em] align-bottom">
-                  <span className={w === "already" ? "rise-word italic text-forest" : "rise-word"} style={at(i)}>
+                  <span className={w === "curiosity" ? "rise-word italic text-forest" : "rise-word"} style={at(i)}>
                     {w}
                   </span>
                 </span>
@@ -38,20 +38,20 @@ export function Hero() {
           </h1>
 
           <p className="lede rise mt-7 max-w-[36rem]" style={at(9)}>
-            Your customers get a proper health check and a plan that makes sense to them. You get a short list each morning
-            of who to follow up with, who still owes you, and who is about to run out.
+            Share one link or QR code. Your customers answer a few questions, see which products fit what they&apos;re
+            looking for, and carry the conversation straight to you on WhatsApp.
           </p>
 
           <div className="rise mt-9 flex flex-col gap-3 sm:flex-row sm:items-center" style={at(11)}>
-            <ButtonLink href="#check" size="lg" arrow>
-              Try the health check
+            <ButtonLink href="#pricing" size="lg" arrow>
+              Get your page
             </ButtonLink>
-            <ButtonLink href="#pricing" size="lg" variant="secondary">
-              See plans
+            <ButtonLink href="#how" size="lg" variant="secondary">
+              See how it works
             </ButtonLink>
           </div>
-          <p className="rise mt-4 text-[0.85rem] text-ink-mute" style={at(13)}>
-            The check takes about three minutes. Plans from {FROM_PRICE} a month.
+          <p className="rise mt-4 max-w-[34rem] text-[0.85rem] leading-relaxed text-ink-mute" style={at(13)}>
+            You stay the seller: your name, your WhatsApp, your customers. Plans from {FROM_PRICE} a month.
           </p>
         </div>
 

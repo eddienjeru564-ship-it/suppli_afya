@@ -6,11 +6,29 @@ import { Reveal } from "@/components/ui/Reveal";
 import { MPesa, keepTogether } from "@/components/ui/KeepTogether";
 
 const EVERY_PLAN = [
-  "Your health check link and QR card",
-  "Leads that arrive with answers and a plan",
+  "Your own page at your own link",
+  "Printable QR cards",
+  "The assessment and product suggestions",
+  "Enquiries that arrive with what they're looking for",
   "WhatsApp messages ready to send",
   "M-Pesa and cash payments recorded against orders",
   "Your customer list stays yours",
+];
+
+/** Getting a page, in the order it actually happens (checkout, then the four onboarding screens). */
+const START = [
+  {
+    title: "Choose a plan and pay",
+    body: "By M-Pesa or card. It takes about two minutes, and your account is kept even if a payment doesn't go through first time.",
+  },
+  {
+    title: "Tell us about your business",
+    body: "Your name, your WhatsApp number, how customers find you and what matters most to you. Your page and workspace are set up from the answers.",
+  },
+  {
+    title: "Share your page",
+    body: "Post the link, print your QR cards, and your first enquiry can arrive the same day.",
+  },
 ];
 
 export function Pricing() {
@@ -20,12 +38,13 @@ export function Pricing() {
         <div className="grid gap-6 lg:grid-cols-2 lg:items-end">
           <Reveal>
             <div className="eyebrow">Plans and pricing</div>
-            <h2 className="display-lg mt-5 max-w-[15ch] text-ink">One extra reorder a month covers it</h2>
+            <h2 className="display-lg mt-5 max-w-[15ch] text-ink">One extra customer a month covers it</h2>
           </Reveal>
           <Reveal delay={0.1}>
             <p className="lede max-w-[34rem] lg:ml-auto">
-              Pay monthly by <MPesa /> or card. There&apos;s no contract and no setup fee, and nothing is taken
-              automatically: each month you choose to renew, so you can stop whenever you like.
+              Every plan gets you your own page, the assessment your customers take and a workspace that remembers them.
+              Pay monthly by <MPesa /> or card, with no contract and no setup fee. Nothing is taken automatically, so you
+              can stop whenever you like.
             </p>
           </Reveal>
         </div>
@@ -105,6 +124,23 @@ export function Pricing() {
         <p className="mt-5 text-[0.85rem] text-ink-mute">
           Prices are in Kenyan shillings. You can move between plans at any renewal.
         </p>
+
+        <div id="setup" className="mt-20 grid grid-cols-1 gap-10 border-t border-ink/10 pt-14 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
+          <Reveal>
+            <h3 className="display-md max-w-[14ch] text-ink">Your page can be live this afternoon</h3>
+          </Reveal>
+          <ol className="grid grid-cols-1 gap-7 md:grid-cols-3">
+            {START.map((s, i) => (
+              <Reveal as="li" key={s.title} delay={0.06 * i}>
+                <span className="grid h-10 w-10 place-items-center rounded-full border border-ink/15 font-display text-lg text-ink">
+                  {i + 1}
+                </span>
+                <h4 className="mt-4 font-display text-[1.3rem] leading-tight text-ink">{s.title}</h4>
+                <p className="mt-1.5 text-[0.98rem] leading-relaxed text-ink-soft">{keepTogether(s.body)}</p>
+              </Reveal>
+            ))}
+          </ol>
+        </div>
       </div>
     </section>
   );

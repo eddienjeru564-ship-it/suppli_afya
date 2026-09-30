@@ -36,7 +36,7 @@ export function Demo() {
   const showChip = Boolean(live) && sectionInView && !panelInView;
 
   return (
-    <section ref={sectionRef} id="check" className="relative overflow-clip bg-forest-deep py-24 text-cream sm:py-32">
+    <section ref={sectionRef} id="try" className="relative overflow-clip bg-forest-deep py-24 text-cream sm:py-32">
       <div aria-hidden className="pointer-events-none absolute inset-0">
         <div className="absolute left-1/2 top-0 h-[36rem] w-[60rem] -translate-x-1/2 rounded-full bg-[radial-gradient(closest-side,rgb(90_122_83/0.35),transparent)]" />
       </div>
@@ -44,13 +44,14 @@ export function Demo() {
       <div className="container-x relative">
         <div className="grid gap-6 lg:grid-cols-2 lg:items-end">
           <Reveal>
-            <div className="eyebrow !text-ochre">The health check</div>
-            <h2 className="display-lg mt-5 max-w-[14ch]">Try it the way your customers will</h2>
+            <div className="eyebrow !text-ochre">Try it</div>
+            <h2 className="display-lg mt-5 max-w-[15ch]">Go through {DEMO_DISTRIBUTOR.firstName}&apos;s page the way a customer would</h2>
           </Reveal>
           <Reveal delay={0.1}>
             <p className="max-w-[34rem] text-[1.1rem] leading-relaxed text-cream/75 lg:ml-auto">
-              Go through it as a customer would, with your own answers or someone else&apos;s. As you answer, you&apos;ll
-              see what reaches you: the lead filling in, then the WhatsApp message and the notes in your portal.
+              This is the real assessment, on {DEMO_DISTRIBUTOR.firstName}&apos;s example page. Answer as yourself or as a
+              customer you know. On the right is what reaches {DEMO_DISTRIBUTOR.firstName} as you go: the enquiry filling in,
+              then the WhatsApp message and the notes in her workspace.
             </p>
           </Reveal>
         </div>
@@ -65,11 +66,11 @@ export function Demo() {
 
           <Reveal delay={0.1} className="lg:pt-6">
             <div ref={panelRef} className="max-w-[30rem] scroll-mt-24" id="what-reaches-you">
-              <h3 className="font-display text-[1.7rem] leading-tight">What reaches you</h3>
+              <h3 className="font-display text-[1.7rem] leading-tight">What reaches {DEMO_DISTRIBUTOR.firstName}</h3>
               <p className="mt-2 text-[0.98rem] leading-relaxed text-cream/70">
                 {result
-                  ? `${result.profile.name || "Your customer"} has finished. On a real link, one tap sends this to your WhatsApp, and the lead is already waiting in your portal.`
-                  : "Your customer's details come together here as they answer. By the time they message you, you already know what they're looking for and what to be careful with."}
+                  ? `${result.profile.name || "Your customer"} has finished. On a real page, one tap sends this to the distributor's WhatsApp, and the enquiry is already waiting in their workspace.`
+                  : "The customer's details come together here as they answer. By the time they message the distributor, the distributor already knows what they're looking for and what to be careful with."}
               </p>
               <div className="mt-7">
                 <LivePanel answers={answers} result={result} distributor={DEMO_DISTRIBUTOR} />
@@ -78,7 +79,7 @@ export function Demo() {
                 href="/check"
                 className="group mt-8 inline-flex items-center gap-2 text-[0.95rem] font-semibold text-cream underline-offset-4 hover:underline"
               >
-                Open the health check on its own page <Arrow />
+                Open {DEMO_DISTRIBUTOR.firstName}&apos;s page on its own <Arrow />
               </Link>
             </div>
           </Reveal>
@@ -101,7 +102,7 @@ export function Demo() {
             </span>
             <span className="min-w-0 flex-1">
               <span className="block text-[0.7rem] font-semibold text-moss">
-                {result ? "Finished · see what reaches Grace" : "Live in Grace's portal"}
+                {result ? `Finished · see what reaches ${DEMO_DISTRIBUTOR.firstName}` : `Live in ${DEMO_DISTRIBUTOR.firstName}'s workspace`}
               </span>
               <span className="block truncate text-[0.9rem] font-semibold">{live.title}</span>
               {live.detail && <span className="block truncate text-[0.78rem] text-ink-soft">{live.detail}</span>}

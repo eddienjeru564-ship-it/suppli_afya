@@ -15,7 +15,7 @@ export function Trust() {
       <div className="container-x grid gap-14 lg:grid-cols-[1.05fr_0.95fr] lg:gap-20">
         <div>
           <Reveal>
-            <div className="eyebrow">Why customers trust it</div>
+            <div className="eyebrow">Responsible by design</div>
             <h2 className="display-lg mt-5 max-w-[15ch] text-ink">
               It knows when to say <span className="italic text-forest">“check with your doctor first”</span>
             </h2>
@@ -23,15 +23,14 @@ export function Trust() {
           <Reveal delay={0.1}>
             <div className="lede mt-7 grid max-w-[36rem] gap-5">
               <p>
-                Customers can tell when they&apos;re being sold to, so the health check is built to be useful to them
-                first. Before it suggests anything, it asks about pregnancy, medicine, allergies and existing
-                conditions, and it leaves out products that don&apos;t suit that person. It explains what each product is
-                for in plain words, is honest about how long things take, and never tells anyone a supplement will cure
-                a disease.
+                The assessment helps people find products. It doesn&apos;t diagnose anything. Before it suggests a thing, it
+                asks about pregnancy, medicine, allergies and existing conditions, leaves out whatever doesn&apos;t suit
+                that person and says why. It explains each product in plain words, is honest about how long things take,
+                and never says a supplement treats or cures a disease.
               </p>
               <p className="text-ink">
-                That protects your customer, and it protects your name. The customer who trusted your advice is the one
-                who reorders, and the one who sends her sister to you.
+                That protects your customer, and your name. The customer who trusted your advice is the one who orders
+                again, and the one who sends her sister to you.
               </p>
             </div>
           </Reveal>

@@ -6,9 +6,9 @@ const url = (process.env.NEXT_PUBLIC_SITE_URL || "https://suppliafya.co.ke").rep
  */
 export const site = {
   name: "Suppli Afya",
-  tagline: "Sell more. Follow up less.",
+  tagline: "Your own page for turning curiosity into customers.",
   description:
-    "Suppli Afya helps BF Suma distributors in Kenya turn enquiries into first orders and first orders into regular customers.",
+    "Your own page where customers answer a few questions, see which BF Suma products could help and message you on WhatsApp. Then Suppli Afya helps you follow up.",
   url,
   /** The domain shown on cards and in mockups: always the one the QR codes and links go to. */
   displayDomain: new URL(url).host.replace(/^www\./, ""),

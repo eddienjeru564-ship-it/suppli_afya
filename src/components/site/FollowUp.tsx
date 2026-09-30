@@ -24,10 +24,10 @@ const TODAY: { kind: Kind; name: string; why: string; action: string; message: s
   {
     kind: "new",
     name: "Wanjiru, 34",
-    why: "Did the health check last night. Energy and joints. Wants a focused plan.",
+    why: "Did the assessment on your page last night. Energy and joints. Wants a focused plan.",
     action: "Reply",
     message:
-      "Hi Wanjiru, thanks for doing the health check last night. I saw energy and joints were top of your list. Can I ask you a couple of quick questions before we decide what to start with?",
+      "Hi Wanjiru, thanks for doing the assessment last night. I saw energy and joints were top of your list. Can I ask you a couple of quick questions before we decide what to start with?",
   },
   {
     kind: "reorder",
@@ -72,35 +72,35 @@ const FILTERS: { id: "all" | Kind | "follow"; label: string; kinds: Kind[] }[] =
 
 const BLOCKS = [
   {
-    title: "Orders and M-Pesa in one place",
-    body: "When someone says yes, create the order from their record. When the money arrives, record it against the order with the M-Pesa code in a couple of taps. Anything still owed stays on your list, with a polite reminder ready to send, so you stop scrolling through M-Pesa messages to work out who paid for what.",
-  },
-  {
     title: "Reorders that don't depend on your memory",
-    body: "Suppli Afya knows roughly how long each product lasts at the usual dose. A few days before a customer runs out, they appear on your list with a message ready to send or change. Customers who've gone quiet show up too, so you can check in before they start buying from someone else.",
+    body: "Suppli Afya knows roughly how long each product lasts at the usual dose. A few days before a customer runs out, they appear on your list with a message ready to send or change.",
   },
   {
-    title: "Every customer's history in one place",
-    body: "What they came to you for, what they bought, what they paid and what you last talked about. When someone messages you after three months, you know exactly where you left off.",
+    title: "Payments you don't have to chase in your head",
+    body: "Record each payment against its order with the M-Pesa code. Anything still owed stays on your list, with a polite reminder ready, so you stop scrolling through M-Pesa messages to work out who paid for what.",
+  },
+  {
+    title: "Customers who've gone quiet",
+    body: "Someone who used to order every month and hasn't in two shows up too, so you can check in before they start buying from someone else.",
   },
 ];
 
-export function Portal() {
+export function FollowUp() {
   return (
-    <section id="portal" className="py-24 sm:py-32">
+    <section id="follow-up" className="py-24 sm:py-32">
       <div className="container-x">
         <div className="grid grid-cols-1 items-center gap-14 lg:grid-cols-[0.95fr_1.05fr] lg:gap-20">
           <div>
             <Reveal>
-              <div className="eyebrow">Your portal</div>
-              <h2 className="display-lg mt-5 max-w-[15ch] text-ink">Each morning, a short list of who to talk to, and why</h2>
+              <div className="eyebrow">After the first sale</div>
+              <h2 className="display-lg mt-5 max-w-[15ch] text-ink">Know who&apos;s ready to order again</h2>
             </Reveal>
             <Reveal delay={0.1}>
               <p className="lede mt-6 max-w-[34rem]">
-                A customer list only helps if it tells you what to do next. The first screen in your portal is
-                today&apos;s list: people who&apos;ve just done the health check, follow-ups that are due, payments that
-                haven&apos;t come in, and customers whose supply is running low. Each one comes with the reason it&apos;s
-                there, so you&apos;re not guessing.
+                First your page brings the customer in. After that, the money is in the second order and the tenth. Each
+                morning your workspace puts together a short list: new enquiries from your page, payments still owed,
+                check-ins that are due and customers who are probably running low. Each one comes with the reason
+                it&apos;s there and a message ready to send.
               </p>
             </Reveal>
           </div>

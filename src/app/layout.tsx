@@ -27,7 +27,7 @@ export const metadata: Metadata = {
   },
   description: site.description,
   openGraph: {
-    title: "Suppli Afya — Sell more. Follow up less.",
+    title: "Suppli Afya — your own page for turning curiosity into customers",
     description: site.description,
     siteName: site.name,
     locale: "en_KE",

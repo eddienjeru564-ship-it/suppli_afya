@@ -65,13 +65,14 @@ function Slider({
 }
 
 export function Calculator() {
-  const [customers, setCustomers] = useState(60);
+  // People who ask about your products in a month, how many of them buy today, and a few more.
+  const [asks, setAsks] = useState(30);
   const [order, setOrder] = useState(6500);
-  const [rate, setRate] = useState(15);
+  const [rate, setRate] = useState(20);
   const [extra, setExtra] = useState(10);
 
-  const nowOrders = (customers * rate) / 100;
-  const extraOrders = (customers * extra) / 100;
+  const nowOrders = (asks * rate) / 100;
+  const extraOrders = (asks * extra) / 100;
   const monthly = extraOrders * order;
   const cardRef = useRef<HTMLDivElement>(null);
   const cardInView = useInView(cardRef, { margin: "0px 0px -15% 0px" });
@@ -83,44 +84,44 @@ export function Calculator() {
         <div>
           <Reveal>
             <div className="eyebrow !text-ochre">Your numbers</div>
-            <h2 className="display-lg mt-5 max-w-[14ch]">Work out what better follow-up is worth to you</h2>
+            <h2 className="display-lg mt-5 max-w-[15ch]">What a few more customers a month would be worth</h2>
           </Reveal>
           <Reveal delay={0.1}>
             <p className="mt-6 max-w-[30rem] text-[1.1rem] leading-relaxed text-cream/75">
-              You know your business better than we do, so use your own numbers. Move the sliders until they look like
-              a normal month for you.
+              Think about the people who ask about your products in a normal month, and how many of them end up buying.
+              Move the sliders until they look like your month.
             </p>
           </Reveal>
           <Reveal delay={0.15}>
             <div className="mt-10 grid gap-8">
               <Slider
-                label="Customers who've bought from you in the last six months"
-                value={customers}
-                min={10}
-                max={400}
+                label="People who ask about your products in a month"
+                value={asks}
+                min={5}
+                max={300}
                 step={5}
                 format={(v) => String(v)}
-                onChange={setCustomers}
+                onChange={setAsks}
               />
-              <Slider label="Your average order" value={order} min={1500} max={30000} step={500} format={kes} onChange={setOrder} />
               <Slider
-                label="How many of them buy again in a normal month"
+                label="How many of them end up buying today"
                 value={rate}
                 min={0}
-                max={60}
+                max={80}
                 step={1}
                 format={(v) => `${v}%`}
                 onChange={setRate}
               />
               <Slider
-                label="If you brought back this many more each month"
+                label="If this many more of them bought"
                 value={extra}
                 min={2}
-                max={30}
+                max={40}
                 step={1}
                 format={(v) => `+${v}%`}
                 onChange={setExtra}
               />
+              <Slider label="Your average order" value={order} min={1500} max={30000} step={500} format={kes} onChange={setOrder} />
             </div>
           </Reveal>
           {/* Phones: keep the answer in view while the sliders move. */}
@@ -139,8 +140,8 @@ export function Calculator() {
         <Reveal delay={0.1} className="lg:pt-24">
           <div ref={cardRef} className="rounded-[2rem] bg-forest-deep/70 p-7 ring-1 ring-cream/10 sm:p-10">
             <div className="text-[0.95rem] text-cream/70">
-              Right now that&apos;s about {Math.round(nowOrders)} repeat orders a month. Bringing back {extra}% more
-              adds roughly {Math.max(1, Math.round(extraOrders))} orders, which is
+              Right now about {Math.round(nowOrders)} of the people who ask become customers each month. If {extra}% more
+              of them bought, that&apos;s roughly {Math.max(1, Math.round(extraOrders))} more orders, or
             </div>
             <div className="mt-5">
               <AnimatedKes value={monthly} className="block font-display text-[3rem] leading-none tracking-[-0.02em] sm:text-[4rem]" />
@@ -151,9 +152,9 @@ export function Calculator() {
               <span className="ml-2 text-cream/70">over a year</span>
             </div>
             <p className="mt-8 text-[0.85rem] leading-relaxed text-cream/55">
-              A rough estimate from the numbers you entered: past customers, times the extra share who come back, times
-              your average order. It isn&apos;t a promise. We&apos;d just rather you judged Suppli Afya this way than
-              took our word for it.
+              A rough estimate from your numbers: people who ask, times the extra share who buy, times your average order.
+              It doesn&apos;t count their reorders, and it isn&apos;t a promise. We&apos;d just rather you judged Suppli Afya
+              this way than took our word for it.
             </p>
           </div>
         </Reveal>

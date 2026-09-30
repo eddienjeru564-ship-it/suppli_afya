@@ -1,6 +1,6 @@
 import { expect, test, type Page } from "@playwright/test";
 
-/** Walks the full health check as a customer would, on the standalone page. */
+/** Walks the full assessment as a customer would, on the example distributor page. */
 
 async function choose(page: Page, name: string | RegExp) {
   await page.getByRole("radio", { name, exact: typeof name === "string" }).click();
@@ -66,8 +66,8 @@ test("a customer can complete the check and get a safe, explained plan", async (
   await expect(page.getByText("One of its ingredients comes from pork, which you avoid.")).toBeVisible();
   await expect(page.getByRole("heading", { name: "ArthroXtra Tablets" })).toBeVisible();
 
-  await page.getByRole("button", { name: /See the message Grace gets/ }).click();
-  await expect(page.getByText("Hi Grace, I've just done the health check.")).toBeVisible();
+  await page.getByRole("button", { name: /See the message Kate gets/ }).click();
+  await expect(page.getByText("Hi Kate, I've just done the assessment on your page.")).toBeVisible();
   await expect(page.getByText(/Takes blood pressure medicine/)).toBeVisible();
 });
 
@@ -103,8 +103,8 @@ test("pregnancy leads to a clinic-first result with no products", async ({ page 
 });
 
 test("the landing page demo updates the distributor panel live", async ({ page }) => {
-  await page.goto("/#check");
-  const demo = page.locator("#check");
+  await page.goto("/#try");
+  const demo = page.locator("#try");
   await demo.getByRole("button", { name: "Start" }).click();
   await page.waitForTimeout(400);
   await demo.getByRole("button", { name: "I understand" }).click();

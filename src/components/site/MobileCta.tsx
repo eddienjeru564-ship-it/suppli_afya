@@ -6,11 +6,11 @@ import { Arrow } from "@/components/ui/Button";
 import { FROM_PRICE } from "@/config/plans";
 
 /** Sections that already have their own call to action or a control at the bottom of the screen. */
-const QUIET_ZONES = ["check", "numbers", "pricing", "start", "site-footer"];
+const QUIET_ZONES = ["try", "numbers", "pricing", "start", "site-footer"];
 
 /**
  * A slim bar for phones, shown between sections that don't have their own call to action.
- * Before the demo it offers the health check; once you've scrolled past the demo it offers the plans.
+ * Before the demo it offers Kate's example page; once you've scrolled past the demo it offers the plans.
  */
 export function MobileCta() {
   const [show, setShow] = useState(false);
@@ -29,7 +29,7 @@ export function MobileCta() {
         return r.top < vh && r.bottom > vh - 140;
       });
       setShow(pastHero && !blocked);
-      const demo = document.getElementById("check");
+      const demo = document.getElementById("try");
       if (demo) setPastDemo(demo.getBoundingClientRect().bottom < vh * 0.5);
     };
     const onScroll = () => {
@@ -57,10 +57,10 @@ export function MobileCta() {
         >
           <div className="flex items-center gap-2 rounded-full bg-forest-deep/95 p-1.5 pl-5 text-cream shadow-float ring-1 ring-cream/10 backdrop-blur">
             <span className="min-w-0 flex-1 truncate text-[0.85rem] text-cream/80">
-              {pastDemo ? `Plans from ${FROM_PRICE} a month` : "See what your customers get"}
+              {pastDemo ? `From ${FROM_PRICE} a month` : "See what customers get"}
             </span>
             <a
-              href={pastDemo ? "#pricing" : "#check"}
+              href={pastDemo ? "#pricing" : "#try"}
               className="group inline-flex h-10 shrink-0 items-center gap-1.5 rounded-full bg-cream px-4 text-[0.85rem] font-semibold text-forest-deep"
             >
               {pastDemo ? "See plans" : "Try it"} <Arrow className="h-3.5 w-3.5" />

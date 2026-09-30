@@ -9,8 +9,8 @@ import { ButtonLink } from "@/components/ui/Button";
 
 const LINKS = [
   { href: "#how", label: "How it works" },
-  { href: "#check", label: "The health check" },
-  { href: "#portal", label: "Your portal" },
+  { href: "#page", label: "Your page" },
+  { href: "#workspace", label: "Your workspace" },
   { href: "#pricing", label: "Pricing" },
 ];
 
@@ -110,7 +110,7 @@ export function Nav() {
                 Log in
               </Link>
               <ButtonLink href="#pricing" size="sm" arrow>
-                Get started
+                Get your page
               </ButtonLink>
             </>
           )}
@@ -151,7 +151,7 @@ export function Nav() {
                 </motion.a>
               ))}
               <p className="mt-6 text-[0.95rem] leading-relaxed text-ink-soft">
-                For BF Suma distributors in Kenya. Sell more, follow up less.
+                For BF Suma distributors in Kenya. Your own page, and a workspace that remembers every customer.
               </p>
               <div className="mt-auto grid gap-3">
                 {account ? (
@@ -161,7 +161,7 @@ export function Nav() {
                 ) : (
                   <>
                     <ButtonLink href="#pricing" size="lg" onClick={() => setOpen(false)} arrow>
-                      Get started
+                      Get your page
                     </ButtonLink>
                     <ButtonLink href="/login" size="lg" variant="secondary" onClick={() => setOpen(false)}>
                       Log in

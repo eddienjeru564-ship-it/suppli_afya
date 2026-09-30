@@ -6,47 +6,56 @@ import { useState } from "react";
 import { Plus } from "@/components/ui/icons";
 import { Reveal } from "@/components/ui/Reveal";
 import { keepTogether } from "@/components/ui/KeepTogether";
+import { KATE } from "./story";
 
 const FAQ = [
   {
+    q: "Is Suppli Afya part of BF Suma?",
+    a: "No. Suppli Afya is an independent business, built for people who sell BF Suma products. It doesn't change how you buy stock, your upline or your account with the company.",
+  },
+  {
+    q: "Who owns the customer relationship?",
+    a: "You do. Customers come through your page, message your WhatsApp and buy from you. Suppli Afya never contacts your customers, never sells to them and never passes them to other distributors. If you leave, your customer list goes with you.",
+  },
+  {
+    q: "What happens to my customers' information?",
+    a: "Nothing leaves a customer's phone until they choose to send it to you. When they do, their answers and plan are saved in your workspace so you can help them, and nobody else sees them. We don't sell it or use it for anything else. The privacy page explains it in full.",
+  },
+  {
+    q: "Does my customer need an app?",
+    a: "No. Your page opens in any phone browser, from your link or your QR code. There's nothing to download and no account to create.",
+  },
+  {
+    q: "How are the products suggested?",
+    a: "The assessment asks about goals, daily routine and health, including medicine, allergies and pregnancy. It matches the answers against the BF Suma range, leaves out anything that doesn't suit that person and explains each suggestion in plain words. It's help choosing products, not a diagnosis, and it tells people plainly when something should be checked by a doctor first.",
+  },
+  {
+    q: "What happens after someone finishes the assessment?",
+    a: "They see their suggestions, with the reasons, and a button to talk it through with you. If they tap it, WhatsApp opens with their answers already written in, and they're saved in your workspace as a new enquiry.",
+  },
+  {
+    q: "How does WhatsApp fit in?",
+    a: "Your page sends customers to your own WhatsApp number, the one you already use. There's no WhatsApp Business setup and nothing is sent in your name. From your workspace, follow-up messages open in WhatsApp ready to send, and you press send.",
+  },
+  {
+    q: "How do customers pay?",
+    a: "They pay you directly, by M-Pesa, cash or however you already work. Suppli Afya never holds your money. Record each payment against its order with the M-Pesa code, and anything still owed stays on your list until it's in. Sending M-Pesa payment requests straight to a customer's phone is coming to the Pro plan.",
+  },
+  {
     q: "Do I need to be good with computers?",
     a: "No. If you can use WhatsApp and M-Pesa, you can use Suppli Afya. It runs on your phone, and the part your customers see is just as simple.",
-  },
-  {
-    q: "Is this from BF Suma?",
-    a: "No. Suppli Afya is an independent tool built for people who sell BF Suma products. It doesn't change how you buy stock, your upline, or your account with the company.",
-  },
-  {
-    q: "Who owns my customer list?",
-    a: "You do. Your customers and their records belong to you. We don't sell your data, share it with other distributors or contact your customers ourselves, and if you leave, you can take your list with you.",
-  },
-  {
-    q: "What does my customer need?",
-    a: "A phone with a browser and WhatsApp. There's no app to download and no account to create.",
-  },
-  {
-    q: "What if a customer's answers point to a medical problem?",
-    a: "The health check looks for things that should be checked by a doctor, like pregnancy, certain medicines, or symptoms that need attention, and tells the customer plainly. You see the same notes on your side, so you can advise them properly.",
-  },
-  {
-    q: "How does M-Pesa work with it?",
-    a: "Every order shows whether it's been paid. When a customer sends money, record it against their order in a couple of taps, with the M-Pesa code, and anything still owed shows up on your list until it's in. Sending M-Pesa requests straight to a customer's phone is coming to the Pro plan.",
   },
   {
     q: "How much does it cost?",
     a: "Starter is KES 1,500, Growth is KES 2,900 and Pro is KES 4,900 a month. You pay each month by M-Pesa or card. Nothing is taken automatically, so there's nothing to cancel: if you stop renewing, your plan simply ends.",
   },
   {
-    q: "What happens if my payment doesn't go through?",
-    a: "Your account is kept. You can try again straight away, with M-Pesa or a card, without filling anything in twice.",
-  },
-  {
     q: "Can I try it before paying?",
-    a: "The health check on this page is the real one your customers will use, so you can see exactly what they get. The portal opens once you've chosen a plan.",
+    a: `Yes. The assessment on ${KATE.first}'s example page is the real one your customers will use, so you can see exactly what they get. Your own page and workspace open once you've chosen a plan.`,
   },
   {
     q: "Can I use it for other brands?",
-    a: "Not yet. The health check and product information are built around BF Suma's range, because that's who it's for.",
+    a: "Not yet. The assessment and product information are built around BF Suma's range, because that's who it's for.",
   },
 ];
 
