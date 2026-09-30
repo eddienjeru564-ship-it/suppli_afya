@@ -2,12 +2,16 @@
 
 # Suppli Afya
 
-A sales and customer system for BF Suma distributors in Kenya. Positioning: **Sell more. Follow up less.**
-Every feature must help a distributor through the loop: Lead → Follow-up → Customer → Order → Payment → Repeat order.
+Each BF Suma distributor in Kenya gets their own page, with a short assessment that helps customers find
+relevant products and hands them to the distributor on WhatsApp, and a workspace that remembers every
+customer. Public line: **Your own page for turning curiosity into customers.**
+Every feature must help a distributor through the loop: attract → qualify → recommend → convert → follow up → reorder.
+The page is the front door; the workspace is the back half of the story. Customers read "the assessment";
+the code calls the engine the health check.
 
 Read before working here:
 - `docs/BRAIN.md`: what the company is, audiences, the three pillars (value, leverage, outcome), risks, roadmap
-- `docs/VOICE.md`: copy rules. The site speaks to distributors like a sharp founder would; the health check speaks to customers calmly
+- `docs/VOICE.md`: copy rules and banned words. The site speaks to distributors like a sharp founder would; the distributor's page speaks to customers calmly
 - `docs/ENGINE.md`: how the health check builds a plan, and the safety rules
 - `docs/DECISIONS.md`: launch blockers and open decisions
 - `docs/UX-REVIEW.md`: the design principles for every screen, and why each screen looks the way it does
@@ -25,7 +29,7 @@ Read before working here:
 
 - `src/engine/`: pure TypeScript health check engine (questions, catalogue, scoring, safety, WhatsApp handoff). Tested.
 - `src/components/check/`: health check UI (used on the landing page demo and on `/check`, `/d/[slug]`)
-- `src/components/site/`: landing page sections, in story order in `src/app/page.tsx`
+- `src/components/site/`: landing page sections, in story order in `src/app/page.tsx`. `story.ts` holds the example (Kate and her customer Sarah) and `Screens.tsx` the phone screens every section draws from
 - `src/config/`: site settings, plans and prices (`plans.ts`), onboarding options, the demo distributor
 - `src/server/`: database (Postgres or embedded PGlite), schema migrations, auth and sessions, payments (M-Pesa through PayHero, cards through Paystack, test mode), portal queries including the Today list
 - `src/app/start/`: checkout (account → payment → welcome) and onboarding (`setup/`)

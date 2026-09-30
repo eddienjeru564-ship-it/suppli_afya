@@ -1,17 +1,22 @@
 # Suppli Afya
 
-Sell more. Follow up less.
+Your own page for turning curiosity into customers.
 
-Suppli Afya helps BF Suma distributors in Kenya turn enquiries into first orders, and first
-orders into customers who keep coming back. This repository holds the website, the customer
-health check and the recommendation engine behind it.
+Suppli Afya gives each BF Suma distributor in Kenya their own page. Customers reach it from a link
+or a QR card, answer a short assessment, see which products fit what they're looking for, and
+carry the conversation to the distributor on WhatsApp. Behind the page, a workspace remembers every
+customer, so the distributor knows who to follow up with, who owes them and who's due to reorder.
+This repository holds the website, the distributor's page and assessment, the recommendation engine
+behind it, and the distributor's workspace.
 
-- `/`: the website for distributors, with a live demo of the health check
-- `/check`: the health check as a customer sees it (demo distributor)
-- `/d/<slug>`: a distributor's own health check link (the QR card points here)
+- `/`: the website for distributors, with a live demo of Kate Cromuel's page
+- `/check`: a distributor's page as a customer sees it (the demo distributor, Kate)
+- `/d/<slug>`: a distributor's own page (the QR card points here)
 - `/start`: choose a plan, create an account, pay, set up
-- `/portal`: the distributor portal (Today, Prospects, Orders, Customers, Settings)
+- `/portal`: the distributor's workspace (Today, Prospects, Orders, Customers, Settings)
 - `/login`: returning distributors
+
+Customers read "the assessment"; the code still calls the engine the health check (`src/engine/`).
 
 Distributors can install the portal on their phone as an app (see "The installed app" below).
 

@@ -53,6 +53,11 @@ Things only the founder can supply or decide. Ordered by how much they block.
     refuses everything and customers order on WhatsApp. The storefront asks customers for their phone
     number for this; orders this app can't take right away wait in the storefront's own database (at
     most 7 days) and are sent again.
+12. **Kate Cromuel on the homepage.** The homepage, `/check` and the demo use Kate Cromuel
+    ("Wellness Consultant") as the example distributor, in `src/config/distributors.ts` and
+    `src/components/site/story.ts`. Confirm with Kate that her name and title can appear there. The
+    demo has no phone number, so nothing on it opens a chat to her. If she'd rather not, change those
+    two files; every section reads from them.
 
 ## Decisions to make during the pilot
 

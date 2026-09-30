@@ -122,3 +122,33 @@ Every page at 360px and 1440px, with an accessibility checker (axe) on each scre
 the check asks (not whatever a request sends), refuses oversized requests, ignores an age that isn't a real age,
 and takes at most 300 new prospects per workspace an hour, far above a busy chama meeting and far below a script
 filling someone's Today list. `src/server/leads.test.ts` covers each.
+
+## Fourth pass: the distributor's page comes first
+
+The homepage led with the workspace (Today list, reminders, payments), so it read like a CRM. Suppli
+Afya's front door is the distributor's own page: a customer scans a card or taps a link, answers a
+short assessment, sees which products fit, and talks to the distributor on WhatsApp. The workspace
+keeps that customer afterwards. The homepage now tells that story in order, with one example all the
+way through: Kate Cromuel's page, and Sarah, who scans Kate's card and ends up reordering.
+
+| Section | What it's for |
+|---|---|
+| Hero | The ten-second test: for supplement distributors, your own page, customers find relevant products, they talk to you, you follow up. The phone plays Kate's page → a question → Sarah's plan → WhatsApp, while the enquiry lands in Kate's workspace |
+| How it usually goes | Interest turns up everywhere, and every person needs the same walk-through in a chat. The loss looks like a slow month |
+| How it works | Thirteen steps from Kate sharing her page to Sarah ordering again, grouped as attract, qualify and recommend, convert, follow up and reorder. Desktop keeps a phone beside the steps that shows what Sarah or Kate sees at each one; phones get one screen per group |
+| Your page | The four parts of the page, and why it isn't an online shop ("Here are 40 products" against "Tell me what you're looking for") |
+| Try it | The real assessment on Kate's example page, with what reaches Kate beside it |
+| Responsible by design | The safety checks, and why they protect the distributor's name |
+| Your workspace | Sarah's record: what she was looking for, what was suggested, what she bought, and when to check in |
+| Your link and QR code | Where to share the page online and in person, and the path from a card to a WhatsApp chat |
+| After the first sale | The Today list: reorders, payments and customers who have gone quiet |
+| Your numbers, Pricing, Questions | What a few more customers are worth, what it costs, and the questions distributors ask |
+
+| Problem | Change |
+|---|---|
+| Customers were told to take a "health check", which sounds clinical and invites diagnosis | "The assessment" everywhere people read it, including the WhatsApp messages and the portal. The engine and routes keep their names |
+| The example distributor was invented | Kate Cromuel, a real distributor, whose storefront is the reference. The demo copy has no phone number, so no chat opens to her. **Confirm with Kate before launch that her name and "Wellness Consultant" can appear on the homepage** |
+| A customer who already knew what they wanted still had to start the assessment | A real distributor's page offers "Or message {name} directly" on the first screen |
+| The first version of this page was 42 phone screens long | Phones get one screen per group of steps instead of one per step, the "Your page" phone is desktop-only (phones have just seen it in the hero), and the shop comparison is shorter: about 34 screens |
+| Numbered pointers on the page mock sat over the monogram and the Start button | They line up down the right edge of the screen |
+| Chat timestamps on green bubbles and the inactive stage pills were under 4.5:1 | Darker grey (#54656f) and `ink-soft` |

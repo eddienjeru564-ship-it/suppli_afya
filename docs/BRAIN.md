@@ -6,34 +6,51 @@ what we learned while building the first version.
 
 ## What Suppli Afya is
 
-A sales and customer system for BF Suma distributors in Kenya. It helps a distributor turn
-the people who ask about products into customers who order, pay and come back.
+The infrastructure a BF Suma distributor in Kenya needs to sell online without becoming a shop.
+Every distributor gets their own page at their own link, with a short assessment that helps their
+customers find relevant products and then carries the conversation to the distributor on WhatsApp.
+Behind the page is a workspace that remembers every customer, so the distributor knows who to
+follow up with, who owes them and who is due to reorder.
 
-The loop it serves, and the test every feature must pass:
+The journey it serves, and the test every feature must pass:
 
 ```
-Lead → Follow-up → Customer → Order → Payment → Repeat order
+QR code or link → the distributor's page → a short assessment → relevant products
+  → WhatsApp → the sale → follow-up → the reorder
 ```
 
-If a feature doesn't help a distributor acquire, convert, retain or reorder, it probably
-doesn't belong in the core product.
+Or, as a loop: **attract → qualify → recommend → convert → follow up → reorder**. If a feature
+doesn't help a distributor through that loop, it probably doesn't belong in the core product.
 
-Public line: **Sell more. Follow up less.**
+Public line: **Your own page for turning curiosity into customers.**
 
-It is not a supplement shop, a chatbot, a generic CRM, a payment gateway or a health app.
-The health check is the entry point into the distributor's pipeline, not the product itself.
+Within ten seconds on the homepage, a visitor should understand five things: it's for supplement
+distributors; they get their own page; customers find relevant products there; customers talk to
+the distributor; the distributor tracks and follows up.
+
+It is not a supplement shop, a chatbot, a generic CRM, a payment gateway or a health app. The page
+and the assessment are the front door. The workspace (customers, orders, payments, reminders) is
+the back half of the story: it keeps the customer after the first sale. The distributor owns the
+relationship throughout: their name on the page, their WhatsApp, their customer list.
+
+A normal online shop says "here are dozens of products, pick one". A distributor's page says "tell
+me what you're looking for, and I'll help you find where to start", then hands the customer to a
+person. That difference is the product.
+
+**Words.** Customers and distributors read "the assessment" and "your page". The code and these
+docs still call the engine the health check (`src/engine/`, `/check`); that name is internal.
 
 ## Two audiences, two voices
 
 | | Distributor | Customer |
 |---|---|---|
-| Where they meet us | The website, the portal | The health check, via a distributor's link or QR card |
+| Where they meet us | The website, the portal | The distributor's page and its assessment, via their link or QR card |
 | What they want | More orders, less chasing, getting paid, repeat business | Advice that's about them, from someone they can trust |
 | Voice | A sharp founder talking to another distributor | A calm, warm, careful guide |
 | Pays? | Yes, a monthly subscription | Never pays Suppli Afya |
 
-The marketing site speaks to distributors. The health check speaks to customers. Don't mix
-the two: no sales talk in the check, no wellness fluff on the site.
+The marketing site speaks to distributors. The distributor's page speaks to customers. Don't mix
+the two: no sales talk in the assessment, no wellness fluff on the site.
 
 ## What we took from Vitable, and what we changed
 
