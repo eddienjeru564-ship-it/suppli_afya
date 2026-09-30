@@ -6,7 +6,7 @@ import { Arrow } from "@/components/ui/Button";
 import { FROM_PRICE } from "@/config/plans";
 
 /** Sections that already have their own call to action or a control at the bottom of the screen. */
-const QUIET_ZONES = ["try", "numbers", "pricing", "start", "site-footer"];
+const QUIET_ZONES = ["try", "pricing", "start", "site-footer"];
 
 /**
  * A slim bar for phones, shown between sections that don't have their own call to action.

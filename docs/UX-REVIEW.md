@@ -142,7 +142,7 @@ way through: Kate Cromuel's page, and Sarah, who scans Kate's card and ends up r
 | Your workspace | Sarah's record: what she was looking for, what was suggested, what she bought, and when to check in |
 | Your link and QR code | Where to share the page online and in person, and the path from a card to a WhatsApp chat |
 | After the first sale | The Today list: reorders, payments and customers who have gone quiet |
-| Your numbers, Pricing, Questions | What a few more customers are worth, what it costs, and the questions distributors ask |
+| Pricing, Questions | What it costs, and the questions distributors ask. The earnings calculator ("Your numbers") is gone: after the first sale, the page goes straight to pricing |
 
 | Problem | Change |
 |---|---|

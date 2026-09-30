@@ -90,9 +90,8 @@ arrives informed. Value comes first; the sale follows.
 fifty people at a chama meeting, while they're busy. The portal turns memory into a list: who
 to talk to today, and why. The distributor's effort goes into closing, not chasing.
 
-**Outcome.** We talk about orders, payments and reorders, not features. The site's calculator
-uses the distributor's own numbers. Internally we measure outcomes (below). Pricing should be
-anchored to outcomes too (see "Pricing").
+**Outcome.** We talk about orders, payments and reorders, not features. Internally we measure
+outcomes (below). Pricing should be anchored to outcomes too (see "Pricing").
 
 Trust and longevity come from all three: careful advice protects the customer and the
 distributor's name, and a customer who trusted the advice is the one who reorders and refers.
@@ -118,7 +117,7 @@ customers, import, monthly summary; the recommended plan) and Pro KES 4,900 (set
 priority help). These numbers are a proposal, anchored on the rule below. Change them in one place.
 
 - Price so that **one or two extra reorders a month clearly cover it**. With an average order around
-  KES 6,500, that is the whole argument, and the homepage calculator lets distributors check it.
+  KES 6,500, that is the whole argument.
 - Billing is monthly by M-Pesa or card, and **nothing renews automatically**: the distributor pays
   again to renew, and a renewal extends from the end of the current month. There's a 3-day grace
   period after a month ends. Automatic card renewal can come later if distributors want it.
