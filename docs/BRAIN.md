@@ -19,7 +19,7 @@ QR code or link → the distributor's page → a short assessment → relevant p
   → WhatsApp → the sale → follow-up → the reorder
 ```
 
-Or, as a loop: **attract → qualify → recommend → convert → follow up → reorder**. If a feature
+Or, as a loop: **attract → understand → recommend → connect → sell → follow up → reorder**. If a feature
 doesn't help a distributor through that loop, it probably doesn't belong in the core product.
 
 Public line: **Your own page for turning curiosity into customers.**

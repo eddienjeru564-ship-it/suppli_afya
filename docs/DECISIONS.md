@@ -80,7 +80,11 @@ Things only the founder can supply or decide. Ordered by how much they block.
 - **WhatsApp handoff via `wa.me` links, no email capture.** Zero cost, works on every phone, matches
   how distributors already sell.
 - **Pregnancy means no product plan.** Clinic first, even if it costs a sale.
-- **No product photos or BF Suma branding.** Independence has to be visible.
+- **No product photos or BF Suma branding.** Independence has to be visible. Products are shown as
+  neutral pack renders by format and product line (`src/components/check/ProductGlyph.tsx`): a bottle,
+  a carton, a jar, with no lettering, so they can't be mistaken for the real label.
+- **The homepage shows what the product really produces.** Sarah's plan, the reasons, the WhatsApp
+  message and Kate's first reply come from the engine; `src/components/site/story.test.ts` fails if they drift.
 - **Demo distributor has no WhatsApp number.** The demo never opens a chat to a real person.
 - **Public pricing, pay before setup.** Asked for by the founder: pricing → account → payment → setup
   → portal. A failed payment keeps the account and offers a retry; returning users never see setup again.

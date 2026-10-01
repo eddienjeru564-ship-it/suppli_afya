@@ -5,7 +5,7 @@
 Each BF Suma distributor in Kenya gets their own page, with a short assessment that helps customers find
 relevant products and hands them to the distributor on WhatsApp, and a workspace that remembers every
 customer. Public line: **Your own page for turning curiosity into customers.**
-Every feature must help a distributor through the loop: attract → qualify → recommend → convert → follow up → reorder.
+Every feature must help a distributor through the loop: attract → understand → recommend → connect → sell → follow up → reorder.
 The page is the front door; the workspace is the back half of the story. Customers read "the assessment";
 the code calls the engine the health check.
 
@@ -29,7 +29,7 @@ Read before working here:
 
 - `src/engine/`: pure TypeScript health check engine (questions, catalogue, scoring, safety, WhatsApp handoff). Tested.
 - `src/components/check/`: health check UI (used on the landing page demo and on `/check`, `/d/[slug]`)
-- `src/components/site/`: landing page sections, in story order in `src/app/page.tsx`. `story.ts` holds the example (Kate and her customer Sarah) and `Screens.tsx` the phone screens every section draws from
+- `src/components/site/`: landing page sections, in story order in `src/app/page.tsx`. `story.ts` holds the example (Kate and her customer Sarah), checked against the real engine by `story.test.ts`; `Screens.tsx` holds the phone screens every section draws from
 - `src/config/`: site settings, plans and prices (`plans.ts`), onboarding options, the demo distributor
 - `src/server/`: database (Postgres or embedded PGlite), schema migrations, auth and sessions, payments (M-Pesa through PayHero, cards through Paystack, test mode), portal queries including the Today list
 - `src/app/start/`: checkout (account → payment → welcome) and onboarding (`setup/`)

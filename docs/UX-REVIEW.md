@@ -152,3 +152,30 @@ way through: Kate Cromuel's page, and Sarah, who scans Kate's card and ends up r
 | The first version of this page was 42 phone screens long | Phones get one screen per group of steps instead of one per step, the "Your page" phone is desktop-only (phones have just seen it in the hero), and the shop comparison is shorter: about 34 screens |
 | Numbered pointers on the page mock sat over the monogram and the Start button | They line up down the right edge of the screen |
 | Chat timestamps on green bubbles and the inactive stage pills were under 4.5:1 | Darker grey (#54656f) and `ink-soft` |
+
+## Fifth pass: show the product, not a description of it
+
+The fourth pass got the story right; this one replaces explanation with the product itself. Every
+section now shows a real surface (Kate's page, the assessment, the plan, the WhatsApp message, the
+workspace), and the words in those surfaces are what the engine and the Today list actually write.
+
+| Section | What changed |
+|---|---|
+| Hero | Copy answers what it is, who it's for and what the customer does, in two sentences. A step rail under the phone names each scene (Kate's page, Questions, Suggestions, WhatsApp); the enquiry card shows the suggested products. Primary call to action is "See it in action" |
+| How it usually goes | Shorter, built around the real question ("Which one should I take?"), ending on the slow month |
+| Your own customer page | Type your name and the page in the phone becomes yours: your initials, your name, your link. Nothing is saved |
+| How it works | The 13-step scroll became an interactive tour in seven steps, one per verb of the loop: attract, understand, recommend, connect, sell, follow up, reorder. Both phones side by side on large screens (one at a time, with a switch, on phones); a WhatsApp message visibly crosses between them. Plays while on screen, stops when you choose a step, and has a pause button |
+| The WhatsApp handoff | New. The exact message the engine writes for Sarah, with each part labelled, then Kate's reply. The finished chat is in the HTML; with scripts it replays once when it scrolls into view |
+| After the first sale | The workspace and follow-up sections became one: Kate's Today list with one person of each kind (new, unpaid, check in, reorder due, gone quiet), the ready message and the history for whoever you tap |
+| Not another online shop | Its own section: a shelf of look-alike packs (browse, choose, checkout) against Kate's page (tell us, get guidance, talk to Kate) |
+| Built around the distributor | Name, WhatsApp, prices and customers stay yours, with the QR card; the safety section is now a short "careful, because it carries your name" with four real examples |
+| Pricing | What every plan includes is listed once; each plan card shows only what it adds |
+| Final call to action | "See what your customers would see", opening Kate's page |
+
+| Problem | Change |
+|---|---|
+| Mock product cards were coloured rectangles, and their reasons didn't match what the engine says | Neutral pack renders (also on the real results screen), and the engine's own reasons; `story.test.ts` keeps them in step |
+| Headlines in Newsreader at 400 looked thin at display sizes | Display styles at 460 (the font is variable, so nothing extra loads) |
+| The FAQ said "your customer list goes with you", but there's no export yet | Removed until there is one |
+| 32 phone screens long | About 28, with more shown and less explained |
+| The dimmed phone in the tour faded its own text below 4.5:1 | It sits behind a scrim instead; the active step label uses a lighter ochre on the dark panel |
