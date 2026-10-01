@@ -43,3 +43,40 @@ test("pages hydrate cleanly for people who asked for reduced motion", async ({ b
   expect(errors).toEqual([]);
   await ctx.close();
 });
+
+test("a distributor can see the example page with their own name on it", async ({ page }) => {
+  await page.goto("/#page");
+  const section = page.locator("#page");
+  await section.getByLabel("See it with your name").fill("Grace Wambui");
+  await expect(section.getByText("suppliafya.co.ke/d/grace-wambui", { exact: false }).first()).toBeVisible();
+  await expect(section.getByText("This is what Grace's customers would see.")).toBeVisible();
+  await section.getByRole("button", { name: "Back to Kate" }).click();
+  await expect(section.getByLabel("See it with your name")).toHaveValue("");
+});
+
+test("the tour steps through one customer's journey, and stops playing when you choose a step", async ({ page }, info) => {
+  await page.goto("/#how");
+  const tour = page.locator("#how");
+  if (info.project.name === "mobile") {
+    await tour.getByRole("button", { name: "Step 4: Connect" }).click();
+    await expect(tour.getByRole("heading", { name: "She sends her plan to Kate" })).toBeVisible();
+    // The step is about Kate's side; the switch shows Sarah's instead.
+    await expect(tour.getByRole("button", { name: "Kate's phone" })).toHaveAttribute("aria-pressed", "true");
+    await tour.getByRole("button", { name: "Sarah's phone" }).click();
+    await expect(tour.getByRole("button", { name: "Sarah's phone" })).toHaveAttribute("aria-pressed", "true");
+  } else {
+    await tour.getByRole("button", { name: /She sends her plan to Kate/ }).click();
+    await expect(tour.getByRole("button", { name: /She sends her plan to Kate/ })).toHaveAttribute("aria-current", "step");
+  }
+  await expect(tour.getByRole("button", { name: "Play the steps" })).toBeVisible();
+  await tour.getByRole("button", { name: "Next step" }).click();
+  await expect(tour.locator('[aria-current="step"]').filter({ visible: true })).toContainText(/5|Kate replies/);
+});
+
+test("the workspace preview shows each person's ready message", async ({ page }) => {
+  await page.goto("/#workspace");
+  const ws = page.locator("#workspace");
+  await expect(ws.getByText(/Habari Sarah! It's about time for your next/)).toBeVisible();
+  await ws.getByRole("button", { name: /Achieng/ }).click();
+  await expect(ws.getByText(/just a quick reminder about your order of KES 7,800/)).toBeVisible();
+});

@@ -6,7 +6,7 @@ import { Arrow } from "@/components/ui/Button";
 import { FROM_PRICE } from "@/config/plans";
 
 /** Sections that already have their own call to action or a control at the bottom of the screen. */
-const QUIET_ZONES = ["try", "pricing", "start", "site-footer"];
+const QUIET_ZONES = ["how", "try", "pricing", "start", "site-footer"];
 
 /**
  * A slim bar for phones, shown between sections that don't have their own call to action.
@@ -57,13 +57,13 @@ export function MobileCta() {
         >
           <div className="flex items-center gap-2 rounded-full bg-forest-deep/95 p-1.5 pl-5 text-cream shadow-float ring-1 ring-cream/10 backdrop-blur">
             <span className="min-w-0 flex-1 truncate text-[0.85rem] text-cream/80">
-              {pastDemo ? `From ${FROM_PRICE} a month` : "See what customers get"}
+              {pastDemo ? `From ${FROM_PRICE} a month` : "Try the real assessment"}
             </span>
             <a
               href={pastDemo ? "#pricing" : "#try"}
               className="group inline-flex h-10 shrink-0 items-center gap-1.5 rounded-full bg-cream px-4 text-[0.85rem] font-semibold text-forest-deep"
             >
-              {pastDemo ? "See plans" : "Try it"} <Arrow className="h-3.5 w-3.5" />
+              {pastDemo ? "See plans" : "See it in action"} <Arrow className="h-3.5 w-3.5" />
             </a>
           </div>
         </motion.div>

@@ -10,24 +10,23 @@ export function FinalCta() {
       <div aria-hidden className="pointer-events-none absolute left-1/2 top-0 h-[30rem] w-[50rem] -translate-x-1/2 rounded-full bg-[radial-gradient(closest-side,rgb(90_122_83/0.4),transparent)]" />
       <div className="container-x relative text-center">
         <Reveal>
-          <h2 className="display-xl mx-auto max-w-[15ch]">
-            Give your customers a better way to <span className="italic text-sage">find you.</span>
+          <h2 className="display-xl mx-auto max-w-[14ch]">
+            See what your customers <span className="italic text-sage">would see.</span>
           </h2>
         </Reveal>
         <Reveal delay={0.1}>
           <p className="mx-auto mt-7 max-w-[34rem] text-[1.15rem] leading-relaxed text-cream/75">
-            Your own page, the assessment that goes with it, and a workspace that remembers every customer. Try {KATE.first}&apos;s
-            page first: if you can picture sending yours to the next person who asks what&apos;s good for energy,
-            you&apos;re an afternoon away from having it.
+            Open {KATE.first}&apos;s page on your phone and go through it the way a customer would. If you can picture your
+            own name at the top, you&apos;re an afternoon away from having it.
           </p>
         </Reveal>
         <Reveal delay={0.15}>
           <div className="mt-10 flex flex-col justify-center gap-3 sm:flex-row">
-            <ButtonLink href="#pricing" variant="light" size="lg" arrow>
-              Get your page
+            <ButtonLink href="/check" variant="light" size="lg" arrow>
+              Open {KATE.first}&apos;s page
             </ButtonLink>
-            <ButtonLink href="#try" size="lg" className="border border-cream/25 !bg-transparent hover:!bg-cream/10">
-              Try {KATE.first}&apos;s page
+            <ButtonLink href="#pricing" size="lg" className="border border-cream/25 !bg-transparent hover:!bg-cream/10">
+              Get your page
             </ButtonLink>
           </div>
         </Reveal>
@@ -48,7 +47,7 @@ export function Footer() {
           <nav aria-label="Footer" className="grid grid-cols-2 gap-x-12 gap-y-3 text-[0.95rem]">
             <Link href="/#how" className="hover:text-cream">How it works</Link>
             <Link href="/check" className="hover:text-cream">An example page</Link>
-            <Link href="/#workspace" className="hover:text-cream">Your workspace</Link>
+            <Link href="/#distributors" className="hover:text-cream">For distributors</Link>
             <Link href="/#pricing" className="hover:text-cream">Pricing</Link>
             <Link href="/login" className="hover:text-cream">Log in</Link>
             <Link href="/privacy" className="hover:text-cream">Privacy</Link>

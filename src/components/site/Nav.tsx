@@ -9,8 +9,7 @@ import { ButtonLink } from "@/components/ui/Button";
 
 const LINKS = [
   { href: "#how", label: "How it works" },
-  { href: "#page", label: "Your page" },
-  { href: "#workspace", label: "Your workspace" },
+  { href: "#distributors", label: "For distributors" },
   { href: "#pricing", label: "Pricing" },
 ];
 
@@ -109,8 +108,8 @@ export function Nav() {
               <Link href="/login" className="px-3 text-[0.92rem] font-medium text-ink-soft transition-colors hover:text-ink">
                 Log in
               </Link>
-              <ButtonLink href="#pricing" size="sm" arrow>
-                Get your page
+              <ButtonLink href="#try" size="sm" arrow>
+                See it in action
               </ButtonLink>
             </>
           )}
@@ -160,8 +159,8 @@ export function Nav() {
                   </ButtonLink>
                 ) : (
                   <>
-                    <ButtonLink href="#pricing" size="lg" onClick={() => setOpen(false)} arrow>
-                      Get your page
+                    <ButtonLink href="#try" size="lg" onClick={() => setOpen(false)} arrow>
+                      See it in action
                     </ButtonLink>
                     <ButtonLink href="/login" size="lg" variant="secondary" onClick={() => setOpen(false)}>
                       Log in

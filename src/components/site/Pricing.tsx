@@ -1,19 +1,9 @@
 import clsx from "clsx";
-import { PLANS, kes } from "@/config/plans";
+import { EVERY_PLAN, PLANS, kes } from "@/config/plans";
 import { ButtonLink } from "@/components/ui/Button";
 import { Check } from "@/components/ui/icons";
 import { Reveal } from "@/components/ui/Reveal";
 import { MPesa, keepTogether } from "@/components/ui/KeepTogether";
-
-const EVERY_PLAN = [
-  "Your own page at your own link",
-  "Printable QR cards",
-  "The assessment and product suggestions",
-  "Enquiries that arrive with what they're looking for",
-  "WhatsApp messages ready to send",
-  "M-Pesa and cash payments recorded against orders",
-  "Your customer list stays yours",
-];
 
 /** Getting a page, in the order it actually happens (checkout, then the four onboarding screens). */
 const START = [
@@ -37,19 +27,32 @@ export function Pricing() {
       <div className="container-x">
         <div className="grid gap-6 lg:grid-cols-2 lg:items-end">
           <Reveal>
-            <div className="eyebrow">Plans and pricing</div>
+            <div className="eyebrow">Pricing</div>
             <h2 className="display-lg mt-5 max-w-[15ch] text-ink">One extra customer a month covers it</h2>
           </Reveal>
           <Reveal delay={0.1}>
             <p className="lede max-w-[34rem] lg:ml-auto">
-              Every plan gets you your own page, the assessment your customers take and a workspace that remembers them.
               Pay monthly by <MPesa /> or card, with no contract and no setup fee. Nothing is taken automatically, so you
               can stop whenever you like.
             </p>
           </Reveal>
         </div>
 
-        <div className="mt-14 grid gap-4 lg:grid-cols-3">
+        <Reveal delay={0.05} className="mt-14">
+          <div className="grid grid-cols-1 gap-x-10 gap-y-6 border-y border-ink/10 py-8 lg:grid-cols-[14rem_1fr]">
+            <h3 className="font-display text-[1.5rem] leading-tight text-ink">Every plan includes</h3>
+            <ul className="grid grid-cols-1 gap-x-8 gap-y-3 text-[0.98rem] text-ink sm:grid-cols-2">
+              {EVERY_PLAN.map((t) => (
+                <li key={t} className="flex items-start gap-2.5">
+                  <Check className="mt-1 h-4 w-4 shrink-0 text-moss" />
+                  {keepTogether(t)}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </Reveal>
+
+        <div className="mt-10 grid gap-4 lg:grid-cols-3">
           {PLANS.map((p, i) => (
             // On phones the recommended plan is the first one you read.
             <Reveal key={p.id} delay={0.06 * i} className={p.featured ? "order-first lg:order-none" : undefined}>
@@ -62,18 +65,16 @@ export function Pricing() {
                 <div className="flex items-center justify-between gap-3">
                   <h3 className="font-display text-[1.7rem] leading-none">{p.name}</h3>
                   {p.featured && (
-                    <span className="rounded-full bg-cream/15 px-2.5 py-1 text-[0.72rem] font-semibold text-cream">Recommended</span>
+                    <span className="rounded-full bg-cream/15 px-2.5 py-1 text-[0.75rem] font-semibold text-cream">Recommended</span>
                   )}
                 </div>
-                <p className={clsx("mt-3 text-[0.95rem] leading-relaxed", p.featured ? "text-cream/75" : "text-ink-soft")}>
-                  {p.tagline}
-                </p>
-                <div className="mt-7 flex items-baseline gap-2">
+                <div className="mt-6 flex items-baseline gap-2">
                   <span className="font-display text-[2.6rem] leading-none tracking-[-0.02em]">{kes(p.price)}</span>
                   <span className={clsx("text-[0.95rem]", p.featured ? "text-cream/70" : "text-ink-mute")}>a month</span>
                 </div>
-                <ul className="mt-7 grid gap-3 text-[0.95rem] leading-snug">
-                  {p.features.map((f) => (
+                <p className={clsx("mt-4 text-[0.98rem] leading-relaxed", p.featured ? "text-cream/80" : "text-ink-soft")}>{p.tagline}</p>
+                <ul className={clsx("mt-6 grid gap-3 border-t pt-6 text-[0.98rem] leading-snug", p.featured ? "border-cream/15" : "border-ink/10")}>
+                  {p.adds.map((f) => (
                     <li key={f.text} className="flex gap-2.5">
                       <Check className={clsx("mt-0.5 h-4 w-4 shrink-0", p.featured ? "text-sage" : "text-moss")} />
                       <span className={clsx(f.soon && (p.featured ? "text-cream/70" : "text-ink-soft"))}>
@@ -81,7 +82,7 @@ export function Pricing() {
                         {f.soon && (
                           <span
                             className={clsx(
-                              "ml-1.5 rounded-full px-1.5 py-0.5 text-[0.68rem] font-semibold",
+                              "ml-1.5 rounded-full px-1.5 py-0.5 text-[0.7rem] font-semibold",
                               p.featured ? "bg-cream/15" : "bg-sand text-ink-soft",
                             )}
                           >
@@ -107,23 +108,7 @@ export function Pricing() {
             </Reveal>
           ))}
         </div>
-
-        <Reveal delay={0.1} className="mt-10">
-          <div className="rounded-[1.5rem] border border-ink/10 p-6 sm:p-7">
-            <div className="text-[0.9rem] font-semibold text-ink">Every plan includes</div>
-            <ul className="mt-3 flex flex-wrap gap-x-6 gap-y-2 text-[0.93rem] text-ink-soft">
-              {EVERY_PLAN.map((t) => (
-                <li key={t} className="flex items-start gap-2">
-                  <Check className="mt-[0.2rem] h-3.5 w-3.5 shrink-0 text-moss" />
-                  {keepTogether(t)}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </Reveal>
-        <p className="mt-5 text-[0.85rem] text-ink-mute">
-          Prices are in Kenyan shillings. You can move between plans at any renewal.
-        </p>
+        <p className="mt-5 text-[0.88rem] text-ink-mute">Prices are in Kenyan shillings. You can move between plans at any renewal.</p>
 
         <div id="setup" className="mt-20 grid grid-cols-1 gap-10 border-t border-ink/10 pt-14 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
           <Reveal>

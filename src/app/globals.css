@@ -83,21 +83,21 @@
   }
   .display-xl {
     font-family: var(--font-display);
-    font-weight: 400;
+    font-weight: 460;
     font-size: clamp(2.6rem, 6.4vw, 5.6rem);
     line-height: 1.02;
     letter-spacing: -0.028em;
   }
   .display-lg {
     font-family: var(--font-display);
-    font-weight: 400;
+    font-weight: 460;
     font-size: clamp(2.1rem, 4.4vw, 3.75rem);
     line-height: 1.06;
     letter-spacing: -0.024em;
   }
   .display-md {
     font-family: var(--font-display);
-    font-weight: 400;
+    font-weight: 460;
     font-size: clamp(1.6rem, 2.8vw, 2.4rem);
     line-height: 1.12;
     letter-spacing: -0.018em;

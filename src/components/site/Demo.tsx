@@ -44,14 +44,13 @@ export function Demo() {
       <div className="container-x relative">
         <div className="grid gap-6 lg:grid-cols-2 lg:items-end">
           <Reveal>
-            <div className="eyebrow !text-ochre">Try it</div>
+            <div className="eyebrow !text-ochre">See it in action</div>
             <h2 className="display-lg mt-5 max-w-[15ch]">Go through {DEMO_DISTRIBUTOR.firstName}&apos;s page the way a customer would</h2>
           </Reveal>
           <Reveal delay={0.1}>
             <p className="max-w-[34rem] text-[1.1rem] leading-relaxed text-cream/75 lg:ml-auto">
               This is the real assessment, on {DEMO_DISTRIBUTOR.firstName}&apos;s example page. Answer as yourself or as a
-              customer you know. On the right is what reaches {DEMO_DISTRIBUTOR.firstName} as you go: the enquiry filling in,
-              then the WhatsApp message and the notes in her workspace.
+              customer you know, and watch what reaches {DEMO_DISTRIBUTOR.firstName} as you go.
             </p>
           </Reveal>
         </div>
@@ -97,7 +96,7 @@ export function Demo() {
             className="fixed inset-x-3 top-[4.6rem] z-40 flex items-center gap-3 rounded-2xl bg-paper p-3 text-left text-ink shadow-float ring-1 ring-ink/10 lg:hidden"
           >
             <span className="relative flex h-2.5 w-2.5 shrink-0">
-              {!result && <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-moss opacity-60" />}
+              {!result && <span className="absolute inline-flex h-full w-full motion-safe:animate-ping rounded-full bg-moss opacity-60" />}
               <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-moss" />
             </span>
             <span className="min-w-0 flex-1">

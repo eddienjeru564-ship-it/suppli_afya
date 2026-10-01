@@ -1,23 +1,23 @@
 import { Nav } from "@/components/site/Nav";
 import { Hero } from "@/components/site/Hero";
 import { Problem } from "@/components/site/Problem";
-import { Journey } from "@/components/site/Journey";
 import { YourPage } from "@/components/site/YourPage";
-import { Demo } from "@/components/site/Demo";
-import { Trust } from "@/components/site/Trust";
+import { Tour } from "@/components/site/Tour";
+import { Handoff } from "@/components/site/Handoff";
 import { Workspace } from "@/components/site/Workspace";
-import { Share } from "@/components/site/Share";
-import { FollowUp } from "@/components/site/FollowUp";
+import { NotAStore } from "@/components/site/NotAStore";
+import { Yours } from "@/components/site/Yours";
+import { Demo } from "@/components/site/Demo";
 import { Pricing } from "@/components/site/Pricing";
 import { Faq } from "@/components/site/Faq";
 import { FinalCta, Footer } from "@/components/site/Footer";
 import { MobileCta } from "@/components/site/MobileCta";
 
 /**
- * The story is the distributor's customer journey, front door first: your page → why interest
- * gets lost → the whole journey, one customer from scan to reorder → the page itself → try it →
- * why it's safe → what the workspace remembers → where to share the page → keeping customers
- * after the first sale → what it costs → questions.
+ * One business loop, front door first: the distributor's own page → how interest gets lost today
+ * → the page itself, with your name on it → the whole journey in seven steps → the WhatsApp
+ * handoff → what the workspace keeps after the sale → why it isn't a shop → what stays yours →
+ * try the real thing → what it costs → questions.
  * Suppli Afya's customer is the distributor; the page is how it serves them.
  */
 export default function Home() {
@@ -27,13 +27,13 @@ export default function Home() {
       <main>
         <Hero />
         <Problem />
-        <Journey />
         <YourPage />
-        <Demo />
-        <Trust />
+        <Tour />
+        <Handoff />
         <Workspace />
-        <Share />
-        <FollowUp />
+        <NotAStore />
+        <Yours />
+        <Demo />
         <Pricing />
         <Faq />
         <FinalCta />

@@ -1,104 +1,154 @@
+"use client";
+
 import clsx from "clsx";
+import { AnimatePresence, motion } from "motion/react";
+import { useState } from "react";
 import { Reveal } from "@/components/ui/Reveal";
 import { WhatsAppIcon } from "@/components/ui/icons";
-import { KATE, ORDER_TOTAL, SARAH, SUGGESTED } from "./story";
+import { KindTag } from "./Screens";
+import { KATE, TODAY, WHEN } from "./story";
 
-const POINTS = [
-  {
-    title: "What she was looking for",
-    body: "Her goals, in her own answers, and anything to be careful with, like medicine or an allergy.",
-  },
-  {
-    title: "What you suggested, and what she bought",
-    body: "So the next conversation starts from the right place, even months later.",
-  },
-  {
-    title: "What happens next",
-    body: "A check-in date and a likely reorder date, worked out from what she bought and how long it lasts.",
-  },
+const NAV = ["Today", "Prospects", "Orders", "Customers"];
+
+const FACTS = [
+  { title: "On your phone, like an app", body: "Install it from the browser. No app store, and it opens on the day's list." },
+  { title: "A reminder each morning", body: "If you'd like one, a notification tells you how many people need you today." },
+  { title: "Orders and M-Pesa codes", body: "Record an order and its payment in a couple of taps, so nobody has to remember who paid." },
 ];
 
-const TIMELINE: { label: string; detail: string; when: string; tone?: "done" | "next" }[] = [
-  { label: "Did the assessment on your page", detail: `Looking for: ${SARAH.goals.join(", ")}`, when: "Tue, 9:02 pm", tone: "done" },
-  { label: "Suggested", detail: SUGGESTED.map((p) => p.name).join(" · "), when: "Tue, 9:05 pm", tone: "done" },
-  { label: "Messaged you on WhatsApp", detail: "With her answers and the suggested plan", when: "Tue, 9:14 pm", tone: "done" },
-  { label: "Bought", detail: `${ORDER_TOTAL} · paid by M-Pesa`, when: "Thu", tone: "done" },
-  { label: "Check in", detail: "Two weeks on the coffee: ask how she's finding it", when: "In 2 weeks", tone: "next" },
-  { label: "Likely to reorder", detail: `${SUGGESTED[0].short}, when the pack runs low`, when: "In about a month", tone: "next" },
-];
-
+/**
+ * After the first sale: Kate's real Today list, one person of each kind, with the record and the
+ * ready message for whoever is selected. Everything the workspace keeps, shown rather than listed.
+ */
 export function Workspace() {
+  const [selected, setSelected] = useState("sarah");
+  const person = TODAY.find((p) => p.id === selected) ?? TODAY[0];
+
   return (
     <section id="workspace" className="py-24 sm:py-32">
-      <div className="container-x grid grid-cols-1 items-center gap-16 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-20">
-        <div>
+      <div className="container-x">
+        <div className="grid gap-6 lg:grid-cols-2 lg:items-end">
           <Reveal>
-            <div className="eyebrow">Your workspace</div>
-            <h2 className="display-lg mt-5 max-w-[14ch] text-ink">Suppli Afya remembers what happened</h2>
+            <div className="eyebrow">After the first sale</div>
+            <h2 className="display-lg mt-5 max-w-[15ch] text-ink">You still know where every customer stands</h2>
           </Reveal>
           <Reveal delay={0.1}>
-            <p className="lede mt-6 max-w-[34rem]">
-              Once someone comes through your page, they&apos;re in your workspace. When {SARAH.name} messages you three
-              weeks later, you don&apos;t have to scroll back through your chats to work out who she is.
+            <p className="lede max-w-[34rem] lg:ml-auto">
+              Every enquiry from your page becomes a customer record. Each morning your workspace puts together a short
+              list: who&apos;s new, who owes you, who to check in with, who&apos;s due to reorder and who&apos;s gone quiet. Each
+              one comes with a message ready to send.
             </p>
           </Reveal>
-          <ul className="mt-10 grid gap-6">
-            {POINTS.map((p, i) => (
-              <Reveal as="li" key={p.title} delay={0.05 * i} className="border-l-2 border-sage pl-5">
-                <h3 className="text-[1.05rem] font-semibold text-ink">{p.title}</h3>
-                <p className="mt-1 text-[0.98rem] leading-relaxed text-ink-soft">{p.body}</p>
-              </Reveal>
-            ))}
-          </ul>
         </div>
 
-        <Reveal delay={0.1}>
-          <figure className="overflow-hidden rounded-[1.75rem] border border-ink/10 bg-paper shadow-float">
-            <div className="flex items-center justify-between gap-3 border-b border-ink/10 px-5 py-3 text-[0.8rem] text-ink-mute sm:px-6">
-              <span>
-                {KATE.first}&apos;s workspace · <span className="text-ink">Customers</span>
-              </span>
-              <span className="hidden sm:inline">Today · Prospects · Orders · Customers</span>
+        <Reveal delay={0.05} className="mt-14">
+          <div className="overflow-hidden rounded-[1.75rem] border border-ink/10 bg-paper shadow-float">
+            <div className="flex items-center gap-4 border-b border-ink/10 px-5 py-3 sm:px-6">
+              <span className="text-[0.85rem] font-semibold text-ink">{KATE.first}&apos;s workspace</span>
+              <nav aria-hidden className="hidden gap-1 text-[0.82rem] sm:flex">
+                {NAV.map((n, i) => (
+                  <span key={n} className={clsx("rounded-full px-3 py-1", i === 0 ? "bg-forest text-cream" : "text-ink-soft")}>
+                    {n}
+                  </span>
+                ))}
+              </nav>
+              <span className="ml-auto hidden text-[0.8rem] text-ink-mute sm:block">{WHEN.reorderDay}</span>
             </div>
-            <div className="flex flex-wrap items-center gap-4 px-5 pt-6 sm:px-6">
-              <span className="grid h-12 w-12 place-items-center rounded-full bg-sand font-display text-[1.3rem] text-ink">S</span>
-              <div className="min-w-0 flex-1">
-                <div className="font-display text-[1.6rem] leading-tight text-ink">{SARAH.name}</div>
-                <div className="text-[0.85rem] text-ink-mute">
-                  {SARAH.phone} · Came through your page
+
+            <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)]">
+              <div className="border-b border-ink/10 p-3 sm:p-4 lg:border-b-0 lg:border-r">
+                <div className="px-2 pb-3 pt-1">
+                  <div className="font-display text-[1.45rem] leading-tight text-ink">Good morning, {KATE.first}.</div>
+                  <div className="text-[0.88rem] text-ink-soft">{TODAY.length} people need you today. Tap one to see it.</div>
                 </div>
+                <ul className="grid grid-cols-1 gap-1.5">
+                  {TODAY.map((p) => {
+                    const on = p.id === person.id;
+                    return (
+                      <li key={p.id} className="min-w-0">
+                        <button
+                          type="button"
+                          onClick={() => setSelected(p.id)}
+                          aria-pressed={on}
+                          className={clsx(
+                            "flex w-full items-center gap-3 rounded-2xl border px-3 py-3 text-left transition-colors",
+                            on ? "border-forest/30 bg-cream" : "border-transparent hover:bg-cream/60",
+                          )}
+                        >
+                          <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-sand font-display text-[1rem] text-ink">
+                            {p.name.charAt(0)}
+                          </span>
+                          <span className="min-w-0 flex-1">
+                            <span className="flex flex-wrap items-center gap-x-2 gap-y-0.5">
+                              <span className="text-[0.95rem] font-semibold text-ink">{p.name}</span>
+                              <KindTag kind={p.kind} className="!text-[0.7rem] !px-2" />
+                            </span>
+                            <span className="mt-0.5 block truncate text-[0.84rem] text-ink-soft">{p.why}</span>
+                          </span>
+                        </button>
+                      </li>
+                    );
+                  })}
+                </ul>
               </div>
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-wa px-3 py-1.5 text-[0.8rem] font-semibold text-[#06331f]">
-                <WhatsAppIcon className="h-3.5 w-3.5" /> Message
-              </span>
+
+              <div className="relative p-5 sm:p-7" aria-live="polite">
+                <AnimatePresence mode="wait" initial={false}>
+                  <motion.div
+                    key={person.id}
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                  >
+                    <div className="flex flex-wrap items-center gap-2">
+                      <span className="font-display text-[1.6rem] leading-tight text-ink">{person.name}</span>
+                      <KindTag kind={person.kind} className="!text-[0.72rem] !px-2" />
+                    </div>
+                    <p className="mt-1 text-[0.95rem] leading-snug text-ink-soft">{person.why}</p>
+
+                    <div className="mt-5 text-[0.78rem] font-semibold text-ink-mute">Message, ready to send</div>
+                    <p className="mt-1.5 rounded-2xl bg-wa-bubble px-4 py-3 text-[0.95rem] leading-relaxed text-[#111b21]">{person.message}</p>
+                    <div aria-hidden className="mt-3 flex flex-wrap gap-2">
+                      <span className="inline-flex h-10 items-center gap-2 rounded-full bg-wa px-4 text-[0.88rem] font-semibold text-[#06331f]">
+                        <WhatsAppIcon className="h-4 w-4" /> Send on WhatsApp
+                      </span>
+                      <span className="inline-flex h-10 items-center rounded-full border border-ink/15 px-4 text-[0.88rem] font-semibold text-ink">
+                        Mark done
+                      </span>
+                    </div>
+
+                    <div className="mt-7 text-[0.78rem] font-semibold text-ink-mute">History</div>
+                    <ol className="mt-2">
+                      {person.history.map((h, n) => (
+                        <li key={n} className="grid grid-cols-[1rem_4.5rem_1fr] gap-x-2 pb-3">
+                          <span className="relative flex justify-center">
+                            <span className={clsx("mt-1.5 h-2 w-2 rounded-full", n === person.history.length - 1 ? "bg-clay" : "bg-forest")} />
+                            {n < person.history.length - 1 && <span className="absolute top-4 h-full w-px bg-ink/15" />}
+                          </span>
+                          <span className="text-[0.82rem] text-ink-mute">{h.when}</span>
+                          <span className="leading-snug">
+                            <span className="block text-[0.92rem] font-medium text-ink">{h.what}</span>
+                            {h.detail && <span className="block text-[0.84rem] text-ink-soft">{h.detail}</span>}
+                          </span>
+                        </li>
+                      ))}
+                    </ol>
+                  </motion.div>
+                </AnimatePresence>
+              </div>
             </div>
-            <ol className="px-5 pb-6 pt-6 sm:px-6">
-              {TIMELINE.map((t, i) => (
-                <li key={t.label} className="grid grid-cols-[1.25rem_1fr_auto] gap-x-3 pb-5 last:pb-0">
-                  <span className="relative flex justify-center">
-                    <span
-                      className={clsx(
-                        "mt-1.5 h-2.5 w-2.5 rounded-full",
-                        t.tone === "next" ? "border-2 border-clay bg-paper" : "bg-forest",
-                      )}
-                    />
-                    {i < TIMELINE.length - 1 && <span aria-hidden className="absolute top-5 h-[calc(100%-0.25rem)] w-px bg-ink/15" />}
-                  </span>
-                  <span className="min-w-0">
-                    <span className={clsx("block text-[0.95rem] font-semibold", t.tone === "next" ? "text-clay" : "text-ink")}>
-                      {t.label}
-                    </span>
-                    <span className="block text-[0.9rem] leading-snug text-ink-soft">{t.detail}</span>
-                  </span>
-                  <span className="pt-0.5 text-right text-[0.78rem] text-ink-mute">{t.when}</span>
-                </li>
-              ))}
-            </ol>
-          </figure>
-          <p className="mt-5 text-center text-[0.95rem] text-ink-soft">
-            You don&apos;t lose a customer after the first conversation.
-          </p>
+          </div>
         </Reveal>
+
+        <div className="mt-12 grid grid-cols-1 gap-8 sm:grid-cols-3">
+          {FACTS.map((f, n) => (
+            <Reveal key={f.title} delay={0.05 * n}>
+              <h3 className="text-[1rem] font-semibold text-ink">{f.title}</h3>
+              <p className="mt-1.5 text-[0.95rem] leading-relaxed text-ink-soft">{f.body}</p>
+            </Reveal>
+          ))}
+        </div>
       </div>
     </section>
   );

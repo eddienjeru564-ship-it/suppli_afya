@@ -37,21 +37,22 @@ export function Hero() {
             ))}
           </h1>
 
-          <p className="lede rise mt-7 max-w-[36rem]" style={at(9)}>
-            Share one link or QR code. Your customers answer a few questions, see which products fit what they&apos;re
-            looking for, and carry the conversation straight to you on WhatsApp.
+          <p className="lede rise mt-7 max-w-[34rem]" style={at(9)}>
+            A page with your name on it, to share on WhatsApp, on QR cards and in your bio. Customers answer a few
+            questions, see which products suit them, and message you with their answers already written.
           </p>
 
           <div className="rise mt-9 flex flex-col gap-3 sm:flex-row sm:items-center" style={at(11)}>
-            <ButtonLink href="#pricing" size="lg" arrow>
+            <ButtonLink href="#try" size="lg" arrow>
+              See it in action
+            </ButtonLink>
+            <ButtonLink href="#pricing" size="lg" variant="secondary">
               Get your page
             </ButtonLink>
-            <ButtonLink href="#how" size="lg" variant="secondary">
-              See how it works
-            </ButtonLink>
           </div>
-          <p className="rise mt-4 max-w-[34rem] text-[0.85rem] leading-relaxed text-ink-mute" style={at(13)}>
-            You stay the seller: your name, your WhatsApp, your customers. Plans from {FROM_PRICE} a month.
+          <p className="rise mt-5 max-w-[32rem] text-[0.9rem] leading-relaxed text-ink-mute" style={at(13)}>
+            You stay the seller. Every enquiry is saved in your own workspace, and each morning you see who to follow
+            up with. From {FROM_PRICE} a month.
           </p>
         </div>
 

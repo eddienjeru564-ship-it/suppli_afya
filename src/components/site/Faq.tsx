@@ -15,7 +15,7 @@ const FAQ = [
   },
   {
     q: "Who owns the customer relationship?",
-    a: "You do. Customers come through your page, message your WhatsApp and buy from you. Suppli Afya never contacts your customers, never sells to them and never passes them to other distributors. If you leave, your customer list goes with you.",
+    a: "You do. Customers come through your page, message your WhatsApp and buy from you. Suppli Afya never contacts your customers, never sells to them and never passes them to other distributors.",
   },
   {
     q: "What happens to my customers' information?",
@@ -30,10 +30,6 @@ const FAQ = [
     a: "The assessment asks about goals, daily routine and health, including medicine, allergies and pregnancy. It matches the answers against the BF Suma range, leaves out anything that doesn't suit that person and explains each suggestion in plain words. It's help choosing products, not a diagnosis, and it tells people plainly when something should be checked by a doctor first.",
   },
   {
-    q: "What happens after someone finishes the assessment?",
-    a: "They see their suggestions, with the reasons, and a button to talk it through with you. If they tap it, WhatsApp opens with their answers already written in, and they're saved in your workspace as a new enquiry.",
-  },
-  {
     q: "How does WhatsApp fit in?",
     a: "Your page sends customers to your own WhatsApp number, the one you already use. There's no WhatsApp Business setup and nothing is sent in your name. From your workspace, follow-up messages open in WhatsApp ready to send, and you press send.",
   },
@@ -44,10 +40,6 @@ const FAQ = [
   {
     q: "Do I need to be good with computers?",
     a: "No. If you can use WhatsApp and M-Pesa, you can use Suppli Afya. It runs on your phone, and the part your customers see is just as simple.",
-  },
-  {
-    q: "How much does it cost?",
-    a: "Starter is KES 1,500, Growth is KES 2,900 and Pro is KES 4,900 a month. You pay each month by M-Pesa or card. Nothing is taken automatically, so there's nothing to cancel: if you stop renewing, your plan simply ends.",
   },
   {
     q: "Can I try it before paying?",
