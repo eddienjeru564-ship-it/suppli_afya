@@ -45,7 +45,7 @@ export function Faq() {
       <div className="container-x grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
         <Reveal>
           <div className="eyebrow">Questions</div>
-          <h2 className="display-lg mt-5 max-w-[12ch] text-ink">What distributors usually ask</h2>
+          <h2 className="display-lg mt-5 max-w-[12ch] text-ink">Questions before you start</h2>
         </Reveal>
         <div className="divide-y divide-ink/10 border-y border-ink/10">
           {FAQ.map((f, i) => {

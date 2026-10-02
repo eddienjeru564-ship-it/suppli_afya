@@ -37,9 +37,9 @@ export function Hero() {
             ))}
           </h1>
 
-          <p className="lede rise mt-7 max-w-[30rem]" style={at(9)}>
-            Share one link. Customers answer a few questions, see what suits them, and message you on WhatsApp with
-            their answers already written.
+          <p className="lede rise mt-7 max-w-[33rem]" style={at(9)}>
+            Share one link. Customers answer a few questions, see what suits them and message you on WhatsApp with
+            their answers already written. Then you&apos;re reminded who to follow up, and when they&apos;re due to reorder.
           </p>
 
           <div className="rise mt-9 flex flex-col gap-3 sm:flex-row sm:items-center" style={at(11)}>
@@ -50,8 +50,11 @@ export function Hero() {
               Claim your page
             </ButtonLink>
           </div>
-          <p className="rise mt-5 text-[0.9rem] text-ink-mute" style={at(13)}>
-            From {FROM_PRICE} a month · No contract · Pay by M-Pesa
+          {/* Two tidy lines on a phone, one line on wider screens: never a separator left hanging. */}
+          <p className="rise mt-5 text-[0.9rem] leading-relaxed text-ink-mute" style={at(13)}>
+            <span className="block sm:inline">From {FROM_PRICE} a month</span>
+            <span className="hidden sm:inline"> · </span>
+            <span>No contract · Pay by M-Pesa</span>
           </p>
         </div>
 

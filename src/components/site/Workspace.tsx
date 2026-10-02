@@ -22,10 +22,11 @@ export function Workspace() {
       <div className="container-x grid grid-cols-1 items-center gap-14 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-20">
         <Reveal>
           <div className="eyebrow">After the sale</div>
-          <h2 className="display-lg mt-5 max-w-[14ch] text-ink">And it remembers every customer</h2>
+          <h2 className="display-lg mt-5 max-w-[14ch] text-ink">Your workspace remembers every customer</h2>
           <p className="lede mt-6 max-w-[30rem]">
-            Each morning you get a short list: who&apos;s new, who owes you, who to check in with and who&apos;s due to
-            reorder. The WhatsApp message is already written. You just send it.
+            Every enquiry from your page is saved with what they were looking for. Each morning you get a short list:
+            who&apos;s new, who owes you, who to check in with and who&apos;s due to reorder. The WhatsApp message is
+            already written, so you just send it.
           </p>
         </Reveal>
 

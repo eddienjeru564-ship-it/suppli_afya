@@ -55,12 +55,12 @@ export function Demo() {
         <div className="grid gap-6 lg:grid-cols-2 lg:items-end">
           <Reveal>
             <div className="eyebrow !text-ochre">See it in action</div>
-            <h2 className="display-lg mt-5 max-w-[15ch]">Don&apos;t take our word for it. Try {DEMO_DISTRIBUTOR.firstName}&apos;s page.</h2>
+            <h2 className="display-lg mt-5 max-w-[15ch]">Try it the way your customers will</h2>
           </Reveal>
           <Reveal delay={0.1}>
             <p className="max-w-[34rem] text-[1.1rem] leading-relaxed text-cream/75 lg:ml-auto">
-              This is the real assessment your customers would use. Answer as yourself, and watch what reaches{" "}
-              {DEMO_DISTRIBUTOR.firstName} as you go.
+              This is the real assessment, on {DEMO_DISTRIBUTOR.firstName}&apos;s example page. Answer as yourself, and
+              watch what reaches {DEMO_DISTRIBUTOR.firstName} as you go.
             </p>
           </Reveal>
         </div>
@@ -91,6 +91,18 @@ export function Demo() {
                 Open {DEMO_DISTRIBUTOR.firstName}&apos;s page on its own <Arrow />
               </Link>
             </div>
+
+            <ul className="mt-12 grid max-w-[36rem] grid-cols-1 gap-x-8 gap-y-7 border-t border-cream/10 pt-10 sm:grid-cols-2">
+              {TRUST.map((t) => (
+                <li key={t.title}>
+                  <h3 className="flex items-center gap-2 text-[1.02rem] font-semibold text-cream">
+                    <Check className="h-4 w-4 shrink-0 text-sage" />
+                    {t.title}
+                  </h3>
+                  <p className="mt-1 text-[0.95rem] leading-relaxed text-cream/70">{t.body}</p>
+                </li>
+              ))}
+            </ul>
           </Reveal>
         </div>
 
@@ -109,15 +121,6 @@ export function Demo() {
           </div>
         )}
 
-        <ul className="mt-20 grid grid-cols-1 gap-8 border-t border-cream/10 pt-12 sm:grid-cols-2 lg:grid-cols-4">
-          {TRUST.map((t, i) => (
-            <Reveal as="li" key={t.title} delay={0.04 * i}>
-              <Check className="h-5 w-5 text-sage" />
-              <h3 className="mt-3 text-[1.05rem] font-semibold text-cream">{t.title}</h3>
-              <p className="mt-1 text-[0.95rem] leading-relaxed text-cream/70">{t.body}</p>
-            </Reveal>
-          ))}
-        </ul>
       </div>
       <AnimatePresence>
         {showChip && live && (

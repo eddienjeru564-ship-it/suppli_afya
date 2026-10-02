@@ -10,8 +10,8 @@ const OPENING = SARAH_MESSAGE.split("\n")
   .join("\n");
 
 /**
- * The whole product in three steps, each with the real screen it happens on. The workspace behind
- * it is mentioned once, lightly, and shown further down.
+ * The whole product in three steps, each with the real screen it happens on. The workspace, which
+ * keeps the customer after the sale, follows straight after.
  */
 export function HowItWorks() {
   const [coffee, joints] = SUGGESTED;
@@ -113,15 +113,6 @@ export function HowItWorks() {
           ))}
         </ol>
 
-        <Reveal delay={0.1} className="mt-14 border-t border-ink/10 pt-6">
-          <p className="max-w-[46rem] text-[1rem] leading-relaxed text-ink-soft">
-            <span className="font-semibold text-ink">Behind all three, your workspace keeps the record.</span> Every enquiry
-            is saved with what they were looking for, so you know who to follow up and when they&apos;re due to reorder.{" "}
-            <a href="#after" className="font-semibold text-forest underline-offset-4 hover:underline">
-              See what it remembers
-            </a>
-          </p>
-        </Reveal>
       </div>
     </section>
   );

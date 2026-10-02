@@ -203,3 +203,18 @@ trust facts and the FAQ. The phone page went from 28 screens to about 15, deskto
 
 No testimonial was written for this pass. A made-up quote would break the site's own rule and the
 trust it's trying to build; the slot is ready for a real one.
+
+## Seventh pass: reading it as a distributor would
+
+The structure held up; the details didn't all. Read cold, as a distributor deciding whether to pay:
+
+| Problem | Change |
+|---|---|
+| The workspace came after the demo, so you were asked to try it before seeing everything you'd pay for | It follows "How it works" directly: get the sale, keep the customer, then try it, then the price |
+| The hero sold the page but not the follow-up, which is why the subscription is worth keeping | One more sentence: "Then you're reminded who to follow up, and when they're due to reorder" |
+| "Don't take our word for it" read like a sales cliché | "Try it the way your customers will" |
+| "Where most sales get lost" and "What distributors usually ask" implied numbers and users we don't have yet | "Where sales get lost" and "Questions before you start" |
+| The problems were numbered 1 to 4 right before the steps numbered 1 to 3, so they read like steps | A plain divided list |
+| A large empty dark area sat beside the demo phone | The four trust points fill that column |
+| The workspace headline ("And it remembers every customer") didn't say what "it" was, and pricing then sold a "workspace" nobody had named | "Your workspace remembers every customer" |
+| The hero's price line could wrap with a separator left dangling on phones | Two tidy lines on phones, one on wider screens |

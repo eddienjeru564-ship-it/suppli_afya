@@ -11,9 +11,9 @@ import { MobileCta } from "@/components/site/MobileCta";
 
 /**
  * Seven sections, one decision. The promise (your own page) → the pain it removes → how it works,
- * in three steps → proof: try the real thing, and what you can trust → the second layer, kept
- * light: it remembers every customer → the questions that stop people → the offer, on one card.
- * The page leads with the simplest version of the offer and lets the depth show up when it's needed.
+ * in three steps → what keeps the customer after the sale (the workspace) → try the real thing,
+ * with what you can trust → the questions that stop people → the offer, on one card.
+ * Everything you'd pay for is shown before you're asked to try it or buy it.
  */
 export default function Home() {
   return (
@@ -23,8 +23,8 @@ export default function Home() {
         <Hero />
         <Problem />
         <HowItWorks />
-        <Demo />
         <Workspace />
+        <Demo />
         <Faq />
         <Pricing />
       </main>

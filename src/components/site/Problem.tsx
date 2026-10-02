@@ -29,21 +29,16 @@ export function Problem() {
         <div>
           <Reveal>
             <div className="eyebrow">How it usually goes</div>
-            <h2 className="display-lg mt-5 max-w-[16ch] text-ink">“Which one should I take?” is where most sales get lost</h2>
+            <h2 className="display-lg mt-5 max-w-[16ch] text-ink">“Which one should I take?” is where sales get lost</h2>
           </Reveal>
-          <ol className="mt-10 grid gap-5">
+          <ul className="mt-10 max-w-[34rem] divide-y divide-ink/10 border-y border-ink/10">
             {LEAKS.map((l, i) => (
-              <Reveal as="li" key={l.title} delay={0.04 * i} className="grid grid-cols-[2rem_1fr] gap-4">
-                <span className="mt-0.5 grid h-7 w-7 place-items-center rounded-full border border-clay/40 text-[0.8rem] font-semibold text-clay">
-                  {i + 1}
-                </span>
-                <div>
-                  <h3 className="text-[1.08rem] font-semibold leading-snug text-ink">{l.title}</h3>
-                  <p className="mt-0.5 text-[0.98rem] leading-relaxed text-ink-soft">{l.body}</p>
-                </div>
+              <Reveal as="li" key={l.title} delay={0.04 * i} className="py-4">
+                <h3 className="text-[1.08rem] font-semibold leading-snug text-ink">{l.title}</h3>
+                <p className="mt-1 text-[0.98rem] leading-relaxed text-ink-soft">{l.body}</p>
               </Reveal>
             ))}
-          </ol>
+          </ul>
         </div>
 
         <Reveal delay={0.1}>
