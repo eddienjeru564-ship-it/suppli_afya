@@ -179,3 +179,27 @@ workspace), and the words in those surfaces are what the engine and the Today li
 | The FAQ said "your customer list goes with you", but there's no export yet | Removed until there is one |
 | 32 phone screens long | About 28, with more shown and less explained |
 | The dimmed phone in the tour faded its own text below 4.5:1 | It sits behind a scrim instead; the active step label uses a lighter ochre on the dark panel |
+
+## Sixth pass: one decision, not a tour
+
+The fifth pass showed everything the product does, and it was too much at once for a first visit:
+twelve sections, a seven-step tour, and the workspace explained twice. A distributor deciding
+whether to try it needs the simplest version of the offer first, and the depth only when they look
+for it. The page is now seven sections, each answering the next question a visitor has:
+
+| Section | The visitor's question |
+|---|---|
+| Hero | What is this, and is it for me? Headline, one sentence, "See it in action" and "Claim your page", and one line: from KES 1,500 a month, no contract, pay by M-Pesa |
+| How it usually goes | Do they understand my problem? Four short lines, beside the WhatsApp chat everyone recognises |
+| How it works | How does it work? Three steps, each with its real screen: share your link, they get their own plan, you close on WhatsApp. The workspace is one sentence and a link |
+| See it in action | Does it actually work? "Don't take our word for it": the real assessment, then four things that are true today (independent of BF Suma, your customers stay yours, careful with health, no contract). Real distributor quotes appear here once there are any (`src/config/testimonials.ts`) |
+| After the sale | What else do I get? Kate's Today list, one person open with the message ready |
+| Questions | What's stopping me? Seven questions |
+| Pricing | What does it cost? One card: KES 1,500 a month, what you get, "Claim your page now". Growth and Pro are a line underneath, and checkout lets anyone switch |
+
+Removed: the seven-step tour, the WhatsApp handoff section, "put your name on it", "not another
+online shop" and "built around the distributor". Their substance lives on in the three steps, the
+trust facts and the FAQ. The phone page went from 28 screens to about 15, desktop from 16 to 8.
+
+No testimonial was written for this pass. A made-up quote would break the site's own rule and the
+trust it's trying to build; the slot is ready for a real one.

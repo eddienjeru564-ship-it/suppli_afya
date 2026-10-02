@@ -12,7 +12,7 @@ const at = (i: number) => ({ "--i": i }) as CSSProperties;
  */
 export function Hero() {
   return (
-    <section className="relative overflow-hidden pb-20 pt-28 sm:pt-32 lg:pb-28 lg:pt-36">
+    <section className="relative overflow-hidden pb-20 pt-28 sm:pt-32 lg:pb-24 lg:pt-32">
       <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
         <div className="absolute -top-40 right-[-10%] h-[40rem] w-[40rem] rounded-full bg-[radial-gradient(closest-side,rgb(236_213_193/0.7),transparent)]" />
         <div className="absolute bottom-0 left-[-15%] h-[30rem] w-[30rem] rounded-full bg-[radial-gradient(closest-side,rgb(223_231_214/0.8),transparent)]" />
@@ -37,9 +37,9 @@ export function Hero() {
             ))}
           </h1>
 
-          <p className="lede rise mt-7 max-w-[34rem]" style={at(9)}>
-            A page with your name on it, to share on WhatsApp, on QR cards and in your bio. Customers answer a few
-            questions, see which products suit them, and message you with their answers already written.
+          <p className="lede rise mt-7 max-w-[30rem]" style={at(9)}>
+            Share one link. Customers answer a few questions, see what suits them, and message you on WhatsApp with
+            their answers already written.
           </p>
 
           <div className="rise mt-9 flex flex-col gap-3 sm:flex-row sm:items-center" style={at(11)}>
@@ -47,12 +47,11 @@ export function Hero() {
               See it in action
             </ButtonLink>
             <ButtonLink href="#pricing" size="lg" variant="secondary">
-              Get your page
+              Claim your page
             </ButtonLink>
           </div>
-          <p className="rise mt-5 max-w-[32rem] text-[0.9rem] leading-relaxed text-ink-mute" style={at(13)}>
-            You stay the seller. Every enquiry is saved in your own workspace, and each morning you see who to follow
-            up with. From {FROM_PRICE} a month.
+          <p className="rise mt-5 text-[0.9rem] text-ink-mute" style={at(13)}>
+            From {FROM_PRICE} a month · No contract · Pay by M-Pesa
           </p>
         </div>
 

@@ -14,39 +14,40 @@ const THREAD: { from: "them" | "you" | "gap"; text: string; time?: string }[] = 
   { from: "you", text: "Hi, still interested?" },
 ];
 
+/** What happens to most enquiries today, one line each so it can be read at a glance. */
+const LEAKS = [
+  { title: "You answer the same questions by hand", body: "What they're looking for, what they've tried, whether they take any medicine." },
+  { title: "You send photos and price lists", body: "They compare on their own and say they'll think about it." },
+  { title: "The chat waits while you're busy", body: "Delivering, at work, asleep. By the time you reply, they've moved on." },
+  { title: "Nobody remembers to follow up", body: "There's no list of who asked, so it never looks like a lost sale. Just a slow month." },
+];
+
 export function Problem() {
   return (
-    <section id="problem" className="bg-paper py-24 sm:py-32">
-      <div className="container-x grid grid-cols-1 gap-14 lg:grid-cols-[1.05fr_0.95fr] lg:gap-20">
+    <section id="problem" className="bg-paper py-24 sm:py-28">
+      <div className="container-x grid grid-cols-1 items-center gap-14 lg:grid-cols-[1.05fr_0.95fr] lg:gap-20">
         <div>
           <Reveal>
             <div className="eyebrow">How it usually goes</div>
-            <h2 className="display-lg mt-5 max-w-[15ch] text-ink">It starts with “Which one should I take?”</h2>
+            <h2 className="display-lg mt-5 max-w-[16ch] text-ink">“Which one should I take?” is where most sales get lost</h2>
           </Reveal>
-          <div className="prose-big mt-10 grid gap-7 text-ink">
-            <Reveal delay={0.05}>
-              <p>
-                Someone replies to your status asking what&apos;s good for energy. You answer by hand, in between
-                everything else.
-              </p>
-            </Reveal>
-            <Reveal delay={0.1}>
-              <p className="text-ink-soft">
-                You ask what they&apos;re looking for and whether they take any medicine. You send photos of four
-                products and a price list. They say they&apos;ll think about it. By the time you remember to follow up,
-                they&apos;ve gone quiet.
-              </p>
-            </Reveal>
-            <Reveal delay={0.15}>
-              <p>
-                None of that shows up as a lost sale. It just looks like a <em className="text-clay">slow month.</em>
-              </p>
-            </Reveal>
-          </div>
+          <ol className="mt-10 grid gap-5">
+            {LEAKS.map((l, i) => (
+              <Reveal as="li" key={l.title} delay={0.04 * i} className="grid grid-cols-[2rem_1fr] gap-4">
+                <span className="mt-0.5 grid h-7 w-7 place-items-center rounded-full border border-clay/40 text-[0.8rem] font-semibold text-clay">
+                  {i + 1}
+                </span>
+                <div>
+                  <h3 className="text-[1.08rem] font-semibold leading-snug text-ink">{l.title}</h3>
+                  <p className="mt-0.5 text-[0.98rem] leading-relaxed text-ink-soft">{l.body}</p>
+                </div>
+              </Reveal>
+            ))}
+          </ol>
         </div>
 
         <Reveal delay={0.1}>
-          <figure className="mx-auto max-w-[26rem] overflow-hidden rounded-[1.75rem] bg-wa-bg shadow-float ring-1 ring-ink/10 lg:mt-20">
+          <figure className="mx-auto max-w-[26rem] overflow-hidden rounded-[1.75rem] bg-wa-bg shadow-float ring-1 ring-ink/10">
             <div className="flex items-center gap-2.5 bg-wa-deep px-4 py-3 text-white">
               <span className="grid h-8 w-8 place-items-center rounded-full bg-[#dfe5e7] text-[0.8rem] font-semibold text-wa-deep">?</span>
               <span className="leading-tight">

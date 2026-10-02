@@ -21,8 +21,6 @@ export interface Plan {
   price: number; // KES per month
   tagline: string;
   features: PlanFeature[];
-  /** What this plan adds to what every plan includes (the homepage shows only the difference). */
-  adds: PlanFeature[];
   /** Enforced limits. null = unlimited. */
   customerLimit: number | null;
   canImport: boolean;
@@ -58,7 +56,6 @@ export const PLANS: Plan[] = [
       { text: "A daily list of who to follow up with, who owes you and who's due to reorder" },
       { text: "Up to 50 customers" },
     ],
-    adds: [{ text: "Up to 50 customers" }],
   },
   {
     id: "growth",
@@ -71,11 +68,6 @@ export const PLANS: Plan[] = [
     featured: true,
     features: [
       { text: "Everything in Starter" },
-      { text: "Unlimited customers" },
-      { text: "Bring in your existing customers from a spreadsheet" },
-      { text: "A monthly summary of sales, payments and reorders" },
-    ],
-    adds: [
       { text: "Unlimited customers" },
       { text: "Bring in your existing customers from a spreadsheet" },
       { text: "A monthly summary of sales, payments and reorders" },
@@ -94,12 +86,6 @@ export const PLANS: Plan[] = [
       { text: "We set up your page and workspace, and move your customers in for you" },
       { text: "Priority help from the Suppli Afya team on WhatsApp" },
       { text: "M-Pesa payment requests to customers (with your own Till or Paybill)", soon: true },
-    ],
-    adds: [
-      { text: "Everything in Growth" },
-      { text: "We set up your page and workspace, and move your customers in for you" },
-      { text: "Priority help from the Suppli Afya team on WhatsApp" },
-      { text: "M-Pesa payment requests to customers", soon: true },
     ],
   },
 ];

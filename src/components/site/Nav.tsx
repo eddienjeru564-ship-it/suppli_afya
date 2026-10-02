@@ -9,8 +9,8 @@ import { ButtonLink } from "@/components/ui/Button";
 
 const LINKS = [
   { href: "#how", label: "How it works" },
-  { href: "#distributors", label: "For distributors" },
   { href: "#pricing", label: "Pricing" },
+  { href: "#faq", label: "Questions" },
 ];
 
 export function Nav() {

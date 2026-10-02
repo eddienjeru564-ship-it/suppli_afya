@@ -18,28 +18,6 @@ export const KATE = {
   link: `${site.displayDomain}/d/${DEMO_DISTRIBUTOR.slug}`,
 };
 
-/** Someone the homepage can put on a page in Kate's place ("try it with your name"). */
-export type Owner = typeof KATE;
-
-export function ownerFor(name: string): Owner {
-  const clean = name.replace(/\s+/g, " ").trim().slice(0, 40);
-  if (!clean) return KATE;
-  const slug = clean
-    .toLowerCase()
-    .normalize("NFKD")
-    .replace(/[^a-z0-9 ]/g, "")
-    .trim()
-    .replace(/ +/g, "-")
-    .slice(0, 24);
-  return {
-    name: clean,
-    first: clean.split(" ")[0],
-    title: "BF Suma distributor",
-    initials: initials(clean),
-    link: `${site.displayDomain}/d/${slug || "your-name"}`,
-  };
-}
-
 function initials(name: string) {
   const parts = name.trim().split(/\s+/).filter(Boolean);
   return ((parts[0]?.[0] ?? "") + (parts.length > 1 ? parts[parts.length - 1][0] : "")).toUpperCase();
@@ -129,26 +107,16 @@ export const SARAH_MESSAGE = `Hi ${KATE.first}, I've just done the assessment on
 Could you tell me the prices and how to get started?
 Ref: ${PLAN_REF}`;
 
-/** The first reply Kate's workspace suggests for Sarah. */
-export const KATE_OPENER =
-  "Hi Sarah, thanks for doing the assessment. I saw you mentioned your energy has been low. That's one of the most common things I help people with. Can I ask you a couple of quick questions before we decide what to start with?";
-
 export const kes = (n: number) => `KES ${n.toLocaleString("en-KE")}`;
 export const ORDER_TOTAL = kes(SUGGESTED.reduce((s, p) => s + p.price, 0));
 
 const BOTH = SUGGESTED.map((p) => p.name).join(" and ");
 
-/** Kate's Today list writes these (src/server/portal.ts); they're shown here word for word. */
-export const CHECKIN_MESSAGE = `Hi Sarah, it's been a couple of weeks on ${BOTH}. How are you finding it? You'll feel the coffee straight away. Any benefit from the cordyceps builds over a few weeks.`;
+/** Kate's Today list writes this (src/server/portal.ts); it's shown here word for word. */
 export const REORDER_MESSAGE = `Habari Sarah! It's about time for your next ${BOTH}. How has it been going? I can set aside another one for you, just let me know. ${KATE.first}`;
 
 /** The dates the story happens on (October 2026). */
-export const WHEN = {
-  assessment: "Tuesday, 9:02 pm",
-  bought: "7 Oct",
-  checkinDay: "Tuesday 20 October",
-  reorderDay: "Monday 26 October",
-};
+export const WHEN = { bought: "7 Oct", today: "Monday 26 October" };
 
 /** Kate's Today list on the day Sarah is due to reorder: one of each kind the real list shows. */
 export type TodayKind = "new" | "payment" | "reorder" | "checkin" | "quiet";
@@ -158,7 +126,6 @@ export interface TodayPerson {
   kind: TodayKind;
   why: string;
   message: string;
-  history: { when: string; what: string; detail?: string }[];
 }
 
 export const ARTHROXTRA_EXPECTATION =
@@ -172,10 +139,6 @@ export const TODAY: TodayPerson[] = [
     why: "Did the assessment on your page last night. Plan: Pure & Broken Ganoderma Spores, Probio3. Focused plan (2–3).",
     message:
       "Hi Wanjiru, thanks for doing the assessment. I saw you mentioned you've been getting sick more often than you'd like. Can I ask you a couple of quick questions before we decide what to start with?",
-    history: [
-      { when: "Last night", what: "Did the assessment on your page", detail: "Looking for immunity, then digestion" },
-      { when: "Last night", what: "Messaged you on WhatsApp", detail: "With her answers and her plan" },
-    ],
   },
   {
     id: "achieng",
@@ -184,10 +147,6 @@ export const TODAY: TodayPerson[] = [
     why: "Order of KES 7,800 from 22 Oct isn't paid yet.",
     message:
       "Hi Achieng, just a quick reminder about your order of KES 7,800 from 22 Oct. Send it whenever you're ready and I'll sort out the delivery. Asante!",
-    history: [
-      { when: "Since March", what: "Five orders", detail: "Always paid within the week" },
-      { when: "22 Oct", what: "Ordered KES 7,800", detail: "Not paid yet" },
-    ],
   },
   {
     id: "sarah",
@@ -195,13 +154,6 @@ export const TODAY: TodayPerson[] = [
     kind: "reorder",
     why: `Bought ${BOTH} on ${WHEN.bought}. Probably running out this week.`,
     message: REORDER_MESSAGE,
-    history: [
-      { when: "6 Oct", what: "Did the assessment on your page", detail: "Looking for energy, then joints & bones" },
-      { when: "6 Oct", what: "Messaged you on WhatsApp", detail: `With her answers and plan ${PLAN_REF}` },
-      { when: "7 Oct", what: `Bought ${ORDER_TOTAL}`, detail: "Paid by M-Pesa" },
-      { when: "20 Oct", what: "You checked in", detail: "“My afternoons are much better”" },
-      { when: "Today", what: "Due to reorder", detail: "The coffee lasts about three weeks" },
-    ],
   },
   {
     id: "njeri",
@@ -209,10 +161,6 @@ export const TODAY: TodayPerson[] = [
     kind: "checkin",
     why: "Started ArthroXtra Tablets 2 weeks ago. A good time to ask how it's going.",
     message: `Hi Mama Njeri, it's been a couple of weeks on ArthroXtra Tablets. How are you finding it? ${ARTHROXTRA_EXPECTATION}`,
-    history: [
-      { when: "12 Oct", what: "Bought ArthroXtra Tablets", detail: "Paid by M-Pesa" },
-      { when: "Today", what: "Two weeks in", detail: "Time to ask how it's going" },
-    ],
   },
   {
     id: "kiprono",
@@ -220,9 +168,5 @@ export const TODAY: TodayPerson[] = [
     kind: "quiet",
     why: "No order since 3 Jul.",
     message: "Hi Kiprono, it's been a while! Hope you're keeping well. Let me know if you need anything, I'm here.",
-    history: [
-      { when: "Feb to Jul", what: "Ordered every month", detail: "Reishi Coffee" },
-      { when: "3 Jul", what: "Last order", detail: "Nothing since" },
-    ],
   },
 ];

@@ -68,8 +68,9 @@ Things only the founder can supply or decide. Ordered by how much they block.
   at least one with a Till or Paybill and one without.
 - **BF Suma relationship.** Whether to approach the company, and when. Check distributor policy
   on third-party tools, online price communication and use of product names.
-- **Testimonials.** The site has none, on purpose. Add real quotes and real numbers from pilot
-  distributors, with permission. Never invent them.
+- **Testimonials.** The site has none, on purpose: no made-up quotes. Add real quotes from pilot
+  distributors, with their permission, to `src/config/testimonials.ts`; they appear on the homepage
+  right after "How it works". Until then the live demo is the proof.
 - **Swahili.** Whether the customer-facing health check should offer Swahili from day one.
 - **Kids.** Whether to build a "for my child" flow for the Smart Kids range.
 

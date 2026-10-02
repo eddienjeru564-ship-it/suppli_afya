@@ -1,24 +1,19 @@
 import { Nav } from "@/components/site/Nav";
 import { Hero } from "@/components/site/Hero";
 import { Problem } from "@/components/site/Problem";
-import { YourPage } from "@/components/site/YourPage";
-import { Tour } from "@/components/site/Tour";
-import { Handoff } from "@/components/site/Handoff";
-import { Workspace } from "@/components/site/Workspace";
-import { NotAStore } from "@/components/site/NotAStore";
-import { Yours } from "@/components/site/Yours";
+import { HowItWorks } from "@/components/site/HowItWorks";
 import { Demo } from "@/components/site/Demo";
-import { Pricing } from "@/components/site/Pricing";
+import { Workspace } from "@/components/site/Workspace";
 import { Faq } from "@/components/site/Faq";
-import { FinalCta, Footer } from "@/components/site/Footer";
+import { Pricing } from "@/components/site/Pricing";
+import { Footer } from "@/components/site/Footer";
 import { MobileCta } from "@/components/site/MobileCta";
 
 /**
- * One business loop, front door first: the distributor's own page → how interest gets lost today
- * → the page itself, with your name on it → the whole journey in seven steps → the WhatsApp
- * handoff → what the workspace keeps after the sale → why it isn't a shop → what stays yours →
- * try the real thing → what it costs → questions.
- * Suppli Afya's customer is the distributor; the page is how it serves them.
+ * Seven sections, one decision. The promise (your own page) → the pain it removes → how it works,
+ * in three steps → proof: try the real thing, and what you can trust → the second layer, kept
+ * light: it remembers every customer → the questions that stop people → the offer, on one card.
+ * The page leads with the simplest version of the offer and lets the depth show up when it's needed.
  */
 export default function Home() {
   return (
@@ -27,16 +22,11 @@ export default function Home() {
       <main>
         <Hero />
         <Problem />
-        <YourPage />
-        <Tour />
-        <Handoff />
-        <Workspace />
-        <NotAStore />
-        <Yours />
+        <HowItWorks />
         <Demo />
-        <Pricing />
+        <Workspace />
         <Faq />
-        <FinalCta />
+        <Pricing />
       </main>
       <Footer />
       <MobileCta />

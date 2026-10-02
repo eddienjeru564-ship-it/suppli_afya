@@ -30,7 +30,7 @@ Read before working here:
 - `src/engine/`: pure TypeScript health check engine (questions, catalogue, scoring, safety, WhatsApp handoff). Tested.
 - `src/components/check/`: health check UI (used on the landing page demo and on `/check`, `/d/[slug]`)
 - `src/components/site/`: landing page sections, in story order in `src/app/page.tsx`. `story.ts` holds the example (Kate and her customer Sarah), checked against the real engine by `story.test.ts`; `Screens.tsx` holds the phone screens every section draws from
-- `src/config/`: site settings, plans and prices (`plans.ts`), onboarding options, the demo distributor
+- `src/config/`: site settings, plans and prices (`plans.ts`), onboarding options, the demo distributor, real distributor quotes (`testimonials.ts`, empty until there are real ones)
 - `src/server/`: database (Postgres or embedded PGlite), schema migrations, auth and sessions, payments (M-Pesa through PayHero, cards through Paystack, test mode), portal queries including the Today list
 - `src/app/start/`: checkout (account → payment → welcome) and onboarding (`setup/`)
 - `src/app/portal/`: the distributor portal; every page guards itself with `requirePortalAccount()`

@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { PRODUCTS_BY_ID, distributorBrief, recommend, whatsappMessage } from "@/engine";
-import { ARTHROXTRA_EXPECTATION, CHECKIN_MESSAGE, KATE, KATE_OPENER, PLAN_REF, SARAH_ANSWERS, SARAH_MESSAGE, SUGGESTED, ownerFor } from "./story";
+import { PRODUCTS_BY_ID, recommend, whatsappMessage } from "@/engine";
+import { ARTHROXTRA_EXPECTATION, KATE, PLAN_REF, SARAH_ANSWERS, SARAH_MESSAGE, SUGGESTED } from "./story";
 
 /** The homepage shows the product working. If the engine or catalogue changes, the story must follow. */
 describe("the homepage story matches the real engine", () => {
@@ -18,30 +18,12 @@ describe("the homepage story matches the real engine", () => {
     }
   });
 
-  it("writes the same WhatsApp message and first reply", () => {
+  it("writes the same WhatsApp message", () => {
     expect(result.ref).toBe(PLAN_REF);
     expect(whatsappMessage(result, { distributorName: KATE.name, distributorFirstName: KATE.first })).toBe(SARAH_MESSAGE);
-    expect(distributorBrief(result).opener).toBe(KATE_OPENER);
   });
 
-  it("checks in with what the first product's label says to expect", () => {
-    expect(CHECKIN_MESSAGE.endsWith(PRODUCTS_BY_ID[SUGGESTED[0].id].expectation)).toBe(true);
+  it("checks in with what the product's label says to expect", () => {
     expect(ARTHROXTRA_EXPECTATION).toBe(PRODUCTS_BY_ID.arthroxtra.expectation);
-  });
-});
-
-describe("putting your own name on the example page", () => {
-  it("builds a name, initials and link from what was typed", () => {
-    const o = ownerFor("  Grace   Wambui ");
-    expect(o.name).toBe("Grace Wambui");
-    expect(o.first).toBe("Grace");
-    expect(o.initials).toBe("GW");
-    expect(o.link.endsWith("/d/grace-wambui")).toBe(true);
-  });
-
-  it("falls back to Kate when empty, and never builds a broken link", () => {
-    expect(ownerFor("   ")).toBe(KATE);
-    expect(ownerFor("Ñjeri").link.endsWith("/d/njeri")).toBe(true);
-    expect(ownerFor("✨✨").link.endsWith("/d/your-name")).toBe(true);
   });
 });

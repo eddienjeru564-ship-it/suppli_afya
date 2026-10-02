@@ -17,9 +17,9 @@ test("a distributor can pay, set up and run their first order", async ({ page, b
   const email = `jane.${info.project.name}.${Date.now()}@example.com`;
   const password = "supersecret1";
 
-  // Pricing on the homepage → the chosen plan carries into checkout.
+  // Pricing on the homepage → the chosen plan carries into checkout (Growth is the line under the card).
   await page.goto("/#pricing");
-  await page.getByRole("link", { name: "Choose Growth" }).click();
+  await page.locator("#pricing").getByRole("link", { name: "Growth", exact: true }).click();
   await page.waitForURL(/\/start\?plan=growth/);
 
   await page.getByLabel("Email").fill(email);

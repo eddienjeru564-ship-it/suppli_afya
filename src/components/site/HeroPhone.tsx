@@ -1,6 +1,5 @@
 "use client";
 
-import clsx from "clsx";
 import { AnimatePresence, motion, useInView } from "motion/react";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { useReducedMotion } from "@/components/ui/useReducedMotion";
@@ -9,18 +8,13 @@ import { KATE, SARAH, SUGGESTED } from "./story";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
-const SCENES = [
-  { label: `${KATE.first}'s page`, ms: 3400 },
-  { label: "Questions", ms: 3600 },
-  { label: "Suggestions", ms: 4400 },
-  { label: "WhatsApp", ms: 5600 },
-];
+/** Kate's page, a question, Sarah's plan, then WhatsApp: how long each stays on screen. */
+const SCENES = [3400, 3600, 4400, 5600];
 
 /**
  * The whole idea in one silent loop: Kate's page, a question, Sarah's plan, then WhatsApp to
- * Kate, while the enquiry lands in Kate's workspace. A rail under the phone names each step. The
- * first frame is Kate's page, drawn in the HTML, so the product is on screen before any script
- * runs; with reduced motion it stays there.
+ * Kate, while the enquiry lands in Kate's workspace. The first frame is Kate's page, drawn in the
+ * HTML, so the product is on screen before any script runs; with reduced motion it stays there.
  */
 export function HeroPhone() {
   const reduce = useReducedMotion();
@@ -34,7 +28,7 @@ export function HeroPhone() {
     const t = setTimeout(() => {
       setScene((s) => (s + 1) % SCENES.length);
       setTick((n) => n + 1);
-    }, SCENES[scene].ms);
+    }, SCENES[scene]);
     return () => clearTimeout(t);
   }, [scene, reduce, inView]);
 
@@ -48,10 +42,10 @@ export function HeroPhone() {
       <MockPhone>
         <AnimatePresence mode="wait" initial={false}>
           <Scene key={`${shown}-${tick}`}>
-            {shown === 0 && <PageScreen pressed={false} />}
+            {shown === 0 && <PageScreen />}
             {shown === 1 && <QuestionScreen live />}
             {shown === 2 && <SuggestionsScreen live />}
-            {shown === 3 && <ChatScreen stage="sent" live />}
+            {shown === 3 && <ChatScreen live />}
           </Scene>
         </AnimatePresence>
       </MockPhone>
@@ -93,33 +87,6 @@ export function HeroPhone() {
         )}
       </AnimatePresence>
 
-      {/* The four steps, named. */}
-      <ol className="mx-auto mt-7 grid max-w-[22rem] grid-cols-4 gap-2">
-        {SCENES.map((s, i) => {
-          const on = i === shown;
-          const done = i < shown;
-          return (
-            <li key={s.label} className="min-w-0">
-              <div className="h-[3px] overflow-hidden rounded-full bg-ink/10">
-                {on && !reduce ? (
-                  <motion.div
-                    key={`bar${tick}`}
-                    className="h-full rounded-full bg-forest"
-                    initial={{ width: "0%" }}
-                    animate={{ width: "100%" }}
-                    transition={{ duration: s.ms / 1000, ease: "linear" }}
-                  />
-                ) : (
-                  <div className={clsx("h-full rounded-full", done || on ? "w-full bg-forest" : "w-0")} />
-                )}
-              </div>
-              <div className={clsx("mt-2 truncate text-[0.72rem] font-semibold transition-colors", on ? "text-ink" : "text-ink-mute")}>
-                {s.label}
-              </div>
-            </li>
-          );
-        })}
-      </ol>
     </div>
   );
 }
