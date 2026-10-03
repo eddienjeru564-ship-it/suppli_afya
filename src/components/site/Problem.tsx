@@ -18,19 +18,19 @@ const THREAD: { from: "them" | "you" | "gap"; text: string; time?: string }[] = 
 const LEAKS = [
   {
     title: "Every enquiry starts from zero",
-    body: "Someone asks which one they should take, and you work it out with them in the chat: what they're looking for, what they've tried, whether they take any medicine.",
+    body: "A potential customer asks which product to take, and you work it out together in the chat: what they're looking for, what they've tried before and whether they take any medicine.",
   },
   {
-    title: "They're left to compare on their own",
-    body: "You send product photos, prices and explanations. The customer has to weigh it all up alone, and often says they'll think about it.",
+    title: "Customers are left to compare on their own",
+    body: "You send product photos, prices and explanations. The customer has to weigh up the options alone, and often says they'll think about it.",
   },
   {
-    title: "Chats wait while you're busy",
-    body: "You're delivering an order, at work or with family. By the time you reply, the moment has passed.",
+    title: "Customers wait while you're busy",
+    body: "While you're delivering an order, at work or with family, the customer's message waits. By the time you reply, they may have lost interest.",
   },
   {
     title: "Nobody keeps a record of who asked",
-    body: "Interest is spread across chats, so follow-ups and reorders are easy to miss. It never looks like a lost sale, just a slow month.",
+    body: "Enquiries are scattered across different chats, so follow-ups and reorders are easy to miss. Those missed sales don't show up anywhere. The month just feels slow.",
   },
 ];
 
@@ -42,8 +42,8 @@ export function Problem() {
           <Reveal>
             <h2 className="display-lg max-w-[16ch] text-ink">Where WhatsApp Sales Get Lost</h2>
             <p className="lede mt-6 max-w-[34rem]">
-              It usually starts with “Which one should I take?” Selling on WhatsApp works, but every enquiry depends on you
-              being free to answer it, and nothing keeps track of who asked.
+              Potential customers usually message you with the same question: “Which one should I take?” Selling on WhatsApp
+              works, but every enquiry depends on you being free to answer it, and nothing keeps track of who asked.
             </p>
           </Reveal>
           <ul className="mt-10 max-w-[34rem] divide-y divide-ink/10 border-y border-ink/10">

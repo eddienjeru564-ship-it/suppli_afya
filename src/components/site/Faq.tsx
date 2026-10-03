@@ -34,14 +34,14 @@ const FAQ = [
   },
   {
     q: "What happens if I have more than 50 customers?",
-    a: "Starter includes up to 50 customers. When you need more, Growth is KES 2,900 a month with no limit, and lets you bring in your existing customers from a spreadsheet. You can move up at any renewal.",
+    a: "The Starter plan includes up to 50 customers. When you need more, the Growth plan is KES 2,900 a month with no limit, and lets you bring in your existing customers from a spreadsheet. You can move up at any renewal.",
   },
   {
     q: "Is the assessment medical advice?",
     a: "No. It gives general wellness information to help customers choose products. It doesn't diagnose anything, and it tells people to speak to a doctor or pharmacist first when that's the right step, for example during pregnancy or alongside certain medicines.",
   },
   {
-    q: "Can I use it from my phone?",
+    q: "Can I use Suppli Afya from my phone?",
     a: "Yes. Your workspace runs on your phone and can be installed like an app, straight from the browser. Your customers only need a phone browser too, with nothing to download.",
   },
 ];

@@ -10,6 +10,9 @@ Suppli Afya clearly and confidently to another distributor. Not software marketi
 - Explain features by where they fit in the workflow and why they matter. Features support the
   story; they are not the story.
 - Use complete sentences. Vary their length. Let some sections breathe as prose.
+- Say who is doing what. A reader may land on any section first, so open with the subject
+  ("Potential customers usually message you…", "Each morning, your workspace lists…") rather than
+  "it", "they" or "the distributor" when it isn't yet clear who that is.
 - Let some headlines simply say what the thing does ("Each morning, a short list of who to talk
   to, and why"). Not every headline needs to be a promise.
 - Keep it commercially confident: orders, payments, reorders, getting paid.

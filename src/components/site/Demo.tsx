@@ -17,11 +17,11 @@ import { TESTIMONIALS } from "@/config/testimonials";
 const TRUST = [
   {
     title: "Independent of BF Suma",
-    body: "Your Suppli Afya account is separate from BF Suma. Your upline, stock purchases and distributor account stay exactly as they are.",
+    body: "Suppli Afya is an independent service, not part of BF Suma. Your BF Suma distributor account, upline and stock purchases stay exactly as they are.",
   },
   {
     title: "Your customers stay yours",
-    body: "We don't sell customer details, share them with other distributors or contact your customers ourselves.",
+    body: "Suppli Afya never sells your customers' details, shares them with other distributors or contacts your customers.",
   },
   {
     title: "Careful with health information",
@@ -67,8 +67,9 @@ export function Demo() {
         <Reveal>
           <h2 className="display-lg max-w-[20ch]">Example Distributor Page</h2>
           <p className="mt-6 max-w-[34rem] text-[1.1rem] leading-relaxed text-cream/75">
-            This is {DEMO_DISTRIBUTOR.name}&apos;s page, set up the way yours would be. Answer the questions yourself and
-            see what reaches {DEMO_DISTRIBUTOR.firstName} as you go.
+            This is an example page for {DEMO_DISTRIBUTOR.name}, a BF Suma distributor. Yours would be set up the same way,
+            with your name. Answer the questions as a customer would, and you&apos;ll see what {DEMO_DISTRIBUTOR.firstName}{" "}
+            receives as you go.
           </p>
         </Reveal>
 
@@ -82,11 +83,11 @@ export function Demo() {
 
           <Reveal delay={0.1} className="lg:pt-6">
             <div ref={panelRef} className="max-w-[30rem] scroll-mt-24" id="what-reaches-you">
-              <h3 className="font-display text-[1.7rem] leading-tight">What reaches {DEMO_DISTRIBUTOR.firstName}</h3>
+              <h3 className="font-display text-[1.7rem] leading-tight">What {DEMO_DISTRIBUTOR.firstName} receives</h3>
               <p className="mt-2 text-[0.98rem] leading-relaxed text-cream/70">
                 {result
-                  ? `${result.profile.name || "Your customer"} has finished. On a real page, one tap sends this to the distributor's WhatsApp, and the enquiry is already waiting in their workspace.`
-                  : "By the time a customer messages the distributor, the distributor already knows what they were looking for, what they were interested in and anything relevant they shared during the assessment."}
+                  ? `${result.profile.name || "The customer"} has finished. On a real page, the customer would now send this to ${DEMO_DISTRIBUTOR.firstName} on WhatsApp, and the enquiry would already be saved in ${DEMO_DISTRIBUTOR.firstName}'s workspace.`
+                  : `Each answer appears here as it's given. By the time a customer sends a message, ${DEMO_DISTRIBUTOR.firstName} can already see what they're looking for, which products were suggested and anything important they mentioned, such as medicine they take.`}
               </p>
               <div className="mt-7">
                 <LivePanel answers={answers} result={result} distributor={DEMO_DISTRIBUTOR} />
@@ -146,7 +147,7 @@ export function Demo() {
             </span>
             <span className="min-w-0 flex-1">
               <span className="block text-[0.7rem] font-semibold text-moss">
-                {result ? `Finished · see what reaches ${DEMO_DISTRIBUTOR.firstName}` : `Live in ${DEMO_DISTRIBUTOR.firstName}'s workspace`}
+                {result ? `Finished · see what ${DEMO_DISTRIBUTOR.firstName} receives` : `Live in ${DEMO_DISTRIBUTOR.firstName}'s workspace`}
               </span>
               <span className="block truncate text-[0.9rem] font-semibold">{live.title}</span>
               {live.detail && <span className="block truncate text-[0.78rem] text-ink-soft">{live.detail}</span>}

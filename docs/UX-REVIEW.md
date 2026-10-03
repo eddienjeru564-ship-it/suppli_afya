@@ -248,3 +248,9 @@ vertical padding. The FAQ heading stays in view while you read the answers on de
 **Follow-up.** Section titles say what each section is, so the page reads as a sequence: Where WhatsApp
 Sales Get Lost → How Suppli Afya Works → Example Distributor Page → Your Daily Follow-Up List → Common
 Questions → Simple Monthly Pricing. The hero subtext now says customers find "what products suit them".
+
+**Follow-up.** Every sentence says who is doing what, so no section relies on the one before it: the
+problem opens with "Potential customers usually message you…", the steps are "Share your page link",
+"Customers get their own plan" and "You finish the sale on WhatsApp", the workspace is introduced as
+the private side of your page that only you can see, and the example page says plainly that Kate is a
+distributor and that yours is set up the same way.

@@ -24,8 +24,8 @@ export function Pricing() {
         <Reveal className="text-center">
           <h2 className="display-lg mx-auto max-w-[17ch]">Simple Monthly Pricing</h2>
           <p className="mx-auto mt-6 max-w-[36rem] text-[1.1rem] leading-relaxed text-cream/75">
-            Your own customer page, the assessment, your workspace and a follow-up list, ready to use without a setup fee or
-            a long-term contract.
+            One monthly price covers your own page, the customer assessment, your workspace and your daily follow-up list.
+            There&apos;s no setup fee and no long-term contract.
           </p>
         </Reveal>
 
@@ -49,7 +49,7 @@ export function Pricing() {
                 <ButtonLink href={`/start?plan=${starter.id}`} size="lg" className="w-full !h-14 !text-[1.05rem]" arrow>
                   Claim your page now
                 </ButtonLink>
-                <p className="mt-3 text-center text-[0.85rem] text-ink-mute">Takes about two minutes. Your page is ready the same day.</p>
+                <p className="mt-3 text-center text-[0.85rem] text-ink-mute">Signing up takes about two minutes, and your page is ready the same day.</p>
               </div>
             </div>
 
