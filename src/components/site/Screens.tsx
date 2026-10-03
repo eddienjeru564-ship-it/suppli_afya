@@ -287,34 +287,6 @@ export function ChatScreen({ live }: { live?: boolean }) {
   );
 }
 
-function QrEye({ x, y }: { x: number; y: number }) {
-  return (
-    <g>
-      <rect x={x} y={y} width="7" height="7" fill="currentColor" />
-      <rect x={x + 1} y={y + 1} width="5" height="5" fill="#fff" />
-      <rect x={x + 2} y={y + 2} width="3" height="3" fill="currentColor" />
-    </g>
-  );
-}
-
-/** A decorative QR code: finder squares and a fixed pattern (never a real link). */
-export function FakeQr({ className }: { className?: string }) {
-  const n = 21;
-  const finder = (x: number, y: number) => (x < 7 && y < 7) || (x >= n - 7 && y < 7) || (x < 7 && y >= n - 7);
-  const cells: [number, number][] = [];
-  for (let y = 0; y < n; y++) for (let x = 0; x < n; x++) if (!finder(x, y) && (x * 7 + y * 13 + x * y) % 5 < 2) cells.push([x, y]);
-  return (
-    <svg viewBox={`-1 -1 ${n + 2} ${n + 2}`} aria-hidden className={clsx("bg-white text-ink", className)} shapeRendering="crispEdges">
-      {cells.map(([x, y]) => (
-        <rect key={`${x}-${y}`} x={x} y={y} width="1" height="1" fill="currentColor" />
-      ))}
-      <QrEye x={0} y={0} />
-      <QrEye x={n - 7} y={0} />
-      <QrEye x={0} y={n - 7} />
-    </svg>
-  );
-}
-
 // ------------------------------------------------------------------ Kate's side
 
 type Kind = "new" | "payment" | "reorder" | "checkin" | "quiet";

@@ -1,7 +1,11 @@
+import clsx from "clsx";
 import type { ReactNode } from "react";
+import { DEMO_DISTRIBUTOR } from "@/config/distributors";
+import { site } from "@/config/site";
+import { QrCard } from "@/components/brand/QrCard";
 import { Reveal } from "@/components/ui/Reveal";
-import { Check } from "@/components/ui/icons";
-import { FakeQr, Monogram, Pack, WaText } from "./Screens";
+import { qrSvg } from "@/lib/qr";
+import { Pack, WaText } from "./Screens";
 import { KATE, PLAN_REF, SARAH, SARAH_MESSAGE, SUGGESTED, kes } from "./story";
 
 /** The opening of Sarah's message: who she is, her goals and her plan (the rest is in the real message). */
@@ -13,59 +17,38 @@ const OPENING = SARAH_MESSAGE.split("\n")
  * The whole product in three steps, each with the real screen it happens on. The workspace, which
  * keeps the customer after the sale, follows straight after.
  */
-export function HowItWorks() {
+export async function HowItWorks() {
   const [coffee, joints] = SUGGESTED;
-  const steps: { title: string; body: string; visual: ReactNode }[] = [
+  const url = `${site.url}/d/${DEMO_DISTRIBUTOR.slug}`;
+  const svg = await qrSvg(url);
+  const steps: { title: string; body: string; box?: string; visual: ReactNode }[] = [
     {
       title: "Share your link",
-      body: "Put it on your WhatsApp status, in your bio and on a QR card. It opens your own page, with your name at the top.",
+      body: "Put it on your WhatsApp status, in your bio and on printed QR cards. It opens your own page, with your name at the top.",
+      box: "bg-sand/50",
       visual: (
-        <div className="flex h-full flex-col">
-          <div className="flex items-center gap-1.5 rounded-full bg-sand/70 px-3 py-1.5 text-[0.75rem] text-ink-soft">
-            <svg viewBox="0 0 12 12" aria-hidden className="h-2.5 w-2.5 shrink-0">
-              <rect x="2.5" y="5.5" width="7" height="5" rx="1.2" fill="currentColor" />
-              <path d="M4 5.5V4a2 2 0 0 1 4 0v1.5" stroke="currentColor" strokeWidth="1.2" fill="none" />
-            </svg>
-            <span className="truncate">{KATE.link}</span>
-          </div>
-          <div className="mt-4 flex items-center gap-3">
-            <Monogram className="h-11 w-11 text-[1rem]" />
-            <div className="min-w-0 leading-tight">
-              <div className="truncate font-display text-[1.15rem] text-ink">{KATE.name}</div>
-              <div className="truncate text-[0.78rem] text-ink-mute">{KATE.title}</div>
-            </div>
-          </div>
-          <div className="mt-3 font-display text-[1.2rem] leading-snug text-ink">Let&apos;s find what actually suits you.</div>
-          <div className="mt-auto flex items-end justify-between gap-3">
-            <div className="flex flex-wrap gap-1.5">
-              {["WhatsApp status", "Bio", "QR card"].map((c) => (
-                <span key={c} className="rounded-full border border-ink/15 px-2.5 py-1 text-[0.72rem] text-ink-soft">
-                  {c}
-                </span>
-              ))}
-            </div>
-            <FakeQr className="h-14 w-14 shrink-0 rounded-md p-0.5 ring-1 ring-ink/10" />
-          </div>
+        <div className="grid h-full place-items-center pb-2 pr-2">
+          <QrCard size="sm" name={KATE.name} tagline={KATE.title} url={url} displayUrl={KATE.link} svg={svg} />
         </div>
       ),
     },
     {
       title: "They get their own plan",
-      body: "A few short questions, then the products that fit what they're looking for, each with the reason why. Anything that doesn't suit them is left out.",
+      body: "A few short questions, then the products that fit, each explained by what they told you. Anything that doesn't suit them is left out, with the reason.",
       visual: (
         <div className="flex h-full flex-col">
           <div className="text-[0.75rem] font-semibold text-clay">Your plan · {PLAN_REF}</div>
           <div className="mt-0.5 font-display text-[1.3rem] leading-tight text-ink">{SARAH.name}, here&apos;s your plan.</div>
           <div className="mt-3 grid gap-2">
             {SUGGESTED.map((p) => (
-              <div key={p.id} className="flex items-center gap-3 rounded-2xl border border-ink/10 bg-cream/60 p-2">
+              <div key={p.id} className="flex items-center gap-3 rounded-2xl border border-ink/10 bg-cream/60 p-2.5">
                 <Pack product={p} className="h-14 w-12" />
                 <div className="min-w-0">
-                  <div className="truncate font-display text-[1rem] leading-tight text-ink">{p.name}</div>
-                  <div className="mt-1 flex items-center gap-1.5 text-[0.75rem] text-ink-soft">
-                    <Check className="h-3 w-3 shrink-0 text-moss" />
-                    <span className="truncate">Fits: {p.goal.toLowerCase()}</span>
-                  </div>
+                  <div className="font-display text-[1rem] leading-tight text-ink">{p.name}</div>
+                  <p className="mt-1 text-[0.78rem] leading-snug text-ink-soft">
+                    <span className="font-semibold text-clay">Because </span>
+                    {p.because}
+                  </p>
                 </div>
               </div>
             ))}
@@ -98,10 +81,10 @@ export function HowItWorks() {
           <h2 className="display-lg mt-5 max-w-[20ch] text-ink">Share a link. They get a plan. You close the sale.</h2>
         </Reveal>
 
-        <ol className="mt-14 grid grid-cols-1 gap-12 md:grid-cols-3 md:gap-6 lg:gap-8">
+        <ol className="mt-14 grid grid-cols-1 gap-12 lg:grid-cols-3 lg:gap-8">
           {steps.map((s, i) => (
-            <Reveal as="li" key={s.title} delay={0.06 * i}>
-              <div aria-hidden className="h-[15rem] overflow-hidden rounded-[1.5rem] bg-paper p-4 shadow-card ring-1 ring-ink/10">
+            <Reveal as="li" key={s.title} delay={0.06 * i} className="max-w-[30rem]">
+              <div aria-hidden className={clsx("h-[16rem] overflow-hidden rounded-[1.5rem] p-4 shadow-card ring-1 ring-ink/10", s.box ?? "bg-paper")}>
                 {s.visual}
               </div>
               <div className="mt-6 flex items-baseline gap-3">

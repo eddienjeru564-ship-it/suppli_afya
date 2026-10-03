@@ -218,3 +218,8 @@ The structure held up; the details didn't all. Read cold, as a distributor decid
 | A large empty dark area sat beside the demo phone | The four trust points fill that column |
 | The workspace headline ("And it remembers every customer") didn't say what "it" was, and pricing then sold a "workspace" nobody had named | "Your workspace remembers every customer" |
 | The hero's price line could wrap with a separator left dangling on phones | Two tidy lines on phones, one on wider screens |
+
+**Follow-up.** Step 1 of "How it works" shows Kate's printable QR card again (`QrCard size="sm"`), the
+design the earlier homepage used; its QR code really opens her page. Step 2 explains each product by
+what Sarah said ("Because you said your energy is low and dips mid-afternoon"), and `story.test.ts`
+checks those words against her actual answers.

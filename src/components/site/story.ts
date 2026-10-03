@@ -67,6 +67,8 @@ export interface StoryProduct {
   /** Kate's price, as she quotes it on WhatsApp. */
   price: number;
   why: string;
+  /** What Sarah said that led to it, in plain words. */
+  because: string;
 }
 
 /** The plan the engine builds from Sarah's answers. */
@@ -80,6 +82,7 @@ export const SUGGESTED: StoryProduct[] = [
     line: "Immune Booster",
     price: 3200,
     why: "Cordyceps is traditionally used for energy and stamina, and it comes in a form that's easy to keep up.",
+    because: "you said your energy is low and dips mid-afternoon",
   },
   {
     id: "arthroxtra",
@@ -90,6 +93,7 @@ export const SUGGESTED: StoryProduct[] = [
     line: "Sport Fit",
     price: 4700,
     why: "You've had joint trouble for a while, and this is the formula BF Suma makes for long-standing problems.",
+    because: "you've had joint pain for more than a year",
   },
 ];
 

@@ -18,6 +18,16 @@ describe("the homepage story matches the real engine", () => {
     }
   });
 
+  it("explains each product with what Sarah actually answered", () => {
+    const [coffee, joints] = SUGGESTED;
+    expect(coffee.because).toContain("energy is low and dips mid-afternoon");
+    expect(SARAH_ANSWERS.energy_level).toBeLessThanOrEqual(2);
+    expect(SARAH_ANSWERS.energy_dips).toContain("afternoon");
+    expect(joints.because).toContain("joint pain for more than a year");
+    expect(SARAH_ANSWERS.joint_issues).toContain("pain");
+    expect(SARAH_ANSWERS.joint_duration).toBe("years");
+  });
+
   it("writes the same WhatsApp message", () => {
     expect(result.ref).toBe(PLAN_REF);
     expect(whatsappMessage(result, { distributorName: KATE.name, distributorFirstName: KATE.first })).toBe(SARAH_MESSAGE);
