@@ -8,7 +8,7 @@ export const site = {
   name: "Suppli Afya",
   tagline: "Turn curiosity into customers.",
   description:
-    "Give customers a simple way to find which BF Suma products suit them, then start a WhatsApp conversation with you. Suppli Afya keeps track of follow-ups and reorders.",
+    "A page that shows potential customers which BF Suma products suit them, then sends them to you on WhatsApp. Suppli Afya keeps track of follow-ups and reorders.",
   url,
   /** The domain shown on cards and in mockups: always the one the QR codes and links go to. */
   displayDomain: new URL(url).host.replace(/^www\./, ""),

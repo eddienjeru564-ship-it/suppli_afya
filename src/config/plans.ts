@@ -33,7 +33,7 @@ export const EVERY_PLAN = [
   "Your own customer page and link",
   "Printable QR cards",
   "Personalised assessment and product suggestions",
-  "Every enquiry saved in your workspace",
+  "Unlimited enquiries, each saved in your workspace",
   "WhatsApp messages ready to send",
   "Daily follow-up and reorder list",
   "Orders and M-Pesa payments recorded in a few taps",
@@ -52,9 +52,9 @@ export const PLANS: Plan[] = [
     features: [
       { text: "Your own page, link and printable QR cards" },
       { text: "The assessment and product suggestions for your customers" },
-      { text: "Every enquiry saved with what they were looking for" },
+      { text: "Unlimited enquiries, each saved with what the customer was looking for" },
       { text: "A daily list of who to follow up with, who owes you and who's due to reorder" },
-      { text: "Up to 50 customers" },
+      { text: "Up to 50 customers on your list" },
     ],
   },
   {

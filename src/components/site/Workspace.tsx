@@ -26,9 +26,9 @@ export function Workspace() {
         <Reveal>
           <h2 className="display-lg max-w-[12ch] text-ink">Your Daily Follow-Up List</h2>
           <p className="lede mt-6 max-w-[30rem]">
-            Each morning, your workspace lists the customers who need you that day: new enquiries, follow-ups, unpaid orders
-            and people who may be due to reorder. Each one comes with a WhatsApp message already written. You read it, change
-            anything you like and send it.
+            Repeat customers are the steadiest part of your business, and the easiest to forget. Each morning, your workspace
+            shows who needs you that day: new enquiries, follow-ups, unpaid orders and customers who may be due to reorder.
+            Each one comes with a WhatsApp message already written. You read it, change anything you like and send it.
           </p>
           {/* Each arrow travels with the step after it, so a wrapped line never ends on an arrow. */}
           <p className="mt-8 flex flex-wrap gap-x-2 gap-y-1 text-[0.92rem] text-ink-mute">

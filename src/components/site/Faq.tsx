@@ -25,20 +25,24 @@ const FAQ = [
     a: "Yes. Your page has a button to message you straight away, for customers who already know what they want. The assessment is there for those who don't.",
   },
   {
+    q: "Is the assessment in Swahili?",
+    a: "Not yet. The assessment is in simple English today. Once a customer messages you, you carry on in whichever language you both prefer. We'll add Swahili if distributors tell us they need it.",
+  },
+  {
     q: "How does payment work?",
-    a: "Your customers pay you directly, by M-Pesa, cash or however you already work. Suppli Afya never holds your money. You record each payment against its order, and anything still owed stays on your list until it's paid. Your own plan is paid monthly by M-Pesa or card.",
+    a: "Your customers pay you directly, by M-Pesa, cash or however you already work. Suppli Afya never holds your money. You record each payment against its order, and anything still owed stays on your list until it's paid. Your Suppli Afya subscription is paid monthly, by M-Pesa or card.",
   },
   {
     q: "Can I stop my subscription?",
-    a: "Yes. Nothing renews automatically, so there's nothing to cancel. If you don't renew, your plan simply ends.",
+    a: "Yes. Nothing renews automatically, so there's nothing to cancel. If you don't renew, your page goes offline three days after your subscription ends. Your customer records stay saved, so everything is still there if you come back. If you'd rather we deleted them, just ask.",
   },
   {
-    q: "What happens if I have more than 50 customers?",
-    a: "The Starter plan includes up to 50 customers. When you need more, the Growth plan is KES 2,900 a month with no limit, and lets you bring in your existing customers from a spreadsheet. You can move up at any renewal.",
+    q: "What counts as a customer, and what if I have more than 50?",
+    a: "Enquiries from your page are unlimited on every plan. A customer is someone you've recorded an order for or added yourself, and Starter holds up to 50. When you need more, Growth is KES 2,900 a month with no limit, and lets you bring in your existing customers from a spreadsheet. You can move up at any renewal.",
   },
   {
     q: "Is the assessment medical advice?",
-    a: "No. It gives general wellness information to help customers choose products. It doesn't diagnose anything, and it tells people to speak to a doctor or pharmacist first when that's the right step, for example during pregnancy or alongside certain medicines.",
+    a: "No. It gives general wellness information to help customers choose products, and it doesn't diagnose anything. When someone should speak to a doctor or pharmacist first, for example during pregnancy or alongside certain medicines, the assessment tells them so.",
   },
   {
     q: "Can I use Suppli Afya from my phone?",

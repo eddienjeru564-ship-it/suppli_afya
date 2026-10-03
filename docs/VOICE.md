@@ -13,6 +13,11 @@ Suppli Afya clearly and confidently to another distributor. Not software marketi
 - Say who is doing what. A reader may land on any section first, so open with the subject
   ("Potential customers usually message you…", "Each morning, your workspace lists…") rather than
   "it", "they" or "the distributor" when it isn't yet clear who that is.
+- One word per idea. A "plan" is the customer's product plan; the distributor pays a
+  "subscription" (Starter, Growth, Pro). An "enquiry" is someone who used the page (unlimited on
+  every plan); a "customer" is someone the distributor recorded an order for or added (Starter holds 50).
+  On the website the distributor's side is "your workspace".
+- Keep sentences under about 25 words. Many readers are reading English as a second language, on a phone.
 - Let some headlines simply say what the thing does ("Each morning, a short list of who to talk
   to, and why"). Not every headline needs to be a promise.
 - Keep it commercially confident: orders, payments, reorders, getting paid.

@@ -18,11 +18,11 @@ const THREAD: { from: "them" | "you" | "gap"; text: string; time?: string }[] = 
 const LEAKS = [
   {
     title: "Every enquiry starts from zero",
-    body: "A potential customer asks which product to take, and you work it out together in the chat: what they're looking for, what they've tried before and whether they take any medicine.",
+    body: "Each new customer needs the same questions: what they're looking for, what they've tried and whether they take any medicine. You type it all out in the chat, every time.",
   },
   {
     title: "Customers are left to compare on their own",
-    body: "You send product photos, prices and explanations. The customer has to weigh up the options alone, and often says they'll think about it.",
+    body: "You send product photos, prices and explanations. Then the customer has to choose alone, and often says they'll think about it.",
   },
   {
     title: "Customers wait while you're busy",
@@ -30,7 +30,7 @@ const LEAKS = [
   },
   {
     title: "Nobody keeps a record of who asked",
-    body: "Enquiries are scattered across different chats, so follow-ups and reorders are easy to miss. Those missed sales don't show up anywhere. The month just feels slow.",
+    body: "Enquiries are scattered across different chats, so follow-ups and reorders are easy to miss. Those missed sales never show up anywhere. The month just feels slow.",
   },
 ];
 
@@ -42,8 +42,8 @@ export function Problem() {
           <Reveal>
             <h2 className="display-lg max-w-[16ch] text-ink">Where WhatsApp Sales Get Lost</h2>
             <p className="lede mt-6 max-w-[34rem]">
-              Potential customers usually message you with the same question: “Which one should I take?” Selling on WhatsApp
-              works, but every enquiry depends on you being free to answer it, and nothing keeps track of who asked.
+              Most potential customers start with the same WhatsApp message: “Which one should I take?” Selling this way works,
+              but it depends on you being free to reply, and nothing keeps track of who asked.
             </p>
           </Reveal>
           <ul className="mt-10 max-w-[34rem] divide-y divide-ink/10 border-y border-ink/10">

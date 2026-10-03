@@ -87,7 +87,7 @@ export function Demo() {
               <p className="mt-2 text-[0.98rem] leading-relaxed text-cream/70">
                 {result
                   ? `${result.profile.name || "The customer"} has finished. On a real page, the customer would now send this to ${DEMO_DISTRIBUTOR.firstName} on WhatsApp, and the enquiry would already be saved in ${DEMO_DISTRIBUTOR.firstName}'s workspace.`
-                  : `Each answer appears here as it's given. By the time a customer sends a message, ${DEMO_DISTRIBUTOR.firstName} can already see what they're looking for, which products were suggested and anything important they mentioned, such as medicine they take.`}
+                  : `Your answers show up here as you go. When a customer sends their message, ${DEMO_DISTRIBUTOR.firstName} already knows what they're looking for and which products were suggested. ${DEMO_DISTRIBUTOR.firstName} also sees anything to be careful about, such as medicine they take.`}
               </p>
               <div className="mt-7">
                 <LivePanel answers={answers} result={result} distributor={DEMO_DISTRIBUTOR} />

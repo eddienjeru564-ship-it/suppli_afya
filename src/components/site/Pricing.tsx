@@ -24,8 +24,8 @@ export function Pricing() {
         <Reveal className="text-center">
           <h2 className="display-lg mx-auto max-w-[17ch]">Simple Monthly Pricing</h2>
           <p className="mx-auto mt-6 max-w-[36rem] text-[1.1rem] leading-relaxed text-cream/75">
-            One monthly price covers your own page, the customer assessment, your workspace and your daily follow-up list.
-            There&apos;s no setup fee and no long-term contract.
+            One monthly subscription covers your own page, the customer assessment, your workspace and your daily follow-up
+            list. Enquiries from your page are unlimited on every plan.
           </p>
         </Reveal>
 
@@ -42,6 +42,7 @@ export function Pricing() {
                 </span>
                 <span className="text-[1rem] text-ink-mute">a month</span>
               </div>
+              <p className="mt-1.5 text-[0.9rem] text-ink-mute">About {kes(starter.price / 30)} a day.</p>
               <p className="mt-4 text-[1rem] leading-relaxed text-ink-soft">
                 Pay by <MPesa /> or card. No contract and no setup fee. You can stop whenever you like.
               </p>
@@ -49,14 +50,14 @@ export function Pricing() {
                 <ButtonLink href={`/start?plan=${starter.id}`} size="lg" className="w-full !h-14 !text-[1.05rem]" arrow>
                   Claim your page now
                 </ButtonLink>
-                <p className="mt-3 text-center text-[0.85rem] text-ink-mute">Signing up takes about two minutes, and your page is ready the same day.</p>
+                <p className="mt-3 text-center text-[0.85rem] text-ink-mute">Signing up takes about two minutes. Your page goes live as soon as you finish setting up.</p>
               </div>
             </div>
 
             <div className="border-t border-ink/10 bg-paper p-7 sm:p-10 md:border-l md:border-t-0">
               <h3 className="text-[0.95rem] font-semibold text-ink">What you get</h3>
               <ul className="mt-4 grid gap-3 text-[0.98rem] leading-snug text-ink">
-                {[...EVERY_PLAN, "Up to 50 customers"].map((t) => (
+                {[...EVERY_PLAN, "Up to 50 customers on your list"].map((t) => (
                   <li key={t} className="flex items-start gap-2.5">
                     <Check className="mt-0.5 h-4 w-4 shrink-0 text-moss" />
                     {keepTogether(t)}

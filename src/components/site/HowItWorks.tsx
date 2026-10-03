@@ -24,7 +24,7 @@ export async function HowItWorks() {
   const steps: { title: string; body: string; box?: string; visual: ReactNode }[] = [
     {
       title: "Share your page link",
-      body: "Suppli Afya gives you your own page with its own link. Share the link on your WhatsApp status, in your social media bio or on a printed QR card.",
+      body: "You get your own page and a short link to it. Share the link on your WhatsApp status, your social media bio or a printed QR card.",
       box: "bg-sand/50",
       visual: (
         <div className="grid h-full place-items-center pb-2 pr-2">
@@ -34,7 +34,7 @@ export async function HowItWorks() {
     },
     {
       title: "Customers get their own plan",
-      body: "On your page, customers answer a few short questions and see the products that fit what they're looking for, with a simple explanation of why each one was suggested.",
+      body: "On your page, customers answer a few short questions. They see which products fit what they're looking for, and why each one was suggested.",
       visual: (
         <div className="flex h-full flex-col">
           <div className="text-[0.75rem] font-semibold text-clay">Your plan · {PLAN_REF}</div>
@@ -58,7 +58,7 @@ export async function HowItWorks() {
     },
     {
       title: "You finish the sale on WhatsApp",
-      body: "The customer then messages you on WhatsApp with their answers and plan already filled in, so you know what they're looking for before you reply. From there, you sell the way you already do.",
+      body: "When the customer is ready, they message you on WhatsApp with their answers and plan included. You know what they want before you reply, then sell the way you always do.",
       visual: (
         <div className="-m-4 flex h-[calc(100%+2rem)] flex-col justify-end gap-2 bg-wa-bg p-3">
           <div className="ml-auto max-w-[92%] rounded-xl rounded-tr-none bg-wa-bubble px-3 py-2 text-[0.78rem] leading-[1.45] text-[#111b21] shadow-sm">
@@ -98,8 +98,8 @@ export async function HowItWorks() {
         <Reveal delay={0.1} className="mt-14 border-t border-ink/10 pt-6">
           <p className="max-w-[46rem] text-[1rem] leading-relaxed text-ink-soft">
             <span className="font-semibold text-ink">Every enquiry is saved for you.</span> Behind your page is your workspace,
-            which only you can see. It records each customer and what they were looking for, so it&apos;s easier to follow up and
-            to see who may be ready to reorder.
+            which only you can see. It keeps each customer&apos;s details and what they were looking for, so you know who to
+            follow up and who may be ready to reorder.
           </p>
         </Reveal>
 

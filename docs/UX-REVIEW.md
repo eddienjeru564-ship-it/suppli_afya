@@ -254,3 +254,10 @@ problem opens with "Potential customers usually message you…", the steps are "
 "Customers get their own plan" and "You finish the sale on WhatsApp", the workspace is introduced as
 the private side of your page that only you can see, and the example page says plainly that Kate is a
 distributor and that yours is set up the same way.
+
+**Follow-up.** A copy review scored the page 7.6/10 and these were fixed: "plan" now only means the
+customer's product plan (the distributor pays a "subscription"); the page says enquiries are
+unlimited on every plan and what counts as a customer; the price shows what it is per day; the FAQ
+answers whether the assessment is in Swahili (not yet) and what happens when a subscription ends
+(the page goes offline three days later, records are kept); the longest sentences are split; and the
+hero subtext says what the page does ("asks potential customers a few short questions").
