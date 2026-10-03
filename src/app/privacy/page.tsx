@@ -20,8 +20,7 @@ export default function PrivacyPage() {
         </Link>
       </header>
       <main className="container-x max-w-2xl py-16">
-        <div className="eyebrow">Privacy</div>
-        <h1 className="mt-4 font-display text-[2.6rem] leading-[1.05] tracking-[-0.02em] text-ink">How we handle your information</h1>
+        <h1 className="font-display text-[2.6rem] leading-[1.05] tracking-[-0.02em] text-ink">How we handle your information</h1>
         <div className="mt-8 grid gap-6 text-[1.02rem] leading-relaxed text-ink-soft">
           <p>
             Health answers are personal, so we keep this simple. This page explains, in plain words, what happens to the

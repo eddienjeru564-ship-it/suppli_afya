@@ -240,3 +240,7 @@ Kenya Turn Curiosity Into Customers", set a little smaller than `display-xl` sin
 
 **Follow-up.** On phones and small tablets the hero is text only: the looping phone stacked under the
 buttons and pushed the rest of the page down. The live demo further down shows the same screens.
+
+**Follow-up.** No eyebrow labels anywhere (homepage, privacy, not found): each section opens on its
+heading, intros are stacked on the left (pricing stays centred), and every section uses the same
+vertical padding. The FAQ heading stays in view while you read the answers on desktop.

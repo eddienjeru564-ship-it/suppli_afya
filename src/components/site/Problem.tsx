@@ -40,8 +40,7 @@ export function Problem() {
       <div className="container-x grid grid-cols-1 items-center gap-14 lg:grid-cols-[1.05fr_0.95fr] lg:gap-20">
         <div>
           <Reveal>
-            <div className="eyebrow">How it usually goes</div>
-            <h2 className="display-lg mt-5 max-w-[16ch] text-ink">Where Sales Get Lost</h2>
+            <h2 className="display-lg max-w-[16ch] text-ink">Where Sales Get Lost</h2>
             <p className="lede mt-6 max-w-[34rem]">
               It usually starts with “Which one should I take?” Selling on WhatsApp works, but every enquiry depends on you
               being free to answer it, and nothing keeps track of who asked.

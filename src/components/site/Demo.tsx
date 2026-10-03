@@ -58,24 +58,19 @@ export function Demo() {
   const showChip = Boolean(live) && sectionInView && !panelInView;
 
   return (
-    <section ref={sectionRef} id="try" className="relative overflow-clip bg-forest-deep py-24 text-cream sm:py-32">
+    <section ref={sectionRef} id="try" className="relative overflow-clip bg-forest-deep py-24 text-cream sm:py-28">
       <div aria-hidden className="pointer-events-none absolute inset-0">
         <div className="absolute left-1/2 top-0 h-[36rem] w-[60rem] -translate-x-1/2 rounded-full bg-[radial-gradient(closest-side,rgb(90_122_83/0.35),transparent)]" />
       </div>
 
       <div className="container-x relative">
-        <div className="grid gap-6 lg:grid-cols-2 lg:items-end">
-          <Reveal>
-            <div className="eyebrow !text-ochre">See It in Action</div>
-            <h2 className="display-lg mt-5 max-w-[15ch]">Don&apos;t take our word for it. Try {DEMO_DISTRIBUTOR.firstName}&apos;s page.</h2>
-          </Reveal>
-          <Reveal delay={0.1}>
-            <p className="max-w-[34rem] text-[1.1rem] leading-relaxed text-cream/75 lg:ml-auto">
-              This is the kind of assessment your customers would use. Answer the questions yourself and see what the
-              distributor receives as you go.
-            </p>
-          </Reveal>
-        </div>
+        <Reveal>
+          <h2 className="display-lg max-w-[20ch]">Don&apos;t take our word for it. Try {DEMO_DISTRIBUTOR.firstName}&apos;s page.</h2>
+          <p className="mt-6 max-w-[34rem] text-[1.1rem] leading-relaxed text-cream/75">
+            This is the kind of assessment your customers would use. Answer the questions yourself and see what the
+            distributor receives as you go.
+          </p>
+        </Reveal>
 
         <div className="mt-16 grid items-start gap-10 lg:grid-cols-[auto_1fr] lg:gap-16">
           <Reveal className="lg:sticky lg:top-24">

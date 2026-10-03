@@ -24,27 +24,20 @@ export function Workspace() {
     <section id="after" className="bg-paper py-24 sm:py-28">
       <div className="container-x grid grid-cols-1 items-center gap-14 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-20">
         <Reveal>
-          <div className="eyebrow">After the sale</div>
-          <h2 className="display-lg mt-5 max-w-[12ch] text-ink">Know Who Needs You Next</h2>
+          <h2 className="display-lg max-w-[12ch] text-ink">Know Who Needs You Next</h2>
           <p className="lede mt-6 max-w-[30rem]">
             Each morning, your workspace shows you who is new, who needs a follow-up, who has an outstanding payment and who
             may be due to reorder. The message is already prepared. You just review it and send it.
           </p>
-          <ol aria-label="Where this fits" className="mt-8 flex flex-wrap items-center gap-x-1.5 gap-y-2 text-[0.85rem]">
+          {/* Each arrow travels with the step after it, so a wrapped line never ends on an arrow. */}
+          <p className="mt-8 flex flex-wrap gap-x-2 gap-y-1 text-[0.92rem] text-ink-mute">
             {JOURNEY.map((j, i) => (
-              <li key={j} className="flex items-center gap-1.5">
-                <span
-                  className={clsx(
-                    "rounded-full px-2.5 py-1",
-                    i >= JOURNEY.length - 2 ? "bg-forest font-semibold text-cream" : "border border-ink/15 text-ink-soft",
-                  )}
-                >
-                  {j}
-                </span>
-                {i < JOURNEY.length - 1 && <span aria-hidden className="text-ink-mute">→</span>}
-              </li>
+              <span key={j} className="whitespace-nowrap">
+                {i > 0 && <span aria-hidden className="mr-2">→</span>}
+                <span className={i >= JOURNEY.length - 2 ? "font-semibold text-forest" : undefined}>{j}</span>
+              </span>
             ))}
-          </ol>
+          </p>
         </Reveal>
 
         <Reveal delay={0.1}>

@@ -77,8 +77,7 @@ export async function HowItWorks() {
     <section id="how" className="py-24 sm:py-28">
       <div className="container-x">
         <Reveal>
-          <div className="eyebrow">How it works</div>
-          <h2 className="display-lg mt-5 max-w-[20ch] text-ink">Share a Link. They Get a Plan. You Close the Sale.</h2>
+          <h2 className="display-lg max-w-[20ch] text-ink">Share a Link. They Get a Plan. You Close the Sale.</h2>
         </Reveal>
 
         <ol className="mt-14 grid grid-cols-1 gap-12 lg:grid-cols-3 lg:gap-8">
