@@ -10,9 +10,12 @@ import { KATE, TODAY, WHEN } from "./story";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
+/** The journey so far, with the part this section is about at the end. */
+const JOURNEY = ["Interest", "Recommendation", "WhatsApp", "Sale", "Follow-up", "Reorder"];
+
 /**
- * The second layer of the offer, kept light: after the sale, the workspace remembers. Kate's
- * Today list as it really looks, one person open with the message ready; tap another to open it.
+ * After the sale: the distributor wakes up knowing who needs attention. Kate's Today list as it
+ * really looks, one person open with the message ready; tap another to open it.
  */
 export function Workspace() {
   const [open, setOpen] = useState<string | null>("sarah");
@@ -22,12 +25,26 @@ export function Workspace() {
       <div className="container-x grid grid-cols-1 items-center gap-14 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-20">
         <Reveal>
           <div className="eyebrow">After the sale</div>
-          <h2 className="display-lg mt-5 max-w-[14ch] text-ink">Your workspace remembers every customer</h2>
+          <h2 className="display-lg mt-5 max-w-[12ch] text-ink">Know Who Needs You Next</h2>
           <p className="lede mt-6 max-w-[30rem]">
-            Every enquiry from your page is saved with what they were looking for. Each morning you get a short list:
-            who&apos;s new, who owes you, who to check in with and who&apos;s due to reorder. The WhatsApp message is
-            already written, so you just send it.
+            Each morning, your workspace shows you who is new, who needs a follow-up, who has an outstanding payment and who
+            may be due to reorder. The message is already prepared. You just review it and send it.
           </p>
+          <ol aria-label="Where this fits" className="mt-8 flex flex-wrap items-center gap-x-1.5 gap-y-2 text-[0.85rem]">
+            {JOURNEY.map((j, i) => (
+              <li key={j} className="flex items-center gap-1.5">
+                <span
+                  className={clsx(
+                    "rounded-full px-2.5 py-1",
+                    i >= JOURNEY.length - 2 ? "bg-forest font-semibold text-cream" : "border border-ink/15 text-ink-soft",
+                  )}
+                >
+                  {j}
+                </span>
+                {i < JOURNEY.length - 1 && <span aria-hidden className="text-ink-mute">→</span>}
+              </li>
+            ))}
+          </ol>
         </Reveal>
 
         <Reveal delay={0.1}>

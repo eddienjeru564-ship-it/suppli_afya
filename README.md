@@ -1,6 +1,6 @@
 # Suppli Afya
 
-Your own page for turning curiosity into customers.
+Turn curiosity into customers.
 
 Suppli Afya gives each BF Suma distributor in Kenya their own page. Customers reach it from a link
 or a QR card, answer a short assessment, see which products fit what they're looking for, and

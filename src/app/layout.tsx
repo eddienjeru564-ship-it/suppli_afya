@@ -22,12 +22,12 @@ const hanken = Hanken_Grotesk({
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
-    default: "Suppli Afya — for BF Suma distributors",
+    default: "Suppli Afya · For BF Suma distributors",
     template: "%s · Suppli Afya",
   },
   description: site.description,
   openGraph: {
-    title: "Suppli Afya — your own page for turning curiosity into customers",
+    title: "Suppli Afya: turn curiosity into customers",
     description: site.description,
     siteName: site.name,
     locale: "en_KE",

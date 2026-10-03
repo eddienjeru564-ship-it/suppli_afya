@@ -30,14 +30,14 @@ export interface Plan {
 
 /** What every plan includes. */
 export const EVERY_PLAN = [
-  "Your own page, at your own link",
+  "Your own customer page and link",
   "Printable QR cards",
-  "The assessment and product suggestions",
-  "Every enquiry saved with what they were looking for",
+  "Personalised assessment and product suggestions",
+  "Every enquiry saved in your workspace",
   "WhatsApp messages ready to send",
-  "A daily list of follow-ups, payments and reorders",
-  "Orders and M-Pesa payments recorded in a couple of taps",
-  "Works on your phone, like an app",
+  "Daily follow-up and reorder list",
+  "Orders and M-Pesa payments recorded in a few taps",
+  "Works on your phone like an app",
 ];
 
 export const PLANS: Plan[] = [

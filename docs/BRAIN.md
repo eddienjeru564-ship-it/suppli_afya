@@ -22,7 +22,9 @@ QR code or link → the distributor's page → a short assessment → relevant p
 Or, as a loop: **attract → understand → recommend → connect → sell → follow up → reorder**. If a feature
 doesn't help a distributor through that loop, it probably doesn't belong in the core product.
 
-Public line: **Your own page for turning curiosity into customers.**
+Public line: **Turn curiosity into customers.** The idea behind it: Suppli Afya helps a distributor turn an
+interested customer into a better-informed WhatsApp conversation, then keeps the relationship organised so
+follow-ups and reorders don't get forgotten.
 
 Within ten seconds on the homepage, a visitor should understand five things: it's for supplement
 distributors; they get their own page; customers find relevant products there; customers talk to

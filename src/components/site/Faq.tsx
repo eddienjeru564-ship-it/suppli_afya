@@ -10,31 +10,39 @@ import { keepTogether } from "@/components/ui/KeepTogether";
 const FAQ = [
   {
     q: "Is Suppli Afya part of BF Suma?",
-    a: "No. Suppli Afya is an independent business, built for people who sell BF Suma products. It doesn't change how you buy stock, your upline or your account with the company.",
+    a: "No. Suppli Afya is an independent business built for people who sell BF Suma products. Your upline, stock purchases and distributor account stay exactly as they are.",
   },
   {
-    q: "Who owns the customer relationship?",
-    a: "You do. Customers come through your page, message your WhatsApp and buy from you. Suppli Afya never contacts your customers, never sells to them and never passes them to other distributors.",
+    q: "Do I need to change how I sell?",
+    a: "No. You keep selling on WhatsApp, the way you already do. Suppli Afya gives your customers a better starting point and keeps track of who to follow up.",
   },
   {
-    q: "Does my customer need an app?",
-    a: "No. Your page opens in any phone browser, from your link or your QR code. There's nothing to download and no account to create.",
+    q: "Do my customers stay mine?",
+    a: "Yes. Customers come through your page, message your WhatsApp and buy from you. We don't sell their details, share them with other distributors or contact them ourselves.",
   },
   {
-    q: "How are the products suggested?",
-    a: "The assessment asks about goals, daily routine and health, including medicine, allergies and pregnancy. It matches the answers against the BF Suma range, leaves out anything that doesn't suit that person and explains each suggestion in plain words. It's help choosing products, not a diagnosis, and it tells people plainly when something should be checked by a doctor first.",
+    q: "Can customers still contact me directly on WhatsApp?",
+    a: "Yes. Your page has a button to message you straight away, for customers who already know what they want. The assessment is there for those who don't.",
   },
   {
-    q: "How do customers pay?",
-    a: "They pay you directly, by M-Pesa, cash or however you already work. Suppli Afya never holds your money. Record each payment against its order with the M-Pesa code, and anything still owed stays on your list until it's in. Sending M-Pesa payment requests straight to a customer's phone is coming to the Pro plan.",
+    q: "How does payment work?",
+    a: "Your customers pay you directly, by M-Pesa, cash or however you already work. Suppli Afya never holds your money. You record each payment against its order, and anything still owed stays on your list until it's paid. Your own plan is paid monthly by M-Pesa or card.",
   },
   {
-    q: "Do I need to be good with computers?",
-    a: "No. If you can use WhatsApp and M-Pesa, you can use Suppli Afya. It runs on your phone, and the part your customers see is just as simple.",
+    q: "Can I stop my subscription?",
+    a: "Yes. Nothing renews automatically, so there's nothing to cancel. If you don't renew, your plan simply ends.",
   },
   {
-    q: "Can I use it for other brands?",
-    a: "Not yet. The assessment and product information are built around BF Suma's range, because that's who it's for.",
+    q: "What happens if I have more than 50 customers?",
+    a: "Starter includes up to 50 customers. When you need more, Growth is KES 2,900 a month with no limit, and lets you bring in your existing customers from a spreadsheet. You can move up at any renewal.",
+  },
+  {
+    q: "Is the assessment medical advice?",
+    a: "No. It gives general wellness information to help customers choose products. It doesn't diagnose anything, and it tells people to speak to a doctor or pharmacist first when that's the right step, for example during pregnancy or alongside certain medicines.",
+  },
+  {
+    q: "Can I use it from my phone?",
+    a: "Yes. Your workspace runs on your phone and can be installed like an app, straight from the browser. Your customers only need a phone browser too, with nothing to download.",
   },
 ];
 
@@ -45,7 +53,7 @@ export function Faq() {
       <div className="container-x grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
         <Reveal>
           <div className="eyebrow">Questions</div>
-          <h2 className="display-lg mt-5 max-w-[12ch] text-ink">Questions before you start</h2>
+          <h2 className="display-lg mt-5 max-w-[12ch] text-ink">What Distributors Usually Ask</h2>
         </Reveal>
         <div className="divide-y divide-ink/10 border-y border-ink/10">
           {FAQ.map((f, i) => {

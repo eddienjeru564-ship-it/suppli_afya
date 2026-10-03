@@ -3,7 +3,7 @@ import { ButtonLink } from "@/components/ui/Button";
 import { FROM_PRICE } from "@/config/plans";
 import { HeroPhone } from "./HeroPhone";
 
-const HEADLINE = ["Your", "own", "page", "for", "turning", "curiosity", "into", "customers."];
+const HEADLINE = ["Turn", "Curiosity", "Into", "Customers"];
 const at = (i: number) => ({ "--i": i }) as CSSProperties;
 
 /**
@@ -22,13 +22,13 @@ export function Hero() {
         <div>
           <div className="eyebrow rise">For BF Suma distributors in Kenya</div>
 
-          <h1 className="display-xl mt-6 max-w-[14ch] text-ink">
+          <h1 className="display-xl mt-6 max-w-[11ch] text-ink">
             {/* Each word rises inside its own clipping box; the spaces sit between the boxes, where they
                 stay spaces (a space at the end of an inline-block is dropped). */}
             {HEADLINE.map((w, i) => (
               <Fragment key={i}>
                 <span className="inline-block overflow-hidden pb-[0.08em] align-bottom">
-                  <span className={w === "curiosity" ? "rise-word italic text-forest" : "rise-word"} style={at(i)}>
+                  <span className={w === "Curiosity" ? "rise-word italic text-forest" : "rise-word"} style={at(i)}>
                     {w}
                   </span>
                 </span>
@@ -37,9 +37,8 @@ export function Hero() {
             ))}
           </h1>
 
-          <p className="lede rise mt-7 max-w-[33rem]" style={at(9)}>
-            Share one link. Customers answer a few questions, see what suits them and message you on WhatsApp with
-            their answers already written. Then you&apos;re reminded who to follow up, and when they&apos;re due to reorder.
+          <p className="lede rise mt-7 max-w-[30rem]" style={at(9)}>
+            Give customers a simple way to find what suits them, then start a conversation with you when they&apos;re ready.
           </p>
 
           <div className="rise mt-9 flex flex-col gap-3 sm:flex-row sm:items-center" style={at(11)}>
@@ -51,7 +50,7 @@ export function Hero() {
             </ButtonLink>
           </div>
           {/* Two tidy lines on a phone, one line on wider screens: never a separator left hanging. */}
-          <p className="rise mt-5 text-[0.9rem] leading-relaxed text-ink-mute" style={at(13)}>
+          <p className="rise mt-5 text-[0.85rem] leading-relaxed text-ink-mute" style={at(13)}>
             <span className="block sm:inline">From {FROM_PRICE} a month</span>
             <span className="hidden sm:inline"> · </span>
             <span>No contract · Pay by M-Pesa</span>

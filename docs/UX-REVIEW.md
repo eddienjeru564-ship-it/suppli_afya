@@ -223,3 +223,14 @@ The structure held up; the details didn't all. Read cold, as a distributor decid
 design the earlier homepage used; its QR code really opens her page. Step 2 explains each product by
 what Sarah said ("Because you said your energy is low and dips mid-afternoon"), and `story.test.ts`
 checks those words against her actual answers.
+
+## Eighth pass: the founder's copy
+
+A copy pass on the same seven sections, read as one story: Turn Curiosity Into Customers → Where
+Sales Get Lost → Share a Link. They Get a Plan. You Close the Sale. → See It in Action → Know Who
+Needs You Next → What Distributors Usually Ask → Your Page Can Be Live This Afternoon. "See it in
+action" comes before the workspace again, in that order. Headings use the founder's capitalisation;
+supporting text stays in sentence case. The problem section describes the process, not the person.
+The FAQ answers the nine practical questions distributors raise (selling the same way, customers
+staying theirs, direct WhatsApp, payment, stopping, the 50-customer limit, medical advice, phones).
+Pricing names Starter as the place to start, with Growth and Pro as two small options beneath it.

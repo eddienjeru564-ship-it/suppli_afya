@@ -10,10 +10,9 @@ import { Footer } from "@/components/site/Footer";
 import { MobileCta } from "@/components/site/MobileCta";
 
 /**
- * Seven sections, one decision. The promise (your own page) → the pain it removes → how it works,
- * in three steps → what keeps the customer after the sale (the workspace) → try the real thing,
- * with what you can trust → the questions that stop people → the offer, on one card.
- * Everything you'd pay for is shown before you're asked to try it or buy it.
+ * One story, seven sections: turn curiosity into customers → where sales get lost → share a link,
+ * they get a plan, you close the sale → see it in action → know who needs you next → what
+ * distributors usually ask → your page can be live this afternoon.
  */
 export default function Home() {
   return (
@@ -23,8 +22,8 @@ export default function Home() {
         <Hero />
         <Problem />
         <HowItWorks />
-        <Workspace />
         <Demo />
+        <Workspace />
         <Faq />
         <Pricing />
       </main>

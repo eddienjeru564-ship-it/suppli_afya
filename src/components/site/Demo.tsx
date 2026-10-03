@@ -15,10 +15,22 @@ import { TESTIMONIALS } from "@/config/testimonials";
 
 /** Things a careful distributor checks before trusting a tool with their customers. Each is true today. */
 const TRUST = [
-  { title: "Independent of BF Suma", body: "Your account, your upline and how you buy stock stay exactly as they are." },
-  { title: "Your customers stay yours", body: "We never sell their details, share them with other distributors or contact them ourselves." },
-  { title: "Careful with health", body: "It never diagnoses. It checks medicine, pregnancy and allergies before suggesting anything." },
-  { title: "No contract", body: "Pay monthly by M-Pesa or card. Nothing renews by itself, so you can stop whenever you like." },
+  {
+    title: "Independent of BF Suma",
+    body: "Your Suppli Afya account is separate from BF Suma. Your upline, stock purchases and distributor account stay exactly as they are.",
+  },
+  {
+    title: "Your customers stay yours",
+    body: "We don't sell customer details, share them with other distributors or contact your customers ourselves.",
+  },
+  {
+    title: "Careful with health information",
+    body: "The assessment provides general wellness information. It does not diagnose or replace advice from a qualified health professional.",
+  },
+  {
+    title: "No contract",
+    body: "Pay monthly by M-Pesa or card. There is no long-term contract, and you can stop when you choose.",
+  },
 ];
 
 export function Demo() {
@@ -54,13 +66,13 @@ export function Demo() {
       <div className="container-x relative">
         <div className="grid gap-6 lg:grid-cols-2 lg:items-end">
           <Reveal>
-            <div className="eyebrow !text-ochre">See it in action</div>
-            <h2 className="display-lg mt-5 max-w-[15ch]">Try it the way your customers will</h2>
+            <div className="eyebrow !text-ochre">See It in Action</div>
+            <h2 className="display-lg mt-5 max-w-[15ch]">Don&apos;t take our word for it. Try {DEMO_DISTRIBUTOR.firstName}&apos;s page.</h2>
           </Reveal>
           <Reveal delay={0.1}>
             <p className="max-w-[34rem] text-[1.1rem] leading-relaxed text-cream/75 lg:ml-auto">
-              This is the real assessment, on {DEMO_DISTRIBUTOR.firstName}&apos;s example page. Answer as yourself, and
-              watch what reaches {DEMO_DISTRIBUTOR.firstName} as you go.
+              This is the kind of assessment your customers would use. Answer the questions yourself and see what the
+              distributor receives as you go.
             </p>
           </Reveal>
         </div>
@@ -79,7 +91,7 @@ export function Demo() {
               <p className="mt-2 text-[0.98rem] leading-relaxed text-cream/70">
                 {result
                   ? `${result.profile.name || "Your customer"} has finished. On a real page, one tap sends this to the distributor's WhatsApp, and the enquiry is already waiting in their workspace.`
-                  : "The customer's details come together here as they answer. By the time they message the distributor, the distributor already knows what they're looking for and what to be careful with."}
+                  : "By the time a customer messages the distributor, the distributor already knows what they were looking for, what they were interested in and anything relevant they shared during the assessment."}
               </p>
               <div className="mt-7">
                 <LivePanel answers={answers} result={result} distributor={DEMO_DISTRIBUTOR} />

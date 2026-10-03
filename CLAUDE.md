@@ -4,7 +4,7 @@
 
 Each BF Suma distributor in Kenya gets their own page, with a short assessment that helps customers find
 relevant products and hands them to the distributor on WhatsApp, and a workspace that remembers every
-customer. Public line: **Your own page for turning curiosity into customers.**
+customer. Public line: **Turn curiosity into customers.**
 Every feature must help a distributor through the loop: attract → understand → recommend → connect → sell → follow up → reorder.
 The page is the front door; the workspace is the back half of the story. Customers read "the assessment";
 the code calls the engine the health check.
