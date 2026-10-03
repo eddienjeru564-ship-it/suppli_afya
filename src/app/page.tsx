@@ -10,9 +10,9 @@ import { Footer } from "@/components/site/Footer";
 import { MobileCta } from "@/components/site/MobileCta";
 
 /**
- * One story, seven sections: turn curiosity into customers → where sales get lost → share a link,
- * they get a plan, you close the sale → see it in action → know who needs you next → what
- * distributors usually ask → your page can be live this afternoon.
+ * One story, seven sections, each titled for what it is: the hero → where WhatsApp sales get lost →
+ * how Suppli Afya works → an example distributor page → your daily follow-up list → common
+ * questions → simple monthly pricing.
  */
 export default function Home() {
   return (

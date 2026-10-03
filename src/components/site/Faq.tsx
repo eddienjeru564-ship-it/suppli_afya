@@ -52,7 +52,7 @@ export function Faq() {
     <section id="faq" className="py-24 sm:py-28">
       <div className="container-x grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
         <Reveal>
-          <h2 className="display-lg max-w-[12ch] text-ink lg:sticky lg:top-28">What Distributors Usually Ask</h2>
+          <h2 className="display-lg max-w-[12ch] text-ink lg:sticky lg:top-28">Common Questions</h2>
         </Reveal>
         <div className="divide-y divide-ink/10 border-y border-ink/10">
           {FAQ.map((f, i) => {

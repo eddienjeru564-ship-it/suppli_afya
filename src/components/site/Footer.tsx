@@ -13,7 +13,7 @@ export function Footer() {
           <nav aria-label="Footer" className="grid grid-cols-2 gap-x-12 gap-y-3 text-[0.95rem]">
             <Link href="/#how" className="hover:text-cream">How it works</Link>
             <Link href="/check" className="hover:text-cream">An example page</Link>
-            <Link href="/#after" className="hover:text-cream">After the sale</Link>
+            <Link href="/#after" className="hover:text-cream">Follow-up list</Link>
             <Link href="/#pricing" className="hover:text-cream">Pricing</Link>
             <Link href="/login" className="hover:text-cream">Log in</Link>
             <Link href="/privacy" className="hover:text-cream">Privacy</Link>

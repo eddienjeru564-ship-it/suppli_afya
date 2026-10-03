@@ -37,7 +37,7 @@ export function Hero() {
           </h1>
 
           <p className="lede rise mt-7 max-w-[30rem]" style={at(9)}>
-            Give customers a simple way to find what suits them, then start a conversation with you when they&apos;re ready.
+            Give customers a simple way to find what products suit them, then start a conversation with you when they&apos;re ready.
           </p>
 
           <div className="rise mt-9 flex flex-col gap-3 sm:flex-row sm:items-center" style={at(11)}>

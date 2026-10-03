@@ -22,7 +22,7 @@ export function Pricing() {
 
       <div className="container-x relative">
         <Reveal className="text-center">
-          <h2 className="display-lg mx-auto max-w-[17ch]">Your Page Can Be Live This Afternoon</h2>
+          <h2 className="display-lg mx-auto max-w-[17ch]">Simple Monthly Pricing</h2>
           <p className="mx-auto mt-6 max-w-[36rem] text-[1.1rem] leading-relaxed text-cream/75">
             Your own customer page, the assessment, your workspace and a follow-up list, ready to use without a setup fee or
             a long-term contract.

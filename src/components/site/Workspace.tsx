@@ -24,7 +24,7 @@ export function Workspace() {
     <section id="after" className="bg-paper py-24 sm:py-28">
       <div className="container-x grid grid-cols-1 items-center gap-14 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-20">
         <Reveal>
-          <h2 className="display-lg max-w-[12ch] text-ink">Know Who Needs You Next</h2>
+          <h2 className="display-lg max-w-[12ch] text-ink">Your Daily Follow-Up List</h2>
           <p className="lede mt-6 max-w-[30rem]">
             Each morning, your workspace shows you who is new, who needs a follow-up, who has an outstanding payment and who
             may be due to reorder. The message is already prepared. You just review it and send it.

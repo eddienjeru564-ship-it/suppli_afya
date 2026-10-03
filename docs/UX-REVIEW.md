@@ -244,3 +244,7 @@ buttons and pushed the rest of the page down. The live demo further down shows t
 **Follow-up.** No eyebrow labels anywhere (homepage, privacy, not found): each section opens on its
 heading, intros are stacked on the left (pricing stays centred), and every section uses the same
 vertical padding. The FAQ heading stays in view while you read the answers on desktop.
+
+**Follow-up.** Section titles say what each section is, so the page reads as a sequence: Where WhatsApp
+Sales Get Lost → How Suppli Afya Works → Example Distributor Page → Your Daily Follow-Up List → Common
+Questions → Simple Monthly Pricing. The hero subtext now says customers find "what products suit them".

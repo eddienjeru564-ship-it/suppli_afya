@@ -65,10 +65,10 @@ export function Demo() {
 
       <div className="container-x relative">
         <Reveal>
-          <h2 className="display-lg max-w-[20ch]">Don&apos;t take our word for it. Try {DEMO_DISTRIBUTOR.firstName}&apos;s page.</h2>
+          <h2 className="display-lg max-w-[20ch]">Example Distributor Page</h2>
           <p className="mt-6 max-w-[34rem] text-[1.1rem] leading-relaxed text-cream/75">
-            This is the kind of assessment your customers would use. Answer the questions yourself and see what the
-            distributor receives as you go.
+            This is {DEMO_DISTRIBUTOR.name}&apos;s page, set up the way yours would be. Answer the questions yourself and
+            see what reaches {DEMO_DISTRIBUTOR.firstName} as you go.
           </p>
         </Reveal>
 
