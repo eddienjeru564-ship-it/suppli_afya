@@ -234,3 +234,6 @@ supporting text stays in sentence case. The problem section describes the proces
 The FAQ answers the nine practical questions distributors raise (selling the same way, customers
 staying theirs, direct WhatsApp, payment, stopping, the 50-customer limit, medical advice, phones).
 Pricing names Starter as the place to start, with Growth and Pro as two small options beneath it.
+
+**Follow-up.** The hero's audience tag and headline are one headline: "Helping BF Suma Distributors in
+Kenya Turn Curiosity Into Customers", set a little smaller than `display-xl` since it's a full sentence.

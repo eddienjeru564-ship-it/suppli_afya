@@ -3,7 +3,7 @@ import { ButtonLink } from "@/components/ui/Button";
 import { FROM_PRICE } from "@/config/plans";
 import { HeroPhone } from "./HeroPhone";
 
-const HEADLINE = ["Turn", "Curiosity", "Into", "Customers"];
+const HEADLINE = ["Helping", "BF", "Suma", "Distributors", "in", "Kenya", "Turn", "Curiosity", "Into", "Customers"];
 const at = (i: number) => ({ "--i": i }) as CSSProperties;
 
 /**
@@ -20,9 +20,8 @@ export function Hero() {
 
       <div className="container-x grid items-center gap-16 lg:grid-cols-[1.15fr_0.85fr] lg:gap-10">
         <div>
-          <div className="eyebrow rise">For BF Suma distributors in Kenya</div>
-
-          <h1 className="display-xl mt-6 max-w-[11ch] text-ink">
+          {/* One headline: who it's for and what it does. Smaller than display-xl, since it's a sentence. */}
+          <h1 className="display-xl max-w-[17ch] text-[clamp(2.3rem,4.7vw,4.4rem)] leading-[1.04] text-ink">
             {/* Each word rises inside its own clipping box; the spaces sit between the boxes, where they
                 stay spaces (a space at the end of an inline-block is dropped). */}
             {HEADLINE.map((w, i) => (
