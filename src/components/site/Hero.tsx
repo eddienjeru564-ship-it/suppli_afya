@@ -56,7 +56,8 @@ export function Hero() {
           </p>
         </div>
 
-        <div className="rise" style={at(4)}>
+        {/* Phones and small tablets would stack the phone below the buttons; there the demo further down shows it. */}
+        <div className="rise hidden lg:block" style={at(4)}>
           <HeroPhone />
         </div>
       </div>

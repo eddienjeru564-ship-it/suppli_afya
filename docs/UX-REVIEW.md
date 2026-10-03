@@ -237,3 +237,6 @@ Pricing names Starter as the place to start, with Growth and Pro as two small op
 
 **Follow-up.** The hero's audience tag and headline are one headline: "Helping BF Suma Distributors in
 Kenya Turn Curiosity Into Customers", set a little smaller than `display-xl` since it's a full sentence.
+
+**Follow-up.** On phones and small tablets the hero is text only: the looping phone stacked under the
+buttons and pushed the rest of the page down. The live demo further down shows the same screens.
