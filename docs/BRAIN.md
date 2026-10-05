@@ -118,13 +118,14 @@ of the work, and the homepage says so: **Starter KES 1,500 gets enquiries** (you
 assessment, ready-to-send messages, up to 50 customers), **Growth KES 3,500 keeps the customers**
 (customer list and enquiry history, daily follow-up and reorder reminders, unlimited customers, and
 we add your existing list for you; the featured plan) and **Pro KES 6,500 takes the payment**
-(orders and M-Pesa payments recorded in a few taps, who still owes you with a reminder ready, and
-priority WhatsApp support). Change prices in one place.
+(M-Pesa STK push to the customer's phone with automatic payment confirmation, orders, and priority
+WhatsApp support). Change prices in one place.
 
 - The app doesn't yet hold Starter back from the follow-up list or orders: a card lists what its plan
   adds, and the app may give more than the card lists, never less. Gating is a separate decision.
-- Pro's card lists only what works today. M-Pesa prompts to a distributor's own customers (STK push
-  for orders) need a PayHero channel per distributor (Phase 3) and go on the card once they work.
+- Pro's card lists M-Pesa prompts to a distributor's own customers ahead of the build (founder
+  decision). They need a PayHero channel per distributor (Phase 3) and must work before anyone pays
+  for Pro.
 
 - Price so that **one or two extra reorders a month clearly cover it**. With an average order around
   KES 6,500, that is the whole argument.
@@ -134,8 +135,8 @@ priority WhatsApp support). Change prices in one place.
 - Consider a **founding rate** locked for the first cohort, in exchange for honest feedback and a case study.
 - Consider an **outcome guarantee** for the pilot ("if you don't see X reorders in 60 days, you
   don't pay for month three"). Only offer it once the portal can measure reorders reliably.
-- M-Pesa payment requests to a distributor's own customers aren't on Pro's card yet. They need each
-  distributor's own PayHero payment channel; don't sell them as live until they are.
+- M-Pesa payment requests to a distributor's own customers are on Pro's card but not built yet. They
+  need each distributor's own PayHero payment channel; build them before taking a Pro payment.
 
 ## Honest risks
 

@@ -21,7 +21,7 @@ Things only the founder can supply or decide. Ordered by how much they block.
 5. **Legal review** of `/privacy`, the disclaimers in the footer and the health check, and ODPC
    registration. The portal now stores customers' health check answers when they choose to send
    them to a distributor, so this is required before real distributors sign up.
-6. **Prices.** Set by the founder, October 2026: KES 1,500 / 3,500 / 6,500 (`src/config/plans.ts`). Still open: whether the app should hold Starter back from the follow-up list and orders, which the homepage now presents as Growth and Pro features, and when M-Pesa prompts to a distributor's own customers ship (Pro's card lists only what works today: recording orders and M-Pesa payments, and payment reminders).
+6. **Prices.** Set by the founder, October 2026: KES 1,500 / 3,500 / 6,500 (`src/config/plans.ts`). Still open: whether the app should hold Starter back from the follow-up list and orders, which the homepage now presents as Growth and Pro features, and when M-Pesa prompts to a distributor's own customers ship.
 7. **Production database.** Set up: the Supabase project `suppli_afya_main_site` (London), reached
    as the app's own user `suppli_app` through the transaction pooler (port 6543; Vercel can't reach
    the direct connection, which is IPv6 only). See README, "The database". Still to decide: the
@@ -58,6 +58,10 @@ Things only the founder can supply or decide. Ordered by how much they block.
     `src/components/site/story.ts`. Confirm with Kate that her name and title can appear there. The
     demo has no phone number, so nothing on it opens a chat to her. If she'd rather not, change those
     two files; every section reads from them.
+13. **Pro's M-Pesa prompts.** The homepage lists "M-Pesa STK push to your customer's phone" and
+    "Automatic payment confirmation" on Pro, ahead of the build (founder decision). Build them
+    before anyone pays for Pro: each Pro distributor's Till or Paybill as a PayHero payment channel,
+    a "Request payment" button on the order page, and the PayHero callback marking the order paid.
 
 ## Decisions to make during the pilot
 
