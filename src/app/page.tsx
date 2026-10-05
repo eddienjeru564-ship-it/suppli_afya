@@ -12,7 +12,7 @@ import { MobileCta } from "@/components/site/MobileCta";
 /**
  * One story, seven sections, each titled for what it is: the hero → where WhatsApp sales get lost →
  * how Suppli Afya works → an example distributor page → your daily follow-up list → common
- * questions → simple monthly pricing.
+ * questions → choose what works for your business (the plans).
  */
 export default function Home() {
   return (

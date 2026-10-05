@@ -21,7 +21,7 @@ Things only the founder can supply or decide. Ordered by how much they block.
 5. **Legal review** of `/privacy`, the disclaimers in the footer and the health check, and ODPC
    registration. The portal now stores customers' health check answers when they choose to send
    them to a distributor, so this is required before real distributors sign up.
-6. **Prices.** The plans in `src/config/plans.ts` are a proposal (KES 1,500 / 2,900 / 4,900).
+6. **Prices.** Set by the founder, October 2026: KES 1,500 / 3,500 / 6,500 (`src/config/plans.ts`). Still open: whether the app should hold Starter back from the follow-up list and orders, which the homepage now presents as Growth and Pro features, and when Pro's M-Pesa payment prompts ship (shown as "Coming soon" until then).
 7. **Production database.** Set up: the Supabase project `suppli_afya_main_site` (London), reached
    as the app's own user `suppli_app` through the transaction pooler (port 6543; Vercel can't reach
    the direct connection, which is IPv6 only). See README, "The database". Still to decide: the

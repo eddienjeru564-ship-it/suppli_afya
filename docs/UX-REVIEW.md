@@ -267,3 +267,14 @@ Customers", set in phrases so every line is a complete thought at every width: H
 Distributors / Turn Product Interest / Into *Actual* Customers. "Actual" is in italic because it's
 the word you'd stress saying it aloud. "BF Suma" never splits, and the smallest size is 2.2rem so the
 two phrase lines fit a 360px phone.
+
+**Follow-up.** Pricing is now "Choose What Works for Your Business": three plans that each add one step
+of the work, so the choice reads in a few seconds. Starter gets enquiries (KES 1,500), Growth keeps
+the customers (KES 3,500), Pro takes the payment (KES 6,500). Each card leads with its price and one
+line on what it's for, then one "Get started" button (the buttons line up on desktop), then what the
+plan adds ("Everything in Starter, plus:"), so the cards aren't three copies with different prices.
+Growth is lifted with a dark outline and a small label, "Best for repeat customers"; "Most popular"
+waits for real sign-ups, since it's a claim about numbers we don't have yet. Pro's M-Pesa features sit
+together in a soft panel marked "Coming soon", because they aren't built. Under the cards: no setup
+fee, M-Pesa or card, upgrade or stop anytime (nothing renews, so there's nothing to cancel), and
+"start with Starter". The section is light now, so the page no longer ends in two dark blocks.

@@ -17,9 +17,9 @@ test("a distributor can pay, set up and run their first order", async ({ page, b
   const email = `jane.${info.project.name}.${Date.now()}@example.com`;
   const password = "supersecret1";
 
-  // Pricing on the homepage → the chosen plan carries into checkout (Growth sits under the Starter card).
+  // Pricing on the homepage → the chosen plan carries into checkout.
   await page.goto("/#pricing");
-  await page.locator("#pricing").getByRole("link", { name: "Choose Growth" }).click();
+  await page.locator("#pricing").getByRole("link", { name: "Get started with Growth" }).click();
   await page.waitForURL(/\/start\?plan=growth/);
 
   await page.getByLabel("Email").fill(email);
@@ -29,11 +29,11 @@ test("a distributor can pay, set up and run their first order", async ({ page, b
 
   // A declined payment keeps the account and offers a retry.
   await page.getByLabel("M-Pesa number").fill("0712 345 678");
-  await page.getByRole("button", { name: /Pay KES 2,900/ }).click();
+  await page.getByRole("button", { name: /Pay KES 3,500/ }).click();
   await page.getByRole("button", { name: "Decline it" }).click();
   await expect(page.getByText("The payment didn't go through").first()).toBeVisible();
   await page.getByRole("button", { name: "Try again" }).click();
-  await page.getByRole("button", { name: /Pay KES 2,900/ }).click();
+  await page.getByRole("button", { name: /Pay KES 3,500/ }).click();
   await page.getByRole("button", { name: "Approve payment" }).click();
   await page.waitForURL(/\/start\/welcome/, { timeout: 20_000 });
   await expect(page.getByRole("heading", { name: "Payment confirmed." })).toBeVisible();

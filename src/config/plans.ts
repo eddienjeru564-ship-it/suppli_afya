@@ -2,24 +2,32 @@
  * Suppli Afya plans. The single source of truth for pricing on the site,
  * in checkout and in the portal.
  *
- * Prices are a founder decision to confirm (see docs/DECISIONS.md). The logic
- * behind them: at an average order of about KES 6,500, one extra reorder a
- * month more than covers Growth.
+ * Each plan adds one step of the distributor's work: Starter gets enquiries
+ * (your page), Growth keeps the customers (the list and the follow-up), Pro
+ * takes the payment (orders and M-Pesa). Prices set by the founder, October 2026.
  *
- * Only list what the product actually does. Anything not yet built is marked `soon`.
+ * Only list what the product actually does. Anything not yet built is marked
+ * `soon`. A card lists what its plan adds; the app may give a plan more than
+ * its card lists, never less.
  */
 export type PlanId = "starter" | "growth" | "pro";
 
 export interface PlanFeature {
   text: string;
   soon?: boolean;
+  /** Shown together on the pricing card, under one heading. */
+  group?: "mpesa";
 }
 
 export interface Plan {
   id: PlanId;
   name: string;
   price: number; // KES per month
+  /** One line: what this plan is for. */
   tagline: string;
+  /** The plan this one builds on ("Everything in Starter, plus:"). */
+  includes?: PlanId;
+  /** What this plan adds. */
   features: PlanFeature[];
   /** Enforced limits. null = unlimited. */
   customerLimit: number | null;
@@ -28,64 +36,56 @@ export interface Plan {
   featured?: boolean;
 }
 
-/** What every plan includes. */
-export const EVERY_PLAN = [
-  "Your own customer page and link",
-  "Printable QR cards",
-  "Personalised assessment and product suggestions",
-  "Unlimited enquiries, each saved in your workspace",
-  "WhatsApp messages ready to send",
-  "Daily follow-up and reorder list",
-  "Orders and M-Pesa payments recorded in a few taps",
-  "Works on your phone like an app",
-];
-
 export const PLANS: Plan[] = [
   {
     id: "starter",
     name: "Starter",
     price: 1500,
-    tagline: "For getting your page out there and your first regular customers in.",
+    tagline: "Get your own page and start receiving enquiries.",
     customerLimit: 50,
     canImport: false,
     monthlySummary: false,
     features: [
-      { text: "Your own page, link and printable QR cards" },
-      { text: "The assessment and product suggestions for your customers" },
-      { text: "Unlimited enquiries, each saved with what the customer was looking for" },
-      { text: "A daily list of who to follow up with, who owes you and who's due to reorder" },
-      { text: "Up to 50 customers on your list" },
+      { text: "Your own branded page and link" },
+      { text: "QR code cards to share" },
+      { text: "Product assessment and recommendations" },
+      { text: "Ready-to-send WhatsApp messages" },
+      { text: "Keep up to 50 customers" },
     ],
   },
   {
     id: "growth",
     name: "Growth",
-    price: 2900,
-    tagline: "For distributors with a growing customer base to keep coming back.",
+    price: 3500,
+    tagline: "Keep track of your customers and follow up.",
+    includes: "starter",
     customerLimit: null,
     canImport: true,
     monthlySummary: true,
     featured: true,
     features: [
-      { text: "Everything in Starter" },
+      { text: "Customer list and enquiry history" },
+      { text: "Daily follow-up and reorder reminders" },
       { text: "Unlimited customers" },
-      { text: "Bring in your existing customers from a spreadsheet" },
-      { text: "A monthly summary of sales, payments and reorders" },
+      { text: "We can add your existing customer list for you" },
     ],
   },
   {
     id: "pro",
     name: "Pro",
-    price: 4900,
-    tagline: "For established distributors who want it set up and supported for them.",
+    price: 6500,
+    tagline: "Take orders and collect M-Pesa payments.",
+    includes: "growth",
     customerLimit: null,
     canImport: true,
     monthlySummary: true,
     features: [
-      { text: "Everything in Growth" },
-      { text: "We set up your page and workspace, and move your customers in for you" },
-      { text: "Priority help from the Suppli Afya team on WhatsApp" },
-      { text: "M-Pesa payment requests to customers (with your own Till or Paybill)", soon: true },
+      // Not built yet: payment prompts to a distributor's own customers need a PayHero channel per
+      // distributor (docs/BRAIN.md, Phase 3). Today STK push is only used for Suppli Afya subscriptions.
+      { text: "M-Pesa STK push to your customer's phone", soon: true, group: "mpesa" },
+      { text: "Automatic payment confirmation", soon: true, group: "mpesa" },
+      { text: "Record and track orders" },
+      { text: "Priority WhatsApp support" },
     ],
   },
 ];

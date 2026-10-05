@@ -54,6 +54,6 @@ test("the workspace preview opens each person's ready message", async ({ page })
 
 test("the offer leads straight to checkout", async ({ page }) => {
   await page.goto("/#pricing");
-  await page.locator("#pricing").getByRole("link", { name: "Claim your page now" }).click();
+  await page.locator("#pricing").getByRole("link", { name: "Get started with Starter" }).click();
   await expect(page).toHaveURL(/\/start\?plan=starter/);
 });

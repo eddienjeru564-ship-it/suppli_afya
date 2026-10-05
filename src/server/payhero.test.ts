@@ -1,5 +1,6 @@
 import { afterEach, beforeAll, describe, expect, it, vi } from "vitest";
 import type { PaymentRow } from "./payments";
+import { PLANS_BY_ID } from "@/config/plans";
 
 // Live-mode PayHero against a fake PayHero API, on an in-memory database.
 process.env.PGLITE_DIR = "memory://";
@@ -101,7 +102,7 @@ describe("PayHero STK Push", () => {
     expect(req.url).toBe("https://backend.payhero.co.ke/api/v2/payments");
     expect(req.auth).toBe(`Basic ${Buffer.from("user:pass").toString("base64")}`);
     expect(req.body).toMatchObject({
-      amount: 2900,
+      amount: PLANS_BY_ID.growth.price,
       phone_number: "0712345678",
       channel_id: 911,
       provider: "m-pesa",

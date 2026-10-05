@@ -6,6 +6,7 @@ import { useState } from "react";
 import { Plus } from "@/components/ui/icons";
 import { Reveal } from "@/components/ui/Reveal";
 import { keepTogether } from "@/components/ui/KeepTogether";
+import { PLANS_BY_ID, kes } from "@/config/plans";
 
 const FAQ = [
   {
@@ -38,7 +39,7 @@ const FAQ = [
   },
   {
     q: "What counts as a customer, and what if I have more than 50?",
-    a: "Enquiries from your page are unlimited on every plan. A customer is someone you've recorded an order for or added yourself, and Starter holds up to 50. When you need more, Growth is KES 2,900 a month with no limit, and lets you bring in your existing customers from a spreadsheet. You can move up at any renewal.",
+    a: `Enquiries from your page are unlimited on every plan. A customer is someone you've recorded an order for or added yourself, and Starter holds up to 50. When you need more, Growth is ${kes(PLANS_BY_ID.growth.price)} a month with no limit, and we can add your existing customer list for you. You can move up at any time.`,
   },
   {
     q: "Is the assessment medical advice?",

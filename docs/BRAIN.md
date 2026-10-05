@@ -111,12 +111,20 @@ For the product, in funnel order:
 
 Vanity metrics to ignore: page views, number of questions answered, "engagement".
 
-## Pricing (proposed, confirm before launch)
+## Pricing
 
-The founder asked for public pricing on the homepage, so there are three monthly plans in
-`src/config/plans.ts`: Starter KES 1,500 (up to 50 customers), Growth KES 2,900 (unlimited
-customers, import, monthly summary; the recommended plan) and Pro KES 4,900 (set up for you,
-priority help). These numbers are a proposal, anchored on the rule below. Change them in one place.
+Three monthly plans in `src/config/plans.ts`, set by the founder in October 2026. Each adds one step
+of the work, and the homepage says so: **Starter KES 1,500 gets enquiries** (your page, QR cards, the
+assessment, ready-to-send messages, up to 50 customers), **Growth KES 3,500 keeps the customers**
+(customer list and enquiry history, daily follow-up and reorder reminders, unlimited customers, and
+we add your existing list for you; the featured plan) and **Pro KES 6,500 takes the payment**
+(M-Pesa STK push to customers and automatic payment confirmation, both coming soon; orders; priority
+WhatsApp support). Change prices in one place.
+
+- The app doesn't yet hold Starter back from the follow-up list or orders: a card lists what its plan
+  adds, and the app may give more than the card lists, never less. Gating is a separate decision.
+- Pro's payment features need a PayHero channel per distributor (Phase 3). Until they ship they are
+  shown as "Coming soon", never as included.
 
 - Price so that **one or two extra reorders a month clearly cover it**. With an average order around
   KES 6,500, that is the whole argument.
