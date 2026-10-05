@@ -110,9 +110,12 @@ function PlanCard({ plan }: { plan: Plan }) {
           <p className="mb-3 text-[0.92rem] font-semibold text-ink">Everything in {PLANS_BY_ID[plan.includes].name}, plus:</p>
         )}
         {mpesa.length > 0 && (
-          <div className="mb-3 rounded-2xl bg-sage-soft/70 p-3.5">
+          <div className="mb-3 rounded-2xl bg-sage-soft/70 p-3.5 ring-1 ring-[#2f8f46]/20">
             <div className="flex flex-wrap items-center justify-between gap-2">
-              <span className="text-[0.82rem] font-semibold text-forest">Payments</span>
+              <span className="inline-flex items-center gap-1.5 text-[0.82rem] font-semibold text-forest">
+                <span aria-hidden className="h-2 w-2 rounded-full bg-[#2f8f46]" />
+                <MPesa /> payments
+              </span>
               {mpesa.every((f) => f.soon) && <Soon />}
             </div>
             <Features items={mpesa} className="mt-2.5" hideSoon />

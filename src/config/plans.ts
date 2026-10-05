@@ -80,11 +80,11 @@ export const PLANS: Plan[] = [
     canImport: true,
     monthlySummary: true,
     features: [
-      // Not built yet: payment prompts to a distributor's own customers need a PayHero channel per
-      // distributor (docs/BRAIN.md, Phase 3). Today STK push is only used for Suppli Afya subscriptions.
-      { text: "M-Pesa STK push to your customer's phone", soon: true, group: "mpesa" },
-      { text: "Automatic payment confirmation", soon: true, group: "mpesa" },
-      { text: "Record and track orders" },
+      // What the workspace does with customer payments today. M-Pesa prompts to a distributor's own
+      // customers (STK push for orders) aren't built yet: they need a PayHero channel per distributor
+      // (docs/BRAIN.md, Phase 3). Add them here once they work.
+      { text: "Record orders and M-Pesa payments in a few taps", group: "mpesa" },
+      { text: "See who still owes you, with a reminder ready to send", group: "mpesa" },
       { text: "Priority WhatsApp support" },
     ],
   },

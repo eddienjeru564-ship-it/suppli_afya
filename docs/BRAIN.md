@@ -118,13 +118,13 @@ of the work, and the homepage says so: **Starter KES 1,500 gets enquiries** (you
 assessment, ready-to-send messages, up to 50 customers), **Growth KES 3,500 keeps the customers**
 (customer list and enquiry history, daily follow-up and reorder reminders, unlimited customers, and
 we add your existing list for you; the featured plan) and **Pro KES 6,500 takes the payment**
-(M-Pesa STK push to customers and automatic payment confirmation, both coming soon; orders; priority
-WhatsApp support). Change prices in one place.
+(orders and M-Pesa payments recorded in a few taps, who still owes you with a reminder ready, and
+priority WhatsApp support). Change prices in one place.
 
 - The app doesn't yet hold Starter back from the follow-up list or orders: a card lists what its plan
   adds, and the app may give more than the card lists, never less. Gating is a separate decision.
-- Pro's payment features need a PayHero channel per distributor (Phase 3). Until they ship they are
-  shown as "Coming soon", never as included.
+- Pro's card lists only what works today. M-Pesa prompts to a distributor's own customers (STK push
+  for orders) need a PayHero channel per distributor (Phase 3) and go on the card once they work.
 
 - Price so that **one or two extra reorders a month clearly cover it**. With an average order around
   KES 6,500, that is the whole argument.
@@ -134,8 +134,8 @@ WhatsApp support). Change prices in one place.
 - Consider a **founding rate** locked for the first cohort, in exchange for honest feedback and a case study.
 - Consider an **outcome guarantee** for the pilot ("if you don't see X reorders in 60 days, you
   don't pay for month three"). Only offer it once the portal can measure reorders reliably.
-- Pro's "M-Pesa payment requests to your customers" is marked *coming soon*. It needs each
-  distributor's own PayHero payment channel; don't sell it as live until it is.
+- M-Pesa payment requests to a distributor's own customers aren't on Pro's card yet. They need each
+  distributor's own PayHero payment channel; don't sell them as live until they are.
 
 ## Honest risks
 
