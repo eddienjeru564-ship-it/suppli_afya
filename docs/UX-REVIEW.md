@@ -261,3 +261,9 @@ unlimited on every plan and what counts as a customer; the price shows what it i
 answers whether the assessment is in Swahili (not yet) and what happens when a subscription ends
 (the page goes offline three days later, records are kept); the longest sentences are split; and the
 hero subtext says what the page does ("asks potential customers a few short questions").
+
+**Follow-up.** The headline is now "Helping BF Suma Distributors Turn Product Interest Into Actual
+Customers", set in phrases so every line is a complete thought at every width: Helping BF Suma /
+Distributors / Turn Product Interest / Into *Actual* Customers. "Actual" is in italic because it's
+the word you'd stress saying it aloud. "BF Suma" never splits, and the smallest size is 2.2rem so the
+two phrase lines fit a 360px phone.

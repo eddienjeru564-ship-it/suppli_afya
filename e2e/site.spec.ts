@@ -5,12 +5,12 @@ test("the first screen is readable before any JavaScript arrives", async ({ brow
   const page = await ctx.newPage();
   await page.goto("/");
   const h1 = page.getByRole("heading", { level: 1 });
-  await expect(h1).toHaveText("Helping BF Suma Distributors in Kenya Turn Curiosity Into Customers");
+  await expect(h1).toHaveText("Helping BF Suma Distributors Turn Product Interest Into Actual Customers");
   // Every word is visible in the HTML itself, not waiting on a script to fade it in.
   const hidden = await h1.locator("span span").evaluateAll((els) => els.filter((e) => getComputedStyle(e).opacity !== "1").length);
   expect(hidden).toBe(0);
-  // And the words have spaces between them on screen, not only in the text.
-  const [a, b] = await h1.locator(":scope > span").evaluateAll((els) => els.slice(0, 2).map((e) => {
+  // And the words have spaces between them on screen, not only in the text (each line is a span of word boxes).
+  const [a, b] = await h1.locator(":scope > span > span").evaluateAll((els) => els.slice(0, 2).map((e) => {
     const r = e.getBoundingClientRect();
     return { left: r.left, right: r.right };
   }));

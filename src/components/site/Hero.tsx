@@ -3,7 +3,15 @@ import { ButtonLink } from "@/components/ui/Button";
 import { FROM_PRICE } from "@/config/plans";
 import { HeroPhone } from "./HeroPhone";
 
-const HEADLINE = ["Helping", "BF", "Suma", "Distributors", "in", "Kenya", "Turn", "Curiosity", "Into", "Customers"];
+/**
+ * The headline in phrases. Each starts a new line, so no line ends mid-thought ("…Turn" or "…Into"),
+ * and "BF Suma" never splits. The two phrase lines fit a 360px phone at the smallest size (2.2rem).
+ */
+const HEADLINE = ["Helping BF\u00a0Suma Distributors", "Turn Product Interest", "Into Actual Customers"].map((l) => l.split(" "));
+/** Where each phrase's words start in the entrance sequence. */
+const START = HEADLINE.map((_, l) => HEADLINE.slice(0, l).flat().length);
+/** Set in italic: the word you'd stress saying it aloud, the gap between interest and a sale. */
+const ACCENT = "Actual";
 const at = (i: number) => ({ "--i": i }) as CSSProperties;
 
 /**
@@ -21,17 +29,24 @@ export function Hero() {
       <div className="container-x grid items-center gap-16 lg:grid-cols-[1.15fr_0.85fr] lg:gap-10">
         <div>
           {/* One headline: who it's for and what it does. Smaller than display-xl, since it's a sentence. */}
-          <h1 className="display-xl max-w-[17ch] text-[clamp(2.3rem,4.7vw,4.4rem)] leading-[1.04] text-ink">
+          <h1 className="display-xl max-w-[17ch] text-[clamp(2.2rem,4.7vw,4.4rem)] leading-[1.04] text-ink">
             {/* Each word rises inside its own clipping box; the spaces sit between the boxes, where they
                 stay spaces (a space at the end of an inline-block is dropped). */}
-            {HEADLINE.map((w, i) => (
-              <Fragment key={i}>
-                <span className="inline-block overflow-hidden pb-[0.08em] align-bottom">
-                  <span className={w === "Curiosity" ? "rise-word italic text-forest" : "rise-word"} style={at(i)}>
-                    {w}
-                  </span>
+            {HEADLINE.map((line, l) => (
+              <Fragment key={l}>
+                <span className="block">
+                  {line.map((w, j) => (
+                    <Fragment key={j}>
+                      <span className="inline-block overflow-hidden pb-[0.08em] align-bottom">
+                        <span className={w === ACCENT ? "rise-word italic text-forest" : "rise-word"} style={at(START[l] + j)}>
+                          {w}
+                        </span>
+                      </span>
+                      {j < line.length - 1 && " "}
+                    </Fragment>
+                  ))}
                 </span>
-                {i < HEADLINE.length - 1 && " "}
+                {l < HEADLINE.length - 1 && " "}
               </Fragment>
             ))}
           </h1>
