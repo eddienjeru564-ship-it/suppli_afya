@@ -6,7 +6,15 @@ import { AnimatePresence, motion, useInView } from "motion/react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { DEMO_DISTRIBUTOR } from "@/config/distributors";
 import { TESTIMONIALS } from "@/config/testimonials";
-import { distributorBrief, whatsappMessage, type EngineResult } from "@/engine";
+import {
+  GOALS_BY_ID,
+  deriveProfile,
+  distributorBrief,
+  pruneAnswers,
+  whatsappMessage,
+  type Answers,
+  type EngineResult,
+} from "@/engine";
 import { HealthCheck } from "@/components/check/HealthCheck";
 import { PhoneFrame } from "@/components/check/PhoneFrame";
 import { Arrow } from "@/components/ui/Button";
@@ -14,7 +22,7 @@ import { Check } from "@/components/ui/icons";
 import { Reveal } from "@/components/ui/Reveal";
 import { SWIRL_DOWN, SWIRL_RIGHT, SwirlArrow } from "@/components/ui/SwirlArrow";
 import { useReducedMotion } from "@/components/ui/useReducedMotion";
-import { KateWhatsApp } from "./DemoWhatsApp";
+import { KateWhatsApp, type Draft } from "./DemoWhatsApp";
 
 const KATE_FIRST = DEMO_DISTRIBUTOR.firstName;
 const CTX = { distributorName: DEMO_DISTRIBUTOR.name, distributorFirstName: KATE_FIRST };
@@ -40,6 +48,24 @@ function asSent(message: string) {
     .join("\n");
 }
 
+/** How the message words the plan size (the engine's PLAN_SIZE_LABEL, src/engine/handoff.ts). */
+const SIZE: Record<string, string> = {
+  one: "one product to start",
+  focused: "a focused plan (2–3 products)",
+  complete: "a complete plan",
+};
+
+/** The message so far: only what the visitor has actually answered. */
+function draftFor(a: Answers): Draft {
+  const p = deriveProfile(pruneAnswers(a));
+  return {
+    name: p.name || undefined,
+    age: p.age ?? undefined,
+    goals: p.goals.length ? p.goals.map((g, i) => `${i + 1}. ${GOALS_BY_ID[g].short}`).join("  ") : undefined,
+    size: typeof a.plan_size === "string" ? SIZE[a.plan_size] : undefined,
+  };
+}
+
 /** The visitor's enquiry on its way: phone → WhatsApp → Kate, who replies. */
 type Phase = "rest" | "sending" | "arrived" | "replied";
 
@@ -51,6 +77,7 @@ type Phase = "rest" | "sending" | "arrived" | "replied";
  */
 export function Demo() {
   const reduce = useReducedMotion();
+  const [answers, setAnswers] = useState<Answers>({});
   const [result, setResult] = useState<EngineResult | null>(null);
   const [step, setStep] = useState("welcome");
   const [phase, setPhase] = useState<Phase>("rest");
@@ -84,6 +111,7 @@ export function Demo() {
     at(2600, () => setPhase("replied"));
   }, [reduce, clearTimers]);
 
+  const onAnswers = useCallback((a: Answers) => setAnswers(a), []);
   const onStep = useCallback((id: string) => setStep(id), []);
   const onResult = useCallback(
     (r: EngineResult | null) => {
@@ -127,8 +155,10 @@ export function Demo() {
     return () => ro.disconnect();
   }, [started]);
 
-  // Phones: Kate's WhatsApp sits below the (long) plan, so once it's sent, offer a way down to it.
-  const showChip = arrived && sectionInView && !kateInView;
+  const draft = useMemo(() => draftFor(answers), [answers]);
+
+  // Phones: Kate's WhatsApp sits below the check, so a small bar keeps the message in view and leads down to it.
+  const showChip = started && sectionInView && !kateInView;
 
   return (
     <section ref={sectionRef} id="try" className="relative overflow-clip bg-forest-deep py-24 text-cream sm:py-28">
@@ -182,6 +212,7 @@ export function Demo() {
                 distributor={DEMO_DISTRIBUTOR}
                 mode="embedded"
                 invite={!started}
+                onAnswersChange={onAnswers}
                 onResult={onResult}
                 onStep={onStep}
               />
@@ -203,6 +234,7 @@ export function Demo() {
               customer={arrived ? sent!.name : null}
               message={arrived ? sent!.message : null}
               reply={phase === "replied" && sent ? sent.reply : null}
+              draft={draft}
             />
           </div>
         </div>
@@ -234,10 +266,14 @@ export function Demo() {
             transition={{ duration: 0.35, ease }}
             className="fixed inset-x-3 top-[4.6rem] z-40 flex items-center gap-3 rounded-2xl bg-paper p-3 text-left text-ink shadow-float ring-1 ring-ink/10 lg:hidden"
           >
-            <span className="relative inline-flex h-2.5 w-2.5 shrink-0 rounded-full bg-wa" />
+            <span className={clsx("relative inline-flex h-2.5 w-2.5 shrink-0 rounded-full", arrived ? "bg-wa" : "bg-ochre")} />
             <span className="min-w-0 flex-1">
-              <span className="block text-[0.7rem] font-semibold text-moss">Sent on WhatsApp</span>
-              <span className="block truncate text-[0.9rem] font-semibold">See it arrive on {KATE_FIRST}&apos;s phone</span>
+              <span className="block text-[0.7rem] font-semibold text-moss">
+                {arrived ? "Sent on WhatsApp" : `Your message to ${KATE_FIRST}, so far`}
+              </span>
+              <span className="block truncate text-[0.9rem] font-semibold">
+                {arrived ? `See it arrive on ${KATE_FIRST}'s phone` : [draft.name, draft.goals].filter(Boolean).join(" · ") || "Fills in as you answer"}
+              </span>
             </span>
             <span className="shrink-0 rounded-full bg-forest px-3 py-1.5 text-[0.72rem] font-semibold text-cream">See it</span>
           </motion.button>

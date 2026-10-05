@@ -28,8 +28,8 @@ export function Workspace() {
           <p className="font-display text-[1.45rem] italic leading-snug text-clay">And it doesn&apos;t stop at the enquiry.</p>
           <h2 className="display-lg mt-3 max-w-[12ch] text-ink">Your Daily Follow-Up List</h2>
           <p className="lede mt-6 max-w-[30rem]">
-            Each morning, you see who needs you today and why: people who asked but haven&apos;t bought yet, customers to
-            check in on, and those who may be ready to reorder. Each one comes with a WhatsApp message ready to send.
+            Each morning, you see who needs you today and why. Some asked but haven&apos;t bought yet. Some are due a check-in,
+            and some may be ready to reorder. Each one comes with a WhatsApp message ready to send.
           </p>
           <p className="mt-5 max-w-[30rem] text-[1.05rem] font-semibold leading-snug text-ink">
             You don&apos;t have to remember who to follow up with.

@@ -49,7 +49,7 @@ export function Problem() {
             <h2 className="display-lg max-w-[16ch] text-ink">Where WhatsApp Sales Get Lost</h2>
             <p className="lede mt-6 max-w-[34rem]">
               Most potential customers start with the same WhatsApp message: “Which one should I take?” The right answer is
-              different for every person, and working it out in a chat takes time you don&apos;t always have.
+              different for every person. Working it out in a chat takes time you don&apos;t always have.
             </p>
           </Reveal>
           <ul className="mt-10 max-w-[34rem] divide-y divide-ink/10 border-y border-ink/10">

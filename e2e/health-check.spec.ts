@@ -119,13 +119,15 @@ test("the landing page demo ends with the plan on the distributor's WhatsApp", a
     await go();
   };
 
-  // Nothing reaches Kate until the customer sends it.
-  await expect(kate.getByText(/When you send your plan, it arrives here/)).toBeVisible();
+  // Nothing reaches Kate until the customer sends it: the message shows as a draft that fills in.
+  await expect(kate.getByText(/Not sent yet/)).toBeVisible();
+  await expect(kate.getByText("your name")).toBeVisible();
 
   await go("Start");
   await go("I understand");
   await demo.getByPlaceholder("First name").fill("Otieno");
   await go();
+  await expect(kate.getByText("Otieno", { exact: true })).toBeVisible();
   await go();
   await pick("Male");
   await demo.getByPlaceholder("Age").fill("38");

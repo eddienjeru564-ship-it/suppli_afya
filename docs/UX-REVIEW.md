@@ -347,3 +347,11 @@ Kate's WhatsApp in the demo is a real-looking chat: before sending, a note says 
 here; after, the customer's message (word for word, minus any medicine or pregnancy note and the
 "maybe later" products) and Kate's first reply, which is the suggested opener the real workspace
 gives her. On phones, once sent, a bar offers "See it arrive on Kate's phone".
+
+**Follow-up.** The demo's payoff is visible before anyone taps. Kate's WhatsApp shows the message
+the visitor will send as a draft ("Not sent yet · fills in as you answer") with blanks: your name,
+what you choose, your recommendation, how much. They fill in live from the visitor's own answers
+(no made-up people), and when they send it, the real message lands and Kate replies. On phones the
+floating bar shows "Your message to Kate, so far" while they answer. Copy: no sentence over 25
+words except the hero line (the founder's own), reading ease 75. "Your Page" swaps sides on desktop
+so it doesn't mirror the follow-up section above it.

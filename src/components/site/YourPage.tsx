@@ -25,7 +25,8 @@ export async function YourPage() {
   return (
     <section id="your-page" className="py-24 sm:py-28">
       <div className="container-x grid grid-cols-1 items-center gap-14 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-20">
-        <Reveal>
+        {/* Text second on large screens, so it doesn't mirror the follow-up section just above. */}
+        <Reveal className="lg:order-2">
           <h2 className="display-lg max-w-[14ch] text-ink">Your Name. Your Page. Your Customers.</h2>
           <p className="lede mt-6 max-w-[32rem]">
             Customers find you through a page with your name on it. Share the link on your WhatsApp status, in your bio or on
@@ -43,7 +44,7 @@ export async function YourPage() {
           </ul>
         </Reveal>
 
-        <Reveal delay={0.08}>
+        <Reveal delay={0.08} className="lg:order-1">
           <div className="grid place-items-center rounded-[2rem] bg-sand/50 px-6 py-12 ring-1 ring-ink/5 sm:px-10 sm:py-16">
             {/* The compact card on phones, where the full-size one would crowd its own words. */}
             <QrCard size="sm" name={KATE.name} tagline={KATE.title} url={url} displayUrl={KATE.link} svg={svg} className="sm:hidden" />

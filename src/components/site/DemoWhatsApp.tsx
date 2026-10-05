@@ -7,16 +7,28 @@ import { KATE } from "./story";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
+/** What the visitor has answered so far, for the message that's writing itself. */
+export interface Draft {
+  name?: string;
+  age?: number;
+  /** As the message words them: "1. Energy  2. Joints". */
+  goals?: string;
+  /** "a focused plan (2–3 products)". */
+  size?: string;
+}
+
 /**
  * Kate's own WhatsApp, the end of the main story: the visitor's plan arrives here as a message
  * that already says who they are, what they want and what was suggested, and Kate starts the
- * conversation from her own phone. Nothing appears until the visitor sends it, as in real life.
- * A phone on large screens; a plain chat card on small ones.
+ * conversation from her own phone. Until it's sent, the message shows as a draft with blanks that
+ * fill in as the visitor answers, so the payoff is visible before anyone taps. Nothing is sent
+ * until they choose to, as in real life. A phone on large screens; a plain chat card on small ones.
  */
 export function KateWhatsApp({
   customer,
   message,
   reply,
+  draft,
 }: {
   /** The customer's first name, once they've sent their plan. */
   customer: string | null;
@@ -24,6 +36,8 @@ export function KateWhatsApp({
   message: string | null;
   /** Kate's first reply. */
   reply: string | null;
+  /** The message so far, while it isn't sent. */
+  draft: Draft;
 }) {
   return (
     <div className="relative mx-auto w-full max-w-[26rem] overflow-hidden rounded-[1.5rem] bg-wa-bg text-[#111b21] shadow-float lg:h-[46rem] lg:w-[21rem] lg:rounded-[2.6rem] lg:border-[9px] lg:border-[#0b1711]">
@@ -48,14 +62,33 @@ export function KateWhatsApp({
           <span className="mx-auto mb-auto shrink-0 rounded-md bg-white/80 px-2.5 py-0.5 text-[0.7rem] text-[#54656f] shadow-sm">Today</span>
           <AnimatePresence initial={false}>
             {!message && (
-              <motion.p
-                key="notice"
-                exit={{ opacity: 0, height: 0 }}
+              <motion.div
+                key="draft"
+                exit={{ opacity: 0, y: -8 }}
                 transition={{ duration: 0.3 }}
-                className="mx-auto max-w-[17rem] rounded-lg bg-[#fff5c4] px-3 py-2 text-center text-[0.76rem] leading-snug text-[#54656f] shadow-sm"
+                className="max-w-[90%] shrink-0"
               >
-                When you send your plan, it arrives here on {KATE.first}&apos;s own WhatsApp.
-              </motion.p>
+                <span className="mb-1.5 flex items-center gap-1.5 text-[0.72rem] font-semibold text-[#54656f]">
+                  <span className="h-1.5 w-1.5 rounded-full bg-ochre" />
+                  Not sent yet · fills in as you answer
+                </span>
+                <div className="rounded-lg rounded-tl-none border border-dashed border-[#54656f]/40 bg-white/75 px-3 py-2 text-[0.78rem] leading-[1.6]">
+                  <p>Hi {KATE.first}, I&apos;ve just done the assessment on your page.</p>
+                  <p className="mt-2">
+                    <b>About me:</b>{" "}
+                    {draft.name ? <Filled>{[draft.name, draft.age].filter(Boolean).join(", ")}</Filled> : <Blank>your name</Blank>}
+                  </p>
+                  <p>
+                    <b>My goals:</b> {draft.goals ? <Filled>{draft.goals}</Filled> : <Blank>what you choose</Blank>}
+                  </p>
+                  <p>
+                    <b>Suggested plan:</b> <Blank>your recommendation</Blank>
+                  </p>
+                  <p>
+                    <b>I&apos;d like to start with:</b> {draft.size ? <Filled>{draft.size}</Filled> : <Blank>how much</Blank>}
+                  </p>
+                </div>
+              </motion.div>
             )}
             {message && (
               <motion.div
@@ -98,5 +131,19 @@ export function KateWhatsApp({
         </div>
       </div>
     </div>
+  );
+}
+
+/** A part of the message the visitor hasn't answered yet. */
+function Blank({ children }: { children: string }) {
+  return <span className="rounded bg-sand px-1 py-px italic text-ink-soft">{children}</span>;
+}
+
+/** A part they have: it settles in as they answer. */
+function Filled({ children }: { children: string }) {
+  return (
+    <motion.span key={children} initial={{ backgroundColor: "rgb(217 253 211)" }} animate={{ backgroundColor: "rgb(217 253 211 / 0)" }} transition={{ duration: 1.2 }} className="rounded px-0.5">
+      {children}
+    </motion.span>
   );
 }
