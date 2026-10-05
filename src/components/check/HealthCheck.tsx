@@ -41,12 +41,18 @@ export function HealthCheck({
   mode,
   onAnswersChange,
   onResult,
+  onStep,
+  invite,
   className,
 }: {
   distributor: Distributor;
   mode: Mode;
   onAnswersChange?: (answers: Answers) => void;
   onResult?: (result: EngineResult | null) => void;
+  /** The screen the customer is on (a question id), so a host page can follow along. */
+  onStep?: (id: string) => void;
+  /** Draw a soft ring around Start, for pages where the check sits among other things to look at. */
+  invite?: boolean;
   className?: string;
 }) {
   const reduce = useReducedMotion();
@@ -96,6 +102,10 @@ export function HealthCheck({
   useEffect(() => () => {
     if (advanceTimer.current) clearTimeout(advanceTimer.current);
   }, []);
+
+  useEffect(() => {
+    onStep?.(currentId);
+  }, [currentId, onStep]);
 
   const q = QUESTIONS_BY_ID[currentId];
 
@@ -291,6 +301,7 @@ export function HealthCheck({
                     distributor={distributor}
                     ctx={ctx}
                     mode={mode}
+                    invite={invite}
                     touched={touched}
                     error={error}
                     onValue={setValue}
@@ -313,6 +324,7 @@ function QuestionView({
   distributor,
   ctx,
   mode,
+  invite,
   touched,
   error,
   onValue,
@@ -324,6 +336,7 @@ function QuestionView({
   distributor: Distributor;
   ctx: { distributorName: string; distributorFirstName: string };
   mode: Mode;
+  invite?: boolean;
   touched: boolean;
   error: string | null;
   onValue: (id: string, v: Answers[string]) => void;
@@ -380,7 +393,7 @@ function QuestionView({
           </div>
         )}
         <div className="mt-8 flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:gap-6">
-          <Button size="lg" onClick={onNext} arrow>
+          <Button size="lg" onClick={onNext} arrow className={clsx(invite && isWelcome && "invite-ring")}>
             {q.cta ?? "Continue"}
           </Button>
           {/* Someone who already knows what they want can go straight to the distributor. */}

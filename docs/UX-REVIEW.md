@@ -298,3 +298,18 @@ screens. Where the column fits the first phrase, the headline reads in three lin
 Helping BF Suma Distributors / Turn Product Interest / Into Actual Customers. On phones it's four,
 and the two phrase lines always stay whole, at any width or font setting. The underline is calmer:
 tapered at both ends, drifting up slightly, with no hook at the end.
+
+**Follow-up.** The example page section is now a stage with two sides, so the product reads at a
+glance: the customer's phone on the left (Kate's real page, running the real assessment) and Kate's
+side on the right, joined by WhatsApp. Above it, four steps (answers a few questions → gets a
+recommendation → sends it on WhatsApp → Kate gets the enquiry) sit over the part of the stage where
+each happens and light up as the visitor goes. Kate's side is never empty: Sarah's enquiry, built by
+the real engine from her answers, arrives when the section comes into view (a WhatsApp dot crosses,
+the message lands, then the structured enquiry lights up in her workspace), and the visitor's own
+enquiry builds live on top as they answer and makes the same trip when they finish. The difference
+between a chat message and an enquiry Kate can act on (goals, what they want, suggested products,
+how to reach them, Reply on WhatsApp) is the point. Nothing about medicines or pregnancy shows in
+the demo; the real message and workspace still carry those notes. "Try it yourself" points at Start
+(beside it on wide screens, above it elsewhere) and Start has a soft ring until it's tapped. The
+four reassurances are one quiet row underneath. Earlier rows in Kate's list step back with softer
+ink, not transparency, so they stay readable.

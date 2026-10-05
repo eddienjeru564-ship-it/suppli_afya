@@ -197,6 +197,19 @@
     animation: rise-word 0.9s var(--ease-soft) both;
     animation-delay: calc(150ms + var(--i, 0) * 55ms);
   }
+  /* A soft ring that keeps widening out from a button, inviting a first tap. */
+  .invite-ring {
+    position: relative;
+  }
+  .invite-ring::after {
+    content: "";
+    position: absolute;
+    inset: -5px;
+    border-radius: inherit;
+    border: 2px solid rgb(30 58 43 / 0.45);
+    animation: invite-ring 2.4s var(--ease-soft) infinite;
+    pointer-events: none;
+  }
   /* Drawn left to right once the word it ends under has mostly risen. */
   .draw-underline {
     animation: draw-underline 0.8s var(--ease-soft) both;
@@ -216,6 +229,10 @@
     .reveal {
       animation: none;
     }
+    .invite-ring::after {
+      animation: none;
+      opacity: 0.6;
+    }
   }
 }
 
@@ -227,6 +244,18 @@
   to {
     opacity: 1;
     transform: none;
+  }
+}
+
+@keyframes invite-ring {
+  0% {
+    opacity: 0.9;
+    transform: scale(1);
+  }
+  70%,
+  100% {
+    opacity: 0;
+    transform: scale(1.14, 1.3);
   }
 }
 
