@@ -18,8 +18,8 @@ async function fonts() {
   ];
 }
 
-/** The hero's underline (src/components/site/Hero.tsx): a brush stroke that ends in a pen-lift flick. */
-const STROKE = "M4 16C90 11.2 220 8.7 352 8.9C372 8.9 386 6.2 396 2.4C397.4 1.8 398.7 3.3 398 4.4C390 11.3 376 15 352 15.6C220 15.8 96 18.1 7 20.7C4 21.6 1.6 16.9 4 16Z";
+/** The hero's underline (src/components/site/Hero.tsx): a brush stroke tapered at both ends. */
+const STROKE = "M4 15.5C100 10.5 250 8.6 392 7.4C396.5 7 397.5 9.6 393.5 10.4C250 14.2 100 16.8 7 20.2C3.8 21.2 1.6 16.4 4 15.5Z";
 
 /**
  * Link preview card. These show up in WhatsApp chats, so they need to read at thumbnail size.

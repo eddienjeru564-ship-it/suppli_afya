@@ -291,3 +291,10 @@ competed with the underline. The underline is now a brush stroke with the weight
 stems: it tapers in from the left and ends in a small upward flick past "Interest", the way a pen
 lifts. A double line and a return swoosh were tried and dropped: there's too little room above "Into
 Actual Customers", and both ran into it. The link preview carries the same stroke.
+
+**Follow-up.** The headline sizes itself to its own column (CSS container units) instead of a width in
+`ch`, which depends on the browser's font metrics and let "Customers" drop to a fifth line on some
+screens. Where the column fits the first phrase, the headline reads in three lines, one phrase each:
+Helping BF Suma Distributors / Turn Product Interest / Into Actual Customers. On phones it's four,
+and the two phrase lines always stay whole, at any width or font setting. The underline is calmer:
+tapered at both ends, drifting up slightly, with no hook at the end.

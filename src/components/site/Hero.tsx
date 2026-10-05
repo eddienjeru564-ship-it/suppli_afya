@@ -5,7 +5,10 @@ import { HeroPhone } from "./HeroPhone";
 
 /**
  * The headline in phrases. Each starts a new line, so no line ends mid-thought ("…Turn" or "…Into"),
- * and "BF Suma" never splits. The two phrase lines fit a 360px phone at the smallest size (2.2rem).
+ * and "BF Suma" never splits. It's sized to its own column (container units), not the window or the
+ * browser's font metrics: where the column fits the first phrase it reads in three lines (7.8cqi
+ * leaves ~5% spare on "Helping BF Suma Distributors"); on phones that phrase wraps and 10.6cqi keeps
+ * "Turn Product Interest" and "Into Actual Customers" on one line each (~7% spare).
  */
 const HEADLINE = ["Helping BF\u00a0Suma Distributors", "Turn Product Interest", "Into Actual Customers"].map((l) => l.split(" "));
 /** Where each phrase's words start in the entrance sequence. */
@@ -31,9 +34,9 @@ function Words({ items }: { items: Word[] }) {
 }
 
 /**
- * A brush stroke, the weight of the letters' stems: it tapers in from the left and ends in a small
- * upward flick past the last letter, the way a pen lifts. It fits in the gap above the next line,
- * and is drawn in from the left once the words above it have landed (globals.css: .draw-underline).
+ * A brush stroke, the weight of the letters' stems, tapered at both ends and drifting up slightly
+ * to the right. It fits in the gap above the next line, and is drawn in from the left once the
+ * words above it have landed (globals.css: .draw-underline).
  */
 function Underline({ i }: { i: number }) {
   return (
@@ -46,7 +49,7 @@ function Underline({ i }: { i: number }) {
     >
       <path
         fill="currentColor"
-        d="M4 16C90 11.2 220 8.7 352 8.9C372 8.9 386 6.2 396 2.4C397.4 1.8 398.7 3.3 398 4.4C390 11.3 376 15 352 15.6C220 15.8 96 18.1 7 20.7C4 21.6 1.6 16.9 4 16Z"
+        d="M4 15.5C100 10.5 250 8.6 392 7.4C396.5 7 397.5 9.6 393.5 10.4C250 14.2 100 16.8 7 20.2C3.8 21.2 1.6 16.4 4 15.5Z"
       />
     </svg>
   );
@@ -65,9 +68,9 @@ export function Hero() {
       </div>
 
       <div className="container-x grid items-center gap-16 lg:grid-cols-[1.15fr_0.85fr] lg:gap-10">
-        <div>
+        <div className="@container">
           {/* One headline: who it's for and what it does. Smaller than display-xl, since it's a sentence. */}
-          <h1 className="display-xl max-w-[17ch] text-[clamp(2.2rem,4.7vw,4.4rem)] leading-[1.04] text-ink">
+          <h1 className="display-xl text-[length:min(10.6cqi,2.6rem)] leading-[1.04] text-ink @min-[30rem]:text-[length:min(7.8cqi,4.4rem)]">
             {/* Each word rises inside its own clipping box; the spaces sit between the boxes, where they
                 stay spaces (a space at the end of an inline-block is dropped). The marked words share
                 one box for the underline, so it spans both and never splits across lines. */}
