@@ -102,14 +102,52 @@ test("pregnancy leads to a clinic-first result with no products", async ({ page 
   await expect(page.getByText("Why it's in your plan")).toHaveCount(0);
 });
 
-test("the landing page demo updates the distributor panel live", async ({ page }) => {
+test("the landing page demo ends with the plan on the distributor's WhatsApp", async ({ page }) => {
   await page.goto("/#try");
   const demo = page.locator("#try");
-  await demo.getByRole("button", { name: "Start" }).click();
-  await page.waitForTimeout(400);
-  await demo.getByRole("button", { name: "I understand" }).click();
-  await page.waitForTimeout(400);
+  const kate = page.locator("#kate-whatsapp");
+  const pick = async (name: string | RegExp) => {
+    await demo.getByRole("radio", { name, exact: typeof name === "string" }).click();
+    await page.waitForTimeout(450);
+  };
+  const go = async (label = "Continue") => {
+    await demo.getByRole("button", { name: label }).click();
+    await page.waitForTimeout(420);
+  };
+  const tick = async (...names: (string | RegExp)[]) => {
+    for (const n of names) await demo.getByRole("checkbox", { name: n, exact: typeof n === "string" }).click();
+    await go();
+  };
+
+  // Nothing reaches Kate until the customer sends it.
+  await expect(kate.getByText(/When you send your plan, it arrives here/)).toBeVisible();
+
+  await go("Start");
+  await go("I understand");
   await demo.getByPlaceholder("First name").fill("Otieno");
-  // Kate's side (on phones the floating summary shows the name too, so look in the panel itself).
-  await expect(page.locator("#what-reaches-you").getByText("Otieno", { exact: true })).toBeVisible();
+  await go();
+  await go();
+  await pick("Male");
+  await demo.getByPlaceholder("Age").fill("38");
+  await go();
+  await pick(/Never/);
+  await go();
+  await tick(/^Energy/, /^Joints & bones/);
+  await pick("2 of 5");
+  await tick("Mid-afternoon");
+  await tick(/Pain when I walk/);
+  await pick("More than a year");
+  await pick("No");
+  await go();
+  for (const a of ["Mostly home-cooked", "One or two", "Every day", "Less than three glasses", "One or two", "Five to six", "None", "No"]) await pick(a);
+  await go();
+  await tick("None of these");
+  await tick("None of these");
+  await tick("None of these");
+  await pick(/focused plan/);
+
+  // The enquiry lands on Kate's WhatsApp already saying who it is and what was suggested, and Kate replies.
+  await expect(kate.getByText(/About me:/)).toBeVisible();
+  await expect(kate.getByText("Otieno, 38")).toBeVisible();
+  await expect(kate.getByText(/Hi Otieno, thanks for doing the assessment/)).toBeVisible({ timeout: 6000 });
 });

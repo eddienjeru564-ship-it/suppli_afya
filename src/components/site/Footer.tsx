@@ -11,7 +11,7 @@ export function Footer() {
             <p className="mt-4 text-[0.95rem] leading-relaxed">Made in Kenya, for people who sell BF Suma products.</p>
           </div>
           <nav aria-label="Footer" className="grid grid-cols-2 gap-x-12 gap-y-3 text-[0.95rem]">
-            <Link href="/#how" className="hover:text-cream">How it works</Link>
+            <Link href="/#try" className="hover:text-cream">How it works</Link>
             <Link href="/check" className="hover:text-cream">An example page</Link>
             <Link href="/#after" className="hover:text-cream">Follow-up list</Link>
             <Link href="/#pricing" className="hover:text-cream">Pricing</Link>

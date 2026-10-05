@@ -1,18 +1,19 @@
 import { Nav } from "@/components/site/Nav";
 import { Hero } from "@/components/site/Hero";
 import { Problem } from "@/components/site/Problem";
-import { HowItWorks } from "@/components/site/HowItWorks";
 import { Demo } from "@/components/site/Demo";
 import { Workspace } from "@/components/site/Workspace";
+import { YourPage } from "@/components/site/YourPage";
 import { Faq } from "@/components/site/Faq";
 import { Pricing } from "@/components/site/Pricing";
 import { Footer } from "@/components/site/Footer";
 import { MobileCta } from "@/components/site/MobileCta";
 
 /**
- * One story, seven sections, each titled for what it is: the hero → where WhatsApp sales get lost →
- * how Suppli Afya works → an example distributor page → your daily follow-up list → common
- * questions → choose what works for your business (the plans).
+ * One story, in order of what matters: the hero → where WhatsApp sales get lost → how it works,
+ * by trying it (answers → recommendation → WhatsApp → the distributor gets the enquiry, and it
+ * stops there) → and it doesn't stop at the enquiry (the daily follow-up list) → your name, your
+ * page, your customers → common questions → the plans.
  */
 export default function Home() {
   return (
@@ -21,9 +22,9 @@ export default function Home() {
       <main>
         <Hero />
         <Problem />
-        <HowItWorks />
         <Demo />
         <Workspace />
+        <YourPage />
         <Faq />
         <Pricing />
       </main>

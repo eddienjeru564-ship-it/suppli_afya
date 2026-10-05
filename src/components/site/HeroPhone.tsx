@@ -3,18 +3,24 @@
 import { AnimatePresence, motion, useInView } from "motion/react";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { useReducedMotion } from "@/components/ui/useReducedMotion";
-import { ChatScreen, KindTag, MockPhone, Pack, PageScreen, QuestionScreen, SuggestionsScreen } from "./Screens";
-import { KATE, SARAH, SUGGESTED } from "./story";
+import { WhatsAppIcon } from "@/components/ui/icons";
+import { ChatScreen, MockPhone, PageScreen, QuestionScreen, SuggestionsScreen, WaText } from "./Screens";
+import { KATE, SARAH, SARAH_MESSAGE } from "./story";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
 /** Kate's page, a question, Sarah's plan, then WhatsApp: how long each stays on screen. */
 const SCENES = [3400, 3600, 4400, 5600];
 
+/** What Kate sees arrive: the start of Sarah's message, who she is, her goals and her plan. */
+const ARRIVING = SARAH_MESSAGE.split("\n")
+  .filter((l, i) => i === 0 || /^\*(My goals|Suggested plan):\*/.test(l))
+  .join("\n");
+
 /**
- * The whole idea in one silent loop: Kate's page, a question, Sarah's plan, then WhatsApp to
- * Kate, while the enquiry lands in Kate's workspace. The first frame is Kate's page, drawn in the
- * HTML, so the product is on screen before any script runs; with reduced motion it stays there.
+ * The whole idea in one silent loop: Kate's page, a question, Sarah's plan, then WhatsApp, and
+ * the message arriving on Kate's own phone. The first frame is Kate's page, drawn in the HTML, so
+ * the product is on screen before any script runs; with reduced motion it stays there.
  */
 export function HeroPhone() {
   const reduce = useReducedMotion();
@@ -50,7 +56,7 @@ export function HeroPhone() {
         </AnimatePresence>
       </MockPhone>
 
-      {/* Kate's side: the enquiry arrives with what Sarah was looking for. */}
+      {/* Kate's side: the enquiry arrives on her WhatsApp, already saying what Sarah wants. */}
       <AnimatePresence>
         {(handedOff || reduce) && (
           <motion.div
@@ -59,29 +65,18 @@ export function HeroPhone() {
             animate={{ opacity: 1, x: 0, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.7, delay: reduce ? 0 : 1.4, ease }}
-            className="absolute -right-1 bottom-[22%] w-[13rem] rounded-2xl border border-ink/10 bg-paper p-3.5 shadow-float sm:-right-12 sm:bottom-auto sm:top-[16%] lg:-right-20"
+            className="absolute -right-1 bottom-[22%] w-[14rem] rounded-2xl border border-ink/10 bg-paper p-3 shadow-float sm:-right-12 sm:bottom-auto sm:top-[16%] lg:-right-20"
           >
-            <div className="flex items-center gap-1.5 text-[0.7rem] font-semibold text-moss">
-              <span className="relative flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full motion-safe:animate-ping rounded-full bg-moss/50" />
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-moss" />
-              </span>
-              In {KATE.first}&apos;s workspace
+            <div className="flex items-center gap-1.5 px-0.5 text-[0.7rem] font-semibold text-wa-deep">
+              <WhatsAppIcon className="h-3.5 w-3.5 text-wa" />
+              On {KATE.first}&apos;s WhatsApp
+              <span className="ml-auto font-normal text-ink-mute">now</span>
             </div>
-            <div className="mt-1.5 flex items-center gap-1.5">
-              <span className="font-display text-[1.15rem] leading-tight text-ink">
-                {SARAH.name}, {SARAH.age}
-              </span>
-              <KindTag kind="new" />
-            </div>
-            <div className="text-[0.75rem] text-ink-soft">{SARAH.goals.join(" · ")}</div>
-            <div className="mt-2 grid gap-1">
-              {SUGGESTED.map((p) => (
-                <span key={p.id} className="flex items-center gap-2 rounded-lg bg-sand/60 px-1.5 py-1">
-                  <Pack product={p} className="h-7 w-6 rounded-md bg-transparent p-0" />
-                  <span className="truncate text-[0.72rem] font-medium text-ink">{p.name}</span>
-                </span>
-              ))}
+            <div className="mt-2 rounded-xl bg-wa-bg p-2">
+              <div className="px-0.5 text-[0.72rem] font-semibold text-ink">{SARAH.name}</div>
+              <p className="mt-1 rounded-lg rounded-tl-none bg-white px-2 py-1.5 text-[0.66rem] leading-[1.45] text-[#111b21] shadow-sm">
+                <WaText text={ARRIVING} />
+              </p>
             </div>
           </motion.div>
         )}

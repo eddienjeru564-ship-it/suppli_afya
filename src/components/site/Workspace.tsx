@@ -14,8 +14,9 @@ const ease = [0.22, 1, 0.36, 1] as const;
 const JOURNEY = ["Interest", "Recommendation", "WhatsApp", "Sale", "Follow-up", "Reorder"];
 
 /**
- * After the sale: the distributor wakes up knowing who needs attention. Kate's Today list as it
- * really looks, one person open with the message ready; tap another to open it.
+ * The second story, after the enquiry: the distributor wakes up knowing who needs them today and
+ * why. Kate's Today list as it really looks, one person open with the message ready; tap another
+ * to open it. Simple on purpose: the point is who to talk to next, not a dashboard.
  */
 export function Workspace() {
   const [open, setOpen] = useState<string | null>("sarah");
@@ -24,11 +25,14 @@ export function Workspace() {
     <section id="after" className="bg-paper py-24 sm:py-28">
       <div className="container-x grid grid-cols-1 items-center gap-14 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-20">
         <Reveal>
-          <h2 className="display-lg max-w-[12ch] text-ink">Your Daily Follow-Up List</h2>
+          <p className="font-display text-[1.45rem] italic leading-snug text-clay">And it doesn&apos;t stop at the enquiry.</p>
+          <h2 className="display-lg mt-3 max-w-[12ch] text-ink">Your Daily Follow-Up List</h2>
           <p className="lede mt-6 max-w-[30rem]">
-            Repeat customers are the steadiest part of your business, and the easiest to forget. Each morning, your workspace
-            shows who needs you that day: new enquiries, follow-ups, unpaid orders and customers who may be due to reorder.
-            Each one comes with a WhatsApp message already written. You read it, change anything you like and send it.
+            Each morning, you see who needs you today and why: people who asked but haven&apos;t bought yet, customers to
+            check in on, and those who may be ready to reorder. Each one comes with a WhatsApp message ready to send.
+          </p>
+          <p className="mt-5 max-w-[30rem] text-[1.05rem] font-semibold leading-snug text-ink">
+            You don&apos;t have to remember who to follow up with.
           </p>
           {/* Each arrow travels with the step after it, so a wrapped line never ends on an arrow. */}
           <p className="mt-8 flex flex-wrap gap-x-2 gap-y-1 text-[0.92rem] text-ink-mute">

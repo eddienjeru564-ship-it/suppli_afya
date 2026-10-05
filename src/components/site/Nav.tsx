@@ -8,7 +8,7 @@ import { Logo } from "@/components/brand/Logo";
 import { ButtonLink } from "@/components/ui/Button";
 
 const LINKS = [
-  { href: "#how", label: "How it works" },
+  { href: "#try", label: "How it works" },
   { href: "#pricing", label: "Pricing" },
   { href: "#faq", label: "Questions" },
 ];

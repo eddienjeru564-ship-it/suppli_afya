@@ -105,7 +105,8 @@ export function Hero() {
 
           <p className="lede rise mt-7 max-w-[30rem]" style={at(9)}>
             Give customers a simple way to get personalised product recommendations based on their needs, lifestyle and
-            goals, then connect with you on WhatsApp when they&apos;re ready.
+            goals, then connect with you on WhatsApp when they&apos;re ready. After that, Suppli Afya reminds you who to
+            follow up with.
           </p>
 
           <div className="rise mt-9 flex flex-col gap-3 sm:flex-row sm:items-center" style={at(11)}>

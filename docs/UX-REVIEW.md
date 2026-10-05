@@ -328,3 +328,22 @@ works: Kate sees nothing until the customer chooses to send. "Try it yourself" i
 note pointing at Start. Arrows across both sections are one hand-drawn swirl with a single loop
 (`src/components/ui/SwirlArrow.tsx`), clay on light backgrounds and ochre on dark; the WhatsApp swirl
 lights up green along its length when the visitor's enquiry is sent.
+
+**Pass 9: one story, in order of what matters.** The page now has one primary story, and it stops
+where the magic is: someone discovers what they need, gets a recommendation, and is talking to the
+distributor on WhatsApp. Everything else comes after, smaller.
+
+| Order | Section | Its one job |
+|---|---|---|
+| 1 | Hero | Who it's for and what it does. Subtext: personal recommendations, then WhatsApp, then a reminder of who to follow up with. The phone loop ends with the enquiry landing on Kate's own WhatsApp |
+| 2 | Where WhatsApp Sales Get Lost | Every customer needs a different answer; a list isn't a recommendation |
+| 3 | How Suppli Afya Works (the demo) | The visitor does it: answers → personal recommendation → sends it on WhatsApp → it arrives on Kate's WhatsApp and Kate replies. No workspace here. The old three-card "How it works" section is gone; the demo is how it works |
+| 4 | And it doesn't stop at the enquiry: Your Daily Follow-Up List | The second story. "You don't have to remember who to follow up with" |
+| 5 | Your Name. Your Page. Your Customers. | The page is the entry point, not the product: their name, their link and QR card, their WhatsApp. The reassurances live here |
+| 6 | Common Questions | |
+| 7 | Choose What Works for Your Business | Starter gets enquiries, Growth keeps track, Pro takes payment |
+
+Kate's WhatsApp in the demo is a real-looking chat: before sending, a note says the plan arrives
+here; after, the customer's message (word for word, minus any medicine or pregnancy note and the
+"maybe later" products) and Kate's first reply, which is the suggested opener the real workspace
+gives her. On phones, once sent, a bar offers "See it arrive on Kate's phone".
