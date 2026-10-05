@@ -197,6 +197,11 @@
     animation: rise-word 0.9s var(--ease-soft) both;
     animation-delay: calc(150ms + var(--i, 0) * 55ms);
   }
+  /* Drawn left to right once the word it ends under has mostly risen. */
+  .draw-underline {
+    animation: draw-underline 0.8s var(--ease-soft) both;
+    animation-delay: calc(650ms + var(--i, 0) * 55ms);
+  }
   @supports (animation-timeline: view()) {
     .reveal {
       animation: rise linear both;
@@ -207,6 +212,7 @@
   @media (prefers-reduced-motion: reduce) {
     .rise,
     .rise-word,
+    .draw-underline,
     .reveal {
       animation: none;
     }
@@ -221,6 +227,15 @@
   to {
     opacity: 1;
     transform: none;
+  }
+}
+
+@keyframes draw-underline {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
   }
 }
 

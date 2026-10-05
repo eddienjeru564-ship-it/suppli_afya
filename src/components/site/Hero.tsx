@@ -12,7 +12,46 @@ const HEADLINE = ["Helping BF\u00a0Suma Distributors", "Turn Product Interest", 
 const START = HEADLINE.map((_, l) => HEADLINE.slice(0, l).flat().length);
 /** Set in italic: the word you'd stress saying it aloud, the gap between interest and a sale. */
 const ACCENT = "Actual";
+/** Underlined in clay, like a pen stroke: the interest every sale starts from. */
+const MARKED = new Set(["Product", "Interest"]);
 const at = (i: number) => ({ "--i": i }) as CSSProperties;
+
+type Word = { w: string; i: number };
+
+/** Words, each rising inside its own clipping box, with real spaces between the boxes. */
+function Words({ items }: { items: Word[] }) {
+  return items.map(({ w, i }, k) => (
+    <Fragment key={i}>
+      <span className="inline-block overflow-hidden pb-[0.08em] align-bottom">
+        <span className={w === ACCENT ? "rise-word italic text-forest" : "rise-word"} style={at(i)}>
+          {w}
+        </span>
+      </span>
+      {k < items.length - 1 && " "}
+    </Fragment>
+  ));
+}
+
+/**
+ * A tapered brush stroke, thin at the ends and rising slightly to the right, drawn in from the left
+ * once the words above it have landed (globals.css: .draw-underline).
+ */
+function Underline({ i }: { i: number }) {
+  return (
+    <svg
+      aria-hidden
+      viewBox="0 0 300 20"
+      preserveAspectRatio="none"
+      className="draw-underline pointer-events-none absolute left-[-2%] top-[0.72em] h-[0.32em] w-[104%] text-clay"
+      style={at(i)}
+    >
+      <path
+        fill="currentColor"
+        d="M3 13.2C80 8.2 200 5.4 296.6 5.6c2.2 0 2.4 3.2.2 3.5C200 10.6 92 13.6 6.4 17.2c-3 1.2-5.3-2.9-3.4-4Z"
+      />
+    </svg>
+  );
+}
 
 /**
  * The first screen. Its entrances are CSS (globals.css: .rise, .rise-word), so the words are in
@@ -31,24 +70,35 @@ export function Hero() {
           {/* One headline: who it's for and what it does. Smaller than display-xl, since it's a sentence. */}
           <h1 className="display-xl max-w-[17ch] text-[clamp(2.2rem,4.7vw,4.4rem)] leading-[1.04] text-ink">
             {/* Each word rises inside its own clipping box; the spaces sit between the boxes, where they
-                stay spaces (a space at the end of an inline-block is dropped). */}
-            {HEADLINE.map((line, l) => (
-              <Fragment key={l}>
-                <span className="block">
-                  {line.map((w, j) => (
-                    <Fragment key={j}>
-                      <span className="inline-block overflow-hidden pb-[0.08em] align-bottom">
-                        <span className={w === ACCENT ? "rise-word italic text-forest" : "rise-word"} style={at(START[l] + j)}>
-                          {w}
+                stay spaces (a space at the end of an inline-block is dropped). The marked words share
+                one box for the underline, so it spans both and never splits across lines. */}
+            {HEADLINE.map((line, l) => {
+              const words = line.map((w, j) => ({ w, i: START[l] + j }));
+              const from = words.findIndex((x) => MARKED.has(x.w));
+              const to = from < 0 ? -1 : from + words.filter((x) => MARKED.has(x.w)).length;
+              const marked = from < 0 ? [] : words.slice(from, to);
+              const before = from < 0 ? words : words.slice(0, from);
+              const after = from < 0 ? [] : words.slice(to);
+              return (
+                <Fragment key={l}>
+                  <span className="block">
+                    <Words items={before} />
+                    {marked.length > 0 && (
+                      <>
+                        {before.length > 0 && " "}
+                        <span className="relative inline-block whitespace-nowrap align-bottom">
+                          <Words items={marked} />
+                          <Underline i={marked[marked.length - 1].i} />
                         </span>
-                      </span>
-                      {j < line.length - 1 && " "}
-                    </Fragment>
-                  ))}
-                </span>
-                {l < HEADLINE.length - 1 && " "}
-              </Fragment>
-            ))}
+                        {after.length > 0 && " "}
+                      </>
+                    )}
+                    <Words items={after} />
+                  </span>
+                  {l < HEADLINE.length - 1 && " "}
+                </Fragment>
+              );
+            })}
           </h1>
 
           <p className="lede rise mt-7 max-w-[30rem]" style={at(9)}>

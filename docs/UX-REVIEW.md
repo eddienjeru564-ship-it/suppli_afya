@@ -278,3 +278,10 @@ waits for real sign-ups, since it's a claim about numbers we don't have yet. Pro
 together in a soft panel marked "Coming soon", because they aren't built. Under the cards: no setup
 fee, M-Pesa or card, upgrade or stop anytime (nothing renews, so there's nothing to cancel), and
 "start with Starter". The section is light now, so the page no longer ends in two dark blocks.
+
+**Follow-up.** "Product Interest" in the headline has a clay underline, drawn like a pen stroke: tapered
+at both ends, rising slightly to the right, close under the letters. It's where the sentence starts
+(interest) and *Actual* is where it lands, so the line is marked at both ends without a second colour
+or a highlight block. It draws in from the left once the words have risen (CSS, `.draw-underline`), is
+in the HTML before any script, and is simply there for anyone who prefers reduced motion. The two
+words share one box, so the stroke always spans both and never splits across lines.
