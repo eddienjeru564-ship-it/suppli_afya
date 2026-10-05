@@ -285,3 +285,9 @@ at both ends, rising slightly to the right, close under the letters. It's where 
 or a highlight block. It draws in from the left once the words have risen (CSS, `.draw-underline`), is
 in the HTML before any script, and is simply there for anyone who prefers reduced motion. The two
 words share one box, so the stroke always spans both and never splits across lines.
+
+**Follow-up.** One mark in the headline, not two: "Actual" is back in plain type, since the italic
+competed with the underline. The underline is now a brush stroke with the weight of the letters'
+stems: it tapers in from the left and ends in a small upward flick past "Interest", the way a pen
+lifts. A double line and a return swoosh were tried and dropped: there's too little room above "Into
+Actual Customers", and both ran into it. The link preview carries the same stroke.

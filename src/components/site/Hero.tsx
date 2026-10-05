@@ -10,9 +10,7 @@ import { HeroPhone } from "./HeroPhone";
 const HEADLINE = ["Helping BF\u00a0Suma Distributors", "Turn Product Interest", "Into Actual Customers"].map((l) => l.split(" "));
 /** Where each phrase's words start in the entrance sequence. */
 const START = HEADLINE.map((_, l) => HEADLINE.slice(0, l).flat().length);
-/** Set in italic: the word you'd stress saying it aloud, the gap between interest and a sale. */
-const ACCENT = "Actual";
-/** Underlined in clay, like a pen stroke: the interest every sale starts from. */
+/** Underlined in clay, like a pen stroke: the interest every sale starts from. The one mark in the headline. */
 const MARKED = new Set(["Product", "Interest"]);
 const at = (i: number) => ({ "--i": i }) as CSSProperties;
 
@@ -23,7 +21,7 @@ function Words({ items }: { items: Word[] }) {
   return items.map(({ w, i }, k) => (
     <Fragment key={i}>
       <span className="inline-block overflow-hidden pb-[0.08em] align-bottom">
-        <span className={w === ACCENT ? "rise-word italic text-forest" : "rise-word"} style={at(i)}>
+        <span className="rise-word" style={at(i)}>
           {w}
         </span>
       </span>
@@ -33,21 +31,22 @@ function Words({ items }: { items: Word[] }) {
 }
 
 /**
- * A tapered brush stroke, thin at the ends and rising slightly to the right, drawn in from the left
- * once the words above it have landed (globals.css: .draw-underline).
+ * A brush stroke, the weight of the letters' stems: it tapers in from the left and ends in a small
+ * upward flick past the last letter, the way a pen lifts. It fits in the gap above the next line,
+ * and is drawn in from the left once the words above it have landed (globals.css: .draw-underline).
  */
 function Underline({ i }: { i: number }) {
   return (
     <svg
       aria-hidden
-      viewBox="0 0 300 20"
+      viewBox="0 0 400 24"
       preserveAspectRatio="none"
-      className="draw-underline pointer-events-none absolute left-[-2%] top-[0.72em] h-[0.32em] w-[104%] text-clay"
+      className="draw-underline pointer-events-none absolute left-[-3%] top-[0.69em] h-[0.42em] w-[106%] overflow-visible text-clay"
       style={at(i)}
     >
       <path
         fill="currentColor"
-        d="M3 13.2C80 8.2 200 5.4 296.6 5.6c2.2 0 2.4 3.2.2 3.5C200 10.6 92 13.6 6.4 17.2c-3 1.2-5.3-2.9-3.4-4Z"
+        d="M4 16C90 11.2 220 8.7 352 8.9C372 8.9 386 6.2 396 2.4C397.4 1.8 398.7 3.3 398 4.4C390 11.3 376 15 352 15.6C220 15.8 96 18.1 7 20.7C4 21.6 1.6 16.9 4 16Z"
       />
     </svg>
   );

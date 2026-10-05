@@ -9,7 +9,7 @@ export const contentType = "image/png";
 export default async function Image() {
   return brandCard({
     headline: ["Helping BF Suma Distributors", "Turn Product Interest", "Into Actual Customers"],
-    accent: "Actual",
+    marked: "Product Interest",
     footer: `From ${FROM_PRICE} a month · No contract · Pay by M-Pesa`,
   });
 }
