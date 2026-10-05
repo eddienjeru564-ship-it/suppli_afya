@@ -110,5 +110,6 @@ test("the landing page demo updates the distributor panel live", async ({ page }
   await demo.getByRole("button", { name: "I understand" }).click();
   await page.waitForTimeout(400);
   await demo.getByPlaceholder("First name").fill("Otieno");
-  await expect(demo.getByText("Otieno", { exact: true })).toBeVisible();
+  // Kate's side (on phones the floating summary shows the name too, so look in the panel itself).
+  await expect(page.locator("#what-reaches-you").getByText("Otieno", { exact: true })).toBeVisible();
 });

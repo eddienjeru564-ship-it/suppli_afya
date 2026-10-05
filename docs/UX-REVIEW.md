@@ -313,3 +313,18 @@ the demo; the real message and workspace still carry those notes. "Try it yourse
 (beside it on wide screens, above it elsewhere) and Start has a soft ring until it's tapped. The
 four reassurances are one quiet row underneath. Earlier rows in Kate's list step back with softer
 ink, not transparency, so they stay readable.
+
+**Follow-up.** One angle, the hero's: personal recommendations. "Where WhatsApp Sales Get Lost" now
+tells only that story: every customer needs a different answer, a list of products isn't a
+recommendation, and interest fades while you work it out. The chat beside it carries handwritten
+notes (a personal question… a generic answer… and the sale goes quiet), and the section ends on
+the answer: a personal recommendation on your page, before they message you. Record-keeping and
+follow-up stay in the workspace section, where they belong.
+
+The example page has no made-up people now. Kate's side shows only the visitor's own enquiry: a
+labelled card of what Kate will get (goals, how much to start with, the recommendation, WhatsApp)
+that fills in as they answer and says "Not sent yet" until they send, which is how the real product
+works: Kate sees nothing until the customer chooses to send. "Try it yourself" is a large italic
+note pointing at Start. Arrows across both sections are one hand-drawn swirl with a single loop
+(`src/components/ui/SwirlArrow.tsx`), clay on light backgrounds and ochre on dark; the WhatsApp swirl
+lights up green along its length when the visitor's enquiry is sent.

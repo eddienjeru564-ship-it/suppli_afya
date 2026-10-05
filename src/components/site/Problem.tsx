@@ -1,36 +1,42 @@
 import clsx from "clsx";
 import { Reveal } from "@/components/ui/Reveal";
+import { SwirlArrow } from "@/components/ui/SwirlArrow";
 
-/** The walk-through every curious person needs, typed out by hand, and how it usually ends. */
-const THREAD: { from: "them" | "you" | "gap"; text: string; time?: string }[] = [
+type Line =
+  | { from: "them" | "you"; text: string; time?: string }
+  | { from: "gap"; text: string }
+  | { from: "seen" }
+  /** A pen note beside the chat, pointing up at the message above it. */
+  | { from: "note"; text: string; side: "left" | "right" };
+
+/** A personal question, a generic answer, and how it usually ends. */
+const THREAD: Line[] = [
   { from: "them", text: "Hi, which one should I take for energy?", time: "7:42 pm" },
-  { from: "you", text: "Hi! What are you looking for exactly?", time: "8:30 pm" },
-  { from: "you", text: "Have you used anything before? Any medicine I should know about?" },
-  { from: "them", text: "Not really. Just tired all the time" },
-  { from: "you", text: "Let me send you a few options 👇 [4 photos]" },
-  { from: "you", text: "Which one would you like? They're all good" },
+  { from: "note", text: "A personal question…", side: "left" },
+  { from: "you", text: "Hi! Sorry, just seeing this", time: "9:15 pm" },
+  { from: "you", text: "Here are a few options 👇 [4 photos]" },
+  { from: "you", text: "They're all good, which one would you like?" },
+  { from: "note", text: "…a generic answer", side: "right" },
   { from: "them", text: "Let me think about it" },
   { from: "gap", text: "Three days later" },
   { from: "you", text: "Hi, still interested?" },
+  { from: "seen" },
+  { from: "note", text: "…and the sale goes quiet", side: "right" },
 ];
 
-/** A normal day selling on WhatsApp, and where it leaks. The process, not the person. */
+/** Why the sale slips: the customer wanted an answer for them, and got a catalogue. */
 const LEAKS = [
   {
-    title: "Every enquiry starts from zero",
-    body: "Each new customer needs the same questions: what they're looking for, what they've tried and whether they take any medicine. You type it all out in the chat, every time.",
+    title: "Every customer needs a different answer",
+    body: "What suits someone who's tired all the time isn't what suits someone with stiff joints. Finding out means asking the same questions in every chat.",
   },
   {
-    title: "Customers are left to compare on their own",
-    body: "You send product photos, prices and explanations. Then the customer has to choose alone, and often says they'll think about it.",
+    title: "A list of products isn't a recommendation",
+    body: "Photos and prices leave the customer to choose alone. Without a reason that fits them, most say they'll think about it.",
   },
   {
-    title: "Customers wait while you're busy",
-    body: "While you're delivering an order, at work or with family, the customer's message waits. By the time you reply, they may have lost interest.",
-  },
-  {
-    title: "Nobody keeps a record of who asked",
-    body: "Enquiries are scattered across different chats, so follow-ups and reorders are easy to miss. Those missed sales never show up anywhere. The month just feels slow.",
+    title: "Interest fades while you're busy",
+    body: "Questions arrive while you're delivering an order or with family. By the time you've worked out what suits them, they've moved on.",
   },
 ];
 
@@ -42,8 +48,8 @@ export function Problem() {
           <Reveal>
             <h2 className="display-lg max-w-[16ch] text-ink">Where WhatsApp Sales Get Lost</h2>
             <p className="lede mt-6 max-w-[34rem]">
-              Most potential customers start with the same WhatsApp message: “Which one should I take?” Selling this way works,
-              but it depends on you being free to reply, and nothing keeps track of who asked.
+              Most potential customers start with the same WhatsApp message: “Which one should I take?” The right answer is
+              different for every person, and working it out in a chat takes time you don&apos;t always have.
             </p>
           </Reveal>
           <ul className="mt-10 max-w-[34rem] divide-y divide-ink/10 border-y border-ink/10">
@@ -54,6 +60,12 @@ export function Problem() {
               </Reveal>
             ))}
           </ul>
+          <Reveal delay={0.12}>
+            <p className="mt-8 max-w-[30rem] font-display text-[1.45rem] leading-snug text-ink">
+              Suppli Afya gives every customer a personal recommendation on your page,{" "}
+              <span className="text-clay">before they message you.</span>
+            </p>
+          </Reveal>
         </div>
 
         <Reveal delay={0.1}>
@@ -67,9 +79,22 @@ export function Problem() {
             </div>
             <ol className="grid gap-1.5 px-3 py-4" aria-label="A typical chat with someone who asked about a product">
               {THREAD.map((m, i) =>
-                m.from === "gap" ? (
+                m.from === "seen" ? (
+                  <li key={i} className="ml-auto pr-1 text-[0.7rem] text-[#54656f]">
+                    Seen
+                  </li>
+                ) : m.from === "gap" ? (
                   <li key={i} className="mx-auto my-1 w-fit rounded-md bg-white/80 px-2.5 py-0.5 text-[0.72rem] text-[#54656f] shadow-sm">
                     {m.text}
+                  </li>
+                ) : m.from === "note" ? (
+                  <li
+                    key={i}
+                    aria-hidden
+                    className={clsx("-mt-0.5 mb-1 flex items-start gap-1.5 text-clay", m.side === "right" ? "flex-row-reverse pr-3" : "pl-4")}
+                  >
+                    <SwirlArrow direction="up" strokeWidth={7} className="h-12 w-4 shrink-0" />
+                    <span className="pt-4 font-display text-[1.08rem] italic leading-none">{m.text}</span>
                   </li>
                 ) : (
                   <li
@@ -84,7 +109,6 @@ export function Problem() {
                   </li>
                 ),
               )}
-              <li className="ml-auto pr-1 text-[0.7rem] text-[#54656f]">Seen</li>
             </ol>
           </figure>
         </Reveal>
