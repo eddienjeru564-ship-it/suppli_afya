@@ -9,24 +9,40 @@ Things only the founder can supply or decide. Ordered by how much they block.
    manufacturer warnings, current retail price. Pay special attention to:
    - ArthroXtra: is the chondroitin from pork? Is the glucosamine from shellfish?
    - The 4 in 1 coffees: do they contain sugar and creamer? Is there a sugar-free version?
-   - Relivin Tea: listings disagree on ingredients (herbal only, or green tea?). Caffeine matters.
-   - ProstatRelax, XPower Man Plus, Novel Depile: full ingredient lists are missing.
+   - Novel Depile: the full ingredient list is missing.
+   - Capsule shells: ProstatRelax's label lists gelatin, and most capsules probably use it. Is it
+     from pork? That matters to customers who avoid pork, and no capsule is flagged for it today.
+   - Probio3 and XPower Man Coffee: `supplyDays` assumes one sachet a day. Confirm the label dose.
    - Products we haven't included that should be (and any we included that are discontinued).
+
+   Already read off the official pack photos (October 2026, 19 products): pack sizes, and these
+   corrections. Relivin Tea is luobuma **and green tea**, so it has caffeine; its label says it's not
+   for children, pregnancy or breastfeeding. It's no longer a sleep and stress pick: a caffeinated
+   tea can't be the answer to poor sleep. YouthEver is a drink in 30 pouches, not capsules, and its
+   label says it's not for pregnancy. Ez-Xlim is tablets. MicrO2 Cycle's dose is 3 tablets 3 times a
+   day, so 100 tablets last about 11 days, not 30. ProstatRelax is epimedium extract; XPower Man
+   Plus is epimedium and black ginger with maca, taurine and L-arginine; XPower Man Coffee adds
+   ginseng, tongkat ali, maca and epimedium to a coffee latte.
 2. **Pharmacist review of `src/engine/safety.ts`.** The rules are conservative general guidance,
-   not a clinical interaction database.
-3. **Suppli Afya support number.** Pro promises priority WhatsApp help. Decide the number and set
+   not a clinical interaction database. From the labels, ask specifically: ProstatRelax is the same
+   herb (epimedium) as XPower Man Plus, which carries heart and blood pressure cautions; should it?
+   Does the ginseng in XPower Man Coffee need a diabetes or blood thinner caution?
+3. **A sleep and stress product.** With Relivin Tea out, nothing in the catalogue is a headline
+   pick for "Sleep & stress": customers get habits and "your distributor can talk you through other
+   options". Decide whether a BF Suma product genuinely fits, checked against its label.
+4. **Suppli Afya support number.** Pro promises priority WhatsApp help. Decide the number and set
    `NEXT_PUBLIC_SUPPLI_WHATSAPP` (format `2547XXXXXXXX`); nothing on the site uses it yet.
-4. **Domain.** The site assumes `suppliafya.co.ke`. Set `NEXT_PUBLIC_SITE_URL` to the real one; QR codes
+5. **Domain.** The site assumes `suppliafya.co.ke`. Set `NEXT_PUBLIC_SITE_URL` to the real one; QR codes
    encode this URL and cards show its domain. Until it's set, a Vercel deploy uses its own address.
-5. **Legal review** of `/privacy`, the disclaimers in the footer and the health check, and ODPC
+6. **Legal review** of `/privacy`, the disclaimers in the footer and the health check, and ODPC
    registration. The portal now stores customers' health check answers when they choose to send
    them to a distributor, so this is required before real distributors sign up.
-6. **Prices.** The plans in `src/config/plans.ts` are a proposal (KES 1,500 / 2,900 / 4,900).
-7. **Production database.** Set `DATABASE_URL` to a hosted Postgres. The embedded database is for
+7. **Prices.** The plans in `src/config/plans.ts` are a proposal (KES 1,500 / 2,900 / 4,900).
+8. **Production database.** Set `DATABASE_URL` to a hosted Postgres. The embedded database is for
    local development only; on Vercel, pages that need the database fail with a clear error until
    `DATABASE_URL` is set. With Supabase, use the transaction pooler (port 6543): Vercel can't reach
    the direct connection, which is IPv6 only.
-8. **Payment keys.** Without keys, checkout runs in test mode (approve or decline on screen), which
+9. **Payment keys.** Without keys, checkout runs in test mode (approve or decline on screen), which
    is allowed only outside production or with `PAYMENTS_ALLOW_TEST=true`. **Never set that on the
    live site.** For live payments:
    - M-Pesa (STK Push through **PayHero**): from the PayHero dashboard, `PAYHERO_API_USERNAME` and
@@ -38,15 +54,15 @@ Things only the founder can supply or decide. Ordered by how much they block.
      Then run `npm run payhero:check -- 07XXXXXXXX` to send yourself a KES 1 prompt end to end.
    - Card (Paystack, KES): `PAYSTACK_SECRET_KEY`. In the Paystack dashboard set the webhook URL to
      `<site>/api/payments/paystack/webhook`.
-9. **Community link.** Set `NEXT_PUBLIC_COMMUNITY_URL` to the WhatsApp community invite. Until then
+10. **Community link.** Set `NEXT_PUBLIC_COMMUNITY_URL` to the WhatsApp community invite. Until then
    the portal doesn't show the invite.
 
-10. **Morning reminder (optional).** Generate VAPID keys (`npx web-push generate-vapid-keys`), set
+11. **Morning reminder (optional).** Generate VAPID keys (`npx web-push generate-vapid-keys`), set
     `NEXT_PUBLIC_VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY`, `VAPID_SUBJECT` and a random `CRON_SECRET`.
     `vercel.json` runs `/api/cron/morning` at 05:00 UTC (08:00 in Nairobi). Until the keys are set, the
     reminder simply doesn't appear.
 
-11. **Storefront orders (optional).** Set the same random `STOREFRONT_SECRET` here and in the
+12. **Storefront orders (optional).** Set the same random `STOREFRONT_SECRET` here and in the
     distributor storefront (`suppli_afya-distributor_template`), with its `SUPPLI_AFYA_URL` pointing
     here. Orders customers place on a live storefront with a `suppliSlug` then arrive through
     `/api/storefront/orders` in that distributor's Orders and on Today. Until it's set, the endpoint
