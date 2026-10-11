@@ -48,7 +48,7 @@ to store results.
 | Shellfish allergy | Exclude glucosamine products and Ez-Xlim (chitosan) |
 | Avoids pork / vegetarian | Exclude GluzoJoint-F; caution on ArthroXtra until chondroitin source is confirmed |
 | Soy allergy | Exclude Detoxilive |
-| Caffeine doesn't agree | Exclude coffees |
+| Caffeine doesn't agree | Exclude coffees and Relivin Tea (made with green tea) |
 | Blood thinners or bleeding disorder | Exclude MicrO2 Cycle and CereBrain; caution on reishi |
 | Diabetes medicine | Caution on anything that lowers blood sugar |
 | High blood pressure or heart disease | Exclude stimulant products; exclude performance products with heart disease |
@@ -62,7 +62,9 @@ Rules read product **traits**, not product ids. Fix a trait in the catalogue and
 
 1. Check it against the official BF Suma Kenya catalogue and the pack label.
 2. Fill every field in `catalogue.ts`. Be strict with `traits` (shellfish, pork, soy, caffeine,
-   sugar, stimulant, clotting, blood sugar). Set `supplyDays` from the label dose and pack size.
+   sugar, stimulant, clotting, blood sugar, label warnings for pregnancy). Set `pack` to what the
+   box says ("60 capsules") and `supplyDays` from the label dose and pack size; a test checks that a
+   box of sachets never "lasts" longer than one a day allows.
 3. Write `summary`, `reasons` and `expectation` in plain words. Say what it is and what people use
    it for. **Never** say it treats, cures or prevents a disease.
 4. Set `verified: true` only after the line-by-line check.
