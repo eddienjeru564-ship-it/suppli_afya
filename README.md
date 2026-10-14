@@ -53,12 +53,12 @@ Without payment keys, checkout runs in test mode in development. The demo distri
 
 ## Deploying on Vercel
 
-The Vercel project is `suppli-afya-main-site`, linked to `suppli-afya/suppli_afya-main_site`.
-`vercel.json` runs functions in London (`lhr1`, next to the database) and schedules the morning reminder.
+The Vercel project is `suppli-afya-main-site`, linked to `eddienjeru564-ship-it/suppli_afya`.
+`vercel.json` runs functions in Dublin (`dub1`, next to the database) and schedules the morning reminder.
 
 - **`DATABASE_URL` is required.** Vercel's disk is read-only, so the embedded database can't be used there.
-  The database is the Supabase project **`suppli_afya_main_site`** (ref `gntwlmnzgfymyxwkrqtn`, London,
-  `eu-west-2`). The storefront has its own Supabase project; never point this app at it. See "The database" below.
+  The database is the Supabase project **`suppli_afya-main_site`** (ref `qadvlemdfypklscmbngc`, Ireland,
+  `eu-west-1`). The storefront has its own Supabase project; never point this app at it. See "The database" below.
 - **`NEXT_PUBLIC_SITE_URL`** can wait: until it's set, links, QR codes and callbacks use the deploy's own
   address (the production domain, or the branch address on previews).
 - **A test deploy without payment keys** needs `PAYMENTS_ALLOW_TEST=true`, because Vercel builds are
@@ -76,7 +76,8 @@ migrations in `src/server/schema.ts`. It never uses Supabase's Data API, Auth or
   can't bypass row level security, create roles or touch Supabase's own schemas. Use the transaction pooler
   (port 6543, IPv4, which Vercel needs). The host is the project's pooler cluster; copy it from Supabase → Connect →
   Transaction pooler rather than guessing (a region has more than one, and a wrong one gives "tenant/user not found"):
-  `postgres://suppli_app.gntwlmnzgfymyxwkrqtn:PASSWORD@aws-0-eu-west-2.pooler.supabase.com:6543/postgres?sslmode=require`
+  `postgres://suppli_app.qadvlemdfypklscmbngc:PASSWORD@aws-0-eu-west-1.pooler.supabase.com:6543/postgres?sslmode=require`
+  Don't add `?pgbouncer=true` (a Prisma setting; Postgres rejects it) and keep `sslmode=require`.
 - **Nothing is readable through the Data API.** Supabase grants its public API roles (`anon`, `authenticated`) every
   table that `postgres` creates. Tables owned by `suppli_app` get no such grants, and migration 4 switches on row
   level security with no policies, so the API sees no rows even if a grant slips in later. A test

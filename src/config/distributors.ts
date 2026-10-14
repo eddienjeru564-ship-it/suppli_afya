@@ -18,7 +18,7 @@ export interface Distributor {
 
 export const DISTRIBUTORS: Distributor[] = [
   // The example page used across the website and at /check. Kate Cromuel is a real distributor
-  // (her own storefront is in suppli_afya-template_site); this copy is a demo with no number.
+  // (her own storefront is in suppli_afya-distributor_template); this copy is a demo with no number.
   {
     slug: "kate",
     name: "Kate Cromuel",
