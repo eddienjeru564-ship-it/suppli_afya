@@ -7,9 +7,10 @@ import { buttonClass } from "@/components/ui/Button";
 import { Card, Pill, kesAmount, longDate, prettyPhone, shortDate } from "@/components/portal/ui";
 import { ChevronLeft, WhatsAppIcon } from "@/components/ui/icons";
 import { NoteForm } from "./NoteForm";
+import { greetingName } from "@/lib/names";
 
 const KIND_LABEL: Record<string, string> = {
-  health_check: "Health check",
+  health_check: "Assessment",
   order: "Order",
   payment: "Payment",
   note: "Note",
@@ -25,7 +26,7 @@ export default async function CustomerPage(props: PageProps<"/portal/customers/[
   const live = orders.filter((o) => o.status !== "cancelled");
   const spent = live.filter((o) => o.status !== "unpaid").reduce((s, o) => s + o.total, 0);
   const next = live[0]?.reorder_due_at ?? null;
-  const hello = `Hi ${c.name.split(" ")[0]}, `;
+  const hello = `Hi ${greetingName(c.name)}, `;
 
   return (
     <div className="grid grid-cols-1 gap-6">
@@ -36,7 +37,7 @@ export default async function CustomerPage(props: PageProps<"/portal/customers/[
         <div>
           <h1 className="font-display text-[2.2rem] leading-tight tracking-[-0.02em] text-ink">{c.name}</h1>
           <p className="mt-1 text-[0.93rem] text-ink-soft">
-            {[c.phone && prettyPhone(c.phone), `Customer since ${longDate(c.created_at)}`, c.source === "health_check" && "Came through your health check"]
+            {[c.phone && prettyPhone(c.phone), `Customer since ${longDate(c.created_at)}`, c.source === "health_check" && "Came through your page"]
               .filter(Boolean)
               .join(" · ")}
           </p>
@@ -73,7 +74,7 @@ export default async function CustomerPage(props: PageProps<"/portal/customers/[
             {live.length === 0 ? (
               <div className="px-5 pb-5 pt-2">
                 <p className="text-[0.93rem] leading-relaxed text-ink-soft">
-                  Record what {c.name.split(" ")[0]} buys and we&apos;ll remind you a few days before it runs out.
+                  Record what {greetingName(c.name)} buys and we&apos;ll remind you a few days before it runs out.
                 </p>
                 <Link href={`/portal/orders/new?customer=${c.id}`} className={`${buttonClass("primary", "md")} mt-4`}>
                   Record their first order
@@ -99,7 +100,7 @@ export default async function CustomerPage(props: PageProps<"/portal/customers/[
 
           {p?.result?.core && p.result.core.length > 0 && (
             <Card className="p-5">
-              <h2 className="text-[0.95rem] font-semibold text-ink">From their health check</h2>
+              <h2 className="text-[0.95rem] font-semibold text-ink">From their assessment</h2>
               <p className="mt-1 text-[0.85rem] text-ink-mute">
                 {longDate(p.created_at)} ·{" "}
                 <Link href={`/portal/prospects/${p.id}`} className="font-semibold text-forest underline underline-offset-2">

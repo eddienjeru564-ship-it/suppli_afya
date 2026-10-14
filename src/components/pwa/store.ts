@@ -148,7 +148,7 @@ export async function promptInstall(): Promise<boolean> {
 
 // ---------------------------------------------------------------- install card dismissal
 
-export function installDismissed() {
+function installDismissed() {
   const at = Number(store.get(DISMISS_KEY) ?? 0);
   return at > 0 && Date.now() - at < DISMISS_DAYS * 86400_000;
 }

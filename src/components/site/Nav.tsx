@@ -8,10 +8,9 @@ import { Logo } from "@/components/brand/Logo";
 import { ButtonLink } from "@/components/ui/Button";
 
 const LINKS = [
-  { href: "#how", label: "How it works" },
-  { href: "#check", label: "The health check" },
-  { href: "#portal", label: "Your portal" },
+  { href: "#try", label: "How it works" },
   { href: "#pricing", label: "Pricing" },
+  { href: "#faq", label: "Questions" },
 ];
 
 export function Nav() {
@@ -73,7 +72,7 @@ export function Nav() {
         scrolled || open ? "bg-cream/85 shadow-[0_1px_0_rgb(22_36_28/0.08)] backdrop-blur-md" : "bg-transparent",
       )}
     >
-      <nav className="container-x flex h-16 items-center justify-between gap-6">
+      <nav aria-label="Main" className="container-x flex h-16 items-center justify-between gap-6">
         <Link href="/" aria-label="Suppli Afya home" onClick={() => setOpen(false)}>
           <Logo />
         </Link>
@@ -109,8 +108,8 @@ export function Nav() {
               <Link href="/login" className="px-3 text-[0.92rem] font-medium text-ink-soft transition-colors hover:text-ink">
                 Log in
               </Link>
-              <ButtonLink href="#pricing" size="sm" arrow>
-                Get started
+              <ButtonLink href="#try" size="sm" arrow>
+                See it in action
               </ButtonLink>
             </>
           )}
@@ -151,7 +150,7 @@ export function Nav() {
                 </motion.a>
               ))}
               <p className="mt-6 text-[0.95rem] leading-relaxed text-ink-soft">
-                For BF Suma distributors in Kenya. Sell more, follow up less.
+                For BF Suma distributors in Kenya. Your own page, and a workspace that remembers every customer.
               </p>
               <div className="mt-auto grid gap-3">
                 {account ? (
@@ -160,8 +159,8 @@ export function Nav() {
                   </ButtonLink>
                 ) : (
                   <>
-                    <ButtonLink href="#pricing" size="lg" onClick={() => setOpen(false)} arrow>
-                      Get started
+                    <ButtonLink href="#try" size="lg" onClick={() => setOpen(false)} arrow>
+                      See it in action
                     </ButtonLink>
                     <ButtonLink href="/login" size="lg" variant="secondary" onClick={() => setOpen(false)}>
                       Log in

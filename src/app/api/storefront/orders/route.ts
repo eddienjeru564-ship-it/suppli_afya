@@ -76,7 +76,7 @@ export async function POST(req: Request) {
     c.id,
     `Ordered from your page (${ref}): ${orderLines(items)}. ${deliveryLine(delivery)}.${
       payment ? ` Paying by ${payment === "mpesa" ? "M-Pesa" : "cash"}.` : ""
-    }${selectorRef ? ` From health check ${selectorRef}.` : ""}${note ? ` Note: ${note}` : ""}`,
+    }${selectorRef ? ` From the assessment ${selectorRef}.` : ""}${note ? ` Note: ${note}` : ""}`,
   ]);
   return Response.json({ ok: true, orderId: rows[0].id });
 }

@@ -1,21 +1,19 @@
 import { Nav } from "@/components/site/Nav";
 import { Hero } from "@/components/site/Hero";
-import { Reality } from "@/components/site/Reality";
-import { HowItWorks } from "@/components/site/HowItWorks";
+import { Problem } from "@/components/site/Problem";
 import { Demo } from "@/components/site/Demo";
-import { Portal } from "@/components/site/Portal";
-import { Trust } from "@/components/site/Trust";
-import { Calculator } from "@/components/site/Calculator";
-import { Pricing } from "@/components/site/Pricing";
-import { Setup } from "@/components/site/Setup";
+import { Workspace } from "@/components/site/Workspace";
+import { YourPage } from "@/components/site/YourPage";
 import { Faq } from "@/components/site/Faq";
-import { FinalCta, Footer } from "@/components/site/Footer";
+import { Pricing } from "@/components/site/Pricing";
+import { Footer } from "@/components/site/Footer";
 import { MobileCta } from "@/components/site/MobileCta";
 
 /**
- * The story runs in order: the distributor's reality → where sales leak →
- * how Suppli Afya fits in → try it → what you see each day →
- * why customers trust it → what it's worth → what it costs → how setup works → questions.
+ * One story, in order of what matters: the hero → where WhatsApp sales get lost → how it works,
+ * by trying it (answers → recommendation → WhatsApp → the distributor gets the enquiry, and it
+ * stops there) → and it doesn't stop at the enquiry (the daily follow-up list) → your name, your
+ * page, your customers → common questions → the plans.
  */
 export default function Home() {
   return (
@@ -23,16 +21,12 @@ export default function Home() {
       <Nav />
       <main>
         <Hero />
-        <Reality />
-        <HowItWorks />
+        <Problem />
         <Demo />
-        <Portal />
-        <Trust />
-        <Calculator />
-        <Pricing />
-        <Setup />
+        <Workspace />
+        <YourPage />
         <Faq />
-        <FinalCta />
+        <Pricing />
       </main>
       <Footer />
       <MobileCta />

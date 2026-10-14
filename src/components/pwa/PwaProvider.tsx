@@ -65,7 +65,7 @@ export function PwaProvider({ children }: { children: ReactNode }) {
   );
 }
 
-export function Toast({ children }: { children: ReactNode }) {
+function Toast({ children }: { children: ReactNode }) {
   return (
     <motion.div
       role="status"

@@ -1,17 +1,22 @@
 # Suppli Afya
 
-Sell more. Follow up less.
+Turn curiosity into customers.
 
-Suppli Afya helps BF Suma distributors in Kenya turn enquiries into first orders, and first
-orders into customers who keep coming back. This repository holds the website, the customer
-health check and the recommendation engine behind it.
+Suppli Afya gives each BF Suma distributor in Kenya their own page. Customers reach it from a link
+or a QR card, answer a short assessment, see which products fit what they're looking for, and
+carry the conversation to the distributor on WhatsApp. Behind the page, a workspace remembers every
+customer, so the distributor knows who to follow up with, who owes them and who's due to reorder.
+This repository holds the website, the distributor's page and assessment, the recommendation engine
+behind it, and the distributor's workspace.
 
-- `/`: the website for distributors, with a live demo of the health check
-- `/check`: the health check as a customer sees it (demo distributor)
-- `/d/<slug>`: a distributor's own health check link (the QR card points here)
+- `/`: the website for distributors, with a live demo of Kate Cromuel's page
+- `/check`: a distributor's page as a customer sees it (the demo distributor, Kate)
+- `/d/<slug>`: a distributor's own page (the QR card points here)
 - `/start`: choose a plan, create an account, pay, set up
-- `/portal`: the distributor portal (Today, Prospects, Orders, Customers, Settings)
+- `/portal`: the distributor's workspace (Today, Prospects, Orders, Customers, Settings)
 - `/login`: returning distributors
+
+Customers read "the assessment"; the code still calls the engine the health check (`src/engine/`).
 
 Distributors can install the portal on their phone as an app (see "The installed app" below).
 
@@ -48,11 +53,12 @@ Without payment keys, checkout runs in test mode in development. The demo distri
 
 ## Deploying on Vercel
 
-Import the repository as a Next.js project; `vercel.json` runs functions in Frankfurt (`fra1`, near
-Kenya and a Supabase `eu-central-1` database) and schedules the morning reminder.
+The Vercel project is `suppli-afya-main-site`, linked to `eddienjeru564-ship-it/suppli_afya`.
+`vercel.json` runs functions in Dublin (`dub1`, next to the database) and schedules the morning reminder.
 
 - **`DATABASE_URL` is required.** Vercel's disk is read-only, so the embedded database can't be used there.
-  With Supabase, use the transaction pooler string (port 6543) with `?sslmode=require`.
+  The database is the Supabase project **`suppli_afya-main_site`** (ref `qadvlemdfypklscmbngc`, Ireland,
+  `eu-west-1`). The storefront has its own Supabase project; never point this app at it. See "The database" below.
 - **`NEXT_PUBLIC_SITE_URL`** can wait: until it's set, links, QR codes and callbacks use the deploy's own
   address (the production domain, or the branch address on previews).
 - **A test deploy without payment keys** needs `PAYMENTS_ALLOW_TEST=true`, because Vercel builds are
@@ -60,6 +66,26 @@ Kenya and a Supabase `eu-central-1` database) and schedules the morning reminder
 - **Storefronts:** set the same `STOREFRONT_SECRET` here and on the storefront deploy, and point the
   storefront's `SUPPLI_AFYA_URL` at this site's production address. The storefront's server calls it,
   so that address must be public: limit Vercel Authentication (Deployment Protection) to previews.
+
+## The database
+
+The app talks to Postgres directly (`src/server/db.ts`) and creates its own tables on first connect from the
+migrations in `src/server/schema.ts`. It never uses Supabase's Data API, Auth or Storage.
+
+- **Its own database user.** The app connects as `suppli_app`, not as `postgres`. It owns the app's tables and
+  can't bypass row level security, create roles or touch Supabase's own schemas. Use the transaction pooler
+  (port 6543, IPv4, which Vercel needs). The host is the project's pooler cluster; copy it from Supabase → Connect →
+  Transaction pooler rather than guessing (a region has more than one, and a wrong one gives "tenant/user not found"):
+  `postgres://suppli_app.qadvlemdfypklscmbngc:PASSWORD@aws-0-eu-west-1.pooler.supabase.com:6543/postgres?sslmode=require`
+  Don't add `?pgbouncer=true` (a Prisma setting; Postgres rejects it) and keep `sslmode=require`.
+- **Nothing is readable through the Data API.** Supabase grants its public API roles (`anon`, `authenticated`) every
+  table that `postgres` creates. Tables owned by `suppli_app` get no such grants, and migration 4 switches on row
+  level security with no policies, so the API sees no rows even if a grant slips in later. A test
+  (`schema.test.ts`) checks this against every table, so a new migration must enable RLS on its tables.
+- **Rotating the password:** in the Supabase SQL editor, `alter role suppli_app password '…'`, then update
+  `DATABASE_URL` in Vercel (Production and Preview) and redeploy.
+- **Viewing data:** the dashboard's `postgres` role is a member of `suppli_app`, so the Table Editor and SQL
+  editor can read and change the app's tables.
 
 ## The installed app
 

@@ -20,20 +20,26 @@ export default function PrivacyPage() {
         </Link>
       </header>
       <main className="container-x max-w-2xl py-16">
-        <div className="eyebrow">Privacy</div>
-        <h1 className="mt-4 font-display text-[2.6rem] leading-[1.05] tracking-[-0.02em] text-ink">How we handle your information</h1>
+        <h1 className="font-display text-[2.6rem] leading-[1.05] tracking-[-0.02em] text-ink">How we handle your information</h1>
         <div className="mt-8 grid gap-6 text-[1.02rem] leading-relaxed text-ink-soft">
           <p>
             Health answers are personal, so we keep this simple. This page explains, in plain words, what happens to the
             information you give us.
           </p>
           <section>
-            <h2 className="font-display text-[1.5rem] text-ink">The health check</h2>
+            <h2 className="font-display text-[1.5rem] text-ink">The assessment on a distributor&apos;s page</h2>
             <p className="mt-2">
-              Your answers are used to build your plan. They are shared with the distributor whose link you used only
+              Your answers are used to build your plan. They are shared with the distributor whose page you used only
               when you choose to send them by tapping the WhatsApp button at the end. Sending also saves your answers and
               plan, and the number you give (if any), in that distributor&apos;s Suppli Afya workspace so they can help you. The demo on this
               website runs entirely in your browser and doesn&apos;t save or send anything.
+            </p>
+          </section>
+          <section>
+            <h2 className="font-display text-[1.5rem] text-ink">Ordering from a distributor&apos;s page</h2>
+            <p className="mt-2">
+              When you order on a distributor&apos;s own page, the products, your name, your phone number and your delivery
+              details are saved in that distributor&apos;s Suppli Afya workspace, so they can deliver your order and follow up.
             </p>
           </section>
           <section>

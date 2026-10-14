@@ -27,7 +27,7 @@ export const GOALS = [
   { id: "followup", label: "Follow up with customers", focus: "follow-ups" },
   { id: "repeat", label: "Get more repeat purchases", focus: "repeat orders" },
   { id: "orders", label: "Manage customer orders", focus: "open orders" },
-  { id: "recommend", label: "Recommend the right products", focus: "new health checks" },
+  { id: "recommend", label: "Recommend the right products", focus: "new enquiries from your page" },
   { id: "payments", label: "Collect payments", focus: "unpaid orders" },
   { id: "track", label: "Keep track of customers", focus: "customers who've gone quiet" },
 ] as const;

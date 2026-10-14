@@ -17,8 +17,8 @@ export function ShareLink({ url, displayUrl, channels, compact }: { url: string;
     }
   };
 
-  const status = `Not sure which supplements suit you? Take my free three-minute health check and get a plan that explains why: ${url}`;
-  const caption = `Wondering what could help with your energy, joints, digestion or sleep? My free health check takes three minutes, and you get a plan that explains what suits you and why. ${url}`;
+  const status = `Not sure which supplements suit you? Answer a few quick questions on my page and see what could help, and why: ${url}`;
+  const caption = `Wondering what could help with your energy, joints, digestion or sleep? My page asks a few quick questions and shows you what suits you and why. ${url}`;
 
   const ideas = [
     {
@@ -41,7 +41,7 @@ export function ShareLink({ url, displayUrl, channels, compact }: { url: string;
       id: "shop",
       show: channels.includes("shop") || channels.includes("referrals"),
       title: channels.includes("shop") ? "Print your QR card for the counter" : "Print cards to hand to customers",
-      body: "Anyone who scans it lands on your health check, and their plan comes to your WhatsApp.",
+      body: "Anyone who scans it lands on your page, and their answers come to your WhatsApp.",
       action: (
         <Link href="/portal/settings#card" className="rounded-full bg-forest px-3 py-1.5 text-[0.8rem] font-semibold text-cream">
           Get the card

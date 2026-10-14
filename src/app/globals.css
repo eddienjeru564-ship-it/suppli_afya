@@ -18,7 +18,7 @@
   --color-moss: #5a7a53;
   --color-sage: #b9c8ae;
   --color-sage-soft: #dfe7d6;
-  --color-clay: #98552f;
+  --color-clay: #8a4a27;
   --color-clay-soft: #ecd5c1;
   --color-ochre: #c48b2c;
   --color-wa: #25d366;
@@ -83,21 +83,21 @@
   }
   .display-xl {
     font-family: var(--font-display);
-    font-weight: 400;
+    font-weight: 460;
     font-size: clamp(2.6rem, 6.4vw, 5.6rem);
     line-height: 1.02;
     letter-spacing: -0.028em;
   }
   .display-lg {
     font-family: var(--font-display);
-    font-weight: 400;
+    font-weight: 460;
     font-size: clamp(2.1rem, 4.4vw, 3.75rem);
     line-height: 1.06;
     letter-spacing: -0.024em;
   }
   .display-md {
     font-family: var(--font-display);
-    font-weight: 400;
+    font-weight: 460;
     font-size: clamp(1.6rem, 2.8vw, 2.4rem);
     line-height: 1.12;
     letter-spacing: -0.018em;
@@ -112,22 +112,6 @@
     font-size: clamp(1.35rem, 2.2vw, 1.85rem);
     line-height: 1.45;
     letter-spacing: -0.01em;
-  }
-  .eyebrow {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.6rem;
-    font-size: 0.8125rem;
-    font-weight: 600;
-    letter-spacing: 0.02em;
-    color: var(--color-clay);
-  }
-  .eyebrow::before {
-    content: "";
-    width: 1.5rem;
-    height: 1px;
-    background: currentColor;
-    opacity: 0.6;
   }
   .hairline {
     border-color: rgb(22 36 28 / 0.12);
@@ -213,6 +197,24 @@
     animation: rise-word 0.9s var(--ease-soft) both;
     animation-delay: calc(150ms + var(--i, 0) * 55ms);
   }
+  /* A soft ring that keeps widening out from a button, inviting a first tap. */
+  .invite-ring {
+    position: relative;
+  }
+  .invite-ring::after {
+    content: "";
+    position: absolute;
+    inset: -5px;
+    border-radius: inherit;
+    border: 2px solid rgb(30 58 43 / 0.45);
+    animation: invite-ring 2.4s var(--ease-soft) infinite;
+    pointer-events: none;
+  }
+  /* Drawn left to right once the word it ends under has mostly risen. */
+  .draw-underline {
+    animation: draw-underline 0.8s var(--ease-soft) both;
+    animation-delay: calc(650ms + var(--i, 0) * 55ms);
+  }
   @supports (animation-timeline: view()) {
     .reveal {
       animation: rise linear both;
@@ -223,8 +225,13 @@
   @media (prefers-reduced-motion: reduce) {
     .rise,
     .rise-word,
+    .draw-underline,
     .reveal {
       animation: none;
+    }
+    .invite-ring::after {
+      animation: none;
+      opacity: 0.6;
     }
   }
 }
@@ -237,6 +244,27 @@
   to {
     opacity: 1;
     transform: none;
+  }
+}
+
+@keyframes invite-ring {
+  0% {
+    opacity: 0.9;
+    transform: scale(1);
+  }
+  70%,
+  100% {
+    opacity: 0;
+    transform: scale(1.14, 1.3);
+  }
+}
+
+@keyframes draw-underline {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
   }
 }
 

@@ -34,13 +34,13 @@ export function OrderActions({
           <div>
             <div className="text-[0.95rem] font-semibold text-ink">Record the payment</div>
             <div className="mt-2 grid gap-2 sm:grid-cols-[9rem_1fr_auto]">
-              <select value={method} onChange={(e) => setMethod(e.target.value as typeof method)} className={inputClass + " mt-0"}>
+              <select aria-label="How it was paid" value={method} onChange={(e) => setMethod(e.target.value as typeof method)} className={inputClass + " mt-0"}>
                 <option value="mpesa">M-Pesa</option>
                 <option value="cash">Cash</option>
                 <option value="other">Other</option>
               </select>
               {method === "mpesa" ? (
-                <input value={ref} onChange={(e) => setRef(e.target.value.toUpperCase())} placeholder="M-Pesa code, e.g. SJK4H7Q2XP" className={inputClass + " mt-0"} />
+                <input value={ref} onChange={(e) => setRef(e.target.value.toUpperCase())} placeholder="M-Pesa code, e.g. SJK4H7Q2XP" aria-label="M-Pesa code" className={inputClass + " mt-0"} />
               ) : (
                 <span />
               )}

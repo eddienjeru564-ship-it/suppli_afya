@@ -1,5 +1,6 @@
 import { beforeAll, describe, expect, it } from "vitest";
 import type { Workspace } from "./auth";
+import { PLANS_BY_ID } from "@/config/plans";
 
 // An in-memory database per test file. Set before the server modules read their env.
 process.env.PGLITE_DIR = "memory://";
@@ -66,7 +67,7 @@ describe("billing", () => {
     if (!r.ok) return;
 
     const p = await payments.getPayment(r.paymentId);
-    expect(p).toMatchObject({ status: "pending", amount: 4900, phone: "254712345678", plan: "pro" });
+    expect(p).toMatchObject({ status: "pending", amount: PLANS_BY_ID.pro.price, phone: "254712345678", plan: "pro" });
     expect(await subscription(w.id)).toBeUndefined();
 
     expect(await payments.markSucceeded(r.paymentId, "TEST123")).toBe(true);

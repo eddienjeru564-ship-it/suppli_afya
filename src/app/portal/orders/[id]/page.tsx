@@ -6,13 +6,14 @@ import { Card, Pill, kesAmount, longDate, prettyPhone } from "@/components/porta
 import { ChevronLeft } from "@/components/ui/icons";
 import { ConfirmOrder } from "./ConfirmOrder";
 import { OrderActions } from "./OrderActions";
+import { greetingName } from "@/lib/names";
 
 export default async function OrderPage(props: PageProps<"/portal/orders/[id]">) {
   const { id } = await props.params;
   const a = await requirePortalAccount();
   const o = /^[0-9a-f-]{36}$/.test(id) ? await getOrder(a.workspace.id, id) : null;
   if (!o) notFound();
-  const first = o.customer_name.split(" ")[0];
+  const first = greetingName(o.customer_name);
   // A page order is confirmed before anyone chases the payment.
   const toConfirm = o.source === "storefront" && o.status === "unpaid" && !(await pageOrderConfirmed(a.workspace.id, o.id));
   const reminder = `Hi ${first}, just a quick reminder about your order of ${kesAmount(o.total)} from ${longDate(o.created_at)}. Send it whenever you're ready and I'll sort out the delivery. Asante!`;
@@ -104,7 +105,7 @@ export default async function OrderPage(props: PageProps<"/portal/orders/[id]">)
             orderId={o.id}
             first={first}
             phone={o.customer_phone}
-            message={confirmationMessage(o, (a.workspace.owner_name ?? "").split(" ")[0])}
+            message={confirmationMessage(o, greetingName(a.workspace.owner_name))}
           />
         </Card>
       )}

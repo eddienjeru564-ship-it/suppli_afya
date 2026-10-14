@@ -1,14 +1,14 @@
 /** Public URL, used for metadata and QR codes. Set NEXT_PUBLIC_SITE_URL in production; on Vercel it defaults to the deploy's own address (next.config.ts). */
-const url = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://suppliafya.co.ke").replace(/\/$/, "");
+const url = (process.env.NEXT_PUBLIC_SITE_URL || "https://suppliafya.co.ke").replace(/\/$/, "");
 
 /**
  * Site-wide settings. Anything that must change before launch lives here.
  */
 export const site = {
   name: "Suppli Afya",
-  tagline: "Sell more. Follow up less.",
+  tagline: "Turn curiosity into customers.",
   description:
-    "Suppli Afya helps BF Suma distributors in Kenya turn enquiries into first orders and first orders into regular customers.",
+    "A page that shows potential customers which BF Suma products suit them, then sends them to you on WhatsApp. Suppli Afya keeps track of follow-ups and reorders.",
   url,
   /** The domain shown on cards and in mockups: always the one the QR codes and links go to. */
   displayDomain: new URL(url).host.replace(/^www\./, ""),

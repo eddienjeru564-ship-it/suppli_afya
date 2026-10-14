@@ -9,7 +9,7 @@ import { env } from "./env";
 
 const scrypt = promisify(scryptCb) as (pw: string, salt: Buffer, len: number) => Promise<Buffer>;
 
-export const SESSION_COOKIE = "sa_session";
+const SESSION_COOKIE = "sa_session";
 const SESSION_DAYS = 30;
 
 export async function hashPassword(password: string) {

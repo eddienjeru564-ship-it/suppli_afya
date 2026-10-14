@@ -1,7 +1,7 @@
 import clsx from "clsx";
 
 /** A placeholder block. Pulses gently; still when reduced motion is on. */
-export function Bone({ className }: { className?: string }) {
+function Bone({ className }: { className?: string }) {
   return <div className={clsx("rounded-xl bg-ink/[0.07] motion-safe:animate-pulse", className)} aria-hidden />;
 }
 

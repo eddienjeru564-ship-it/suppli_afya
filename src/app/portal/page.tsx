@@ -14,6 +14,7 @@ import { ReminderCard } from "@/components/pwa/MorningReminder";
 import { pushConfigured } from "@/server/env";
 import { Card, kesAmount } from "@/components/portal/ui";
 import { Check } from "@/components/ui/icons";
+import { greetingName } from "@/lib/names";
 
 export const metadata = { title: "Today" };
 
@@ -37,7 +38,7 @@ export default async function Dashboard() {
     ),
   ]);
   const c = counts[0];
-  const first = (w.owner_name ?? "").split(" ")[0];
+  const first = greetingName(w.owner_name);
   const url = `${site.url}/d/${w.slug}`;
   const displayUrl = `${site.displayDomain}/d/${w.slug}`;
   const plan = PLANS_BY_ID[w.plan];
@@ -45,7 +46,7 @@ export default async function Dashboard() {
   const steps = [
     // Already true: starting the checklist part-done makes the rest feel close.
     { done: true, title: "Set up your workspace", body: "" },
-    { done: c.prospects > 0, title: "Share your health check link", body: "Your first prospect appears here as soon as someone sends their plan." },
+    { done: c.prospects > 0, title: "Share your page", body: "Your first enquiry appears here as soon as someone sends you their plan." },
     { done: c.customers > 0, title: "Add a customer you already have", body: "Start with the people who order from you regularly.", href: "/portal/customers/new" },
     { done: c.orders > 0, title: "Record an order", body: "We'll work out when they're likely to run out and remind you.", href: "/portal/orders/new" },
   ];
@@ -160,7 +161,7 @@ export default async function Dashboard() {
 
       {setupDone && (
         <section>
-          <h2 className="mb-3 font-display text-[1.6rem] text-ink">Your health check link</h2>
+          <h2 className="mb-3 font-display text-[1.6rem] text-ink">Your page</h2>
           <Card className="p-5">
             <ShareLink url={url} displayUrl={displayUrl} channels={w.channels} />
           </Card>

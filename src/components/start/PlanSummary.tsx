@@ -64,6 +64,10 @@ function Details({ plan, onChange, desktop }: { plan: PlanId; onChange: (p: Plan
   const p = PLANS_BY_ID[plan];
   return (
     <div className={clsx(desktop ? "mt-6" : "px-5 pb-5")}>
+      <p className="mb-3 text-[0.92rem] leading-snug text-cream/80">{p.tagline}</p>
+      {p.includes && (
+        <p className="mb-2.5 text-[0.85rem] font-semibold text-cream/70">Everything in {PLANS_BY_ID[p.includes].name}, plus:</p>
+      )}
       <ul className="grid gap-2.5 text-[0.92rem] leading-snug">
         {p.features.map((f) => (
           <li key={f.text} className={clsx("flex gap-2.5", f.soon && "text-cream/60")}>

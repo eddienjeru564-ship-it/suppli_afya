@@ -25,7 +25,7 @@ export default async function ProspectPage(props: PageProps<"/portal/prospects/[
           <Pill tone={p.status} />
         </div>
         <p className="mt-1 text-[0.93rem] text-ink-soft">
-          Did the health check {relative(p.created_at)} · Ref <span className="font-mono">{p.ref}</span>
+          Did the assessment {relative(p.created_at)} · Ref <span className="font-mono">{p.ref}</span>
           {p.phone && <> · {prettyPhone(p.phone)}</>}
         </p>
       </div>
@@ -33,7 +33,7 @@ export default async function ProspectPage(props: PageProps<"/portal/prospects/[
       <div className="grid gap-6 lg:grid-cols-[1.2fr_1fr]">
         <div className="grid content-start gap-4">
           <Card className="p-5">
-            <h2 className="text-[0.95rem] font-semibold text-ink">What they told the health check</h2>
+            <h2 className="text-[0.95rem] font-semibold text-ink">What they told you in the assessment</h2>
             <div className="mt-2 flex flex-wrap gap-1.5">
               {p.goals.map((g, i) => (
                 <span key={g} className="rounded-full bg-sage-soft px-2.5 py-1 text-[0.78rem] font-semibold text-forest">
@@ -88,7 +88,7 @@ export default async function ProspectPage(props: PageProps<"/portal/prospects/[
                 ))}
               </ul>
             ) : (
-              <p className="mt-2 text-[0.93rem] text-ink-soft">No product plan: the health check asked them to speak to their clinic first.</p>
+              <p className="mt-2 text-[0.93rem] text-ink-soft">No product plan: the assessment asked them to speak to their clinic first.</p>
             )}
             {r.addons && r.addons.length > 0 && (
               <p className="mt-3 text-[0.88rem] text-ink-soft">Maybe later: {r.addons.map((x) => x.product.name).join(", ")}</p>
@@ -112,7 +112,7 @@ export default async function ProspectPage(props: PageProps<"/portal/prospects/[
               id={p.id}
               status={p.status}
               phone={p.phone}
-              opener={r.opener ?? `Hi ${p.name}, thanks for doing the health check.`}
+              opener={r.opener ?? `Hi ${p.name}, thanks for doing the assessment.`}
               customerId={p.customer_id}
             />
           </Card>

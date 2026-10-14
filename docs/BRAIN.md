@@ -6,34 +6,53 @@ what we learned while building the first version.
 
 ## What Suppli Afya is
 
-A sales and customer system for BF Suma distributors in Kenya. It helps a distributor turn
-the people who ask about products into customers who order, pay and come back.
+The infrastructure a BF Suma distributor in Kenya needs to sell online without becoming a shop.
+Every distributor gets their own page at their own link, with a short assessment that helps their
+customers find relevant products and then carries the conversation to the distributor on WhatsApp.
+Behind the page is a workspace that remembers every customer, so the distributor knows who to
+follow up with, who owes them and who is due to reorder.
 
-The loop it serves, and the test every feature must pass:
+The journey it serves, and the test every feature must pass:
 
 ```
-Lead → Follow-up → Customer → Order → Payment → Repeat order
+QR code or link → the distributor's page → a short assessment → relevant products
+  → WhatsApp → the sale → follow-up → the reorder
 ```
 
-If a feature doesn't help a distributor acquire, convert, retain or reorder, it probably
-doesn't belong in the core product.
+Or, as a loop: **attract → understand → recommend → connect → sell → follow up → reorder**. If a feature
+doesn't help a distributor through that loop, it probably doesn't belong in the core product.
 
-Public line: **Sell more. Follow up less.**
+Public line: **Turn curiosity into customers.** The idea behind it: Suppli Afya helps a distributor turn an
+interested customer into a better-informed WhatsApp conversation, then keeps the relationship organised so
+follow-ups and reorders don't get forgotten.
 
-It is not a supplement shop, a chatbot, a generic CRM, a payment gateway or a health app.
-The health check is the entry point into the distributor's pipeline, not the product itself.
+Within ten seconds on the homepage, a visitor should understand five things: it's for supplement
+distributors; they get their own page; customers find relevant products there; customers talk to
+the distributor; the distributor tracks and follows up.
+
+It is not a supplement shop, a chatbot, a generic CRM, a payment gateway or a health app. The page
+and the assessment are the front door. The workspace (customers, orders, payments, reminders) is
+the back half of the story: it keeps the customer after the first sale. The distributor owns the
+relationship throughout: their name on the page, their WhatsApp, their customer list.
+
+A normal online shop says "here are dozens of products, pick one". A distributor's page says "tell
+me what you're looking for, and I'll help you find where to start", then hands the customer to a
+person. That difference is the product.
+
+**Words.** Customers and distributors read "the assessment" and "your page". The code and these
+docs still call the engine the health check (`src/engine/`, `/check`); that name is internal.
 
 ## Two audiences, two voices
 
 | | Distributor | Customer |
 |---|---|---|
-| Where they meet us | The website, the portal | The health check, via a distributor's link or QR card |
+| Where they meet us | The website, the portal | The distributor's page and its assessment, via their link or QR card |
 | What they want | More orders, less chasing, getting paid, repeat business | Advice that's about them, from someone they can trust |
 | Voice | A sharp founder talking to another distributor | A calm, warm, careful guide |
 | Pays? | Yes, a monthly subscription | Never pays Suppli Afya |
 
-The marketing site speaks to distributors. The health check speaks to customers. Don't mix
-the two: no sales talk in the check, no wellness fluff on the site.
+The marketing site speaks to distributors. The distributor's page speaks to customers. Don't mix
+the two: no sales talk in the assessment, no wellness fluff on the site.
 
 ## What we took from Vitable, and what we changed
 
@@ -73,9 +92,8 @@ arrives informed. Value comes first; the sale follows.
 fifty people at a chama meeting, while they're busy. The portal turns memory into a list: who
 to talk to today, and why. The distributor's effort goes into closing, not chasing.
 
-**Outcome.** We talk about orders, payments and reorders, not features. The site's calculator
-uses the distributor's own numbers. Internally we measure outcomes (below). Pricing should be
-anchored to outcomes too (see "Pricing").
+**Outcome.** We talk about orders, payments and reorders, not features. Internally we measure
+outcomes (below). Pricing should be anchored to outcomes too (see "Pricing").
 
 Trust and longevity come from all three: careful advice protects the customer and the
 distributor's name, and a customer who trusted the advice is the one who reorders and refers.
@@ -93,23 +111,32 @@ For the product, in funnel order:
 
 Vanity metrics to ignore: page views, number of questions answered, "engagement".
 
-## Pricing (proposed, confirm before launch)
+## Pricing
 
-The founder asked for public pricing on the homepage, so there are three monthly plans in
-`src/config/plans.ts`: Starter KES 1,500 (up to 50 customers), Growth KES 2,900 (unlimited
-customers, import, monthly summary; the recommended plan) and Pro KES 4,900 (set up for you,
-priority help). These numbers are a proposal, anchored on the rule below. Change them in one place.
+Three monthly plans in `src/config/plans.ts`, set by the founder in October 2026. Each adds one step
+of the work, and the homepage says so: **Starter KES 1,500 gets enquiries** (your page, QR cards, the
+assessment, ready-to-send messages, up to 50 customers), **Growth KES 3,500 keeps the customers**
+(customer list and enquiry history, daily follow-up and reorder reminders, unlimited customers, and
+we add your existing list for you; the featured plan) and **Pro KES 6,500 takes the payment**
+(M-Pesa STK push to the customer's phone with automatic payment confirmation, orders, and priority
+WhatsApp support). Change prices in one place.
+
+- The app doesn't yet hold Starter back from the follow-up list or orders: a card lists what its plan
+  adds, and the app may give more than the card lists, never less. Gating is a separate decision.
+- Pro's card lists M-Pesa prompts to a distributor's own customers ahead of the build (founder
+  decision). They need a PayHero channel per distributor (Phase 3) and must work before anyone pays
+  for Pro.
 
 - Price so that **one or two extra reorders a month clearly cover it**. With an average order around
-  KES 6,500, that is the whole argument, and the homepage calculator lets distributors check it.
+  KES 6,500, that is the whole argument.
 - Billing is monthly by M-Pesa or card, and **nothing renews automatically**: the distributor pays
   again to renew, and a renewal extends from the end of the current month. There's a 3-day grace
   period after a month ends. Automatic card renewal can come later if distributors want it.
 - Consider a **founding rate** locked for the first cohort, in exchange for honest feedback and a case study.
 - Consider an **outcome guarantee** for the pilot ("if you don't see X reorders in 60 days, you
   don't pay for month three"). Only offer it once the portal can measure reorders reliably.
-- Pro's "M-Pesa payment requests to your customers" is marked *coming soon*. It needs each
-  distributor's own PayHero payment channel; don't sell it as live until it is.
+- M-Pesa payment requests to a distributor's own customers are on Pro's card but not built yet. They
+  need each distributor's own PayHero payment channel; build them before taking a Pro payment.
 
 ## Honest risks
 

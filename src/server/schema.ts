@@ -3,6 +3,9 @@
  * shipped; add a new one.
  *
  * Money is stored as whole Kenyan shillings (integers).
+ *
+ * Every new table needs `alter table … enable row level security` in its migration (see
+ * version 4; a test checks). The app connects as the tables' owner, so RLS never limits it.
  */
 export const MIGRATIONS: { version: number; sql: string }[] = [
   {
@@ -167,6 +170,33 @@ alter table orders add column ref text;
 alter table orders add column customer_note text;
 alter table orders add column delivery jsonb;
 create unique index orders_workspace_ref_idx on orders(workspace_id, ref) where ref is not null;
+`,
+  },
+  {
+    version: 4,
+    sql: `
+-- Supabase publishes the public schema through its Data API, whose anon key is public by design.
+-- The app never uses that API: it connects as its own database user, which owns these tables.
+-- So every table gets row level security with no policies (the API sees no rows), and the API's
+-- roles lose any grants. Outside Supabase those roles don't exist and only RLS is switched on.
+do $$
+declare t text;
+begin
+  for t in
+    select c.relname from pg_class c join pg_namespace n on n.oid = c.relnamespace
+    where n.nspname = 'public' and c.relkind in ('r', 'p') and pg_get_userbyid(c.relowner) = current_user
+  loop
+    execute format('alter table public.%I enable row level security', t);
+  end loop;
+
+  if exists (select 1 from pg_roles where rolname = 'anon') and exists (select 1 from pg_roles where rolname = 'authenticated') then
+    revoke all on all tables in schema public from anon, authenticated;
+    revoke all on all sequences in schema public from anon, authenticated;
+    alter default privileges in schema public revoke all on tables from anon, authenticated;
+    alter default privileges in schema public revoke all on sequences from anon, authenticated;
+    alter default privileges in schema public revoke all on functions from anon, authenticated;
+  end if;
+end $$;
 `,
   },
 ];

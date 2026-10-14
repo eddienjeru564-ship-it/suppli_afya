@@ -60,7 +60,7 @@ describe("morning reminder", () => {
       url: "/portal",
     });
     expect(push.morningMessage("Jane", [{ kind: "new", title: "Wanjiru, 34" }])?.body).toBe(
-      "Wanjiru did your health check. The message is ready to send.",
+      "Wanjiru did the assessment on your page. The message is ready to send.",
     );
   });
 

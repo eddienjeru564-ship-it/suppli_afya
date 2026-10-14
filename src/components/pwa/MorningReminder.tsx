@@ -14,7 +14,7 @@ function keyBytes(base64: string) {
 }
 
 /** Reads and changes whether this device gets the morning reminder. */
-export function useMorningReminder() {
+function useMorningReminder() {
   const pwa = usePwa();
   const [status, setStatus] = useState<Status>("loading");
   const [busy, setBusy] = useState(false);

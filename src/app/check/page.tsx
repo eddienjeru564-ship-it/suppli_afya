@@ -2,12 +2,12 @@ import type { Metadata } from "next";
 import { DEMO_DISTRIBUTOR } from "@/config/distributors";
 import { CheckShell } from "@/components/check/CheckShell";
 
-const description = "A short health check that turns your goals, routine and health into a plan that makes sense.";
+const description = "A few short questions about what you're looking for, then the products that could help, and why.";
 
 export const metadata: Metadata = {
-  title: "Health check",
+  title: `${DEMO_DISTRIBUTOR.name} · example page`,
   description,
-  openGraph: { title: "A three-minute health check", description, siteName: "Suppli Afya", locale: "en_KE", type: "website" },
+  openGraph: { title: "Find where to start", description, siteName: "Suppli Afya", locale: "en_KE", type: "website" },
 };
 
 export default function CheckPage() {

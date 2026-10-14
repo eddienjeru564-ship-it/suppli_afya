@@ -66,7 +66,7 @@ export function LivePanel({
         )}
       </AnimatePresence>
       <motion.div layout transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}>
-        <div className="mb-2 text-[0.8rem] font-semibold text-sage">In your Suppli Afya portal</div>
+        <div className="mb-2 text-[0.8rem] font-semibold text-sage">In {distributor.firstName}&apos;s workspace</div>
         {done ? (
           <LeadCard brief={done.brief} refCode={result?.ref} />
         ) : (

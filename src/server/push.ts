@@ -3,6 +3,7 @@ import type { Workspace } from "./auth";
 import { db } from "./db";
 import { env, pushConfigured } from "./env";
 import { today, type Task } from "./portal";
+import { greetingName } from "@/lib/names";
 
 /**
  * The morning reminder: one notification a day, only when someone needs the
@@ -44,21 +45,19 @@ export interface Payload {
   tag: string;
 }
 
-const first = (n: string) => n.split(" ")[0].split(",")[0];
-
 /** What the reminder says. Null means don't send one today. */
 export function morningMessage(ownerName: string | null, tasks: Pick<Task, "kind" | "title">[]): Payload | null {
   if (tasks.length === 0) return null;
-  const who = first(tasks[0].title);
+  const who = greetingName(tasks[0].title);
   const lead: Record<Task["kind"], string> = {
-    new: `${who} did your health check`,
+    new: `${who} did the assessment on your page`,
     payment: `${who} hasn't paid yet`,
     reorder: `${who} is due for a reorder`,
     checkin: `${who} is due a check-in`,
     quiet: `${who} has gone quiet`,
   };
   const rest = tasks.length - 1;
-  const name = ownerName ? `, ${first(ownerName)}` : "";
+  const name = ownerName ? `, ${greetingName(ownerName)}` : "";
   return {
     title: tasks.length === 1 ? `Good morning${name}. One person needs you today` : `Good morning${name}. ${tasks.length} people need you today`,
     body: rest > 0 ? `${lead[tasks[0].kind]}, and ${rest} more. Messages are ready to send.` : `${lead[tasks[0].kind]}. The message is ready to send.`,

@@ -3,8 +3,57 @@ import { ButtonLink } from "@/components/ui/Button";
 import { FROM_PRICE } from "@/config/plans";
 import { HeroPhone } from "./HeroPhone";
 
-const HEADLINE = ["Most", "of", "your", "next", "orders", "are", "already", "in", "your", "phone."];
+/**
+ * The headline in phrases. Each starts a new line, so no line ends mid-thought ("…Turn" or "…Into"),
+ * and "BF Suma" never splits. It's sized to its own column (container units), not the window or the
+ * browser's font metrics: where the column fits the first phrase it reads in three lines (7.8cqi
+ * leaves ~5% spare on "Helping BF Suma Distributors"); on phones that phrase wraps and 10.6cqi keeps
+ * "Turn Product Interest" and "Into Actual Customers" on one line each (~7% spare).
+ */
+const HEADLINE = ["Helping BF\u00a0Suma Distributors", "Turn Product Interest", "Into Actual Customers"].map((l) => l.split(" "));
+/** Where each phrase's words start in the entrance sequence. */
+const START = HEADLINE.map((_, l) => HEADLINE.slice(0, l).flat().length);
+/** Underlined in clay, like a pen stroke: the interest every sale starts from. The one mark in the headline. */
+const MARKED = new Set(["Product", "Interest"]);
 const at = (i: number) => ({ "--i": i }) as CSSProperties;
+
+type Word = { w: string; i: number };
+
+/** Words, each rising inside its own clipping box, with real spaces between the boxes. */
+function Words({ items }: { items: Word[] }) {
+  return items.map(({ w, i }, k) => (
+    <Fragment key={i}>
+      <span className="inline-block overflow-hidden pb-[0.08em] align-bottom">
+        <span className="rise-word" style={at(i)}>
+          {w}
+        </span>
+      </span>
+      {k < items.length - 1 && " "}
+    </Fragment>
+  ));
+}
+
+/**
+ * A brush stroke, the weight of the letters' stems, tapered at both ends and drifting up slightly
+ * to the right. It fits in the gap above the next line, and is drawn in from the left once the
+ * words above it have landed (globals.css: .draw-underline).
+ */
+function Underline({ i }: { i: number }) {
+  return (
+    <svg
+      aria-hidden
+      viewBox="0 0 400 24"
+      preserveAspectRatio="none"
+      className="draw-underline pointer-events-none absolute left-[-3%] top-[0.69em] h-[0.42em] w-[106%] overflow-visible text-clay"
+      style={at(i)}
+    >
+      <path
+        fill="currentColor"
+        d="M4 15.5C100 10.5 250 8.6 392 7.4C396.5 7 397.5 9.6 393.5 10.4C250 14.2 100 16.8 7 20.2C3.8 21.2 1.6 16.4 4 15.5Z"
+      />
+    </svg>
+  );
+}
 
 /**
  * The first screen. Its entrances are CSS (globals.css: .rise, .rise-word), so the words are in
@@ -12,50 +61,72 @@ const at = (i: number) => ({ "--i": i }) as CSSProperties;
  */
 export function Hero() {
   return (
-    <section className="relative overflow-hidden pb-20 pt-28 sm:pt-32 lg:pb-28 lg:pt-36">
+    <section className="relative overflow-hidden pb-20 pt-28 sm:pt-32 lg:pb-24 lg:pt-32">
       <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
         <div className="absolute -top-40 right-[-10%] h-[40rem] w-[40rem] rounded-full bg-[radial-gradient(closest-side,rgb(236_213_193/0.7),transparent)]" />
         <div className="absolute bottom-0 left-[-15%] h-[30rem] w-[30rem] rounded-full bg-[radial-gradient(closest-side,rgb(223_231_214/0.8),transparent)]" />
       </div>
 
       <div className="container-x grid items-center gap-16 lg:grid-cols-[1.15fr_0.85fr] lg:gap-10">
-        <div>
-          <div className="eyebrow rise">For BF Suma distributors in Kenya</div>
-
-          <h1 className="display-xl mt-6 max-w-[14ch] text-ink">
+        <div className="@container">
+          {/* One headline: who it's for and what it does. Smaller than display-xl, since it's a sentence. */}
+          <h1 className="display-xl text-[length:min(10.6cqi,2.6rem)] leading-[1.04] text-ink @min-[30rem]:text-[length:min(7.8cqi,4.4rem)]">
             {/* Each word rises inside its own clipping box; the spaces sit between the boxes, where they
-                stay spaces (a space at the end of an inline-block is dropped). */}
-            {HEADLINE.map((w, i) => (
-              <Fragment key={i}>
-                <span className="inline-block overflow-hidden pb-[0.08em] align-bottom">
-                  <span className={w === "already" ? "rise-word italic text-forest" : "rise-word"} style={at(i)}>
-                    {w}
+                stay spaces (a space at the end of an inline-block is dropped). The marked words share
+                one box for the underline, so it spans both and never splits across lines. */}
+            {HEADLINE.map((line, l) => {
+              const words = line.map((w, j) => ({ w, i: START[l] + j }));
+              const from = words.findIndex((x) => MARKED.has(x.w));
+              const to = from < 0 ? -1 : from + words.filter((x) => MARKED.has(x.w)).length;
+              const marked = from < 0 ? [] : words.slice(from, to);
+              const before = from < 0 ? words : words.slice(0, from);
+              const after = from < 0 ? [] : words.slice(to);
+              return (
+                <Fragment key={l}>
+                  <span className="block">
+                    <Words items={before} />
+                    {marked.length > 0 && (
+                      <>
+                        {before.length > 0 && " "}
+                        <span className="relative inline-block whitespace-nowrap align-bottom">
+                          <Words items={marked} />
+                          <Underline i={marked[marked.length - 1].i} />
+                        </span>
+                        {after.length > 0 && " "}
+                      </>
+                    )}
+                    <Words items={after} />
                   </span>
-                </span>
-                {i < HEADLINE.length - 1 && " "}
-              </Fragment>
-            ))}
+                  {l < HEADLINE.length - 1 && " "}
+                </Fragment>
+              );
+            })}
           </h1>
 
-          <p className="lede rise mt-7 max-w-[36rem]" style={at(9)}>
-            Your customers get a proper health check and a plan that makes sense to them. You get a short list each morning
-            of who to follow up with, who still owes you, and who is about to run out.
+          <p className="lede rise mt-7 max-w-[30rem]" style={at(9)}>
+            Give customers a simple way to get personalised product recommendations based on their needs, lifestyle and
+            goals, then connect with you on WhatsApp when they&apos;re ready. After that, Suppli Afya reminds you who to
+            follow up with.
           </p>
 
           <div className="rise mt-9 flex flex-col gap-3 sm:flex-row sm:items-center" style={at(11)}>
-            <ButtonLink href="#check" size="lg" arrow>
-              Try the health check
+            <ButtonLink href="#try" size="lg" arrow>
+              See it in action
             </ButtonLink>
             <ButtonLink href="#pricing" size="lg" variant="secondary">
-              See plans
+              Claim your page
             </ButtonLink>
           </div>
-          <p className="rise mt-4 text-[0.85rem] text-ink-mute" style={at(13)}>
-            The check takes about three minutes. Plans from {FROM_PRICE} a month.
+          {/* Two tidy lines on a phone, one line on wider screens: never a separator left hanging. */}
+          <p className="rise mt-5 text-[0.85rem] leading-relaxed text-ink-mute" style={at(13)}>
+            <span className="block sm:inline">From {FROM_PRICE} a month</span>
+            <span className="hidden sm:inline"> · </span>
+            <span>No contract · Pay by M-Pesa</span>
           </p>
         </div>
 
-        <div className="rise" style={at(4)}>
+        {/* Phones and small tablets would stack the phone below the buttons; there the demo further down shows it. */}
+        <div className="rise hidden lg:block" style={at(4)}>
           <HeroPhone />
         </div>
       </div>

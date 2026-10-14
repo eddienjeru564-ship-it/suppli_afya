@@ -6,58 +6,58 @@ import { useState } from "react";
 import { Plus } from "@/components/ui/icons";
 import { Reveal } from "@/components/ui/Reveal";
 import { keepTogether } from "@/components/ui/KeepTogether";
+import { PLANS_BY_ID, kes } from "@/config/plans";
 
 const FAQ = [
   {
-    q: "Do I need to be good with computers?",
-    a: "No. If you can use WhatsApp and M-Pesa, you can use Suppli Afya. It runs on your phone, and the part your customers see is just as simple.",
+    q: "Is Suppli Afya part of BF Suma?",
+    a: "No. Suppli Afya is an independent business built for people who sell BF Suma products. Your upline, stock purchases and distributor account stay exactly as they are.",
   },
   {
-    q: "Is this from BF Suma?",
-    a: "No. Suppli Afya is an independent tool built for people who sell BF Suma products. It doesn't change how you buy stock, your upline, or your account with the company.",
+    q: "Do I need to change how I sell?",
+    a: "No. You keep selling on WhatsApp, the way you already do. Suppli Afya gives your customers a better starting point and keeps track of who to follow up.",
   },
   {
-    q: "Who owns my customer list?",
-    a: "You do. Your customers and their records belong to you. We don't sell your data, share it with other distributors or contact your customers ourselves, and if you leave, you can take your list with you.",
+    q: "Do my customers stay mine?",
+    a: "Yes. Customers come through your page, message your WhatsApp and buy from you. We don't sell their details, share them with other distributors or contact them ourselves.",
   },
   {
-    q: "What does my customer need?",
-    a: "A phone with a browser and WhatsApp. There's no app to download and no account to create.",
+    q: "Can customers still contact me directly on WhatsApp?",
+    a: "Yes. Your page has a button to message you straight away, for customers who already know what they want. The assessment is there for those who don't.",
   },
   {
-    q: "What if a customer's answers point to a medical problem?",
-    a: "The health check looks for things that should be checked by a doctor, like pregnancy, certain medicines, or symptoms that need attention, and tells the customer plainly. You see the same notes on your side, so you can advise them properly.",
+    q: "Is the assessment in Swahili?",
+    a: "Not yet. The assessment is in simple English today. Once a customer messages you, you carry on in whichever language you both prefer. We'll add Swahili if distributors tell us they need it.",
   },
   {
-    q: "How does M-Pesa work with it?",
-    a: "Every order shows whether it's been paid. When a customer sends money, record it against their order in a couple of taps, with the M-Pesa code, and anything still owed shows up on your list until it's in. Sending M-Pesa requests straight to a customer's phone is coming to the Pro plan.",
+    q: "How does payment work?",
+    a: "Your customers pay you directly, by M-Pesa, cash or however you already work. Suppli Afya never holds your money. You record each payment against its order, and anything still owed stays on your list until it's paid. Your Suppli Afya subscription is paid monthly, by M-Pesa or card.",
   },
   {
-    q: "How much does it cost?",
-    a: "Starter is KES 1,500, Growth is KES 2,900 and Pro is KES 4,900 a month. You pay each month by M-Pesa or card. Nothing is taken automatically, so there's nothing to cancel: if you stop renewing, your plan simply ends.",
+    q: "Can I stop my subscription?",
+    a: "Yes. Nothing renews automatically, so there's nothing to cancel. If you don't renew, your page goes offline three days after your subscription ends. Your customer records stay saved, so everything is still there if you come back. If you'd rather we deleted them, just ask.",
   },
   {
-    q: "What happens if my payment doesn't go through?",
-    a: "Your account is kept. You can try again straight away, with M-Pesa or a card, without filling anything in twice.",
+    q: "What counts as a customer, and what if I have more than 50?",
+    a: `Enquiries from your page are unlimited on Starter, Growth and Pro. A customer is someone you've recorded an order for or added yourself, and Starter holds up to 50. When you need more, Growth is ${kes(PLANS_BY_ID.growth.price)} a month with no limit, and we can add your existing customer list for you. You can move up at any time.`,
   },
   {
-    q: "Can I try it before paying?",
-    a: "The health check on this page is the real one your customers will use, so you can see exactly what they get. The portal opens once you've chosen a plan.",
+    q: "Is the assessment medical advice?",
+    a: "No. It gives general wellness information to help customers choose products, and it doesn't diagnose anything. When someone should speak to a doctor or pharmacist first, for example during pregnancy or alongside certain medicines, the assessment tells them so.",
   },
   {
-    q: "Can I use it for other brands?",
-    a: "Not yet. The health check and product information are built around BF Suma's range, because that's who it's for.",
+    q: "Can I use Suppli Afya from my phone?",
+    a: "Yes. Your workspace runs on your phone and can be installed like an app, straight from the browser. Your customers only need a phone browser too, with nothing to download.",
   },
 ];
 
 export function Faq() {
   const [open, setOpen] = useState<number | null>(0);
   return (
-    <section id="faq" className="border-t border-ink/10 py-24 sm:py-32">
+    <section id="faq" className="bg-paper py-24 sm:py-28">
       <div className="container-x grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
         <Reveal>
-          <div className="eyebrow">Questions</div>
-          <h2 className="display-lg mt-5 max-w-[12ch] text-ink">What distributors usually ask</h2>
+          <h2 className="display-lg max-w-[12ch] text-ink lg:sticky lg:top-28">Common Questions</h2>
         </Reveal>
         <div className="divide-y divide-ink/10 border-y border-ink/10">
           {FAQ.map((f, i) => {

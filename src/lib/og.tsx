@@ -18,16 +18,27 @@ async function fonts() {
   ];
 }
 
-/** Link preview card. These show up in WhatsApp chats, so they need to read at thumbnail size. */
+/** The hero's underline (src/components/site/Hero.tsx): a brush stroke tapered at both ends. */
+const STROKE = "M4 15.5C100 10.5 250 8.6 392 7.4C396.5 7 397.5 9.6 393.5 10.4C250 14.2 100 16.8 7 20.2C3.8 21.2 1.6 16.4 4 15.5Z";
+
+/**
+ * Link preview card. These show up in WhatsApp chats, so they need to read at thumbnail size.
+ * Give either a `title` (with an optional italic `emphasis`) or a `headline` set line by line,
+ * with one `marked` phrase underlined in clay, the way the homepage hero sets it.
+ */
 export async function brandCard({
   eyebrow,
   title,
   emphasis,
+  headline,
+  marked,
   footer,
 }: {
-  eyebrow: string;
-  title: string;
+  eyebrow?: string;
+  title?: string;
   emphasis?: string;
+  headline?: string[];
+  marked?: string;
   footer: string;
 }) {
   return new ImageResponse(
@@ -55,21 +66,58 @@ export async function brandCard({
           </div>
         </div>
         <div style={{ display: "flex", flexDirection: "column" }}>
-          <div style={{ fontSize: 26, color: "#98552f", marginBottom: 18 }}>{eyebrow}</div>
-          <div
-            style={{
-              display: "flex",
-              flexWrap: "wrap",
-              fontFamily: "Newsreader",
-              fontSize: 84,
-              lineHeight: 1.04,
-              letterSpacing: -2,
-              maxWidth: 1000,
-            }}
-          >
-            <span style={{ marginRight: 20 }}>{title}</span>
-            {emphasis && <span style={{ fontStyle: "italic", color: "#1e3a2b" }}>{emphasis}</span>}
-          </div>
+          {eyebrow && <div style={{ fontSize: 26, color: "#8a4a27", marginBottom: 18 }}>{eyebrow}</div>}
+          {headline ? (
+            <div style={{ display: "flex", flexDirection: "column", fontFamily: "Newsreader", fontSize: 78, lineHeight: 1.06, letterSpacing: -1.5 }}>
+              {headline.map((line) => {
+                const at = marked ? line.indexOf(marked) : -1;
+                // A space after every word, except the last one under the stroke, so the stroke ends with it.
+                const words = (t: string, last = true) =>
+                  t
+                    .split(" ")
+                    .filter(Boolean)
+                    .map((w, i, all) => (
+                      <span key={i} style={{ marginRight: last || i < all.length - 1 ? 20 : 0 }}>
+                        {w}
+                      </span>
+                    ));
+                if (!marked || at < 0) return <div key={line} style={{ display: "flex" }}>{words(line)}</div>;
+                return (
+                  <div key={line} style={{ display: "flex" }}>
+                    {words(line.slice(0, at))}
+                    <div style={{ display: "flex", position: "relative", marginRight: 20 }}>
+                      {words(marked, false)}
+                      <svg
+                        viewBox="0 0 400 24"
+                        preserveAspectRatio="none"
+                        width="106%"
+                        height="33"
+                        style={{ position: "absolute", left: "-3%", top: 54 }}
+                      >
+                        <path d={STROKE} fill="#8a4a27" />
+                      </svg>
+                    </div>
+                    {words(line.slice(at + marked.length))}
+                  </div>
+                );
+              })}
+            </div>
+          ) : (
+            <div
+              style={{
+                display: "flex",
+                flexWrap: "wrap",
+                fontFamily: "Newsreader",
+                fontSize: 84,
+                lineHeight: 1.04,
+                letterSpacing: -2,
+                maxWidth: 1000,
+              }}
+            >
+              <span style={{ marginRight: 20 }}>{title}</span>
+              {emphasis && <span style={{ fontStyle: "italic", color: "#1e3a2b" }}>{emphasis}</span>}
+            </div>
+          )}
         </div>
         <div style={{ display: "flex", justifyContent: "space-between", fontSize: 24, color: "#46534b" }}>
           <span>{footer}</span>

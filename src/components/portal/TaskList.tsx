@@ -37,7 +37,7 @@ export function TaskList({ tasks }: { tasks: Task[] }) {
       <div className="rounded-[1.25rem] border border-dashed border-ink/15 px-6 py-10 text-center">
         <div className="font-display text-[1.35rem] text-ink">Nothing waiting on you right now</div>
         <p className="mx-auto mt-2 max-w-sm text-[0.93rem] leading-relaxed text-ink-soft">
-          New health checks, unpaid orders, reorders and check-ins appear here as soon as they&apos;re due.
+          New enquiries from your page, unpaid orders, reorders and check-ins appear here as soon as they&apos;re due.
         </p>
       </div>
     );
