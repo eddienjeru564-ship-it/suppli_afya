@@ -23,11 +23,12 @@ export default async function CardSheet() {
   return (
     <main className="min-h-dvh bg-white p-6 print:p-0">
       <h1 className="sr-only">Your QR cards</h1>
-      <div className="mx-auto mb-6 flex max-w-[190mm] items-center justify-between print:hidden">
+      <div className="mx-auto mb-6 flex max-w-[190mm] flex-wrap items-center justify-between gap-3 print:hidden">
         <p className="text-[0.95rem] text-ink-soft">Ten cards per A4 sheet. Print at 100% and cut along the edges.</p>
         <PrintButton />
       </div>
-      <div className="mx-auto grid max-w-[190mm] grid-cols-2 gap-[4mm]">
+      {/* One card per row on a phone screen; the printed sheet is always two across. */}
+      <div className="mx-auto grid max-w-[90mm] grid-cols-1 gap-[4mm] sm:max-w-[190mm] sm:grid-cols-2 print:max-w-[190mm] print:grid-cols-2">
         {Array.from({ length: 10 }).map((_, i) => (
           <div key={i} className="grid h-[52mm] grid-cols-[1fr_auto] gap-3 rounded-[3mm] border border-ink/20 p-[5mm] [break-inside:avoid]">
             <div className="flex min-w-0 flex-col">

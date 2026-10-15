@@ -56,7 +56,7 @@ export default async function CustomersPage(props: PageProps<"/portal/customers"
             )
           }
         >
-          {!q && "Prospects become customers when you record their first order. You can also add the people who already buy from you."}
+          {!q && "Enquiries become customers when you record their first order. You can also add the people who already buy from you."}
         </Empty>
       ) : (
         <Card className="divide-y divide-ink/10 overflow-hidden">

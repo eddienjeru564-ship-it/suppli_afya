@@ -5,7 +5,7 @@ import { prospects, relative } from "@/server/portal";
 import { ShareLink } from "@/components/portal/ShareLink";
 import { Avatar, Card, Empty, PageHeader, Pill, Row, Tabs } from "@/components/portal/ui";
 
-export const metadata = { title: "Prospects" };
+export const metadata = { title: "Enquiries" };
 
 const FILTERS = [
   { id: "", label: "All" },
@@ -25,7 +25,7 @@ export default async function ProspectsPage(props: PageProps<"/portal/prospects"
   return (
     <div>
       <PageHeader
-        title="Prospects"
+        title="Enquiries"
         sub="People who did the assessment on your page and sent you their plan."
       />
       <Tabs
@@ -38,7 +38,7 @@ export default async function ProspectsPage(props: PageProps<"/portal/prospects"
       />
       {list.length === 0 ? (
         all.length === 0 ? (
-          <Empty title="No prospects yet">
+          <Empty title="No enquiries yet">
             <p>When someone does the assessment on your page and taps send, they appear here with their answers and plan.</p>
             <div className="mx-auto mt-5 max-w-md text-left">
               <ShareLink url={`${site.url}/d/${a.workspace.slug}`} displayUrl={`${site.displayDomain}/d/${a.workspace.slug}`} channels={a.workspace.channels} compact />

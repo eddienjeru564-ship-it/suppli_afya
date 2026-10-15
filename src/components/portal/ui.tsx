@@ -75,13 +75,14 @@ export function Pill({ tone }: { tone: keyof typeof TONES }) {
 
 export function Tabs({ items, current }: { items: { href: string; label: string; count?: number }[]; current: string }) {
   return (
-    <div className="no-scrollbar -mx-4 mb-5 flex gap-1.5 overflow-x-auto px-4 sm:mx-0 sm:px-0">
+    // Wraps rather than scrolling sideways, so every filter is visible on a small phone.
+    <div className="mb-5 flex flex-wrap gap-1.5">
       {items.map((t) => (
         <Link
           key={t.href}
           href={t.href}
           className={clsx(
-            "shrink-0 rounded-full px-3.5 py-1.5 text-[0.85rem] font-semibold transition-colors",
+            "rounded-full px-3.5 py-1.5 text-[0.85rem] font-semibold transition-colors",
             t.href === current ? "bg-forest text-cream" : "bg-paper text-ink-soft hover:text-ink",
           )}
         >

@@ -36,7 +36,7 @@ export default function manifest(): MetadataRoute.Manifest {
     shortcuts: [
       { name: "New order", url: "/portal/orders/new", icons: [{ src: "/icons/icon-192.png", sizes: "192x192" }] },
       { name: "Add a customer", url: "/portal/customers/new", icons: [{ src: "/icons/icon-192.png", sizes: "192x192" }] },
-      { name: "Prospects", url: "/portal/prospects", icons: [{ src: "/icons/icon-192.png", sizes: "192x192" }] },
+      { name: "Enquiries", url: "/portal/prospects", icons: [{ src: "/icons/icon-192.png", sizes: "192x192" }] },
     ],
   };
 }

@@ -195,7 +195,7 @@ export async function createOrder(input: NewOrderInput): Promise<ActionResult> {
       `select id, name, phone, customer_id from prospects where workspace_id = $1 and id = $2`,
       [ws, input.prospectId],
     );
-    if (!p) return { ok: false, error: "That prospect wasn't found." };
+    if (!p) return { ok: false, error: "That enquiry wasn't found." };
     if (p.customer_id) customerId = p.customer_id;
     else {
       if (!(await withinCustomerLimit(a))) return { ok: false, error: LIMIT_ERROR };

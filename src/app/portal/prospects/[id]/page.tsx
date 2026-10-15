@@ -17,7 +17,7 @@ export default async function ProspectPage(props: PageProps<"/portal/prospects/[
   return (
     <div className="grid grid-cols-1 gap-6">
       <Link href="/portal/prospects" className="inline-flex w-fit items-center gap-1 text-[0.88rem] font-semibold text-ink-soft hover:text-ink">
-        <ChevronLeft className="h-3.5 w-3.5" /> Prospects
+        <ChevronLeft className="h-3.5 w-3.5" /> Enquiries
       </Link>
       <div>
         <div className="flex flex-wrap items-center gap-2">
