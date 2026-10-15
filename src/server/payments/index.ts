@@ -1,5 +1,6 @@
 import { PLANS_BY_ID, type PlanId } from "@/config/plans";
 import { db, json } from "../db";
+import { notifyPaymentSucceeded } from "../email";
 import { env, mpesaConfigured, paystackConfigured } from "../env";
 import * as mpesa from "./mpesa";
 import * as payhero from "./payhero";
@@ -141,6 +142,8 @@ export async function markSucceeded(paymentId: string, receipt: string | null, o
     [p.workspace_id, p.plan],
   );
   await d.query(`update workspaces set plan = $2 where id = $1`, [p.workspace_id, p.plan]);
+  // A welcome on the first payment, a receipt after that. Never fails the payment.
+  await notifyPaymentSucceeded(p.id);
   return true;
 }
 

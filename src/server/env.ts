@@ -40,6 +40,17 @@ export const env = {
   },
 
   /**
+   * Email through Resend (resend.com), from the verified domain suppliafya.co.ke. Without a key,
+   * emails aren't sent: outside production they're printed in the server log instead.
+   */
+  email: {
+    resendApiKey: process.env.RESEND_API_KEY ?? "",
+    from: process.env.EMAIL_FROM || "Suppli Afya <hello@suppliafya.co.ke>",
+    /** Where replies go. Empty means replies go to the From address. */
+    replyTo: process.env.EMAIL_REPLY_TO ?? "",
+  },
+
+  /**
    * Test payments let the whole journey run without live keys. They're allowed
    * automatically outside production, and in production only when explicitly
    * switched on (for previews). Never enable this on the live site.
