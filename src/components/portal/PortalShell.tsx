@@ -11,7 +11,7 @@ import { promptInstall, usePwa } from "@/components/pwa/store";
 
 const NAV = [
   { href: "/portal", label: "Today", icon: IconToday },
-  { href: "/portal/prospects", label: "Prospects", icon: IconProspects },
+  { href: "/portal/prospects", label: "Enquiries", icon: IconProspects },
   { href: "/portal/orders", label: "Orders", icon: IconOrders },
   { href: "/portal/customers", label: "Customers", icon: IconCustomers },
 ];

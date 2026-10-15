@@ -137,7 +137,7 @@ export default async function Dashboard() {
         <section>
           <h2 className="mb-3 font-display text-[1.6rem] text-ink">This month</h2>
           <div className="grid grid-cols-2 gap-2 lg:grid-cols-4">
-            <Stat label="New prospects" value={String(stats.prospects)} href="/portal/prospects" />
+            <Stat label="New enquiries" value={String(stats.prospects)} href="/portal/prospects" />
             <Stat label="Orders" value={String(stats.orders)} href="/portal/orders" />
             <Stat label="Paid" value={kesAmount(stats.paid)} href="/portal/orders?status=paid" />
             <Stat label="Reorders due soon" value={String(stats.reordersDue)} href="/portal/customers" />
