@@ -32,8 +32,9 @@ Things only the founder can supply or decide. Ordered by how much they block.
    options". Decide whether a BF Suma product genuinely fits, checked against its label.
 4. **Suppli Afya support number.** Pro promises priority WhatsApp help. Decide the number and set
    `NEXT_PUBLIC_SUPPLI_WHATSAPP` (format `2547XXXXXXXX`); nothing on the site uses it yet.
-5. **Domain.** The site assumes `suppliafya.co.ke`. Set `NEXT_PUBLIC_SITE_URL` to the real one; QR codes
-   encode this URL and cards show its domain. Until it's set, a Vercel deploy uses its own address.
+5. **Domain.** Done: `suppliafya.co.ke` (and `www`) point at the main site, with DNS hosted on Vercel, and
+   `NEXT_PUBLIC_SITE_URL` is `https://suppliafya.co.ke` in production. QR codes, cards and email links use it.
+   Kate's storefront is `kate.suppliafya.co.ke`, on the storefront's own Vercel project.
 6. **Legal review** of `/privacy`, the disclaimers in the footer and the health check, and ODPC
    registration. The portal now stores customers' health check answers when they choose to send
    them to a distributor, so this is required before real distributors sign up.
