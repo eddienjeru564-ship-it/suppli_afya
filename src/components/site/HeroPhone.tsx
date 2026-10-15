@@ -42,7 +42,7 @@ export function HeroPhone() {
   const handedOff = !reduce && shown === 3;
 
   return (
-    <div ref={ref} aria-hidden className="relative mx-auto w-full max-w-[25rem] lg:max-w-none">
+    <div ref={ref} aria-hidden className="relative mx-auto w-fit">
       <div className="absolute -inset-10 -z-10 rounded-full bg-[radial-gradient(closest-side,rgb(185_200_174/0.55),transparent)] blur-2xl" />
 
       <MockPhone>
@@ -65,7 +65,7 @@ export function HeroPhone() {
             animate={{ opacity: 1, x: 0, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.7, delay: reduce ? 0 : 1.4, ease }}
-            className="absolute -right-1 bottom-[22%] w-[14rem] rounded-2xl border border-ink/10 bg-paper p-3 shadow-float sm:-right-12 sm:bottom-auto sm:top-[16%] lg:-right-20"
+            className="absolute -right-1 bottom-[22%] w-[14rem] rounded-2xl border border-ink/10 bg-paper p-3 shadow-float sm:-right-12 sm:bottom-auto sm:top-[16%] xl:-right-20"
           >
             <div className="flex items-center gap-1.5 px-0.5 text-[0.7rem] font-semibold text-wa-deep">
               <WhatsAppIcon className="h-3.5 w-3.5 text-wa" />
