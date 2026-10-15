@@ -199,4 +199,31 @@ begin
 end $$;
 `,
   },
+  {
+    version: 5,
+    sql: `
+-- Password reset links. Only a hash of the token is kept; a link works once, for an hour.
+create table password_resets (
+  token_hash text primary key,
+  user_id uuid not null references users(id) on delete cascade,
+  expires_at timestamptz not null,
+  used_at timestamptz,
+  created_at timestamptz not null default now()
+);
+create index password_resets_user_idx on password_resets(user_id, created_at desc);
+
+-- Emails sent once per event (a welcome, a receipt, a renewal reminder for one period), so a
+-- retried webhook or a second run of the morning job never sends the same email twice.
+create table email_log (
+  kind text not null,
+  ref text not null,
+  user_id uuid references users(id) on delete cascade,
+  created_at timestamptz not null default now(),
+  primary key (kind, ref)
+);
+
+alter table password_resets enable row level security;
+alter table email_log enable row level security;
+`,
+  },
 ];

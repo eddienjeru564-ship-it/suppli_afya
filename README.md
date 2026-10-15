@@ -87,6 +87,26 @@ migrations in `src/server/schema.ts`. It never uses Supabase's Data API, Auth or
 - **Viewing data:** the dashboard's `postgres` role is a member of `suppli_app`, so the Table Editor and SQL
   editor can read and change the app's tables.
 
+## Email
+
+The app sends email through Resend (`src/server/email/`), from `hello@suppliafya.co.ke`. The domain's DNS
+records (DKIM, SPF, DMARC) are on Vercel, which hosts the domain's DNS. Set `RESEND_API_KEY` in Vercel; without
+it nothing is sent, and outside production each email is printed in the server log instead.
+
+| Email | When |
+|---|---|
+| Welcome | The first payment goes through: the subscription is active, next set up your page, with the receipt |
+| Payment received | Every later payment: a receipt |
+| Your page is live | Onboarding finishes: the link, how to share it, the QR card |
+| Reset your password | Someone asks on `/login/forgot` (at most 3 an hour per account; the link works once, for an hour) |
+| Your password was changed | A reset goes through; every other session is signed out |
+| Your subscription ends on… | The morning job, 3 days before the paid period ends (nothing renews automatically) |
+| Your subscription has ended | The morning job, once the period has ended: the page stays open 3 more days |
+
+Templates are pure functions in `templates.ts` (subject, HTML and plain text). Each event is recorded in
+`email_log` before sending, so a retried webhook or a second cron run sends nothing twice; if Resend can't be
+reached, the record is released and the next run tries again. An email never fails a payment or a sign-up.
+
 ## The installed app
 
 The portal is a Progressive Web App. `src/app/manifest.ts` describes it, `src/pwa/service-worker.ts`

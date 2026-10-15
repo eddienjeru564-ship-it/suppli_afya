@@ -13,7 +13,12 @@ export function LoginForm({ next }: { next: string }) {
     <form action={action} className="mt-8 grid gap-5" noValidate>
       <input type="hidden" name="next" value={next} />
       <Field label="Email" name="email" type="email" autoComplete="email" inputMode="email" defaultValue={state.fields?.email} required />
-      <PasswordField label="Password" name="password" autoComplete="current-password" required />
+      <div>
+        <PasswordField label="Password" name="password" autoComplete="current-password" required />
+        <Link href="/login/forgot" className="mt-2 inline-block text-[0.85rem] font-semibold text-forest underline underline-offset-2">
+          Forgot your password?
+        </Link>
+      </div>
       {state.error && (
         <p role="alert" className="rounded-xl bg-clay-soft/60 px-4 py-3 text-[0.9rem] text-[#6b3a1f]">
           {state.error}

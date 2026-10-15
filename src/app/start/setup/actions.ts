@@ -5,6 +5,7 @@ import { DISTRIBUTORS } from "@/config/distributors";
 import { site } from "@/config/site";
 import { getAccount, subscriptionState } from "@/server/auth";
 import { db, json } from "@/server/db";
+import { notifyPageLive } from "@/server/email";
 import { normaliseKenyanPhone } from "@/server/payments/mpesa";
 import { qrSvg } from "@/lib/qr";
 
@@ -98,6 +99,8 @@ export async function finishOnboarding(): Promise<FinishResult> {
     w.id,
     slug,
   ]);
+  // The first time only: the page is live, and how to share it.
+  if (!w.onboarded_at) await notifyPageLive(w.id);
   const url = `${site.url}/d/${slug}`;
   return { ok: true, slug, url, displayUrl: `${site.displayDomain}/d/${slug}`, svg: await qrSvg(url) };
 }

@@ -109,3 +109,16 @@ test("someone without an account is sent to log in, not into the portal", async 
   await page.waitForURL(/\/login/);
   await expect(page.getByRole("heading", { name: "Welcome back" })).toBeVisible();
 });
+
+test("a forgotten password: the link from log in, the same answer for any email, and an old link explained", async ({ page }) => {
+  await page.goto("/login");
+  await page.getByRole("link", { name: "Forgot your password?" }).click();
+  await expect(page.getByRole("heading", { name: "Reset your password" })).toBeVisible();
+  await page.getByLabel("Email").fill("someone-without-an-account@example.com");
+  await page.getByRole("button", { name: "Send the link" }).click();
+  await expect(page.getByRole("status")).toContainText("If someone-without-an-account@example.com has a Suppli Afya account");
+
+  await page.goto("/login/reset?token=not-a-real-link");
+  await expect(page.getByRole("heading", { name: "This link has expired" })).toBeVisible();
+  await expect(page.getByRole("link", { name: "Send a new link" })).toHaveAttribute("href", "/login/forgot");
+});

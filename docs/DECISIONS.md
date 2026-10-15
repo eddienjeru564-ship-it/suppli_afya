@@ -70,12 +70,15 @@ Things only the founder can supply or decide. Ordered by how much they block.
     refuses everything and customers order on WhatsApp. The storefront asks customers for their phone
     number for this; orders this app can't take right away wait in the storefront's own database (at
     most 7 days) and are sent again.
-13. **Kate Cromuel on the homepage.** The homepage, `/check` and the demo use Kate Cromuel
+13. **Email.** Set `RESEND_API_KEY` in Vercel (a sending-only key for `suppliafya.co.ke`). Decide where
+    replies go: `hello@suppliafya.co.ke` doesn't receive mail, so set `EMAIL_REPLY_TO` to a mailbox someone reads,
+    or turn on receiving in Resend.
+14. **Kate Cromuel on the homepage.** The homepage, `/check` and the demo use Kate Cromuel
     ("Wellness Consultant") as the example distributor, in `src/config/distributors.ts` and
     `src/components/site/story.ts`. Confirm with Kate that her name and title can appear there. The
     demo has no phone number, so nothing on it opens a chat to her. If she'd rather not, change those
     two files; every section reads from them.
-14. **Pro's M-Pesa prompts.** The homepage lists "M-Pesa STK push to your customer's phone" and
+15. **Pro's M-Pesa prompts.** The homepage lists "M-Pesa STK push to your customer's phone" and
     "Automatic payment confirmation" on Pro, ahead of the build (founder decision). Build them
     before anyone pays for Pro: each Pro distributor's Till or Paybill as a PayHero payment channel,
     a "Request payment" button on the order page, and the PayHero callback marking the order paid.
