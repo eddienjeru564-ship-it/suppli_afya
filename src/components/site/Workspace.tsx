@@ -22,7 +22,7 @@ export function Workspace() {
   const [open, setOpen] = useState<string | null>("sarah");
 
   return (
-    <section id="after" className="bg-paper py-24 sm:py-28">
+    <section id="after" className="bg-paper py-16 sm:py-24 lg:py-28">
       <div className="container-x grid grid-cols-1 items-center gap-14 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-20">
         <Reveal>
           <p className="font-display text-[1.45rem] italic leading-snug text-clay">And it doesn&apos;t stop at the enquiry.</p>

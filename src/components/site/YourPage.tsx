@@ -23,7 +23,7 @@ export async function YourPage() {
   const svg = await qrSvg(url);
 
   return (
-    <section id="your-page" className="py-24 sm:py-28">
+    <section id="your-page" className="py-16 sm:py-24 lg:py-28">
       <div className="container-x grid grid-cols-1 items-center gap-14 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-20">
         {/* Text second on large screens, so it doesn't mirror the follow-up section just above. */}
         <Reveal className="lg:order-2">

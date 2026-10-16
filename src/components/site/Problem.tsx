@@ -42,7 +42,7 @@ const LEAKS = [
 
 export function Problem() {
   return (
-    <section id="problem" className="bg-paper py-24 sm:py-28">
+    <section id="problem" className="bg-paper py-16 sm:py-24 lg:py-28">
       <div className="container-x grid grid-cols-1 items-center gap-14 lg:grid-cols-[1.05fr_0.95fr] lg:gap-20">
         <div>
           <Reveal>

@@ -161,7 +161,7 @@ export function Demo() {
   const showChip = started && sectionInView && !kateInView;
 
   return (
-    <section ref={sectionRef} id="try" className="relative overflow-clip bg-forest-deep py-24 text-cream sm:py-28">
+    <section ref={sectionRef} id="try" className="relative overflow-clip bg-forest-deep py-16 text-cream sm:py-24 lg:py-28">
       <div className="container-x">
         <Reveal>
           <h2 className="display-lg max-w-[20ch]">How Suppli Afya Works</h2>

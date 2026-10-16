@@ -42,7 +42,7 @@ const MARK: Record<PlanId, ReactNode> = {
  */
 export function Pricing() {
   return (
-    <section id="pricing" className="bg-sand/40 py-24 sm:py-28">
+    <section id="pricing" className="bg-sand/40 py-16 sm:py-24 lg:py-28">
       <div className="container-x">
         <Reveal className="text-center">
           <h2 className="display-lg mx-auto max-w-[16ch] text-ink">Choose What Works for Your Business</h2>
