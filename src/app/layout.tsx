@@ -1,16 +1,25 @@
 import type { Metadata, Viewport } from "next";
-import { Hanken_Grotesk, Newsreader } from "next/font/google";
+import { Hanken_Grotesk } from "next/font/google";
+import localFont from "next/font/local";
 import { splashStartupImages } from "@/config/pwa";
 import { site } from "@/config/site";
 import { PwaProvider } from "@/components/pwa/PwaProvider";
 import "./globals.css";
 
-const newsreader = Newsreader({
+/*
+ * Newsreader (Google Fonts, SIL Open Font License), cut down to what the site uses: Latin only,
+ * weights 400 to 460, optical sizes 24 to 72 so headlines keep their display shapes. 130 KB for
+ * regular and italic, against 278 KB for the full family, which matters on prepaid mobile data.
+ * Made with fontTools' instancer from the Google Fonts variable files.
+ */
+const newsreader = localFont({
   variable: "--font-newsreader",
-  subsets: ["latin"],
-  style: ["normal", "italic"],
-  axes: ["opsz"],
+  src: [
+    { path: "./fonts/newsreader-latin-normal.woff2", weight: "400 460", style: "normal" },
+    { path: "./fonts/newsreader-latin-italic.woff2", weight: "400 460", style: "italic" },
+  ],
   display: "swap",
+  adjustFontFallback: "Times New Roman",
 });
 
 const hanken = Hanken_Grotesk({
