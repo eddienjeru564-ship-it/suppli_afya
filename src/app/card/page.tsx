@@ -33,7 +33,7 @@ export default async function CardSheet() {
           <div key={i} className="grid h-[52mm] grid-cols-[1fr_auto] gap-3 rounded-[3mm] border border-ink/20 p-[5mm] [break-inside:avoid]">
             <div className="flex min-w-0 flex-col">
               <div className="flex items-center gap-1.5">
-                <LogoMark className="h-4 w-4" />
+                <LogoMark className="h-5 w-auto" />
                 <span className="truncate font-display text-[15pt] leading-tight text-ink">{w.owner_name}</span>
               </div>
               <div className="truncate text-[7.5pt] text-ink-mute">{tagline}</div>

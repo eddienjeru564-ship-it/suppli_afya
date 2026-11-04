@@ -1,6 +1,13 @@
 import { ImageResponse } from "next/og";
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
+import { logoDocument, svgDataUri } from "@/components/brand/artwork";
+
+const LOGO = (() => {
+  const { svg, width, height } = logoDocument("color");
+  const h = 60;
+  return { src: svgDataUri(svg), width: Math.round((width / height) * h), height: h };
+})();
 
 export const ogSize = { width: 1200, height: 630 };
 
@@ -56,14 +63,9 @@ export async function brandCard({
           color: "#16241c",
         }}
       >
-        <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
-          <svg width="44" height="44" viewBox="0 0 32 32">
-            <path d="M5 27C5 14.3 13.6 5 27 5c0 13.4-9.3 22-22 22Z" fill="#1e3a2b" />
-            <path d="M7.5 24.5C12 20 17 15 23.5 8.5" stroke="#f4eee3" strokeWidth="1.5" strokeLinecap="round" fill="none" />
-          </svg>
-          <div style={{ display: "flex", fontFamily: "Newsreader", fontSize: 38, color: "#1e3a2b" }}>
-            Suppli&nbsp;<span style={{ fontStyle: "italic" }}>Afya</span>
-          </div>
+        <div style={{ display: "flex", alignItems: "center" }}>
+          {/* eslint-disable-next-line @next/next/no-img-element, jsx-a11y/alt-text */}
+          <img src={LOGO.src} width={LOGO.width} height={LOGO.height} />
         </div>
         <div style={{ display: "flex", flexDirection: "column" }}>
           {eyebrow && <div style={{ fontSize: 26, color: "#8a4a27", marginBottom: 18 }}>{eyebrow}</div>}

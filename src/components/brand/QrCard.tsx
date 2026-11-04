@@ -32,7 +32,7 @@ export function QrCard({
         )}
       >
         <div className={clsx("flex h-full flex-col justify-between text-cream", sm ? "p-4" : "p-6 sm:p-8")}>
-          <LogoMark tone="cream" className={sm ? "h-6 w-6" : "h-8 w-8"} />
+          <LogoMark tone="cream" className={sm ? "h-7 w-auto" : "h-10 w-auto"} />
           <div className={clsx("font-display italic leading-tight text-cream/90", sm ? "text-[1rem]" : "text-[1.35rem]")}>
             Afya yako, <br /> mpango wako.
           </div>

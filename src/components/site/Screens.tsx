@@ -3,7 +3,7 @@
 import clsx from "clsx";
 import { motion } from "motion/react";
 import { Fragment, type ReactNode } from "react";
-import { LogoMark } from "@/components/brand/Logo";
+import { PoweredBy } from "@/components/brand/Logo";
 import { PackArt } from "@/components/check/ProductGlyph";
 import { Check, WhatsAppIcon } from "@/components/ui/icons";
 import { KATE, PLAN_REF, SARAH, SARAH_MESSAGE, SUGGESTED, type StoryProduct } from "./story";
@@ -125,9 +125,7 @@ export function PageScreen() {
         </div>
       </div>
       <div className="mt-auto flex items-center justify-between px-4 pb-4 text-[0.58rem] text-ink-mute">
-        <span className="inline-flex items-center gap-1">
-          Powered by <LogoMark className="h-3 w-3" /> Suppli Afya
-        </span>
+        <PoweredBy className="h-5" />
         <span>Privacy</span>
       </div>
     </div>
