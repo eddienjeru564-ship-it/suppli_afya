@@ -95,7 +95,7 @@ export function PortalShell({
         <header className="sticky top-0 z-30 border-b border-ink/10 bg-cream/90 pl-[max(1rem,env(safe-area-inset-left))] pr-[max(1rem,env(safe-area-inset-right))] pt-[env(safe-area-inset-top)] backdrop-blur lg:hidden">
           <div className="flex h-14 items-center justify-between">
             <Link href="/portal" aria-label="Today">
-              <Logo className="scale-90 origin-left" />
+              <Logo className="h-7" />
             </Link>
             <Link
               href="/portal/settings"

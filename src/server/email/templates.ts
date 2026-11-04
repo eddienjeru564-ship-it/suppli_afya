@@ -20,6 +20,8 @@ type Block =
   | { small: string };
 
 const C = { cream: "#f4eee3", paper: "#ffffff", ink: "#16241c", soft: "#46534b", mute: "#5f6a62", forest: "#1e3a2b", line: "#e4dccd" };
+/** Always the live site: an email opened next week must still find its logo. Mail apps don't show SVG, so PNG. */
+const LOGO_URL = "https://suppliafya.co.ke/brand/logo-email.png";
 const FONT = "'Hanken Grotesk', -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif";
 
 export function escapeHtml(s: string) {
@@ -64,7 +66,7 @@ function render(subject: string, heading: string, blocks: Block[], preheader = "
 <div style="display:none;max-height:0;overflow:hidden;opacity:0">${escapeHtml(preheader)}</div>
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:${C.cream}"><tr><td align="center" style="padding:32px 16px">
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:560px">
-<tr><td style="padding:0 4px 18px;font-family:Georgia,'Times New Roman',serif;font-size:20px;color:${C.forest}">Suppli Afya</td></tr>
+<tr><td style="padding:0 4px 18px"><img src="${LOGO_URL}" width="199" height="40" alt="Suppli Afya" style="display:block;border:0;height:40px;width:199px;font-family:Georgia,'Times New Roman',serif;font-size:20px;color:${C.forest}"></td></tr>
 <tr><td style="background:${C.paper};border-radius:20px;padding:32px 28px;font-family:${FONT}">
 <h1 style="margin:0 0 18px;font-family:Georgia,'Times New Roman',serif;font-weight:400;font-size:28px;line-height:1.2;color:${C.ink}">${escapeHtml(heading)}</h1>
 ${blocks.map(blockHtml).join("\n")}
