@@ -18,7 +18,7 @@ export interface PlanFeature {
 }
 
 export interface FeatureGroup {
-  id: "sell" | "follow" | "paid" | "setup";
+  id: "sell" | "follow" | "setup";
   title: string;
   features: PlanFeature[];
 }
@@ -54,7 +54,11 @@ export const PLAN: Plan = {
       features: [
         {
           title: "Your own branded shop",
-          body: "Your name and photo at yourname.suppliafya.co.ke, with every product, its price and a one-tap WhatsApp order.",
+          body: "Your name and photo at yourname.suppliafya.co.ke, with every product and its price.",
+        },
+        {
+          title: "WhatsApp checkout",
+          body: "Customers fill a basket and send the order to your WhatsApp, with their details already written.",
         },
         {
           title: "Personal product recommendations",
@@ -82,27 +86,10 @@ export const PLAN: Plan = {
           title: "Reorder tracking",
           body: "Each customer's pack is tracked, so you ask for the reorder before they buy elsewhere.",
         },
+        // Listed ahead of the build, by founder decision (November 2026): it ships before it's relied on.
         {
           title: "SMS reminders to your customers",
           body: "Reorder and payment reminders sent by text, in your name.",
-          soon: true,
-        },
-      ],
-    },
-    {
-      // Listed ahead of the build, by founder decision: M-Pesa prompts to a distributor's own customers
-      // need a PayHero channel per distributor (docs/BRAIN.md, Phase 3). They must work before anyone
-      // relies on them (docs/DECISIONS.md, launch blockers).
-      id: "paid",
-      title: "Get paid",
-      features: [
-        {
-          title: "M-Pesa payment prompts",
-          body: "The payment request pops up on your customer's phone. No more \"send to this number\".",
-        },
-        {
-          title: "Payments confirmed for you",
-          body: "Each payment is matched to its order the moment it lands. No checking messages.",
         },
       ],
     },
