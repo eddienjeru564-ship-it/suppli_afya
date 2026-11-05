@@ -7,11 +7,15 @@ import { useEffect, useState } from "react";
 import { Logo } from "@/components/brand/Logo";
 import { ButtonLink } from "@/components/ui/Button";
 
+// Full paths, so the menu works from the guides as well as the homepage.
 const LINKS = [
-  { href: "#try", label: "How it works" },
-  { href: "#pricing", label: "Pricing" },
-  { href: "#faq", label: "Questions" },
+  { href: "/#try", label: "How it works" },
+  { href: "/#pricing", label: "Pricing" },
+  { href: "/#faq", label: "Questions" },
+  { href: "/guides", label: "Guides" },
 ];
+/** The homepage section a link points at, for highlighting the one being read. */
+const sectionOf = (href: string) => href.split("#")[1] ?? null;
 
 export function Nav() {
   const [scrolled, setScrolled] = useState(false);
@@ -32,7 +36,7 @@ export function Nav() {
 
   // Highlight the section being read.
   useEffect(() => {
-    const ids = LINKS.map((l) => l.href.slice(1));
+    const ids = LINKS.map((l) => sectionOf(l.href)).filter((id): id is string => Boolean(id));
     const seen = new Map<string, boolean>();
     const io = new IntersectionObserver(
       (entries) => {
@@ -78,7 +82,7 @@ export function Nav() {
         </Link>
         <div className="hidden items-center gap-7 text-[0.92rem] font-medium text-ink-soft lg:flex">
           {LINKS.map((l) => {
-            const on = active === l.href.slice(1);
+            const on = active !== null && active === sectionOf(l.href);
             return (
               <a
                 key={l.href}
@@ -108,7 +112,7 @@ export function Nav() {
               <Link href="/login" className="px-3 text-[0.92rem] font-medium text-ink-soft transition-colors hover:text-ink">
                 Log in
               </Link>
-              <ButtonLink href="#try" size="sm" arrow>
+              <ButtonLink href="/#try" size="sm" arrow>
                 See it in action
               </ButtonLink>
             </>
@@ -159,7 +163,7 @@ export function Nav() {
                   </ButtonLink>
                 ) : (
                   <>
-                    <ButtonLink href="#try" size="lg" onClick={() => setOpen(false)} arrow>
+                    <ButtonLink href="/#try" size="lg" onClick={() => setOpen(false)} arrow>
                       See it in action
                     </ButtonLink>
                     <ButtonLink href="/login" size="lg" variant="secondary" onClick={() => setOpen(false)}>

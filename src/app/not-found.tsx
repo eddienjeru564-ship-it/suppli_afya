@@ -5,7 +5,7 @@ export default function NotFound() {
     <main className="container-x flex min-h-dvh flex-col items-start justify-center py-24">
       <h1 className="display-lg max-w-[16ch] text-ink">We couldn&apos;t find that page</h1>
       <p className="lede mt-5 max-w-md">If someone sent you a distributor link, check it with them. It may have a small typo.</p>
-      <div className="mt-8 flex gap-3">
+      <div className="mt-8 flex w-full flex-col gap-3 sm:w-auto sm:flex-row [&>a]:whitespace-nowrap">
         <ButtonLink href="/" arrow>
           Go to the home page
         </ButtonLink>

@@ -1,3 +1,7 @@
+import type { Metadata } from "next";
+import { faqPage, graph, organization, software, website } from "@/config/seo";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { FAQ } from "@/components/site/faq-data";
 import { Nav } from "@/components/site/Nav";
 import { Hero } from "@/components/site/Hero";
 import { Problem } from "@/components/site/Problem";
@@ -15,9 +19,12 @@ import { MobileCta } from "@/components/site/MobileCta";
  * stops there) → and it doesn't stop at the enquiry (the daily follow-up list) → your name, your
  * page, your customers → common questions → pricing.
  */
+export const metadata: Metadata = { alternates: { canonical: "/" } };
+
 export default function Home() {
   return (
     <>
+      <JsonLd data={graph(organization(), website(), software(), faqPage(FAQ))} />
       <Nav />
       <main>
         <Hero />

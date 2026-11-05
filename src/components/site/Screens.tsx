@@ -58,7 +58,7 @@ export function Monogram({ className }: { className?: string }) {
 /** A product as Kate's page shows it: the pack, the name, what it's for. */
 export function Pack({ product, className }: { product: StoryProduct; className?: string }) {
   return (
-    <span className={clsx("grid shrink-0 place-items-center rounded-xl bg-sand/70 p-1", className)}>
+    <span className={clsx("grid shrink-0 place-items-center rounded-xl bg-[radial-gradient(120%_90%_at_50%_30%,#ffffff_0%,#fbf8f2_55%,#efe7d9_100%)] ring-1 ring-ink/[0.06] shadow-[inset_0_-10px_18px_-14px_rgb(22_36_28/0.25)] p-1", className)}>
       <PackArt format={product.format} line={product.line} />
     </span>
   );

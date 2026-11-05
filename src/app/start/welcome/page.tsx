@@ -48,7 +48,7 @@ export default async function WelcomePage() {
             <div className="flex justify-between gap-4">
               <dt className="text-ink-mute">{paymentLabel(p.amount)}</dt>
               <dd className="text-right font-semibold text-ink">
-                {kes(p.amount)} by {p.method === "mpesa" ? "M-Pesa" : "card"}
+                {kes(p.amount)} by <span className="whitespace-nowrap">{p.method === "mpesa" ? "M-Pesa" : "card"}</span>
               </dd>
             </div>
           )}

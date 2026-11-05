@@ -9,10 +9,11 @@ const base =
   "group inline-flex items-center justify-center gap-2 rounded-full font-semibold transition-[background-color,color,box-shadow,transform] duration-300 ease-[var(--ease-soft)] active:scale-[0.98] disabled:pointer-events-none disabled:opacity-40 select-none";
 
 const variants: Record<Variant, string> = {
-  primary: "bg-forest text-cream hover:bg-forest-deep shadow-[inset_0_1px_0_rgb(255_255_255/0.08)]",
+  primary:
+    "bg-forest text-cream hover:bg-forest-deep shadow-[inset_0_1px_0_rgb(255_255_255/0.08)] hover:-translate-y-px hover:shadow-[inset_0_1px_0_rgb(255_255_255/0.08),0_12px_24px_-14px_rgb(17_35_26/0.6)] motion-reduce:hover:translate-y-0",
   secondary: "border border-forest/25 text-forest hover:border-forest/60 hover:bg-forest/[0.04]",
   ghost: "text-forest hover:bg-forest/[0.06]",
-  light: "bg-cream text-forest-deep hover:bg-paper",
+  light: "bg-cream text-forest-deep hover:bg-paper hover:-translate-y-px hover:shadow-[0_12px_24px_-14px_rgb(0_0_0/0.5)] motion-reduce:hover:translate-y-0",
   whatsapp: "bg-wa text-[#06331f] hover:brightness-95",
 };
 
