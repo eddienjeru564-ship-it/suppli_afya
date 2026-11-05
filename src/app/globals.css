@@ -426,3 +426,16 @@
     animation: none;
   }
 }
+
+/* Product packs: they settle onto their stage, and lift a little when their card is hovered. */
+.pack-float {
+  transition: transform 0.6s var(--ease-soft);
+}
+article:hover .pack-float {
+  transform: translateY(-3px) scale(1.04);
+}
+@media (prefers-reduced-motion: reduce) {
+  .pack-float {
+    transition: none;
+  }
+}

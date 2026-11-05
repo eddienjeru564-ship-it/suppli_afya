@@ -26,10 +26,8 @@ export function PlanSummary({ renewing = false }: { renewing?: boolean }) {
       >
         <span className="min-w-0">
           <span className="block text-[0.75rem] font-semibold text-cream/60">{renewing ? "Renewing" : "Today"}</span>
-          <span className="font-display text-[1.35rem]">
-            {kes(today)}
-            <span className="text-[0.9rem] text-cream/60">{renewing ? " for one month" : `, then ${MONTHLY_PRICE} a month`}</span>
-          </span>
+          <span className="block font-display text-[1.45rem] leading-tight">{kes(today)}</span>
+          <span className="block text-[0.82rem] text-cream/65">{renewing ? "For one month" : `Then ${MONTHLY_PRICE} a month`}</span>
         </span>
         <span className="shrink-0 text-[0.8rem] font-semibold text-sage">{open ? "Hide" : "What's included"}</span>
       </button>

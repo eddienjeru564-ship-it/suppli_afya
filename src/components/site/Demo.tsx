@@ -1,10 +1,10 @@
 "use client";
 
 import clsx from "clsx";
-import Link from "next/link";
 import { AnimatePresence, motion, useInView } from "motion/react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { DEMO_DISTRIBUTOR } from "@/config/distributors";
+import { KATE } from "./story";
 import { TESTIMONIALS } from "@/config/testimonials";
 import {
   GOALS_BY_ID,
@@ -219,9 +219,9 @@ export function Demo() {
             </PhoneFrame>
             <p className="mt-4 flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-[0.8rem] text-cream/55">
               <span>Demo only. Nothing you enter is saved or sent.</span>
-              <Link href="/check" className="group inline-flex items-center gap-1 font-semibold text-cream/80 hover:text-cream">
+              <a href={KATE.url} target="_blank" rel="noopener" className="group inline-flex items-center gap-1 font-semibold text-cream/80 hover:text-cream">
                 Open {KATE_FIRST}&apos;s page on its own <Arrow className="h-3 w-3" />
-              </Link>
+              </a>
             </p>
           </div>
 

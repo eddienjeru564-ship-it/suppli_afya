@@ -1,5 +1,4 @@
 import { DEMO_DISTRIBUTOR } from "@/config/distributors";
-import { site } from "@/config/site";
 import type { Answers, ProductFormat, ProductLine } from "@/engine";
 
 /**
@@ -14,8 +13,9 @@ export const KATE = {
   first: DEMO_DISTRIBUTOR.firstName,
   title: DEMO_DISTRIBUTOR.tagline ?? "BF Suma distributor",
   initials: initials(DEMO_DISTRIBUTOR.name),
-  /** Where her page lives: the same address her QR code opens. */
-  link: `${site.displayDomain}/d/${DEMO_DISTRIBUTOR.slug}`,
+  /** Where her page lives: her own site, the address on her card and in her QR code. */
+  link: "kate.suppliafya.co.ke",
+  url: "https://kate.suppliafya.co.ke",
 };
 
 function initials(name: string) {

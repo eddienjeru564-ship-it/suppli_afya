@@ -32,8 +32,8 @@ function ProductCard({ rec, i }: { rec: Recommendation; i: number }) {
     <Appear i={i + 2}>
       <article className="overflow-hidden rounded-[1.5rem] border border-ink/10 bg-paper">
         <div className="flex gap-4 p-5">
-          <div className="grid h-20 w-16 shrink-0 place-items-center rounded-2xl bg-sand/70 p-2">
-            <ProductGlyph product={p} />
+          <div className="pack-stage grid h-24 w-20 shrink-0 place-items-center rounded-2xl bg-[radial-gradient(120%_90%_at_50%_30%,#ffffff_0%,#fbf8f2_55%,#efe7d9_100%)] ring-1 ring-ink/[0.06] shadow-[inset_0_-10px_18px_-14px_rgb(22_36_28/0.25)] p-2.5 sm:h-28 sm:w-24">
+            <ProductGlyph product={p} className="pack-float" />
           </div>
           <div className="min-w-0 flex-1">
             <div className="text-[0.75rem] font-semibold text-ink-mute">
@@ -270,7 +270,7 @@ export function ResultPlan({
           <div className="mt-3 grid gap-2">
             {result.addons.map((rec) => (
               <div key={rec.product.id} className="flex gap-3 rounded-2xl border border-ink/10 bg-paper/60 p-3.5">
-                <div className="h-12 w-10 shrink-0">
+                <div className="grid h-16 w-14 shrink-0 place-items-center rounded-xl bg-[radial-gradient(120%_90%_at_50%_30%,#ffffff_0%,#fbf8f2_55%,#efe7d9_100%)] ring-1 ring-ink/[0.06] shadow-[inset_0_-10px_18px_-14px_rgb(22_36_28/0.25)] p-1.5">
                   <ProductGlyph product={rec.product} />
                 </div>
                 <div className="min-w-0">

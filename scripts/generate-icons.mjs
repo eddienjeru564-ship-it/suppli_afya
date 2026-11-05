@@ -73,11 +73,8 @@ const files = {
   "public/brand/powered-by.svg": poweredBy,
 };
 
-// Favicon: the colour mark, switched to the light mark when the browser chrome is dark.
-const fav = (tone, id) => `<svg width="64" height="64" viewBox="0 0 64 64">${centred(64, 62, tone, id)}</svg>`;
-files["src/app/icon.svg"] =
-  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><style>.d{display:none}@media (prefers-color-scheme:dark){.l{display:none}.d{display:inline}}</style>` +
-  `<g class="l">${fav("color", "f")}</g><g class="d">${fav("light", "g")}</g></svg>`;
+// Favicon: always the colour mark, in light and dark browser tabs alike.
+files["src/app/icon.svg"] = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">${centred(64, 62, "color", "f")}</svg>`;
 
 for (const [path, svg] of Object.entries(files)) {
   writeFileSync(path, svg);

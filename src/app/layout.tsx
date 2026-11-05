@@ -3,6 +3,7 @@ import { Hanken_Grotesk } from "next/font/google";
 import localFont from "next/font/local";
 import { splashStartupImages } from "@/config/pwa";
 import { site } from "@/config/site";
+import { KEYWORDS } from "@/config/seo";
 import { PwaProvider } from "@/components/pwa/PwaProvider";
 import "./globals.css";
 
@@ -31,10 +32,16 @@ const hanken = Hanken_Grotesk({
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
-    default: "Suppli Afya · For BF Suma distributors",
+    default: "Suppli Afya · Shop and customer app for BF Suma distributors in Kenya",
     template: "%s · Suppli Afya",
   },
   description: site.description,
+  keywords: KEYWORDS,
+  authors: [{ name: site.name, url: site.url }],
+  creator: site.name,
+  publisher: site.name,
+  category: "business",
+  robots: { index: true, follow: true, googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1 } },
   openGraph: {
     title: "Suppli Afya: turn curiosity into customers",
     description: site.description,

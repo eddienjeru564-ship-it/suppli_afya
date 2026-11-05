@@ -147,7 +147,7 @@ export function PaymentStep({
                 )}
 
                 <Button size="lg" className="mt-6 w-full" disabled={pending || mode === "off"} onClick={pay} arrow>
-                  {pending ? "Starting payment…" : renewing ? `Pay ${kes(amount)} and renew` : `Pay ${kes(amount)} and start Suppli Afya`}
+                  {pending ? "Starting payment…" : renewing ? `Pay ${kes(amount)} and renew` : `Pay ${kes(amount)} and get started`}
                 </Button>
                 <p className="mt-4 text-center text-[0.8rem] leading-relaxed text-ink-mute">
                   Nothing renews automatically. Your portal reminds you a few days before the month ends.
