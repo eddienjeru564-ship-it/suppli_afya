@@ -51,7 +51,7 @@ export default function PrivacyPage() {
             <p className="mt-2">
               The only messages we send to customers are reminder texts on the distributor&apos;s behalf, signed with their
               name: a few days before products are likely to run out, and once if an order is still to be paid. Every text
-              has a link that stops them, and the distributor can switch them off for anyone.
+              has a link that stops them, and the distributor can switch them off for anyone. Texts are sent through Africa&apos;s Talking.
             </p>
           </section>
           <section>
@@ -69,7 +69,7 @@ export default function PrivacyPage() {
               you. Contact the Suppli Afya team and we&apos;ll deal with it promptly.
             </p>
           </section>
-          <p className="text-[0.85rem] text-ink-mute">Last updated September 2026.</p>
+          <p className="text-[0.85rem] text-ink-mute">Last updated November 2026.</p>
         </div>
       </main>
     </div>

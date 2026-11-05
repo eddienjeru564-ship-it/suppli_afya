@@ -80,18 +80,18 @@ export function Problem() {
             <ol className="grid gap-1.5 px-3 py-4" aria-label="A typical chat with someone who asked about a product">
               {THREAD.map((m, i) =>
                 m.from === "seen" ? (
-                  <li key={i} className="ml-auto pr-1 text-[0.7rem] text-[#54656f]">
+                  <li key={i} className="pop-in ml-auto origin-right pr-1 text-[0.7rem] text-[#54656f]">
                     Seen
                   </li>
                 ) : m.from === "gap" ? (
-                  <li key={i} className="mx-auto my-1 w-fit rounded-md bg-white/80 px-2.5 py-0.5 text-[0.72rem] text-[#54656f] shadow-sm">
+                  <li key={i} className="pop-in mx-auto my-1 w-fit rounded-md bg-white/80 px-2.5 py-0.5 text-[0.72rem] text-[#54656f] shadow-sm">
                     {m.text}
                   </li>
                 ) : m.from === "note" ? (
                   <li
                     key={i}
                     aria-hidden
-                    className={clsx("-mt-0.5 mb-1 flex items-start gap-1.5 text-clay", m.side === "right" ? "flex-row-reverse pr-3" : "pl-4")}
+                    className={clsx("pop-in -mt-0.5 mb-1 flex items-start gap-1.5 text-clay", m.side === "right" ? "origin-right flex-row-reverse pr-3" : "origin-left pl-4")}
                   >
                     <SwirlArrow direction="up" strokeWidth={7} className="h-12 w-4 shrink-0" />
                     <span className="pt-4 font-display text-[1.08rem] italic leading-none">{m.text}</span>
@@ -100,8 +100,8 @@ export function Problem() {
                   <li
                     key={i}
                     className={clsx(
-                      "max-w-[82%] rounded-lg px-3 py-1.5 text-[0.86rem] leading-snug text-[#111b21] shadow-sm",
-                      m.from === "you" ? "ml-auto rounded-tr-none bg-wa-bubble" : "rounded-tl-none bg-white",
+                      "pop-in max-w-[82%] rounded-lg px-3 py-1.5 text-[0.86rem] leading-snug text-[#111b21] shadow-sm",
+                      m.from === "you" ? "ml-auto origin-right rounded-tr-none bg-wa-bubble" : "origin-left rounded-tl-none bg-white",
                     )}
                   >
                     {m.text}

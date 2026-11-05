@@ -30,7 +30,7 @@ export function LoginForm({ next }: { next: string }) {
       <p className="text-[0.9rem] text-ink-soft">
         New to Suppli Afya?{" "}
         <Link href="/#pricing" className="font-semibold text-forest underline underline-offset-2">
-          See plans and get started
+          See pricing and get started
         </Link>
       </p>
     </form>

@@ -1,5 +1,6 @@
 import { Check } from "@/components/ui/icons";
 import { Reveal } from "@/components/ui/Reveal";
+import { keepTogether } from "@/components/ui/KeepTogether";
 import { BusinessCard } from "./BusinessCard";
 
 /** What a distributor wants to know before trusting anyone with their customers. Each is true today. */
@@ -30,7 +31,7 @@ export function YourPage() {
               <li key={y.title} className="flex items-start gap-3 text-[0.98rem] leading-snug">
                 <Check className="mt-0.5 h-4 w-4 shrink-0 text-moss" />
                 <span>
-                  <span className="font-semibold text-ink">{y.title}</span> <span className="text-ink-soft">{y.body}</span>
+                  <span className="font-semibold text-ink">{y.title}</span> <span className="text-ink-soft">{keepTogether(y.body)}</span>
                 </span>
               </li>
             ))}
