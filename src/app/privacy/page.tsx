@@ -46,7 +46,12 @@ export default function PrivacyPage() {
             <h2 className="font-display text-[1.5rem] text-ink">Distributors and their customers</h2>
             <p className="mt-2">
               A distributor&apos;s customer records belong to that distributor. We don&apos;t sell them, share them with
-              other distributors, or contact customers ourselves.
+              other distributors, or contact customers about anything of our own.
+            </p>
+            <p className="mt-2">
+              The only messages we send to customers are reminder texts on the distributor&apos;s behalf, signed with their
+              name: a few days before products are likely to run out, and once if an order is still to be paid. Every text
+              has a link that stops them, and the distributor can switch them off for anyone.
             </p>
           </section>
           <section>

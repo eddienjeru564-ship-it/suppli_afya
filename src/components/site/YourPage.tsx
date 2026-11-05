@@ -4,7 +4,7 @@ import { BusinessCard } from "./BusinessCard";
 
 /** What a distributor wants to know before trusting anyone with their customers. Each is true today. */
 const YOURS = [
-  { title: "Your customers stay yours.", body: "We never sell their details or contact them ourselves." },
+  { title: "Your customers stay yours.", body: "We never sell their details. The only texts they get are reminders in your name." },
   { title: "Independent of BF Suma.", body: "Your upline, stock and distributor account stay as they are." },
   { title: "No contract.", body: "After setup, pay monthly by M-Pesa or card, and stop when you like." },
 ];

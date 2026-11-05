@@ -51,6 +51,18 @@ export const env = {
   },
 
   /**
+   * Reminder texts through Africa's Talking (africastalking.com). From the dashboard: the app's
+   * username and an API key (Settings → API Key), and the approved sender ID if there is one
+   * (without it, texts come from Africa's Talking's shared number). Username "sandbox" uses the
+   * sandbox. Without a key, texts aren't sent: outside production they're printed in the log.
+   */
+  sms: {
+    username: process.env.AFRICASTALKING_USERNAME ?? "",
+    apiKey: process.env.AFRICASTALKING_API_KEY ?? "",
+    senderId: process.env.AFRICASTALKING_SENDER_ID ?? "",
+  },
+
+  /**
    * Test payments let the whole journey run without live keys. They're allowed
    * automatically outside production, and in production only when explicitly
    * switched on (for previews). Never enable this on the live site.
@@ -65,6 +77,10 @@ export function mpesaConfigured() {
 
 export function paystackConfigured() {
   return Boolean(env.paystack.secretKey);
+}
+
+export function smsConfigured() {
+  return Boolean(env.sms.username && env.sms.apiKey);
 }
 
 export function pushConfigured() {

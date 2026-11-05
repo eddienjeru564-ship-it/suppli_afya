@@ -226,4 +226,40 @@ alter table password_resets enable row level security;
 alter table email_log enable row level security;
 `,
   },
+  {
+    version: 6,
+    sql: `
+-- Reminder texts to a distributor's customers, sent in the distributor's name by the morning job.
+-- On by default; each kind can be switched off in Settings.
+alter table workspaces add column sms_reorder boolean not null default true;
+alter table workspaces add column sms_payment boolean not null default true;
+
+-- A customer can stop the texts from the link in each one (source 'customer'), or the distributor
+-- can stop them for one customer (source 'distributor'). The token is the short code in that link.
+alter table customers add column sms_token text unique;
+alter table customers add column sms_opt_out_at timestamptz;
+alter table customers add column sms_opt_out_source text;
+
+-- Every text, once per reminder: (kind, ref) is the reminder (a reorder or payment for one order),
+-- so a second run of the morning job never sends it twice.
+create table sms_log (
+  id uuid primary key default gen_random_uuid(),
+  workspace_id uuid not null references workspaces(id) on delete cascade,
+  customer_id uuid references customers(id) on delete set null,
+  kind text not null,
+  ref text not null,
+  phone text not null,
+  body text not null,
+  status text not null default 'pending',
+  provider_id text,
+  cost text,
+  error text,
+  created_at timestamptz not null default now(),
+  unique (kind, ref)
+);
+create index sms_log_workspace_idx on sms_log(workspace_id, created_at desc);
+
+alter table sms_log enable row level security;
+`,
+  },
 ];

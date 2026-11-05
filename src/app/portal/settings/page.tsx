@@ -12,9 +12,22 @@ import { AppSettings } from "@/components/pwa/AppSettings";
 import { LogoutButton } from "@/components/pwa/LogoutButton";
 import { pushConfigured } from "@/server/env";
 import { qrSvg } from "@/lib/qr";
+import { textsThisMonth } from "@/server/sms";
+import { paymentSms, reorderSms } from "@/server/sms/templates";
 import { ProfileForm } from "./ProfileForm";
+import { SmsSettings } from "./SmsSettings";
 
 export const metadata = { title: "Settings" };
+
+/** The texts a customer would get, with this distributor's name and number. */
+function previews(name: string, whatsapp: string | null) {
+  const now = Date.now();
+  const sample = { customer: { name: "Sarah Achieng" }, seller: { name, whatsapp }, products: ["Immuno Guard"], stopUrl: `${site.displayDomain}/s/Ab3xK9q` };
+  return {
+    reorder: reorderSms({ ...sample, dueAt: new Date(now + 3 * 86400_000) }).body,
+    payment: paymentSms({ ...sample, amount: 3900, orderedAt: new Date(now - 3 * 86400_000) }).body,
+  };
+}
 
 export default async function SettingsPage() {
   const a = await requirePortalAccount();
@@ -30,6 +43,9 @@ export default async function SettingsPage() {
     [w.id],
   );
   const state = subscriptionState(a);
+
+  const smsPreviews = previews(w.owner_name ?? "", w.whatsapp);
+  const sentThisMonth = await textsThisMonth(w.id);
 
   return (
     <div className="grid grid-cols-1 gap-10">
@@ -64,6 +80,11 @@ export default async function SettingsPage() {
       <section id="app" className="scroll-mt-20">
         <h2 className="mb-3 font-display text-[1.5rem] text-ink">Suppli Afya on your phone</h2>
         <AppSettings phoneQrSvg={phoneSvg} pushEnabled={pushConfigured()} />
+      </section>
+
+      <section id="texts" className="scroll-mt-20">
+        <h2 className="mb-3 font-display text-[1.5rem] text-ink">Reminder texts to customers</h2>
+        <SmsSettings initial={{ reorder: w.sms_reorder, payment: w.sms_payment }} previews={smsPreviews} sentThisMonth={sentThisMonth} />
       </section>
 
       <section>
