@@ -91,7 +91,7 @@ function reasonsFor(s: Scored): string[] {
  * (docs/DECISIONS.md, #3), so it says so plainly; other goals usually miss because a safety rule
  * left the only suitable product out, which the "left out" list explains.
  */
-function unmetNote(goal: GoalId, hasHabits: boolean): string {
+export function unmetNote(goal: GoalId, hasHabits: boolean): string {
   const next = hasHabits ? "Start with the small changes below, and your distributor can talk you through anything else." : "Your distributor can talk you through other options.";
   if (goal === "sleep_stress")
     return `For sleep and stress, we'd start with daily habits rather than a product. ${hasHabits ? "The small changes below are the usual first step, and your distributor can talk it through with you." : "Your distributor can talk it through with you."}`;
