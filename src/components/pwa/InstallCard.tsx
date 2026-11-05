@@ -41,14 +41,14 @@ export function InstallCard() {
               <button
                 type="button"
                 onClick={install}
-                className="h-10 rounded-full bg-forest px-4 text-[0.88rem] font-semibold text-cream active:scale-[0.98]"
+                className="h-11 rounded-full bg-forest px-4 text-[0.88rem] font-semibold text-cream active:scale-[0.98]"
               >
                 {kind === "prompt" ? "Install" : "Show me how"}
               </button>
               <button
                 type="button"
                 onClick={dismissInstall}
-                className="h-10 rounded-full px-3 text-[0.88rem] font-semibold text-ink-soft hover:text-ink"
+                className="h-11 rounded-full px-3 text-[0.88rem] font-semibold text-ink-soft hover:text-ink"
               >
                 Not now
               </button>

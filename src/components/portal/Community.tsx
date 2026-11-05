@@ -17,7 +17,7 @@ export function CommunityInvite({ url }: { url: string }) {
           href={url}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex h-10 items-center rounded-full bg-cream px-4 text-[0.88rem] font-semibold text-forest-deep"
+          className="inline-flex h-11 items-center rounded-full bg-cream px-4 text-[0.88rem] font-semibold text-forest-deep"
         >
           Join the community
         </a>

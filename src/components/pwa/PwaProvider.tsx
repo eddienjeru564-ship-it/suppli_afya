@@ -41,7 +41,7 @@ export function PwaProvider({ children }: { children: ReactNode }) {
                   applyUpdate();
                 }}
                 disabled={updating}
-                className="h-9 shrink-0 rounded-full bg-cream px-4 text-[0.85rem] font-semibold text-forest-deep disabled:opacity-60"
+                className="h-11 shrink-0 rounded-full bg-cream px-4 text-[0.85rem] font-semibold text-forest-deep disabled:opacity-60"
               >
                 {updating ? "Updating…" : "Update"}
               </button>
@@ -53,7 +53,7 @@ export function PwaProvider({ children }: { children: ReactNode }) {
               <button
                 type="button"
                 onClick={() => patchPwa({ justInstalled: false })}
-                className="h-9 shrink-0 rounded-full px-3 text-[0.85rem] font-semibold text-cream/80 hover:text-cream"
+                className="h-11 shrink-0 rounded-full px-3 text-[0.85rem] font-semibold text-cream/80 hover:text-cream"
               >
                 OK
               </button>

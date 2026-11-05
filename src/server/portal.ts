@@ -300,7 +300,10 @@ export async function today(ws: Workspace): Promise<Task[]> {
     ),
     d.query<CustomerRow>(
       `select c.*, max(o.created_at) as last_order_at from customers c join orders o on o.customer_id = c.id and o.status <> 'cancelled'
-        where c.workspace_id = $1 group by c.id having max(o.created_at) < now() - interval '75 days'
+        where c.workspace_id = $1
+          -- Anyone the distributor has been in touch with this month isn't "quiet".
+          and not exists (select 1 from interactions i where i.customer_id = c.id and i.created_at > now() - interval '30 days')
+        group by c.id having max(o.created_at) < now() - interval '75 days'
         order by max(o.created_at) desc limit 20`,
       [id],
     ),
@@ -420,8 +423,29 @@ export async function today(ws: Workspace): Promise<Task[]> {
     });
   }
 
-  const order = kindOrder(ws.goals);
-  return tasks.sort((a, b) => order.indexOf(a.kind) - order.indexOf(b.kind) || +new Date(a.at) - +new Date(b.at));
+  return arrange(tasks, ws.goals);
+}
+
+/**
+ * One task per person, in the order that matters. When someone shows up twice (a reorder that's due and
+ * "gone quiet", say), the more useful reason wins, whatever the distributor's goals. Orders waiting
+ * on the distributor's page always come first: a customer has already said yes.
+ */
+export function arrange(tasks: Task[], goals: string[]): Task[] {
+  const rank = (t: Task) => (t.key.startsWith("placed:") ? -1 : DEFAULT_ORDER.indexOf(t.kind));
+  const best = new Map<string, Task>();
+  const loose: Task[] = [];
+  for (const t of tasks) {
+    if (!t.customerId) {
+      loose.push(t);
+      continue;
+    }
+    const seen = best.get(t.customerId);
+    if (!seen || rank(t) < rank(seen)) best.set(t.customerId, t);
+  }
+  const order = kindOrder(goals);
+  const weight = (t: Task) => (t.key.startsWith("placed:") ? -1 : order.indexOf(t.kind));
+  return [...loose, ...best.values()].sort((a, b) => weight(a) - weight(b) || +new Date(a.at) - +new Date(b.at));
 }
 
 /** Whole days from now until a date (negative if it's passed). */
