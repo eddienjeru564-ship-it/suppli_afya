@@ -262,4 +262,19 @@ create index sms_log_workspace_idx on sms_log(workspace_id, created_at desc);
 alter table sms_log enable row level security;
 `,
   },
+  {
+    version: 7,
+    sql: `
+-- One-off events the server records so they happen once, e.g. telling search engines about a
+-- new version of the site (kind 'indexnow', ref = the deployed commit).
+create table site_events (
+  kind text not null,
+  ref text not null,
+  detail text,
+  created_at timestamptz not null default now(),
+  primary key (kind, ref)
+);
+alter table site_events enable row level security;
+`,
+  },
 ];
