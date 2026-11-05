@@ -41,21 +41,6 @@ const ICON: Record<FeatureGroup["id"], ReactNode> = {
       <path d="m7.5 12 1.75 1.75L12.75 10" />
     </svg>
   ),
-  paid: (
-    <svg
-      viewBox="0 0 20 20"
-      aria-hidden
-      className="h-5 w-5"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.6"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <rect x="5.5" y="2.5" width="9" height="15" rx="2" />
-      <path d="M8 10.25 9.5 11.75 12.25 8.75" />
-    </svg>
-  ),
   setup: (
     <svg
       viewBox="0 0 20 20"
@@ -88,11 +73,8 @@ const STEPS = [
   },
 ];
 
-/** The two columns of included features, balanced by length. */
-const COLUMNS: FeatureGroup["id"][][] = [
-  ["sell", "paid"],
-  ["follow", "setup"],
-];
+/** Shown full width under the other two, its items side by side. */
+const WIDE: FeatureGroup["id"] = "setup";
 
 const PER_DAY = Math.ceil(PLAN.monthly / 30 / 5) * 5;
 
@@ -126,18 +108,14 @@ export function Pricing() {
           <Reveal className="min-w-0 xl:sticky xl:top-24">
             <PriceCard />
           </Reveal>
-          {/* Two packed columns, so a short card never leaves a hole. On phones they stack: Sell, Get paid, Follow up, Done for you. */}
-          <div className="grid min-w-0 grid-cols-1 gap-4 md:grid-cols-2 md:items-start lg:gap-5">
-            {COLUMNS.map((col, c) => (
-              <ul key={c} className="grid min-w-0 gap-4 lg:gap-5">
-                {col.map((id, i) => (
-                  <Reveal as="li" key={id} delay={0.05 + 0.05 * (c + i * 2)} className="min-w-0">
-                    <Group group={PLAN.groups.find((x) => x.id === id)!} />
-                  </Reveal>
-                ))}
-              </ul>
+          {/* Sell and Follow up side by side, Done for you full width beneath. On phones they stack in that order. */}
+          <ul className="grid min-w-0 grid-cols-1 gap-4 md:grid-cols-2 lg:gap-5">
+            {PLAN.groups.map((g, i) => (
+              <Reveal as="li" key={g.id} delay={0.05 + 0.05 * i} className={clsx("min-w-0", g.id === WIDE && "md:col-span-2")}>
+                <Group group={g} wide={g.id === WIDE} />
+              </Reveal>
             ))}
-          </div>
+          </ul>
         </div>
 
         <Setup />
@@ -215,16 +193,16 @@ function PriceCard() {
   );
 }
 
-function Group({ group }: { group: FeatureGroup }) {
+function Group({ group, wide }: { group: FeatureGroup; wide?: boolean }) {
   return (
-    <div className="group/card rounded-[1.6rem] bg-paper p-5 ring-1 ring-ink/[0.07] transition-[box-shadow,transform] duration-500 ease-[var(--ease-soft)] hover:-translate-y-0.5 hover:shadow-card sm:p-6">
+    <div className="group/card h-full rounded-[1.6rem] bg-paper p-5 ring-1 ring-ink/[0.07] transition-[box-shadow,transform] duration-500 ease-[var(--ease-soft)] hover:-translate-y-0.5 hover:shadow-card sm:p-6">
       <div className="flex items-center gap-3">
         <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-sage-soft text-forest transition-colors duration-500 group-hover/card:bg-forest group-hover/card:text-cream">
           {ICON[group.id]}
         </span>
         <h3 className="font-display text-[1.45rem] leading-none text-ink">{group.title}</h3>
       </div>
-      <ul className="mt-5 grid gap-4">
+      <ul className={clsx("mt-5 grid gap-4", wide && "md:grid-cols-2 md:gap-x-8")}>
         {group.features.map((f) => (
           <li key={f.title} className="flex items-start gap-3">
             <Check className={clsx("mt-[0.2rem] h-4 w-4 shrink-0", f.soon ? "text-ink-mute/60" : "text-moss")} />

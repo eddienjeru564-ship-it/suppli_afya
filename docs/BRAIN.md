@@ -116,14 +116,15 @@ Vanity metrics to ignore: page views, number of questions answered, "engagement"
 One subscription in `src/config/plans.ts`, set by the founder in November 2026: **KES 6,500 once**
 for setup and the first month, **then KES 2,500 a month**. Everything is included: the branded shop,
 the assessment and recommendations, the customer app with the morning follow-up list and reorder
-tracking, QR business cards, M-Pesa payment prompts, full setup by our team (shop, products and
+tracking, SMS reminders to customers, QR business cards, full setup by our team (shop, products and
 prices, cards, moving existing customers in), unlimited customers and priority WhatsApp support.
 The setup fee is charged on a workspace's first payment only; every later payment is the monthly fee.
 Change prices in one place.
 
-- M-Pesa prompts to a distributor's own customers are listed ahead of the build (founder decision).
-  They need a PayHero channel per distributor (Phase 3) and must work before anyone relies on them.
-- SMS reminders to customers are listed as "Coming soon" until they're built.
+- SMS reminders to customers are listed ahead of the build (founder decision, November 2026). They
+  must ship before anyone relies on them.
+- No M-Pesa payment requests from distributors to their own customers (founder decision, November
+  2026). Customers pay the distributor directly, and the distributor records it against the order.
 - The setup fee pays for real work by the team: building the shop and cards and importing customers.
   The welcome email tells new distributors we'll message them on WhatsApp to do it.
 
@@ -176,7 +177,7 @@ Paystack, with retry on failure), five-screen onboarding, and the distributor po
 Sign-in is email and password. Phone OTP can replace or join it once there's an SMS provider.
 
 **Phase 3: next.**
-- M-Pesa payment requests from distributors to their own customers (a PayHero channel per distributor).
+- SMS reminders to customers (listed on the pricing section).
 - Automatic renewal for card payers, if asked for.
 - Pilot measurement: reorders recorded per distributor per month.
 

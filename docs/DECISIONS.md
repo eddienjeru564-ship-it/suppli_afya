@@ -38,7 +38,7 @@ Things only the founder can supply or decide. Ordered by how much they block.
 6. **Legal review** of `/privacy`, the disclaimers in the footer and the health check, and ODPC
    registration. The portal now stores customers' health check answers when they choose to send
    them to a distributor, so this is required before real distributors sign up.
-7. **Prices.** Set by the founder, November 2026: one subscription, KES 6,500 once for setup and the first month, then KES 2,500 a month (`src/config/plans.ts`). Still open: when M-Pesa prompts to a distributor's own customers ship, and SMS reminders.
+7. **Prices.** Set by the founder, November 2026: one subscription, KES 6,500 once for setup and the first month, then KES 2,500 a month (`src/config/plans.ts`). Still open: when SMS reminders to customers ship (listed on the pricing section ahead of the build). M-Pesa payment requests to a distributor's own customers are not planned.
 8. **Production database.** Set up: the Supabase project `suppli_afya-main_site`
    (`qadvlemdfypklscmbngc`, Ireland), reached as the app's own user `suppli_app` through the
    transaction pooler (port 6543; Vercel can't reach the direct connection, which is IPv6 only). See
@@ -79,10 +79,9 @@ Things only the founder can supply or decide. Ordered by how much they block.
     `src/components/site/story.ts`. Confirm with Kate that her name and title can appear there. The
     demo has no phone number, so nothing on it opens a chat to her. If she'd rather not, change those
     two files; every section reads from them.
-15. **Pro's M-Pesa prompts.** The homepage lists "M-Pesa STK push to your customer's phone" and
-    "Automatic payment confirmation" on Pro, ahead of the build (founder decision). Build them
-    before anyone pays for Pro: each Pro distributor's Till or Paybill as a PayHero payment channel,
-    a "Request payment" button on the order page, and the PayHero callback marking the order paid.
+15. **SMS reminders to customers.** Listed on the pricing section ahead of the build (founder
+    decision, November 2026). Build before anyone relies on them: reorder and payment reminders
+    sent by text in the distributor's name, through an SMS provider.
 
 ## Decisions to make during the pilot
 
