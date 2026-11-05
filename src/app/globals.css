@@ -299,3 +299,76 @@
     transform: none;
   }
 }
+
+/* Pricing: a slow band of light across the price card, every few seconds. */
+.price-sheen {
+  background: linear-gradient(112deg, transparent 38%, rgb(255 255 255 / 0.075) 50%, transparent 62%) no-repeat;
+  background-size: 260% 100%;
+  animation: sheen 7.5s var(--ease-soft) infinite;
+}
+@keyframes sheen {
+  0%,
+  45% {
+    background-position: 130% 0;
+  }
+  100% {
+    background-position: -30% 0;
+  }
+}
+
+/* Business card: front and back, turned over on hover, focus or tap. */
+.flip-card {
+  perspective: 1600px;
+}
+.flip-card-inner {
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.9s var(--ease-soft);
+}
+.flip-card[data-flipped="true"] .flip-card-inner {
+  transform: rotateY(180deg);
+}
+@media (hover: hover) {
+  .flip-card:hover .flip-card-inner {
+    transform: rotateY(180deg);
+  }
+  .flip-card[data-flipped="true"]:hover .flip-card-inner {
+    transform: none;
+  }
+}
+.flip-face {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+.flip-back {
+  position: absolute;
+  inset: 0;
+  transform: rotateY(180deg);
+}
+/* A gentle drift, so the card feels like it's sitting on the table, not printed on the page. */
+.card-drift {
+  animation: card-drift 7s ease-in-out infinite;
+}
+.card-drift:hover,
+.card-drift:focus-within {
+  animation-play-state: paused;
+}
+@keyframes card-drift {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-1.2deg);
+  }
+  50% {
+    transform: translateY(-6px) rotate(-0.4deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .price-sheen,
+  .card-drift {
+    animation: none;
+  }
+  .flip-card-inner {
+    transition-duration: 0.01s;
+  }
+}

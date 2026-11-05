@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
-import { planOrDefault } from "@/config/plans";
 import { getAccount, nextStepFor, subscriptionState } from "@/server/auth";
 import { db } from "@/server/db";
 import { methodModes } from "@/server/payments";
@@ -11,8 +10,7 @@ export const metadata: Metadata = { title: "Payment" };
 export default async function PayPage(props: PageProps<"/start/pay">) {
   const sp = await props.searchParams;
   const account = await getAccount();
-  const planParam = typeof sp.plan === "string" ? sp.plan : null;
-  if (!account) redirect(`/start?plan=${planOrDefault(planParam).id}`);
+  if (!account) redirect("/start");
 
   const renew = sp.renew === "1";
   const state = subscriptionState(account);
@@ -27,10 +25,9 @@ export default async function PayPage(props: PageProps<"/start/pay">) {
 
   return (
     <PaymentStep
-      initialPlan={planOrDefault(planParam ?? account.workspace.plan).id}
       modes={methodModes()}
       email={account.user.email}
-      renewing={Boolean(account.subscription) || renew}
+      renewing={Boolean(account.subscription)}
       lastPhone={last?.phone ?? null}
       lastFailure={failedHere ? last.failure_reason : null}
     />

@@ -1,3 +1,5 @@
+import { paymentLabel } from "@/config/plans";
+
 /**
  * Every email the app sends, as pure functions: data in, subject + HTML + plain text out.
  * The voice is docs/VOICE.md: plain, warm, one idea per paragraph, sentences under 25 words.
@@ -95,7 +97,7 @@ export interface PaymentDetails {
 
 function paymentRows(p: PaymentDetails): [string, string][] {
   return [
-    ["Subscription", `${p.plan}, one month`],
+    ["Paid for", paymentLabel(p.amount)],
     ["Amount", kes(p.amount)],
     ["Paid by", p.method],
     ...(p.receipt ? ([["Receipt", p.receipt]] as [string, string][]) : []),
@@ -111,7 +113,7 @@ export function welcomeEmail(p: PaymentDetails & { setupUrl: string }): Rendered
     [
       { p: `${hi(p.name)} thank you for joining. Your ${p.plan} subscription is active.` },
       { p: "Next, set up your page. It takes about five minutes: your name, your WhatsApp number, and what your customers usually ask about." },
-      { p: "You then get your own link and a QR card to share with customers." },
+      { p: "You then get your own link and a QR card to share with customers. Our team will also message you on WhatsApp to set up your shop and design your cards." },
       { button: { label: "Set up your page", url: p.setupUrl } },
       { rows: paymentRows(p) },
       { small: "Nothing renews automatically. We'll email you a few days before your subscription ends." },

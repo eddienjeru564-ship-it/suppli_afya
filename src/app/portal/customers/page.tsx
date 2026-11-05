@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { PLANS_BY_ID } from "@/config/plans";
 import { requirePortalAccount } from "@/server/auth";
 import { customers, daysUntil } from "@/server/portal";
 import { buttonClass } from "@/components/ui/Button";
@@ -11,26 +10,18 @@ export default async function CustomersPage(props: PageProps<"/portal/customers"
   const sp = await props.searchParams;
   const q = typeof sp.q === "string" ? sp.q.slice(0, 40) : "";
   const a = await requirePortalAccount();
-  const plan = PLANS_BY_ID[a.workspace.plan];
   const list = await customers(a.workspace.id, q || undefined);
-  const total = q ? null : list.length;
 
   return (
     <div>
       <PageHeader
         title="Customers"
-        sub={
-          plan.customerLimit !== null && total !== null
-            ? `${total} of ${plan.customerLimit} customers on Starter.`
-            : "Everyone who buys from you, with what they bought and when they'll need more."
-        }
+        sub="Everyone who buys from you, with what they bought and when they'll need more."
         action={
           <div className="flex gap-2">
-            {plan.canImport && (
-              <Link href="/portal/customers/import" className={buttonClass("secondary", "md")}>
-                Import
-              </Link>
-            )}
+            <Link href="/portal/customers/import" className={buttonClass("secondary", "md")}>
+              Import
+            </Link>
             <Link href="/portal/customers/new" className={buttonClass("primary", "md")}>
               Add customer
             </Link>

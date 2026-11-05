@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { PLANS_BY_ID, kes } from "@/config/plans";
+import { kes, paymentLabel, planFor } from "@/config/plans";
 import { site } from "@/config/site";
 import { requirePortalAccount, subscriptionState } from "@/server/auth";
 import { db } from "@/server/db";
@@ -19,7 +19,7 @@ export const metadata = { title: "Settings" };
 export default async function SettingsPage() {
   const a = await requirePortalAccount();
   const w = a.workspace;
-  const plan = PLANS_BY_ID[w.plan];
+  const plan = planFor(w.plan);
   const url = `${site.url}/d/${w.slug}`;
   const displayUrl = `${site.displayDomain}/d/${w.slug}`;
   const svg = await qrSvg(url);
@@ -84,12 +84,12 @@ export default async function SettingsPage() {
       </section>
 
       <section>
-        <h2 className="mb-3 font-display text-[1.5rem] text-ink">Plan and billing</h2>
+        <h2 className="mb-3 font-display text-[1.5rem] text-ink">Subscription and billing</h2>
         <Card className="p-5 sm:p-6">
           <div className="flex flex-wrap items-start justify-between gap-4">
             <div>
               <div className="font-display text-[1.5rem] text-ink">
-                {plan.name} · {kes(plan.price)} <span className="text-[1rem] text-ink-mute">a month</span>
+                {plan.name} · {kes(plan.monthly)} <span className="text-[1rem] text-ink-mute">a month</span>
               </div>
               <p className="mt-1 text-[0.93rem] text-ink-soft">
                 {state === "grace"
@@ -98,7 +98,7 @@ export default async function SettingsPage() {
               </p>
             </div>
             <Link href="/start/pay?renew=1" className={buttonClass("primary", "md")}>
-              Renew or change plan
+              Renew
             </Link>
           </div>
           {payments.length > 0 && (
@@ -106,7 +106,7 @@ export default async function SettingsPage() {
               {payments.map((p) => (
                 <li key={p.id} className="flex flex-wrap items-center justify-between gap-2 py-2.5">
                   <span className="text-ink">
-                    {longDate(p.created_at)} · {PLANS_BY_ID[p.plan as keyof typeof PLANS_BY_ID]?.name ?? p.plan}
+                    {longDate(p.created_at)} · {paymentLabel(p.amount)}
                   </span>
                   <span className={p.status === "succeeded" ? "text-ink-soft" : "text-clay"}>
                     {kesAmount(p.amount)} by {p.method === "mpesa" ? "M-Pesa" : "card"}

@@ -6,7 +6,7 @@ import { useState } from "react";
 import { Plus } from "@/components/ui/icons";
 import { Reveal } from "@/components/ui/Reveal";
 import { keepTogether } from "@/components/ui/KeepTogether";
-import { PLANS_BY_ID, kes } from "@/config/plans";
+import { PLAN, kes } from "@/config/plans";
 
 const FAQ = [
   {
@@ -31,15 +31,15 @@ const FAQ = [
   },
   {
     q: "How does payment work?",
-    a: "Your customers pay you directly, by M-Pesa, cash or however you already work. Suppli Afya never holds your money. You record each payment against its order, and anything still owed stays on your list until it's paid. Your Suppli Afya subscription is paid monthly, by M-Pesa or card.",
+    a: "Your customers pay you directly, by M-Pesa, cash or however you already work. Suppli Afya never holds your money. You record each payment against its order, and anything still owed stays on your list until it's paid. Your own Suppli Afya subscription is a one-time setup fee, then a monthly fee, paid by M-Pesa or card.",
   },
   {
     q: "Can I stop my subscription?",
     a: "Yes. Nothing renews automatically, so there's nothing to cancel. If you don't renew, your page goes offline three days after your subscription ends. Your customer records stay saved, so everything is still there if you come back. If you'd rather we deleted them, just ask.",
   },
   {
-    q: "What counts as a customer, and what if I have more than 50?",
-    a: `Enquiries from your page are unlimited on Starter, Growth and Pro. A customer is someone you've recorded an order for or added yourself, and Starter holds up to 50. When you need more, Growth is ${kes(PLANS_BY_ID.growth.price)} a month with no limit, and we can add your existing customer list for you. You can move up at any time.`,
+    q: "What does the setup fee cover?",
+    a: `Our team builds your shop with your name, photo, products and prices. We design your QR business cards and move your existing customers into your app. The ${kes(PLAN.setupFee)} also covers your first month. After that it's ${kes(PLAN.monthly)} a month, with no limit on customers or enquiries.`,
   },
   {
     q: "Is the assessment medical advice?",

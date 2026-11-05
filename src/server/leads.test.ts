@@ -16,11 +16,11 @@ let n = 0;
 async function distributor() {
   const [u] = await d.query<{ id: string }>(`insert into users (email, password_hash) values ($1, 'x') returning id`, [`lead${++n}@example.com`]);
   const [w] = await d.query<{ id: string; slug: string }>(
-    `insert into workspaces (owner_id, plan, owner_name, slug, onboarded_at) values ($1, 'growth', 'Grace Wambui', $2, now()) returning id, slug`,
+    `insert into workspaces (owner_id, plan, owner_name, slug, onboarded_at) values ($1, 'suppli', 'Grace Wambui', $2, now()) returning id, slug`,
     [u.id, `grace-${n}`],
   );
   await d.query(
-    `insert into subscriptions (workspace_id, plan, status, current_period_start, current_period_end) values ($1, 'growth', 'active', now(), now() + interval '20 days')`,
+    `insert into subscriptions (workspace_id, plan, status, current_period_start, current_period_end) values ($1, 'suppli', 'active', now(), now() + interval '20 days')`,
     [w.id],
   );
   return w;

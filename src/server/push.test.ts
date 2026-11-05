@@ -30,12 +30,12 @@ let n = 0;
 async function distributor(opts: { tasks: boolean; paid?: boolean }) {
   const [u] = await d.query<{ id: string }>(`insert into users (email, password_hash) values ($1, 'x') returning id`, [`p${++n}@example.com`]);
   const [w] = await d.query<{ id: string }>(
-    `insert into workspaces (owner_id, plan, owner_name, slug, onboarded_at) values ($1, 'growth', 'Jane Wanjiku', $2, now()) returning id`,
+    `insert into workspaces (owner_id, plan, owner_name, slug, onboarded_at) values ($1, 'suppli', 'Jane Wanjiku', $2, now()) returning id`,
     [u.id, `jane-${n}`],
   );
   await d.query(
     `insert into subscriptions (workspace_id, plan, status, current_period_start, current_period_end)
-     values ($1, 'growth', 'active', now(), now() + interval ${opts.paid === false ? "'-10 days'" : "'20 days'"})`,
+     values ($1, 'suppli', 'active', now(), now() + interval ${opts.paid === false ? "'-10 days'" : "'20 days'"})`,
     [w.id],
   );
   if (opts.tasks) {

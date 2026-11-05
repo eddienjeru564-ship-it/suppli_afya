@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { goalFocus } from "@/config/onboarding";
-import { PLANS_BY_ID } from "@/config/plans";
 import { communityUrl, site } from "@/config/site";
 import { requirePortalAccount } from "@/server/auth";
 import { db } from "@/server/db";
@@ -41,7 +40,6 @@ export default async function Dashboard() {
   const first = greetingName(w.owner_name);
   const url = `${site.url}/d/${w.slug}`;
   const displayUrl = `${site.displayDomain}/d/${w.slug}`;
-  const plan = PLANS_BY_ID[w.plan];
   const isNew = c.customers + c.orders + c.prospects === 0;
   const steps = [
     // Already true: starting the checklist part-done makes the rest feel close.
@@ -142,20 +140,10 @@ export default async function Dashboard() {
             <Stat label="Paid" value={kesAmount(stats.paid)} href="/portal/orders?status=paid" />
             <Stat label="Reorders due soon" value={String(stats.reordersDue)} href="/portal/customers" />
           </div>
-          {plan.monthlySummary ? (
-            <p className="mt-3 text-[0.93rem] leading-relaxed text-ink-soft">
-              {stats.repeatOrders} of this month&apos;s orders came from returning customers.{" "}
-              {stats.unpaid > 0 ? `${kesAmount(stats.unpaid)} is still owed on unpaid orders.` : "Nothing is owed on open orders."}
-            </p>
-          ) : (
-            <p className="mt-3 text-[0.85rem] text-ink-mute">
-              The monthly summary of repeat orders and money owed is part of{" "}
-              <Link href="/start/pay?renew=1&plan=growth" className="font-semibold text-forest underline underline-offset-2">
-                Growth
-              </Link>
-              .
-            </p>
-          )}
+          <p className="mt-3 text-[0.93rem] leading-relaxed text-ink-soft">
+            {stats.repeatOrders} of this month&apos;s orders came from returning customers.{" "}
+            {stats.unpaid > 0 ? `${kesAmount(stats.unpaid)} is still owed on unpaid orders.` : "Nothing is owed on open orders."}
+          </p>
         </section>
       )}
 

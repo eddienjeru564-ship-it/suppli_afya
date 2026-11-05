@@ -23,7 +23,7 @@ test("public pages fit a small phone without sideways scrolling", async ({ brows
   // A plain 360px window: phone emulation zooms out to fit a page that's too wide, which hides the problem.
   const ctx = await browser.newContext({ baseURL: info.project.use.baseURL, viewport: { width: 360, height: 740 } });
   const page = await ctx.newPage();
-  for (const path of ["/", "/check", "/start?plan=growth", "/login", "/privacy"]) {
+  for (const path of ["/", "/check", "/start", "/login", "/privacy"]) {
     await page.goto(path);
     await page.waitForLoadState("networkidle");
     expect(await page.evaluate(() => document.documentElement.scrollWidth), path).toBeLessThanOrEqual(360);
@@ -36,7 +36,7 @@ test("pages hydrate cleanly for people who asked for reduced motion", async ({ b
   const page = await ctx.newPage();
   const errors: string[] = [];
   page.on("pageerror", (e) => errors.push(String(e)));
-  for (const path of ["/", "/check", "/start?plan=growth", "/login"]) {
+  for (const path of ["/", "/check", "/start", "/login"]) {
     await page.goto(path);
     await page.waitForLoadState("networkidle");
   }
@@ -54,6 +54,9 @@ test("the workspace preview opens each person's ready message", async ({ page })
 
 test("the offer leads straight to checkout", async ({ page }) => {
   await page.goto("/#pricing");
-  await page.locator("#pricing").getByRole("link", { name: "Get started with Starter" }).click();
-  await expect(page).toHaveURL(/\/start\?plan=starter/);
+  const pricing = page.locator("#pricing");
+  await expect(pricing.getByText("KES 6,500", { exact: true })).toBeVisible();
+  await expect(pricing.getByText("KES 2,500", { exact: true })).toBeVisible();
+  await pricing.getByRole("link", { name: "Get started", exact: true }).click();
+  await expect(page).toHaveURL(/\/start$/);
 });

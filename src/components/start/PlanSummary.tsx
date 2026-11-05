@@ -3,17 +3,17 @@
 import clsx from "clsx";
 import { AnimatePresence, motion } from "motion/react";
 import { useState } from "react";
-import { PLANS, PLANS_BY_ID, kes, type PlanId } from "@/config/plans";
+import { MONTHLY_PRICE, PLAN, SETUP_PRICE, amountDue, kes } from "@/config/plans";
 import { Check } from "@/components/ui/icons";
 import { MPesa } from "@/components/ui/KeepTogether";
 
 /**
- * What you're buying, kept in view through checkout. Switching plan here is
- * allowed at any point, so nobody has to go back to the homepage.
+ * What you're buying, kept in view through checkout: what is paid today (setup and the first month,
+ * or one month on a renewal), what follows, and everything included.
  */
-export function PlanSummary({ plan, onChange }: { plan: PlanId; onChange: (p: PlanId) => void }) {
+export function PlanSummary({ renewing = false }: { renewing?: boolean }) {
   const [open, setOpen] = useState(false);
-  const p = PLANS_BY_ID[plan];
+  const today = amountDue(renewing);
 
   return (
     <div className="rounded-[1.5rem] bg-forest text-cream shadow-float lg:sticky lg:top-8">
@@ -24,14 +24,14 @@ export function PlanSummary({ plan, onChange }: { plan: PlanId; onChange: (p: Pl
         onClick={() => setOpen((o) => !o)}
         aria-expanded={open}
       >
-        <span>
-          <span className="block text-[0.75rem] font-semibold text-cream/60">Your plan</span>
+        <span className="min-w-0">
+          <span className="block text-[0.75rem] font-semibold text-cream/60">{renewing ? "Renewing" : "Today"}</span>
           <span className="font-display text-[1.35rem]">
-            {p.name} · {kes(p.price)}
-            <span className="text-[0.9rem] text-cream/60"> a month</span>
+            {kes(today)}
+            <span className="text-[0.9rem] text-cream/60">{renewing ? " for one month" : `, then ${MONTHLY_PRICE} a month`}</span>
           </span>
         </span>
-        <span className="text-[0.8rem] font-semibold text-sage">{open ? "Hide" : "Details"}</span>
+        <span className="shrink-0 text-[0.8rem] font-semibold text-sage">{open ? "Hide" : "What's included"}</span>
       </button>
 
       <AnimatePresence initial={false}>
@@ -42,65 +42,56 @@ export function PlanSummary({ plan, onChange }: { plan: PlanId; onChange: (p: Pl
             exit={{ height: 0, opacity: 0 }}
             className="overflow-hidden lg:hidden"
           >
-            <Details plan={plan} onChange={onChange} />
+            <Details renewing={renewing} />
           </motion.div>
         )}
       </AnimatePresence>
 
       <div className="hidden p-7 lg:block">
-        <div className="text-[0.8rem] font-semibold text-cream/60">Your plan</div>
-        <div className="mt-1 font-display text-[2rem] leading-none">{p.name}</div>
-        <div className="mt-3 flex items-baseline gap-1.5">
-          <span className="font-display text-[1.6rem]">{kes(p.price)}</span>
-          <span className="text-cream/60">a month</span>
-        </div>
-        <Details plan={plan} onChange={onChange} desktop />
+        <div className="text-[0.8rem] font-semibold text-cream/60">Your subscription</div>
+        <div className="mt-1 font-display text-[2rem] leading-none">{PLAN.name}</div>
+        <dl className="mt-5 grid gap-2 rounded-2xl bg-cream/[0.07] p-4 text-[0.92rem] ring-1 ring-cream/10">
+          <div className="flex items-baseline justify-between gap-3">
+            <dt className="text-cream/75">{renewing ? "One month" : "Setup and first month"}</dt>
+            <dd className="font-display text-[1.45rem] leading-none">{kes(today)}</dd>
+          </div>
+          {!renewing && (
+            <div className="flex items-baseline justify-between gap-3 border-t border-cream/10 pt-2">
+              <dt className="text-cream/75">From month two</dt>
+              <dd>
+                {kes(PLAN.monthly)} <span className="text-cream/60">a month</span>
+              </dd>
+            </div>
+          )}
+        </dl>
+        <Details renewing={renewing} desktop />
       </div>
     </div>
   );
 }
 
-function Details({ plan, onChange, desktop }: { plan: PlanId; onChange: (p: PlanId) => void; desktop?: boolean }) {
-  const p = PLANS_BY_ID[plan];
+function Details({ renewing, desktop }: { renewing: boolean; desktop?: boolean }) {
   return (
     <div className={clsx(desktop ? "mt-6" : "px-5 pb-5")}>
-      <p className="mb-3 text-[0.92rem] leading-snug text-cream/80">{p.tagline}</p>
-      {p.includes && (
-        <p className="mb-2.5 text-[0.85rem] font-semibold text-cream/70">Everything in {PLANS_BY_ID[p.includes].name}, plus:</p>
+      {!desktop && !renewing && (
+        <p className="mb-4 text-[0.88rem] leading-snug text-cream/75">
+          {SETUP_PRICE} once covers setup and your first month. Then {MONTHLY_PRICE} a month.
+        </p>
       )}
-      <ul className="grid gap-2.5 text-[0.92rem] leading-snug">
-        {p.features.map((f) => (
-          <li key={f.text} className={clsx("flex gap-2.5", f.soon && "text-cream/60")}>
+      <p className="mb-2.5 text-[0.85rem] font-semibold text-cream/70">Everything included:</p>
+      <ul className="grid gap-2 text-[0.9rem] leading-snug">
+        {PLAN.groups.flatMap((g) => g.features).map((f) => (
+          <li key={f.title} className={clsx("flex gap-2.5", f.soon && "text-cream/60")}>
             <Check className="mt-0.5 h-4 w-4 shrink-0 text-sage" />
             <span>
-              {f.text}
+              {f.title}
               {f.soon && <span className="ml-1 text-[0.72rem] font-semibold">(coming soon)</span>}
             </span>
           </li>
         ))}
       </ul>
-      <div className="mt-6 border-t border-cream/10 pt-5">
-        <div className="text-[0.78rem] font-semibold text-cream/60">Change plan</div>
-        <div role="radiogroup" className="mt-2 grid grid-cols-3 gap-1.5 rounded-full bg-cream/10 p-1">
-          {PLANS.map((o) => (
-            <button
-              key={o.id}
-              type="button"
-              role="radio"
-              aria-checked={o.id === plan}
-              onClick={() => onChange(o.id)}
-              className={clsx(
-                "rounded-full px-2 py-1.5 text-[0.8rem] font-semibold transition-colors",
-                o.id === plan ? "bg-cream text-forest-deep" : "text-cream/75 hover:text-cream",
-              )}
-            >
-              {o.name}
-            </button>
-          ))}
-        </div>
-      </div>
-      <p className="mt-5 text-[0.8rem] leading-relaxed text-cream/60">
-        Paid monthly. Nothing is taken automatically; you renew each month by <MPesa /> or card.
+      <p className="mt-5 border-t border-cream/10 pt-4 text-[0.8rem] leading-relaxed text-cream/60">
+        Nothing is taken automatically. You renew each month by <MPesa /> or card, and you can stop anytime.
       </p>
     </div>
   );
