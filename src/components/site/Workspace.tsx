@@ -67,7 +67,7 @@ export function Workspace() {
               {TODAY.map((p) => {
                 const isOpen = open === p.id;
                 return (
-                  <li key={p.id} className={clsx("min-w-0 rounded-2xl border transition-colors", isOpen ? "border-ink/15 bg-paper" : "border-transparent")}>
+                  <li key={p.id} className={clsx("pop-in min-w-0 origin-top rounded-2xl border transition-colors", isOpen ? "border-ink/15 bg-paper" : "border-transparent")}>
                     <button
                       type="button"
                       onClick={() => setOpen(isOpen ? null : p.id)}

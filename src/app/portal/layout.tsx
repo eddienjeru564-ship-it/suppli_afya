@@ -27,7 +27,7 @@ export default async function PortalLayout({ children }: LayoutProps<"/portal">)
   const banner =
     state === "grace" || daysLeft <= 5 ? (
       <div className="border-b border-ochre/30 bg-[#f6ead2] px-4 py-2.5 text-center text-[0.88rem] text-[#6b4a10]">
-        {state === "grace" ? `Your plan ended on ${longDate(end)}.` : `Your plan renews by ${longDate(end)}.`}{" "}
+        {state === "grace" ? `Your subscription ended on ${longDate(end)}.` : `Your subscription is due for renewal by ${longDate(end)}.`}{" "}
         <Link href="/start/pay?renew=1" className="font-semibold underline underline-offset-2">
           Renew now
         </Link>

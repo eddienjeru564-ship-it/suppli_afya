@@ -13,7 +13,7 @@ import { MobileCta } from "@/components/site/MobileCta";
  * One story, in order of what matters: the hero → where WhatsApp sales get lost → how it works,
  * by trying it (answers → recommendation → WhatsApp → the distributor gets the enquiry, and it
  * stops there) → and it doesn't stop at the enquiry (the daily follow-up list) → your name, your
- * page, your customers → common questions → the plans.
+ * page, your customers → common questions → pricing.
  */
 export default function Home() {
   return (

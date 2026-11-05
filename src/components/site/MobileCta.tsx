@@ -9,7 +9,7 @@ const QUIET_ZONES = ["try", "pricing", "site-footer"];
 
 /**
  * A slim bar for phones, shown between sections that don't have their own call to action.
- * Before the demo it offers Kate's example page; once you've scrolled past the demo it offers the plans.
+ * Before the demo it offers Kate's example page; once you've scrolled past the demo it offers pricing.
  */
 export function MobileCta() {
   const [show, setShow] = useState(false);

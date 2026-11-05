@@ -29,6 +29,7 @@ export function BusinessCard() {
                 sizes="(min-width: 1024px) 30rem, 90vw"
                 className="h-full w-full object-cover"
                 placeholder="blur"
+                loading="eager"
               />
             </span>
             <span className="flip-face flip-back overflow-hidden rounded-[1.1rem] shadow-float ring-1 ring-ink/10">
@@ -38,6 +39,7 @@ export function BusinessCard() {
                 sizes="(min-width: 1024px) 30rem, 90vw"
                 className="h-full w-full object-cover"
                 placeholder="blur"
+                loading="eager"
               />
             </span>
           </span>

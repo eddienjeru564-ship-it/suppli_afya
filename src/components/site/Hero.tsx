@@ -121,7 +121,7 @@ export function Hero() {
           <p className="rise mt-5 text-[0.85rem] leading-relaxed text-ink-mute" style={at(13)}>
             <span className="block sm:inline">{SETUP_PRICE} setup, then {MONTHLY_PRICE} a month</span>
             <span className="hidden sm:inline"> · </span>
-            <span>No contract · Pay by M-Pesa</span>
+            <span>No contract · Pay by <span className="whitespace-nowrap">M-Pesa</span></span>
           </p>
         </div>
 

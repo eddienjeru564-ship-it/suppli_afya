@@ -218,7 +218,7 @@ function Group({ group, wide }: { group: FeatureGroup; wide?: boolean }) {
                   </>
                 )}
               </div>
-              <p className="mt-0.5 text-[0.9rem] leading-relaxed text-ink-soft">{f.body}</p>
+              <p className="mt-0.5 text-[0.9rem] leading-relaxed text-ink-soft">{keepTogether(f.body)}</p>
             </div>
           </li>
         ))}
@@ -248,7 +248,7 @@ function Setup() {
           >
             <span className="grid h-9 w-9 place-items-center rounded-full bg-forest font-display text-[1.05rem] text-cream">{i + 1}</span>
             <h4 className="mt-4 text-[1.05rem] font-semibold text-ink">{s.title}</h4>
-            <p className="mt-1.5 text-[0.93rem] leading-relaxed text-ink-soft">{s.body}</p>
+            <p className="mt-1.5 text-[0.93rem] leading-relaxed text-ink-soft">{keepTogether(s.body)}</p>
           </Reveal>
         ))}
       </ol>
