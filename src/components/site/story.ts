@@ -103,7 +103,7 @@ export const PLAN_REF = "SA-FK27";
 export const SARAH_MESSAGE = `Hi ${KATE.first}, I've just done the assessment on your page.
 
 *About me:* Sarah, 34
-*My goals:* 1. Energy  2. Joints
+*My goals:* 1. Energy, 2. Joints
 *Suggested plan:* 4 in 1 Cordyceps Coffee, ArthroXtra Tablets
 *Maybe later:* NMN Duo Release
 *I'd like to start with:* a focused plan (2–3 products)

@@ -3,6 +3,7 @@ import { sendSubscriptionEmails } from "@/server/email";
 import { env } from "@/server/env";
 import { sendMorningReminders } from "@/server/push";
 import { sendSmsReminders } from "@/server/sms";
+import { submitToIndexNow } from "@/server/indexnow";
 
 /**
  * Called by the scheduler every morning (see vercel.json). Needs CRON_SECRET. Sends the morning
@@ -15,6 +16,6 @@ export async function GET(req: Request) {
   if (!env.cronSecret || given.length !== expected.length || !timingSafeEqual(given, expected)) {
     return Response.json({ error: "Unauthorized" }, { status: 401 });
   }
-  const [push, email, sms] = await Promise.all([sendMorningReminders(), sendSubscriptionEmails(), sendSmsReminders()]);
-  return Response.json({ push, email, sms });
+  const [push, email, sms, indexnow] = await Promise.all([sendMorningReminders(), sendSubscriptionEmails(), sendSmsReminders(), submitToIndexNow()]);
+  return Response.json({ push, email, sms, indexnow });
 }
