@@ -54,13 +54,32 @@ export async function markDone(taskKey: string, note: string) {
   }
   await d.query(
     `insert into interactions (workspace_id, ${col}, kind, body, task_key) values ($1, $2, 'followup', $3, $4)`,
-    [a.workspace.id, refId, text(note, 300) || "Followed up.", taskKey],
+    [a.workspace.id, refId, text(note, 700) || "Followed up.", taskKey],
   );
   if (kind === "prospect") {
     await d.query(`update prospects set status = 'contacted', contacted_at = now() where workspace_id = $1 and id = $2 and status = 'new'`, [
       a.workspace.id,
       id,
     ]);
+  }
+  revalidatePath("/portal", "layout");
+}
+
+/** Takes back a "done" from the last few minutes, for the Undo on the Today list. */
+export async function undoDone(taskKey: string) {
+  const a = await requireAccount();
+  const d = await db();
+  const [kind, id] = taskKey.split(":");
+  await d.query(
+    `delete from interactions where workspace_id = $1 and task_key = $2 and created_at > now() - interval '10 minutes'`,
+    [a.workspace.id, taskKey],
+  );
+  if (kind === "prospect") {
+    await d.query(
+      `update prospects set status = 'new', contacted_at = null
+        where workspace_id = $1 and id = $2 and status = 'contacted' and contacted_at > now() - interval '10 minutes'`,
+      [a.workspace.id, id],
+    );
   }
   revalidatePath("/portal", "layout");
 }

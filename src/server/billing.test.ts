@@ -145,7 +145,7 @@ describe("today's list", () => {
     );
     await d.query(
       `insert into orders (workspace_id, customer_id, items, total, status) values ($1, $2, $3::jsonb, 7800, 'unpaid')`,
-      [w.id, c.id, JSON.stringify([{ productId: "x", name: "Veggie Veggie", qty: 1, price: 7800 }])],
+      [w.id, c.id, JSON.stringify([{ productId: "x", name: "Veggie Veggie", qty: 1, unitPrice: 7800 }])],
     );
     const [c2] = await d.query<{ id: string }>(
       `insert into customers (workspace_id, name, phone) values ($1, 'Otieno', '254700000003') returning id`,
@@ -154,7 +154,7 @@ describe("today's list", () => {
     await d.query(
       `insert into orders (workspace_id, customer_id, items, total, status, created_at, reorder_due_at)
        values ($1, $2, $3::jsonb, 3500, 'paid', now() - interval '28 days', now() + interval '2 days')`,
-      [w.id, c2.id, JSON.stringify([{ productId: "x", name: "ArthroXtra", qty: 1, price: 3500 }])],
+      [w.id, c2.id, JSON.stringify([{ productId: "x", name: "ArthroXtra", qty: 1, unitPrice: 3500 }])],
     );
     return w;
   }
@@ -165,6 +165,36 @@ describe("today's list", () => {
 
     const payments = await seed(["payments"]);
     expect((await portal.today(payments)).map((t) => t.kind)).toEqual(["payment", "new", "reorder"]);
+  });
+
+  it("lists each person once, with the most useful reason", async () => {
+    const w = await workspace(["track"]);
+    const [c] = await d.query<{ id: string }>(
+      `insert into customers (workspace_id, name, phone) values ($1, 'Kiprono', '254700000009') returning id`,
+      [w.id],
+    );
+    // Bought three months ago: both "reorder due" and "gone quiet". The reorder is the better reason.
+    await d.query(
+      `insert into orders (workspace_id, customer_id, items, total, status, created_at, reorder_due_at)
+       values ($1, $2, $3::jsonb, 3500, 'paid', now() - interval '95 days', now() - interval '65 days')`,
+      [w.id, c.id, JSON.stringify([{ productId: "x", name: "Reishi", qty: 1, unitPrice: 3500 }])],
+    );
+    const tasks = await portal.today(w);
+    expect(tasks.map((t) => t.kind)).toEqual(["reorder"]);
+  });
+
+  it("puts an order from the distributor's page first, whatever the goals", async () => {
+    const w = await seed(["repeat"]);
+    const [c] = await d.query<{ id: string }>(
+      `insert into customers (workspace_id, name, phone) values ($1, 'Grace', '254700000010') returning id`,
+      [w.id],
+    );
+    await d.query(
+      `insert into orders (workspace_id, customer_id, items, total, status, source) values ($1, $2, $3::jsonb, 3900, 'unpaid', 'storefront')`,
+      [w.id, c.id, JSON.stringify([{ productId: "x", name: "Probio3", qty: 1, unitPrice: 3900 }])],
+    );
+    const [first] = await portal.today(w);
+    expect(first.key).toMatch(/^placed:/);
   });
 
   it("drops a task once it's marked done", async () => {

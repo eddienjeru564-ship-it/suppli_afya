@@ -185,11 +185,11 @@ export function ReminderCard() {
             await turnOn();
             dismiss();
           }}
-          className="h-10 rounded-full bg-forest px-4 text-[0.88rem] font-semibold text-cream active:scale-[0.98] disabled:opacity-60"
+          className="h-11 rounded-full bg-forest px-4 text-[0.88rem] font-semibold text-cream active:scale-[0.98] disabled:opacity-60"
         >
           Turn on
         </button>
-        <button type="button" onClick={dismiss} className="h-10 rounded-full px-3 text-[0.88rem] font-semibold text-ink-soft">
+        <button type="button" onClick={dismiss} className="h-11 rounded-full px-3 text-[0.88rem] font-semibold text-ink-soft">
           Not now
         </button>
       </div>

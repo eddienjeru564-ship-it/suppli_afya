@@ -11,7 +11,7 @@ import { AppBadge } from "@/components/pwa/AppBadge";
 import { InstallCard } from "@/components/pwa/InstallCard";
 import { ReminderCard } from "@/components/pwa/MorningReminder";
 import { pushConfigured } from "@/server/env";
-import { Card, kesAmount } from "@/components/portal/ui";
+import { Card } from "@/components/portal/ui";
 import { Check } from "@/components/ui/icons";
 import { greetingName } from "@/lib/names";
 
@@ -124,25 +124,38 @@ export default async function Dashboard() {
         </p>
       </div>
 
+      {hasActivity && (
+        // The money at a glance: what's owed, who's about to need more, what came in.
+        <div className="-mt-4 grid grid-cols-3 gap-2">
+          <Glance label="Owed to you" kes={stats.unpaid} href="/portal/orders?status=unpaid" alert={stats.unpaid > 0} />
+          <Glance label="Reorders due" value={String(stats.reordersDue)} href="/portal/customers?due=1" alert={stats.reordersDue > 0} />
+          <Glance label="Paid this month" kes={stats.paid} href="/portal/orders?status=paid" />
+        </div>
+      )}
+
+      {/* Phones only, until installed or waved away: the app is how the morning list reaches them. */}
+      <InstallCard />
+
       {/* Someone waiting on you comes before the checklist; on a quiet day the checklist leads. */}
       {tasks.length > 0 ? todayList : checklist}
       {tasks.length > 0 ? checklist : todayList}
 
-      <InstallCard />
       {pushConfigured() && <ReminderCard />}
 
       {hasActivity && (
         <section>
           <h2 className="mb-3 font-display text-[1.6rem] text-ink">This month</h2>
-          <div className="grid grid-cols-2 gap-2 lg:grid-cols-4">
+          <div className="grid grid-cols-3 gap-2">
             <Stat label="New enquiries" value={String(stats.prospects)} href="/portal/prospects" />
             <Stat label="Orders" value={String(stats.orders)} href="/portal/orders" />
-            <Stat label="Paid" value={kesAmount(stats.paid)} href="/portal/orders?status=paid" />
-            <Stat label="Reorders due soon" value={String(stats.reordersDue)} href="/portal/customers" />
+            <Stat label="From returning customers" value={String(stats.repeatOrders)} href="/portal/customers" />
           </div>
           <p className="mt-3 text-[0.93rem] leading-relaxed text-ink-soft">
-            {stats.repeatOrders} of this month&apos;s orders came from returning customers.{" "}
-            {stats.unpaid > 0 ? `${kesAmount(stats.unpaid)} is still owed on unpaid orders.` : "Nothing is owed on open orders."}
+            {stats.orders === 0
+              ? "No orders yet this month. Sharing your page on your WhatsApp status is the quickest way to change that."
+              : stats.repeatOrders > 0
+                ? `${stats.repeatOrders} of ${stats.orders} orders this month came from people who had bought before.`
+                : "Every order this month came from someone new. Reorder reminders help them come back."}
           </p>
         </section>
       )}
@@ -163,9 +176,36 @@ export default async function Dashboard() {
 
 function Stat({ label, value, href }: { label: string; value: string; href: string }) {
   return (
-    <Link href={href} className="rounded-[1.1rem] border border-ink/10 bg-paper p-4 transition-colors hover:border-ink/25">
-      <div className="text-[0.8rem] font-semibold text-ink-mute">{label}</div>
-      <div className="mt-1 font-display text-[1.6rem] leading-tight text-ink">{value}</div>
+    <Link href={href} className="min-w-0 rounded-[1.1rem] border border-ink/10 bg-paper px-3 py-3 transition-colors hover:border-ink/25 sm:p-4">
+      <div className="text-[0.74rem] font-semibold leading-snug text-ink-mute sm:text-[0.8rem]">{label}</div>
+      <div className="mt-1 font-display text-[1.45rem] leading-tight text-ink sm:text-[1.6rem]">{value}</div>
+    </Link>
+  );
+}
+
+function Glance({ label, value, kes, href, alert }: { label: string; value?: string; kes?: number; href: string; alert?: boolean }) {
+  return (
+    <Link
+      href={href}
+      className={
+        alert
+          ? "min-w-0 rounded-[1.1rem] border border-clay/25 bg-[#f6e9df] px-3 py-3 transition-colors hover:border-clay/50 sm:px-4"
+          : "min-w-0 rounded-[1.1rem] border border-ink/10 bg-paper px-3 py-3 transition-colors hover:border-ink/25 sm:px-4"
+      }
+    >
+      <div className={alert ? "truncate text-[0.74rem] font-semibold text-clay sm:text-[0.8rem]" : "truncate text-[0.74rem] font-semibold text-ink-mute sm:text-[0.8rem]"}>
+        {label}
+      </div>
+      <div className="mt-0.5 truncate font-display text-[1.2rem] leading-tight text-ink sm:text-[1.45rem]">
+        {kes !== undefined ? (
+          <>
+            <span className="mr-1 font-sans text-[0.68rem] font-semibold text-ink-mute sm:text-[0.75rem]">KES</span>
+            {kes.toLocaleString("en-KE")}
+          </>
+        ) : (
+          value
+        )}
+      </div>
     </Link>
   );
 }
