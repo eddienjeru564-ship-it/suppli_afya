@@ -2,6 +2,7 @@ import { PRODUCTS_BY_ID } from "@/engine";
 import type { Workspace } from "./auth";
 import { db } from "./db";
 import { greetingName } from "@/lib/names";
+import { textedOrders } from "./sms";
 
 /** Data access for the distributor portal. Every query is scoped to one workspace. */
 
@@ -47,6 +48,9 @@ export interface Customer {
   notes: string | null;
   source: string;
   prospect_id: string | null;
+  /** Set when reminder texts are stopped for this customer: by the customer from the link, or by the distributor. */
+  sms_opt_out_at: Date | null;
+  sms_opt_out_source: "customer" | "distributor" | null;
   created_at: Date;
 }
 
@@ -272,7 +276,7 @@ export async function pageOrderConfirmed(workspaceId: string, orderId: string): 
 export async function today(ws: Workspace): Promise<Task[]> {
   const d = await db();
   const id = ws.id;
-  const [newP, unpaid, due, checkins, quiet, done] = await Promise.all([
+  const [newP, unpaid, due, checkins, quiet, done, texted] = await Promise.all([
     d.query<Prospect>(`select * from prospects where workspace_id = $1 and status = 'new' order by created_at desc limit 30`, [id]),
     d.query<Order>(
       `select o.*, c.name as customer_name, c.phone as customer_phone from orders o join customers c on c.id = o.customer_id
@@ -305,7 +309,13 @@ export async function today(ws: Workspace): Promise<Task[]> {
         where workspace_id = $1 and task_key is not null group by task_key`,
       [id],
     ),
+    textedOrders(id),
   ]);
+  /** " We texted Sarah a reminder on 5 Nov." when the morning text already went out. */
+  const textNote = (kind: "payment" | "reorder", orderId: string, name: string) => {
+    const at = texted.get(`${kind}:${orderId}`);
+    return at ? ` We texted ${greetingName(name)} a reminder on ${dayMonth(at)}.` : "";
+  };
 
   const doneAt = new Map(done.map((r) => [r.task_key, new Date(r.created_at).getTime()]));
   const recentlyDone = (key: string, days: number) => {
@@ -354,7 +364,7 @@ export async function today(ws: Workspace): Promise<Task[]> {
       key,
       kind: "payment",
       title: o.customer_name,
-      why: `Order of ${kesFmt(o.total)} from ${dayMonth(o.created_at)} isn't paid yet.`,
+      why: `Order of ${kesFmt(o.total)} from ${dayMonth(o.created_at)} isn't paid yet.${textNote("payment", o.id, o.customer_name)}`,
       message: `Hi ${greetingName(o.customer_name)}, just a quick reminder about your order of ${kesFmt(o.total)} from ${dayMonth(o.created_at)}. Send it whenever you're ready and I'll sort out the delivery. Asante!`,
       phone: o.customer_phone,
       href: `/portal/orders/${o.id}`,
@@ -370,7 +380,7 @@ export async function today(ws: Workspace): Promise<Task[]> {
       key,
       kind: "reorder",
       title: o.customer_name,
-      why: `Bought ${productNames(o.items)} on ${dayMonth(o.created_at)}. ${overdue ? "Probably finished by now." : "Probably running out this week."}`,
+      why: `Bought ${productNames(o.items)} on ${dayMonth(o.created_at)}. ${overdue ? "Probably finished by now." : "Probably running out this week."}${textNote("reorder", o.id, o.customer_name)}`,
       message: `Habari ${greetingName(o.customer_name)}! It's about time for your next ${productNames(o.items)}. How has it been going? I can set aside another one for you, just let me know.${me ? ` ${me}` : ""}`,
       phone: o.customer_phone,
       href: `/portal/customers/${o.customer_id}`,

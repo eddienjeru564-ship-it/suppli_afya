@@ -6,6 +6,7 @@ import { customer as getCustomer } from "@/server/portal";
 import { buttonClass } from "@/components/ui/Button";
 import { Card, Pill, kesAmount, longDate, prettyPhone, shortDate } from "@/components/portal/ui";
 import { ChevronLeft, WhatsAppIcon } from "@/components/ui/icons";
+import { CustomerTexts } from "./CustomerTexts";
 import { NoteForm } from "./NoteForm";
 import { greetingName } from "@/lib/names";
 
@@ -15,6 +16,7 @@ const KIND_LABEL: Record<string, string> = {
   payment: "Payment",
   note: "Note",
   followup: "Follow-up",
+  sms: "Reminder text",
 };
 
 export default async function CustomerPage(props: PageProps<"/portal/customers/[id]">) {
@@ -98,6 +100,16 @@ export default async function CustomerPage(props: PageProps<"/portal/customers/[
             )}
           </Card>
 
+          <Card className="p-5">
+            <CustomerTexts
+              customerId={c.id}
+              first={greetingName(c.name) || c.name}
+              hasPhone={Boolean(c.phone)}
+              stoppedByCustomer={c.sms_opt_out_source === "customer"}
+              initialOn={!c.sms_opt_out_at}
+            />
+          </Card>
+
           {p?.result?.core && p.result.core.length > 0 && (
             <Card className="p-5">
               <h2 className="text-[0.95rem] font-semibold text-ink">From their assessment</h2>
@@ -132,7 +144,9 @@ export default async function CustomerPage(props: PageProps<"/portal/customers/[
                 <span className="text-[0.78rem] text-ink-mute">{shortDate(i.created_at)}</span>
                 <span>
                   <span className="text-[0.75rem] font-semibold text-ink-mute">{KIND_LABEL[i.kind] ?? i.kind}</span>
-                  <span className="block leading-snug text-ink">{i.body}</span>
+                  <span className={i.kind === "sms" ? "mt-1 block whitespace-pre-line rounded-xl bg-cream px-3 py-2 text-[0.85rem] leading-snug text-ink-soft" : "block leading-snug text-ink"}>
+                    {i.body}
+                  </span>
                 </span>
               </li>
             ))}

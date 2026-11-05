@@ -67,6 +67,9 @@ export interface Workspace {
   onboarding_step: number;
   onboarded_at: Date | null;
   community_dismissed_at: Date | null;
+  /** Reminder texts to customers, each kind switched on or off in Settings. */
+  sms_reorder: boolean;
+  sms_payment: boolean;
   created_at: Date;
 }
 

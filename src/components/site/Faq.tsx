@@ -19,7 +19,7 @@ const FAQ = [
   },
   {
     q: "Do my customers stay mine?",
-    a: "Yes. Customers come through your page, message your WhatsApp and buy from you. We don't sell their details, share them with other distributors or contact them ourselves.",
+    a: "Yes. Customers come through your page, message your WhatsApp and buy from you. We don't sell their details or share them with other distributors. The only texts they get are your reminders, signed with your name.",
   },
   {
     q: "Can customers still contact me directly on WhatsApp?",

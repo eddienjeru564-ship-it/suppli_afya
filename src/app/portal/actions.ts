@@ -12,6 +12,7 @@ import { pushConfigured } from "@/server/env";
 import { removeSubscription, saveSubscription, sendTo, type PushSubscriptionJSON } from "@/server/push";
 import { normaliseKenyanPhone } from "@/server/payments/mpesa";
 import { customerCount, supplyDaysFor, type OrderItem } from "@/server/portal";
+import { setStoppedByDistributor } from "@/server/sms";
 
 export type ActionResult = { ok: true; id?: string } | { ok: false; error: string };
 
@@ -325,4 +326,24 @@ export async function unsubscribePush(endpoint: string): Promise<ActionResult> {
   const a = await requireAccount();
   await removeSubscription(a.workspace.id, String(endpoint ?? ""));
   return { ok: true };
+}
+
+// ------------------------------------------------------------------ Reminder texts
+
+/** Switches one kind of reminder text on or off for the whole workspace. */
+export async function setSmsKind(kind: "reorder" | "payment", on: boolean): Promise<ActionResult> {
+  const a = await requireAccount();
+  const d = await db();
+  const column = kind === "reorder" ? "sms_reorder" : "sms_payment";
+  await d.query(`update workspaces set ${column} = $2 where id = $1`, [a.workspace.id, Boolean(on)]);
+  revalidatePath("/portal/settings");
+  return { ok: true };
+}
+
+/** Stops or restarts reminder texts for one customer. Texts a customer stopped themselves stay off. */
+export async function setCustomerTexts(customerId: string, on: boolean): Promise<ActionResult> {
+  const a = await requireAccount();
+  const changed = await setStoppedByDistributor(a.workspace.id, customerId, !on);
+  revalidatePath(`/portal/customers/${customerId}`);
+  return changed ? { ok: true } : { ok: false, error: on ? "This customer stopped the texts themselves, so only they can turn them back on." : "Texts are already off." };
 }

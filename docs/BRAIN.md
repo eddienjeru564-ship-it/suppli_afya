@@ -121,8 +121,12 @@ prices, cards, moving existing customers in), unlimited customers and priority W
 The setup fee is charged on a workspace's first payment only; every later payment is the monthly fee.
 Change prices in one place.
 
-- SMS reminders to customers are listed ahead of the build (founder decision, November 2026). They
-  must ship before anyone relies on them.
+- SMS reminders to customers are built (`src/server/sms/`): the morning job texts a customer three
+  days before they're likely to run out, and once three days after an unpaid order. Texts go
+  through Africa's Talking, signed with the distributor's name, at most one per customer a morning,
+  each with a stop link (`/s/<code>`). Distributors switch each kind on or off in Settings, and per
+  customer on the customer page. They need `AFRICASTALKING_USERNAME` and `AFRICASTALKING_API_KEY`
+  (and ideally an approved sender ID) before any text goes out.
 - No M-Pesa payment requests from distributors to their own customers (founder decision, November
   2026). Customers pay the distributor directly, and the distributor records it against the order.
 - The setup fee pays for real work by the team: building the shop and cards and importing customers.
@@ -177,7 +181,6 @@ Paystack, with retry on failure), five-screen onboarding, and the distributor po
 Sign-in is email and password. Phone OTP can replace or join it once there's an SMS provider.
 
 **Phase 3: next.**
-- SMS reminders to customers (listed on the pricing section).
 - Automatic renewal for card payers, if asked for.
 - Pilot measurement: reorders recorded per distributor per month.
 
