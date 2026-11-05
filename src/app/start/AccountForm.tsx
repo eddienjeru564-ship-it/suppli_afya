@@ -1,9 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useActionState, useState } from "react";
-import type { PlanId } from "@/config/plans";
+import { useActionState } from "react";
 import { Button } from "@/components/ui/Button";
 import { Field } from "@/components/ui/Field";
 import { PasswordField } from "@/components/ui/PasswordField";
@@ -11,18 +9,11 @@ import { PlanSummary } from "@/components/start/PlanSummary";
 import { StartShell } from "@/components/start/Shell";
 import { createAccount, type FormState } from "./actions";
 
-export function AccountStep({ initialPlan }: { initialPlan: PlanId }) {
-  const router = useRouter();
-  const [plan, setPlan] = useState(initialPlan);
+export function AccountStep() {
   const [state, action, pending] = useActionState<FormState, FormData>(createAccount, {});
 
-  const choose = (p: PlanId) => {
-    setPlan(p);
-    router.replace(`/start?plan=${p}`, { scroll: false });
-  };
-
   return (
-    <StartShell step={0} aside={<PlanSummary plan={plan} onChange={choose} />}>
+    <StartShell step={0} aside={<PlanSummary />}>
       <div className="max-w-md">
         <h1 className="font-display text-[2.3rem] leading-[1.05] tracking-[-0.02em] text-ink sm:text-[2.8rem]">
           Create your account
@@ -33,7 +24,6 @@ export function AccountStep({ initialPlan }: { initialPlan: PlanId }) {
         </p>
 
         <form action={action} className="mt-8 grid gap-5" noValidate>
-          <input type="hidden" name="plan" value={plan} />
           <Field
             label="Email"
             name="email"

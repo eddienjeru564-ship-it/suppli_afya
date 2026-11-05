@@ -1,4 +1,4 @@
-import { PLANS_BY_ID, type PlanId } from "@/config/plans";
+import { planFor, type PlanId } from "@/config/plans";
 import { site } from "@/config/site";
 import { greetingName } from "@/lib/names";
 import { db } from "../db";
@@ -75,7 +75,7 @@ export const notifyPaymentSucceeded = safely("payment", async (paymentId: string
   if (!p) return;
   const details: t.PaymentDetails = {
     name: p.owner_name ? greetingName(p.owner_name) : null,
-    plan: PLANS_BY_ID[p.plan]?.name ?? p.plan,
+    plan: planFor(p.plan).name,
     amount: p.amount,
     method: p.provider === "test" ? "Test payment" : (METHOD[p.method] ?? p.method),
     receipt: p.receipt,
@@ -145,9 +145,9 @@ export async function sendSubscriptionEmails() {
   );
   let sent = 0;
   for (const r of rows) {
-    const plan = PLANS_BY_ID[r.plan] ?? PLANS_BY_ID.starter;
+    const plan = planFor(r.plan);
     const name = r.owner_name ? greetingName(r.owner_name) : null;
-    const renewUrl = url(`/start/pay?renew=1&plan=${plan.id}`);
+    const renewUrl = url("/start/pay?renew=1");
     const ref = `${r.workspace_id}:${new Date(r.period_end).toISOString().slice(0, 10)}`;
     try {
       const ok = r.ended
@@ -163,7 +163,7 @@ export async function sendSubscriptionEmails() {
           })
         : await sendOnce("renewal_due", ref, r.user_id, {
             to: r.email,
-            ...t.renewalDueEmail({ name, plan: plan.name, price: plan.price, endsOn: r.period_end, renewUrl }),
+            ...t.renewalDueEmail({ name, plan: plan.name, price: plan.monthly, endsOn: r.period_end, renewUrl }),
           });
       if (ok) sent++;
     } catch (e) {

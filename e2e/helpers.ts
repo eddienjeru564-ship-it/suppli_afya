@@ -2,7 +2,7 @@ import type { Page } from "@playwright/test";
 
 /** Signs up, pays with a test payment and finishes set up. Leaves the page on /portal. */
 export async function signUp(page: Page, email: string, name = "Jane Wanjiku") {
-  await page.goto("/start?plan=growth");
+  await page.goto("/start");
   await page.getByLabel("Email").fill(email);
   await page.getByLabel("Password").fill("supersecret1");
   await page.getByRole("button", { name: "Continue to payment" }).click();

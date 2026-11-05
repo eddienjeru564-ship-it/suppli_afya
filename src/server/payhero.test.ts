@@ -1,6 +1,6 @@
 import { afterEach, beforeAll, describe, expect, it, vi } from "vitest";
 import type { PaymentRow } from "./payments";
-import { PLANS_BY_ID } from "@/config/plans";
+import { PLAN } from "@/config/plans";
 
 // Live-mode PayHero against a fake PayHero API, on an in-memory database.
 process.env.PGLITE_DIR = "memory://";
@@ -52,12 +52,12 @@ afterEach(() => {
 let n = 0;
 async function workspace() {
   const [u] = await d.query<{ id: string }>(`insert into users (email, password_hash) values ($1, 'x') returning id`, [`ph${++n}@example.com`]);
-  const [w] = await d.query<{ id: string }>(`insert into workspaces (owner_id, plan) values ($1, 'growth') returning id`, [u.id]);
+  const [w] = await d.query<{ id: string }>(`insert into workspaces (owner_id, plan) values ($1, 'suppli') returning id`, [u.id]);
   return w.id;
 }
 
 async function push(wsId: string) {
-  const r = await payments.startPayment({ workspaceId: wsId, email: "a@b.c", plan: "growth", method: "mpesa", phone: "+254 712 345 678", customerName: "Jane Wanjiku" });
+  const r = await payments.startPayment({ workspaceId: wsId, email: "a@b.c", method: "mpesa", phone: "+254 712 345 678", customerName: "Jane Wanjiku" });
   if (!r.ok) throw new Error(r.error);
   return (await payments.getPayment(r.paymentId))!;
 }
@@ -102,7 +102,7 @@ describe("PayHero STK Push", () => {
     expect(req.url).toBe("https://backend.payhero.co.ke/api/v2/payments");
     expect(req.auth).toBe(`Basic ${Buffer.from("user:pass").toString("base64")}`);
     expect(req.body).toMatchObject({
-      amount: PLANS_BY_ID.growth.price,
+      amount: PLAN.setupFee,
       phone_number: "0712345678",
       channel_id: 911,
       provider: "m-pesa",
@@ -139,7 +139,7 @@ describe("PayHero STK Push", () => {
     expect(await payments.getPayment(p.id)).toMatchObject({ status: "failed", failure_reason: "The M-Pesa prompt was cancelled." });
   });
 
-  it("refuses a payment smaller than the plan price", async () => {
+  it("refuses a payment smaller than the price", async () => {
     const p = await push(await workspace());
     await post(success(p, { Amount: 10 }));
     expect((await payments.getPayment(p.id))!.status).toBe("failed");
@@ -182,7 +182,7 @@ describe("PayHero STK Push", () => {
   it("limits how many prompts one account can send", async () => {
     const ws = await workspace();
     for (let i = 0; i < 5; i++) await push(ws);
-    const r = await payments.startPayment({ workspaceId: ws, email: "a@b.c", plan: "growth", method: "mpesa", phone: "0712345678" });
+    const r = await payments.startPayment({ workspaceId: ws, email: "a@b.c", method: "mpesa", phone: "0712345678" });
     expect(r).toMatchObject({ ok: false, error: expect.stringContaining("Wait ten minutes") });
   });
 });

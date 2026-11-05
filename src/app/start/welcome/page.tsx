@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
-import { PLANS_BY_ID, kes } from "@/config/plans";
+import { kes, paymentLabel, planFor } from "@/config/plans";
 import { getAccount, subscriptionState } from "@/server/auth";
 import { db } from "@/server/db";
 import { ButtonLink } from "@/components/ui/Button";
@@ -19,7 +19,7 @@ export default async function WelcomePage() {
     `select amount, receipt, method, plan from payments where workspace_id = $1 and status = 'succeeded' order by updated_at desc limit 1`,
     [account.workspace.id],
   );
-  const plan = PLANS_BY_ID[account.subscription!.plan];
+  const plan = planFor(account.subscription!.plan);
   const until = new Date(account.subscription!.current_period_end!).toLocaleDateString("en-KE", {
     day: "numeric",
     month: "long",
@@ -37,17 +37,17 @@ export default async function WelcomePage() {
           Payment confirmed.
         </h1>
         <p className="mt-3 text-[1.1rem] leading-relaxed text-ink-soft">
-          {onboarded ? "Your plan is renewed." : "Let's get Suppli Afya set up for your business."}
+          {onboarded ? "Your subscription is renewed." : "Let's get Suppli Afya set up for your business."}
         </p>
         <dl className="mx-auto mt-8 grid max-w-sm gap-2 rounded-2xl bg-paper p-5 text-left text-[0.93rem]">
           <div className="flex justify-between gap-4">
-            <dt className="text-ink-mute">Plan</dt>
+            <dt className="text-ink-mute">Subscription</dt>
             <dd className="font-semibold text-ink">{plan.name}</dd>
           </div>
           {p && (
             <div className="flex justify-between gap-4">
-              <dt className="text-ink-mute">Paid</dt>
-              <dd className="font-semibold text-ink">
+              <dt className="text-ink-mute">{paymentLabel(p.amount)}</dt>
+              <dd className="text-right font-semibold text-ink">
                 {kes(p.amount)} by {p.method === "mpesa" ? "M-Pesa" : "card"}
               </dd>
             </div>

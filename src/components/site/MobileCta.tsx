@@ -3,7 +3,6 @@
 import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useState } from "react";
 import { Arrow } from "@/components/ui/Button";
-import { FROM_PRICE } from "@/config/plans";
 
 /** Sections that already have their own call to action or a control at the bottom of the screen. */
 const QUIET_ZONES = ["try", "pricing", "site-footer"];
@@ -57,7 +56,7 @@ export function MobileCta() {
         >
           <div className="flex items-center gap-2 rounded-full bg-forest-deep/95 p-1.5 pl-5 text-cream shadow-float ring-1 ring-cream/10 backdrop-blur">
             <span className="min-w-0 flex-1 truncate text-[0.85rem] text-cream/80">
-              {pastDemo ? `${FROM_PRICE} a month` : "Try the real assessment"}
+              {pastDemo ? "Set up for you" : "Try the real assessment"}
             </span>
             <a
               href={pastDemo ? "#pricing" : "#try"}

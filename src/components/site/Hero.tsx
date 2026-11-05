@@ -1,6 +1,6 @@
 import { Fragment, type CSSProperties } from "react";
 import { ButtonLink } from "@/components/ui/Button";
-import { FROM_PRICE } from "@/config/plans";
+import { MONTHLY_PRICE, SETUP_PRICE } from "@/config/plans";
 import { HeroPhone } from "./HeroPhone";
 
 /**
@@ -119,7 +119,7 @@ export function Hero() {
           </div>
           {/* Two tidy lines on a phone, one line on wider screens: never a separator left hanging. */}
           <p className="rise mt-5 text-[0.85rem] leading-relaxed text-ink-mute" style={at(13)}>
-            <span className="block sm:inline">From {FROM_PRICE} a month</span>
+            <span className="block sm:inline">{SETUP_PRICE} setup, then {MONTHLY_PRICE} a month</span>
             <span className="hidden sm:inline"> · </span>
             <span>No contract · Pay by M-Pesa</span>
           </p>

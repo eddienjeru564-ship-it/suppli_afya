@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { BUSINESS_TYPES, CHANNELS, GOALS } from "@/config/onboarding";
-import { PLANS_BY_ID } from "@/config/plans";
+import { planFor } from "@/config/plans";
 import { PRODUCTS_BY_ID } from "@/engine";
 import { getAccount, subscriptionState, type Account } from "@/server/auth";
 import { db, json } from "@/server/db";
@@ -30,12 +30,12 @@ const phoneOrNull = (v: FormDataEntryValue | null) => {
 };
 
 async function withinCustomerLimit(a: Account) {
-  const limit = PLANS_BY_ID[a.workspace.plan].customerLimit;
+  const limit = planFor(a.workspace.plan).customerLimit;
   if (limit === null) return true;
   return (await customerCount(a.workspace.id)) < limit;
 }
 
-const LIMIT_ERROR = "You've reached the 50 customers included in Starter. Move to Growth for unlimited customers.";
+const LIMIT_ERROR = "You've reached the customer limit on your subscription. Message us on WhatsApp and we'll sort it out.";
 
 // ------------------------------------------------------------------ Today
 
@@ -128,10 +128,10 @@ export async function addNote(customerId: string, note: string): Promise<ActionR
   return { ok: true };
 }
 
-/** Growth and Pro: paste rows of "name, phone" from a spreadsheet. */
+/** Paste rows of "name, phone" from a spreadsheet. */
 export async function importCustomers(_prev: ActionResult | null, fd: FormData): Promise<ActionResult & { added?: number; skipped?: number }> {
   const a = await requireAccount();
-  if (!PLANS_BY_ID[a.workspace.plan].canImport) return { ok: false, error: "Importing is included in Growth and Pro." };
+  if (!planFor(a.workspace.plan).canImport) return { ok: false, error: "Importing isn't available on your subscription." };
   const rows = String(fd.get("rows") ?? "")
     .split(/\r?\n/)
     .map((l) => l.split(/[,\t;]/).map((x) => x.trim()))

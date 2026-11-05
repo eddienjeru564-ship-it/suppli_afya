@@ -14,8 +14,9 @@ Suppli Afya clearly and confidently to another distributor. Not software marketi
   ("Potential customers usually message you…", "Each morning, your workspace lists…") rather than
   "it", "they" or "the distributor" when it isn't yet clear who that is.
 - One word per idea. A "plan" is the customer's product plan; the distributor pays a
-  "subscription" (Starter, Growth, Pro). An "enquiry" is someone who used the page (unlimited on
-  every plan); a "customer" is someone the distributor recorded an order for or added (Starter holds 50).
+  "subscription" (one subscription: a setup fee once, then a monthly fee). An "enquiry" is someone
+  who used the page; a "customer" is someone the distributor recorded an order for or added. Both
+  are unlimited.
   On the website the distributor's side is "your workspace".
 - Keep sentences under about 25 words. Many readers are reading English as a second language, on a phone.
 - Let some headlines simply say what the thing does ("Each morning, a short list of who to talk

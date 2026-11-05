@@ -1,6 +1,6 @@
 import { beforeAll, describe, expect, it } from "vitest";
 import type { Workspace } from "./auth";
-import { PLANS_BY_ID } from "@/config/plans";
+import { PLAN } from "@/config/plans";
 
 // An in-memory database per test file. Set before the server modules read their env.
 process.env.PGLITE_DIR = "memory://";
@@ -27,7 +27,7 @@ async function workspace(goals: string[] = []) {
     `t${++n}@example.com`,
   ]);
   const [w] = await d.query<Workspace>(
-    `insert into workspaces (owner_id, plan, owner_name, goals) values ($1, 'growth', 'Jane Wanjiku', $2::jsonb) returning *`,
+    `insert into workspaces (owner_id, plan, owner_name, goals) values ($1, 'suppli', 'Jane Wanjiku', $2::jsonb) returning *`,
     [u.id, JSON.stringify(goals)],
   );
   return w;
@@ -50,16 +50,15 @@ describe("billing", () => {
 
   it("rejects an M-Pesa payment without a valid number", async () => {
     const w = await workspace();
-    const r = await payments.startPayment({ workspaceId: w.id, email: "a@b.c", plan: "growth", method: "mpesa", phone: "123" });
+    const r = await payments.startPayment({ workspaceId: w.id, email: "a@b.c", method: "mpesa", phone: "123" });
     expect(r.ok).toBe(false);
   });
 
-  it("activates a month of the chosen plan once, however many confirmations arrive", async () => {
+  it("charges the setup fee first and activates a month once, however many confirmations arrive", async () => {
     const w = await workspace();
     const r = await payments.startPayment({
       workspaceId: w.id,
       email: "a@b.c",
-      plan: "pro",
       method: "mpesa",
       phone: "0712 345 678",
     });
@@ -67,12 +66,12 @@ describe("billing", () => {
     if (!r.ok) return;
 
     const p = await payments.getPayment(r.paymentId);
-    expect(p).toMatchObject({ status: "pending", amount: PLANS_BY_ID.pro.price, phone: "254712345678", plan: "pro" });
+    expect(p).toMatchObject({ status: "pending", amount: PLAN.setupFee, phone: "254712345678", plan: "suppli" });
     expect(await subscription(w.id)).toBeUndefined();
 
     expect(await payments.markSucceeded(r.paymentId, "TEST123")).toBe(true);
     const first = await subscription(w.id);
-    expect(first).toMatchObject({ plan: "pro", status: "active" });
+    expect(first).toMatchObject({ status: "active" });
     expect(days(first.current_period_end, new Date())).toBeGreaterThanOrEqual(28);
 
     // A late callback or a second poll must not add another month.
@@ -80,12 +79,12 @@ describe("billing", () => {
     expect((await subscription(w.id)).current_period_end).toEqual(first.current_period_end);
 
     const [ws] = await d.query<{ plan: string }>(`select plan from workspaces where id = $1`, [w.id]);
-    expect(ws.plan).toBe("pro");
+    expect(ws.plan).toBe("suppli");
   });
 
   it("keeps the account after a failed payment and lets the retry succeed", async () => {
     const w = await workspace();
-    const a = await payments.startPayment({ workspaceId: w.id, email: "a@b.c", plan: "growth", method: "card" });
+    const a = await payments.startPayment({ workspaceId: w.id, email: "a@b.c", method: "card" });
     if (!a.ok) throw new Error(a.error);
     await payments.markFailed(a.paymentId, "Cancelled on the phone.");
     expect(await payments.getPayment(a.paymentId)).toMatchObject({ status: "failed", failure_reason: "Cancelled on the phone." });
@@ -93,35 +92,39 @@ describe("billing", () => {
     expect(await payments.markSucceeded(a.paymentId, null)).toBe(false);
     expect(await subscription(w.id)).toBeUndefined();
 
-    const b = await payments.startPayment({ workspaceId: w.id, email: "a@b.c", plan: "growth", method: "card" });
+    const b = await payments.startPayment({ workspaceId: w.id, email: "a@b.c", method: "card" });
     if (!b.ok) throw new Error(b.error);
     expect(await payments.markSucceeded(b.paymentId, null)).toBe(true);
-    expect(await subscription(w.id)).toMatchObject({ plan: "growth", status: "active" });
+    expect(await subscription(w.id)).toMatchObject({ status: "active" });
   });
 
   it("extends a renewal from the end of the current period, not from today", async () => {
     const w = await workspace();
     const start = async () => {
-      const r = await payments.startPayment({ workspaceId: w.id, email: "a@b.c", plan: "starter", method: "card" });
+      const r = await payments.startPayment({ workspaceId: w.id, email: "a@b.c", method: "card" });
       if (!r.ok) throw new Error(r.error);
       await payments.markSucceeded(r.paymentId, null);
       return (await subscription(w.id)).current_period_end;
     };
     const firstEnd = await start();
     const secondEnd = await start();
+    // Setup once, then the monthly fee.
+    const paid = await d.query<{ amount: number }>(`select amount from payments where workspace_id = $1 order by created_at`, [w.id]);
+    expect(paid.map((p) => p.amount)).toEqual([PLAN.setupFee, PLAN.monthly]);
     expect(days(secondEnd, firstEnd)).toBeGreaterThanOrEqual(28);
     expect(days(secondEnd, new Date())).toBeGreaterThanOrEqual(56);
   });
 
-  it("starts a lapsed plan again from today", async () => {
+  it("charges a lapsed subscription the monthly fee, not setup again, and starts it from today", async () => {
     const w = await workspace();
     await d.query(
       `insert into subscriptions (workspace_id, plan, status, current_period_start, current_period_end)
-       values ($1, 'growth', 'active', now() - interval '3 months', now() - interval '2 months')`,
+       values ($1, 'suppli', 'active', now() - interval '3 months', now() - interval '2 months')`,
       [w.id],
     );
-    const r = await payments.startPayment({ workspaceId: w.id, email: "a@b.c", plan: "growth", method: "card" });
+    const r = await payments.startPayment({ workspaceId: w.id, email: "a@b.c", method: "card" });
     if (!r.ok) throw new Error(r.error);
+    expect((await payments.getPayment(r.paymentId))?.amount).toBe(PLAN.monthly);
     await payments.markSucceeded(r.paymentId, null);
     const end = (await subscription(w.id)).current_period_end;
     expect(days(end, new Date())).toBeGreaterThanOrEqual(28);

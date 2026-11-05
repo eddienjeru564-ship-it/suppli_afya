@@ -4,7 +4,7 @@ import clsx from "clsx";
 import { AnimatePresence, motion } from "motion/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState, useTransition } from "react";
-import { PLANS_BY_ID, kes, type PlanId } from "@/config/plans";
+import { MONTHLY_PRICE, PLAN, amountDue, kes } from "@/config/plans";
 import type { Method, Mode } from "@/server/payments";
 import { Button } from "@/components/ui/Button";
 import { Field } from "@/components/ui/Field";
@@ -27,14 +27,12 @@ const ease = [0.22, 1, 0.36, 1] as const;
 const validPhone = (v: string) => /^(?:254|0)?[17]\d{8}$/.test(v.replace(/[^\d+]/g, "").replace(/^\+/, ""));
 
 export function PaymentStep({
-  initialPlan,
   modes,
   email,
   renewing,
   lastPhone,
   lastFailure,
 }: {
-  initialPlan: PlanId;
   modes: Record<Method, Mode>;
   email: string;
   renewing: boolean;
@@ -42,18 +40,13 @@ export function PaymentStep({
   lastFailure: string | null;
 }) {
   const router = useRouter();
-  const [plan, setPlan] = useState(initialPlan);
   const [method, setMethod] = useState<Method>(modes.mpesa !== "off" ? "mpesa" : "card");
   const [phone, setPhone] = useState(lastPhone ? `0${lastPhone.slice(3)}` : "");
   const [stage, setStage] = useState<Stage>(lastFailure ? { kind: "failed", reason: lastFailure } : { kind: "choose" });
   const [pending, start] = useTransition();
-  const p = PLANS_BY_ID[plan];
+  // The server works the amount out the same way: setup the first time, the monthly fee after.
+  const amount = amountDue(renewing);
   const mode = modes[method];
-
-  const choosePlan = (id: PlanId) => {
-    setPlan(id);
-    router.replace(`/start/pay?plan=${id}${renewing ? "&renew=1" : ""}`, { scroll: false });
-  };
 
   const pay = () => {
     if (method === "mpesa" && !validPhone(phone)) {
@@ -61,7 +54,7 @@ export function PaymentStep({
       return;
     }
     start(async () => {
-      const r = await beginPayment({ plan, method, phone });
+      const r = await beginPayment({ method, phone });
       if (!r.ok) return setStage({ kind: "choose", error: r.error });
       if (r.next === "redirect") {
         window.location.assign(r.url);
@@ -79,7 +72,7 @@ export function PaymentStep({
   };
 
   return (
-    <StartShell step={1} aside={<PlanSummary plan={plan} onChange={choosePlan} />}>
+    <StartShell step={1} aside={<PlanSummary renewing={renewing} />}>
       <div className="max-w-md">
         <AnimatePresence mode="wait" initial={false}>
           <motion.div
@@ -92,10 +85,12 @@ export function PaymentStep({
             {stage.kind === "choose" && (
               <>
                 <h1 className="font-display text-[2.3rem] leading-[1.05] tracking-[-0.02em] text-ink sm:text-[2.8rem]">
-                  {renewing ? "Renew your plan" : "Payment"}
+                  {renewing ? "Renew your subscription" : "Payment"}
                 </h1>
                 <p className="mt-3 text-[1.02rem] leading-relaxed text-ink-soft">
-                  {kes(p.price)} for {renewing ? "another" : "your first"} month of {p.name}.
+                  {renewing
+                    ? `${kes(amount)} for another month of ${PLAN.name}.`
+                    : `${kes(amount)} once for setup and your first month. Then ${MONTHLY_PRICE} a month.`}
                 </p>
 
                 <div role="radiogroup" aria-label="Payment method" className="mt-8 grid grid-cols-2 gap-2">
@@ -152,7 +147,7 @@ export function PaymentStep({
                 )}
 
                 <Button size="lg" className="mt-6 w-full" disabled={pending || mode === "off"} onClick={pay} arrow>
-                  {pending ? "Starting payment…" : renewing ? `Pay ${kes(p.price)} and renew` : `Pay ${kes(p.price)} and start Suppli Afya`}
+                  {pending ? "Starting payment…" : renewing ? `Pay ${kes(amount)} and renew` : `Pay ${kes(amount)} and start Suppli Afya`}
                 </Button>
                 <p className="mt-4 text-center text-[0.8rem] leading-relaxed text-ink-mute">
                   Nothing renews automatically. Your portal reminds you a few days before the month ends.
@@ -167,7 +162,7 @@ export function PaymentStep({
                 key={stage.paymentId}
                 paymentId={stage.paymentId}
                 phone={phone}
-                amount={p.price}
+                amount={amount}
                 resending={pending}
                 onResult={onResult}
                 onResend={pay}
@@ -180,7 +175,7 @@ export function PaymentStep({
             )}
 
             {stage.kind === "test" && (
-              <TestApproval paymentId={stage.paymentId} method={method} amount={p.price} onResult={onResult} />
+              <TestApproval paymentId={stage.paymentId} method={method} amount={amount} onResult={onResult} />
             )}
 
             {stage.kind === "failed" && (

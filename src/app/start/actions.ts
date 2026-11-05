@@ -1,7 +1,7 @@
 "use server";
 
 import { redirect } from "next/navigation";
-import { planOrDefault, type PlanId } from "@/config/plans";
+import { PLAN } from "@/config/plans";
 import { endSession, getAccount, hashPassword, nextStepFor, startSession, verifyPassword } from "@/server/auth";
 import { db } from "@/server/db";
 import { startPayment, type Method, type StartResult } from "@/server/payments";
@@ -16,7 +16,6 @@ const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 export async function createAccount(_prev: FormState, fd: FormData): Promise<FormState> {
   const email = String(fd.get("email") ?? "").trim().toLowerCase();
   const password = String(fd.get("password") ?? "");
-  const plan = planOrDefault(String(fd.get("plan") ?? "")).id;
   const fields = { email };
 
   if (!EMAIL.test(email)) return { error: "Please enter a valid email address.", fields };
@@ -30,9 +29,9 @@ export async function createAccount(_prev: FormState, fd: FormData): Promise<For
     email,
     await hashPassword(password),
   ]);
-  await d.query(`insert into workspaces (owner_id, plan) values ($1, $2)`, [user.id, plan]);
+  await d.query(`insert into workspaces (owner_id, plan) values ($1, $2)`, [user.id, PLAN.id]);
   await startSession(user.id);
-  redirect(`/start/pay?plan=${plan}`);
+  redirect("/start/pay");
 }
 
 export async function logIn(_prev: FormState, fd: FormData): Promise<FormState> {
@@ -54,16 +53,14 @@ export async function logOut() {
   redirect("/");
 }
 
-export async function beginPayment(input: { plan: PlanId; method: Method; phone?: string }): Promise<StartResult> {
+export async function beginPayment(input: { method: Method; phone?: string }): Promise<StartResult> {
   const account = await getAccount();
   if (!account) return { ok: false, error: "Your session has ended. Please log in again." };
-  const plan = planOrDefault(input.plan).id;
   const d = await db();
-  await d.query(`update workspaces set plan = $2 where id = $1`, [account.workspace.id, plan]);
+  await d.query(`update workspaces set plan = $2 where id = $1`, [account.workspace.id, PLAN.id]);
   return startPayment({
     workspaceId: account.workspace.id,
     email: account.user.email,
-    plan,
     method: input.method === "card" ? "card" : "mpesa",
     phone: input.phone,
     customerName: account.workspace.owner_name ?? account.workspace.business_name ?? undefined,

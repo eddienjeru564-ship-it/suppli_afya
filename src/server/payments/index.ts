@@ -1,4 +1,4 @@
-import { PLANS_BY_ID, type PlanId } from "@/config/plans";
+import { PLAN, amountDue, type PlanId } from "@/config/plans";
 import { db, json } from "../db";
 import { notifyPaymentSucceeded } from "../email";
 import { env, mpesaConfigured, paystackConfigured } from "../env";
@@ -45,12 +45,11 @@ export type StartResult =
 export async function startPayment(opts: {
   workspaceId: string;
   email: string;
-  plan: PlanId;
   method: Method;
   phone?: string;
   customerName?: string;
 }): Promise<StartResult> {
-  const plan = PLANS_BY_ID[opts.plan];
+  const plan = PLAN;
   const mode = methodModes()[opts.method];
   if (mode === "off") return { ok: false, error: "This payment method isn't switched on yet. Please try the other one." };
 
@@ -74,10 +73,15 @@ export async function startPayment(opts: {
     if (n >= MAX_PROMPTS)
       return { ok: false, error: "That's a few M-Pesa prompts in a short time. Wait ten minutes and try again, or pay by card." };
   }
+  // The setup fee is paid once: a workspace that has ever had a subscription pays the monthly fee.
+  const [prior] = await d.query<{ n: number }>(`select count(*)::int as n from subscriptions where workspace_id = $1`, [
+    opts.workspaceId,
+  ]);
+  const amount = amountDue(prior.n > 0);
   const [row] = await d.query<PaymentRow>(
     `insert into payments (workspace_id, plan, amount, method, provider, phone)
      values ($1, $2, $3, $4, $5, $6) returning *`,
-    [opts.workspaceId, plan.id, plan.price, opts.method, provider, phone],
+    [opts.workspaceId, plan.id, amount, opts.method, provider, phone],
   );
 
   if (provider === "test") return { ok: true, paymentId: row.id, next: "test" };
@@ -86,7 +90,7 @@ export async function startPayment(opts: {
     if (provider === "payhero") {
       const r = await payhero.stkPush({
         phone: phone!,
-        amount: plan.price,
+        amount,
         externalReference: row.id,
         customerName: opts.customerName || opts.email,
       });
@@ -100,7 +104,7 @@ export async function startPayment(opts: {
     const reference = `sa_${row.id.replace(/-/g, "")}`;
     const { url } = await paystack.initialize({
       email: opts.email,
-      amount: plan.price,
+      amount,
       reference,
       metadata: { payment_id: row.id, plan: plan.id },
     });
@@ -165,7 +169,7 @@ export async function getPayment(paymentId: string) {
 export async function applyMpesaOutcome(p: PaymentRow, o: payhero.StkOutcome) {
   if (o.state === "success") {
     if (o.amount !== null && o.amount < p.amount) {
-      await markFailed(p.id, "The amount paid didn't match the plan price. Contact us with your M-Pesa message and we'll sort it out.");
+      await markFailed(p.id, "The amount paid didn't match the price. Contact us with your M-Pesa message and we'll sort it out.");
     } else {
       await markSucceeded(p.id, o.receipt, { confirmed: true });
     }

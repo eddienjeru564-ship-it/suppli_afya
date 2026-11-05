@@ -56,7 +56,7 @@ async function workspace(extra: Partial<Workspace> = {}) {
     addr,
     await auth.hashPassword("old-password"),
   ]);
-  const [w] = await d.query<Workspace>(`insert into workspaces (owner_id, plan, owner_name, slug) values ($1, 'growth', $2, $3) returning *`, [
+  const [w] = await d.query<Workspace>(`insert into workspaces (owner_id, plan, owner_name, slug) values ($1, 'suppli', $2, $3) returning *`, [
     u.id,
     extra.owner_name ?? null,
     extra.slug ?? null,
@@ -65,7 +65,7 @@ async function workspace(extra: Partial<Workspace> = {}) {
 }
 
 async function pay(workspaceId: string) {
-  const r = await payments.startPayment({ workspaceId, email: "x@example.com", plan: "growth", method: "mpesa", phone: "0712345678" });
+  const r = await payments.startPayment({ workspaceId, email: "x@example.com", method: "mpesa", phone: "0712345678" });
   if (!r.ok) throw new Error(r.error);
   await payments.markSucceeded(r.paymentId, "QWE123ABC");
   return r.paymentId;
@@ -78,9 +78,9 @@ describe("payment emails", () => {
     expect(kinds()).toEqual(["welcome"]);
     expect(sent[0].to).toEqual([to]);
     expect(sent[0].subject).toBe("Welcome to Suppli Afya");
-    expect(sent[0].text).toContain("Hi Mama Njeri, thank you for joining. Your Growth subscription is active.");
+    expect(sent[0].text).toContain("Hi Mama Njeri, thank you for joining. Your Suppli Afya subscription is active.");
     expect(sent[0].text).toContain("Set up your page: https://suppliafya.co.ke/start/setup");
-    expect(sent[0].text).toContain("Amount: KES 3,500");
+    expect(sent[0].text).toContain("Amount: KES 6,500");
     expect(sent[0].text).toContain("Receipt: QWE123ABC");
 
     // A webhook reporting the same payment again sends nothing.
@@ -89,7 +89,7 @@ describe("payment emails", () => {
 
     await pay(w.id);
     expect(kinds()).toEqual(["welcome", "receipt"]);
-    expect(sent[1].subject).toBe("Payment received: Growth subscription, KES 3,500");
+    expect(sent[1].subject).toBe("Payment received: Suppli Afya subscription, KES 2,500");
   });
 
   it("never fails a payment because an email couldn't go out", async () => {
@@ -117,7 +117,7 @@ describe("subscription emails", () => {
     const ws = await workspace({ owner_name: "Wanjiru" });
     await d.query(
       `insert into subscriptions (workspace_id, plan, status, current_period_start, current_period_end)
-       values ($1, 'growth', 'active', now() - interval '1 month', now() + ($2 || ' days')::interval)`,
+       values ($1, 'suppli', 'active', now() - interval '1 month', now() + ($2 || ' days')::interval)`,
       [ws.w.id, String(inDays)],
     );
     return ws;
@@ -135,7 +135,7 @@ describe("subscription emails", () => {
     expect(to(ended.email)).toEqual(["subscription_ended"]);
     expect(to(later.email)).toEqual([]);
     expect(to(gone.email)).toEqual([]);
-    expect(sent.find((s) => s.to[0] === soon.email)!.text).toContain("Renew now: https://suppliafya.co.ke/start/pay?renew=1&plan=growth");
+    expect(sent.find((s) => s.to[0] === soon.email)!.text).toContain("Renew now: https://suppliafya.co.ke/start/pay?renew=1");
 
     sent = [];
     await email.sendSubscriptionEmails();
@@ -208,15 +208,15 @@ describe("email templates", () => {
 
   it("keeps every sentence short and the banned words out", async () => {
     const t = await import("./email/templates");
-    const p = { name: "Kate", plan: "Growth", amount: 3500, method: "M-Pesa", receipt: "QWE", paidUntil: new Date() };
+    const p = { name: "Kate", plan: "Suppli Afya", amount: 2500, method: "M-Pesa", receipt: "QWE", paidUntil: new Date() };
     const all = [
       t.welcomeEmail({ ...p, setupUrl: "https://x" }),
       t.receiptEmail({ ...p, portalUrl: "https://x" }),
       t.pageLiveEmail({ name: "Kate", pageUrl: "https://x", displayUrl: "x", cardUrl: "https://x", portalUrl: "https://x" }),
       t.passwordResetEmail({ resetUrl: "https://x" }),
       t.passwordChangedEmail({ when: new Date(), forgotUrl: "https://x" }),
-      t.renewalDueEmail({ name: "Kate", plan: "Growth", price: 3500, endsOn: new Date(), renewUrl: "https://x" }),
-      t.subscriptionEndedEmail({ name: "Kate", plan: "Growth", endedOn: new Date(), pageClosesOn: new Date(), renewUrl: "https://x" }),
+      t.renewalDueEmail({ name: "Kate", plan: "Suppli Afya", price: 2500, endsOn: new Date(), renewUrl: "https://x" }),
+      t.subscriptionEndedEmail({ name: "Kate", plan: "Suppli Afya", endedOn: new Date(), pageClosesOn: new Date(), renewUrl: "https://x" }),
     ];
     for (const e of all) {
       expect(e.text).not.toMatch(/\b(AI|automation|seamless|effortless|unlock|empower|leads|CRM|quiz)\b/i);
