@@ -7,7 +7,8 @@ import back from "./cards/kate-card-back.webp";
 
 /**
  * Kate's printed business card, front and back, as our team designs them in setup. Hover turns it
- * over on a computer; on a phone, a tap does. The button keeps it reachable by keyboard too.
+ * over on a computer; on a phone, a tap does. The button keeps it reachable by keyboard too. Both
+ * faces load lazily: the card is far down the page, and the back is in place before anyone can flip it.
  */
 export function BusinessCard() {
   const [flipped, setFlipped] = useState(false);
@@ -29,7 +30,7 @@ export function BusinessCard() {
                 sizes="(min-width: 1024px) 30rem, 90vw"
                 className="h-full w-full object-cover"
                 placeholder="blur"
-                loading="eager"
+                loading="lazy"
               />
             </span>
             <span className="flip-face flip-back overflow-hidden rounded-[1.1rem] shadow-float ring-1 ring-ink/10">
@@ -39,7 +40,7 @@ export function BusinessCard() {
                 sizes="(min-width: 1024px) 30rem, 90vw"
                 className="h-full w-full object-cover"
                 placeholder="blur"
-                loading="eager"
+                loading="lazy"
               />
             </span>
           </span>

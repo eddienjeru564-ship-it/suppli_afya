@@ -277,4 +277,12 @@ create table site_events (
 alter table site_events enable row level security;
 `,
   },
+  {
+    version: 8,
+    sql: `
+-- A customer's history (their page, texts sent, "has anyone been in touch lately?" on Today)
+-- is read by customer, newest first.
+create index if not exists interactions_customer_idx on interactions(customer_id, created_at desc);
+`,
+  },
 ];

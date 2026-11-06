@@ -5,6 +5,37 @@
  * Palette: tea-estate greens, cream paper, red-earth clay. Warm, calm, grown-up.
  * Greens carry the brand; clay is the accent; ochre is used sparingly for emphasis.
  */
+/*
+ * Newsreader (Google Fonts, SIL Open Font License), cut down to what the site uses: Latin only,
+ * weights 400 to 460, optical sizes 24 to 72 so headlines keep their display shapes. 128 KB for
+ * regular and italic, against 278 KB for the full family. Made with fontTools' instancer from the
+ * Google Fonts variable files. Files are versioned (-v1) and cached for a year: change the name
+ * when the font changes. The fallback face is Times New Roman resized to Newsreader's metrics, so
+ * nothing jumps when the font arrives.
+ */
+@font-face {
+  font-family: "Newsreader";
+  src: url("/fonts/newsreader-normal-v1.woff2") format("woff2");
+  font-weight: 400 460;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Newsreader";
+  src: url("/fonts/newsreader-italic-v1.woff2") format("woff2");
+  font-weight: 400 460;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Newsreader Fallback";
+  src: local("Times New Roman");
+  ascent-override: 72.72%;
+  descent-override: 26.22%;
+  line-gap-override: 0%;
+  size-adjust: 101.07%;
+}
+
 @theme {
   --color-cream: #f4eee3;
   --color-paper: #fbf8f2;
@@ -26,7 +57,7 @@
   --color-wa-bubble: #d9fdd3;
   --color-wa-bg: #efeae2;
 
-  --font-display: var(--font-newsreader), "Iowan Old Style", Georgia, serif;
+  --font-display: "Newsreader", "Newsreader Fallback", "Iowan Old Style", Georgia, serif;
   --font-sans: var(--font-hanken), ui-sans-serif, system-ui, sans-serif;
 
   --ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
@@ -257,9 +288,11 @@
   }
 }
 
+/* Entrances start at a hair above zero, not zero: the eye can't tell, but the browser counts the text
+   as painted on the first frame, so the page is "ready" as soon as the words arrive. */
 @keyframes rise {
   from {
-    opacity: 0;
+    opacity: 0.01;
     transform: translateY(14px);
   }
   to {
@@ -291,7 +324,7 @@
 
 @keyframes rise-word {
   from {
-    opacity: 0;
+    opacity: 0.01;
     transform: translateY(105%);
   }
   to {

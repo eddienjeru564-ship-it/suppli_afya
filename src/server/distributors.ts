@@ -19,6 +19,24 @@ export function businessTypeLabel(t: string | null | undefined) {
  * A distributor's public entry point. Workspaces with an active plan come from
  * the database; the demo distributor comes from config.
  */
+/**
+ * Distributor pages are cached at the edge (see /d/[slug]/page.tsx), so customers get them in one
+ * hop with no database query. Call this whenever something on the page, or whether it's live,
+ * changes: the name or WhatsApp number, finishing setup, a payment. Never throws: a stale page for
+ * a couple of minutes is better than a failed save.
+ */
+export async function refreshDistributorPage(workspaceId: string) {
+  try {
+    const d = await db();
+    const [w] = await d.query<{ slug: string | null }>(`select slug from workspaces where id = $1`, [workspaceId]);
+    if (!w?.slug) return;
+    const { revalidatePath } = await import("next/cache");
+    revalidatePath(`/d/${w.slug}`);
+  } catch {
+    // Outside a request (tests, scripts) there's no cache to clear.
+  }
+}
+
 export async function distributorBySlug(slug: string): Promise<(Distributor & { workspaceId?: string }) | null> {
   const demo = DISTRIBUTORS.find((d) => d.slug === slug);
   if (demo) return demo;

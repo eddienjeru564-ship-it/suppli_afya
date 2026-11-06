@@ -163,6 +163,7 @@ export function serviceWorker(config: WorkerConfig) {
     if (url.origin !== sw.location.origin) return;
     if (req.mode === "navigate") return event.respondWith(navigation(event));
     if (url.pathname.startsWith("/_next/static/")) return event.respondWith(cacheFirst(req));
+    if (url.pathname.startsWith("/fonts/")) return event.respondWith(cacheFirst(req));
     if (/^\/(icons\/|splash\/|icon\.svg|apple-icon|favicon)/.test(url.pathname)) return event.respondWith(staleWhileRevalidate(event));
   });
 

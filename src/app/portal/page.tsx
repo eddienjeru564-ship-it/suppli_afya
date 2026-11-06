@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Suspense } from "react";
 import { goalFocus } from "@/config/onboarding";
 import { communityUrl, site } from "@/config/site";
 import { requirePortalAccount } from "@/server/auth";
@@ -101,7 +102,9 @@ export default async function Dashboard() {
         <h2 className="font-display text-[1.6rem] text-ink">Today</h2>
         {tasks.length > 0 && <span className="text-[0.85rem] font-semibold text-ink-mute">{tasks.length} to do</span>}
       </div>
-      <TaskList tasks={tasks} />
+      <Suspense>
+        <TaskList tasks={tasks} />
+      </Suspense>
       <AppBadge count={tasks.length} />
     </section>
   );
@@ -134,13 +137,19 @@ export default async function Dashboard() {
       )}
 
       {/* Phones only, until installed or waved away: the app is how the morning list reaches them. */}
-      <InstallCard />
+      <Suspense>
+        <InstallCard />
+      </Suspense>
 
       {/* Someone waiting on you comes before the checklist; on a quiet day the checklist leads. */}
       {tasks.length > 0 ? todayList : checklist}
       {tasks.length > 0 ? checklist : todayList}
 
-      {pushConfigured() && <ReminderCard />}
+      {pushConfigured() && (
+        <Suspense>
+          <ReminderCard />
+        </Suspense>
+      )}
 
       {hasActivity && (
         <section>
