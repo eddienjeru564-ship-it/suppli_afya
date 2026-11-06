@@ -8,6 +8,7 @@ import { planFor } from "@/config/plans";
 import { PRODUCTS_BY_ID } from "@/engine";
 import { getAccount, subscriptionState, type Account } from "@/server/auth";
 import { db, json } from "@/server/db";
+import { refreshDistributorPage } from "@/server/distributors";
 import { pushConfigured } from "@/server/env";
 import { removeSubscription, saveSubscription, sendTo, type PushSubscriptionJSON } from "@/server/push";
 import { normaliseKenyanPhone } from "@/server/payments/mpesa";
@@ -306,6 +307,7 @@ export async function saveProfile(_prev: ActionResult | null, fd: FormData): Pro
     [a.workspace.id, name, businessName, location, type, whatsapp, json(channels), json(goals)],
   );
   revalidatePath("/portal", "layout");
+  await refreshDistributorPage(a.workspace.id);
   return { ok: true };
 }
 

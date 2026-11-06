@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { faqPage, graph, organization, software, website } from "@/config/seo";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { FAQ } from "@/components/site/faq-data";
@@ -28,15 +29,30 @@ export default function Home() {
       <Nav />
       <main>
         <Hero />
-        <Problem />
-        <Demo />
-        <Workspace />
-        <YourPage />
-        <Faq />
-        <Pricing />
+        {/* Each boundary hydrates on its own, so the phone gets breaks between them instead of one long freeze. */}
+        <Suspense>
+          <Problem />
+        </Suspense>
+        <Suspense>
+          <Demo />
+        </Suspense>
+        <Suspense>
+          <Workspace />
+        </Suspense>
+        <Suspense>
+          <YourPage />
+        </Suspense>
+        <Suspense>
+          <Faq />
+        </Suspense>
+        <Suspense>
+          <Pricing />
+        </Suspense>
       </main>
       <Footer />
-      <MobileCta />
+      <Suspense>
+        <MobileCta />
+      </Suspense>
     </>
   );
 }

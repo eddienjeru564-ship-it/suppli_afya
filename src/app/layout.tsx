@@ -1,27 +1,11 @@
 import type { Metadata, Viewport } from "next";
 import { Hanken_Grotesk } from "next/font/google";
-import localFont from "next/font/local";
+import { preload } from "react-dom";
 import { splashStartupImages } from "@/config/pwa";
 import { site } from "@/config/site";
 import { KEYWORDS } from "@/config/seo";
 import { PwaProvider } from "@/components/pwa/PwaProvider";
 import "./globals.css";
-
-/*
- * Newsreader (Google Fonts, SIL Open Font License), cut down to what the site uses: Latin only,
- * weights 400 to 460, optical sizes 24 to 72 so headlines keep their display shapes. 130 KB for
- * regular and italic, against 278 KB for the full family, which matters on prepaid mobile data.
- * Made with fontTools' instancer from the Google Fonts variable files.
- */
-const newsreader = localFont({
-  variable: "--font-newsreader",
-  src: [
-    { path: "./fonts/newsreader-latin-normal.woff2", weight: "400 460", style: "normal" },
-    { path: "./fonts/newsreader-latin-italic.woff2", weight: "400 460", style: "italic" },
-  ],
-  display: "swap",
-  adjustFontFallback: "Times New Roman",
-});
 
 const hanken = Hanken_Grotesk({
   variable: "--font-hanken",
@@ -71,9 +55,15 @@ export const viewport: Viewport = {
   interactiveWidget: "resizes-content",
 };
 
+/**
+ * Newsreader, the display face, is served from /fonts (see globals.css). Only the upright cut is
+ * preloaded: it sets the first screen's headline. The italic is only used further down, so it loads
+ * when a page first needs it instead of competing with the first screen on a slow connection.
+ */
 export default function RootLayout({ children }: LayoutProps<"/">) {
+  preload("/fonts/newsreader-normal-v1.woff2", { as: "font", type: "font/woff2", crossOrigin: "anonymous" });
   return (
-    <html lang="en-KE" className={`${newsreader.variable} ${hanken.variable} antialiased`}>
+    <html lang="en-KE" className={`${hanken.variable} antialiased`}>
       <body className="grain min-h-dvh">
         <PwaProvider>{children}</PwaProvider>
       </body>

@@ -36,6 +36,11 @@ const nextConfig: NextConfig = {
         ],
       },
       {
+        // Versioned file names (-v1): safe to keep for a year.
+        source: "/fonts/:file*",
+        headers: [{ key: "Cache-Control", value: "public, max-age=31536000, immutable" }],
+      },
+      {
         source: "/:path*",
         headers: [
           { key: "X-Content-Type-Options", value: "nosniff" },
